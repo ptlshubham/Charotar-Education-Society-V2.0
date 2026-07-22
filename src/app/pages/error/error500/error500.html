@@ -1,0 +1,138 @@
+<!-- ─── 500 Error Hero ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 pt-[48px] pb-[30px]">
+  <div class="mx-auto grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-16">
+    <!-- Copy -->
+    <div>
+
+        <div class="h-[24px] w-fit md:h-[29px] bg-[#E8FFFD] rounded-full flex justify-center items-center z-10 px-[15px]">
+        <p class="text-[12px] md:text-[14px] font-semibold text-main ">500
+        ERROR</p>
+      </div>
+
+      <h1 class="mt-[10px] text-primary text-[40px] md:text-[52px] font-medium leading-[1.1]">
+        Oops! Something <br /><span class="text-main">went wrong</span>
+      </h1>
+
+      <p class="mt-6 max-w-[440px] text-[16px] leading-[26px] text-secondary">
+        We're experiencing some technical difficulties on our end. Our team has been notified and is working on a fix.
+      </p>
+
+      <div class="mt-8 flex flex-wrap items-center gap-3">
+        <a routerLink="/"
+          class="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-[8px] bg-main text-white text-[15px] font-medium hover:bg-primary transition-colors">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <path d="M9 22V12h6v10" />
+          </svg>
+          Go to Homepage
+        </a>
+        <button type="button" (click)="goBack()"
+          class="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-[8px] border border-main text-main text-[15px] font-medium hover:bg-main/[0.06] transition-colors">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M11 6l-6 6 6 6" />
+          </svg>
+          Go Back
+        </button>
+      </div>
+    </div>
+
+    <!-- Illustration -->
+    <div class="w-full">
+      <svg viewBox="0 0 520 380" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto"
+        role="img" aria-label="500 internal server error">
+        <!-- floor shadow -->
+        <ellipse cx="270" cy="336" rx="205" ry="18" fill="#0A2827" opacity="0.05" />
+
+        <!-- browser window -->
+        <rect x="118" y="72" width="336" height="216" rx="16" fill="#FFFFFF" stroke="#E4E9E8" stroke-width="2" />
+        <path d="M118 88a16 16 0 0 1 16-16h304a16 16 0 0 1 16 16v18H118V88Z" fill="#3DAFA9" />
+        <circle cx="140" cy="89" r="4" fill="#FFFFFF" opacity="0.95" />
+        <circle cx="156" cy="89" r="4" fill="#FFFFFF" opacity="0.7" />
+        <circle cx="172" cy="89" r="4" fill="#FFFFFF" opacity="0.5" />
+
+        <!-- 500 message -->
+        <text x="286" y="212" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="104"
+          font-weight="800" fill="#3DAFA9">500</text>
+        <text x="286" y="244" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15"
+          font-weight="700" letter-spacing="2.5" fill="#0A2827">INTERNAL SERVER ERROR</text>
+
+        <!-- warning triangle -->
+        <path d="M461 44 502 118H420Z" fill="#2FA39C" stroke="#2FA39C" stroke-width="8" stroke-linejoin="round" />
+        <rect x="458.2" y="74" width="5.6" height="24" rx="2.8" fill="#FFFFFF" />
+        <circle cx="461" cy="107" r="2.9" fill="#FFFFFF" />
+
+        <!-- ?! speech bubble -->
+        <g>
+          <rect x="60" y="120" width="58" height="44" rx="13" fill="#FFFFFF" stroke="#E4E9E8" stroke-width="2" />
+          <path d="M80 163l3 13 10-12" fill="#FFFFFF" stroke="#E4E9E8" stroke-width="2" stroke-linejoin="round" />
+          <text x="89" y="151" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24"
+            font-weight="800" fill="#3DAFA9">?!</text>
+        </g>
+
+        <!-- potted plant -->
+        <g stroke-linecap="round">
+          <path d="M474 268c0-18 0-30 0-40" stroke="#3DAFA9" stroke-width="3" />
+          <ellipse cx="474" cy="224" rx="6.5" ry="13" fill="#3DAFA9" />
+          <path d="M474 252c-11-5-21 1-21 1s9 9 21 4" fill="#43B4AE" />
+          <path d="M474 244c11-6 22 0 22 0s-9 10-22 5" fill="#43B4AE" />
+          <path d="M456 266h36l-4.6 27a4 4 0 0 1-4 3.4h-18.8a4 4 0 0 1-4-3.4L456 266Z" fill="#2B3A39" />
+          <path d="M453 261h42v6h-42z" fill="#334544" />
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Helpful links ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 pt-[10px] pb-[56px]">
+  <div class="mx-auto">
+    <h2 class="text-center text-primary text-[20px] font-semibold">
+      Need help? Here are some <span class="text-main">helpful links</span>
+    </h2>
+
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      @for (link of helpfulLinks; track link.title) {
+      <div class="flex flex-col rounded-[15px] border border-primary/10 bg-white p-5">
+        <div class="flex items-center gap-3">
+          <span class="flex items-center justify-center w-11 h-11 rounded-full bg-main/10 text-main shrink-0">
+            @switch (link.icon) {
+            @case ('book') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z" />
+            </svg> }
+            @case ('monitor') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" />
+              <path d="M8 21h8M12 17v4" />
+            </svg> }
+            @case ('mail') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <path d="m2 7 10 6 10-6" />
+            </svg> }
+            @case ('doc') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" />
+              <path d="M14 2v6h6M8 13h8M8 17h6" />
+            </svg> }
+            }
+          </span>
+          <h3 class="text-primary text-[15px] font-semibold">{{ link.title }}</h3>
+        </div>
+        <p class="mt-3 text-[13px] leading-[19px] text-secondary flex-1">{{ link.desc }}</p>
+        <a [routerLink]="link.route"
+          class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-main hover:gap-2.5 transition-all">
+          {{ link.cta }}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </a>
+      </div>
+      }
+    </div>
+  </div>
+</section>

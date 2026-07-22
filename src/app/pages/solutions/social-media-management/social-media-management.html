@@ -1,0 +1,212 @@
+<!-- ─── Breadcrumb ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 pt-[24px]">
+  <div class="mx-auto ">
+    <nav class="flex items-center gap-2 text-[13px] text-secondary">
+      <a routerLink="/" class="hover:text-main transition-colors">Home</a>
+      <span class="text-secondary/50">&#8250;</span>
+      <span>Solutions</span>
+      <span class="text-secondary/50">&#8250;</span>
+      <span class="text-primary font-medium">Social Media Management</span>
+    </nav>
+  </div>
+</section>
+
+<!-- ─── Hero ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 pt-[30px] pb-[30px]">
+  <div class="mx-auto  grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-16">
+    <!-- Copy -->
+    <div>
+      <div class="h-[24px] w-fit md:h-[29px] bg-[#E8FFFD] rounded-full flex justify-center items-center z-10 px-[15px]">
+        <p class="text-[12px] md:text-[14px] font-semibold text-main ">Social Media Solution</p>
+      </div>
+
+      <h1 class="mt-[10px] text-primary text-[38px] md:text-[44px] font-medium leading-[1.12]">
+        Manage. Create. Engage. <span class="text-main">Grow your brand online.</span>
+      </h1>
+
+      <p class="mt-6 max-w-[440px] text-[16px] leading-[26px] text-secondary">
+        ZarklyX helps you plan, create, schedule, and analyze content across all social platforms  from one powerful dashboard.
+      </p>
+
+      <ul class="mt-6 grid lg:grid-cols-2 gap-2.5">
+        @for (item of heroChecklist; track item) {
+          <li class="flex items-center gap-2.5 text-[14px] text-primary">
+            <svg class="shrink-0 text-main" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>
+            {{ item }}
+          </li>
+        }
+      </ul>
+
+      <div class="mt-8 flex flex-wrap items-center gap-4">
+        <a href="#" class="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-[8px] bg-main text-white text-[15px] font-medium hover:bg-primary transition-colors">
+          Start Free Trial
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a routerLink="/contact" class="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-[8px] border border-primary/15 text-primary text-[15px] font-medium hover:border-main hover:text-main transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Schedule a Demo
+        </a>
+      </div>
+    </div>
+
+    <!-- Dashboard mockup -->
+    <div class="rounded-[16px] overflow-hidden border border-primary/10 shadow-[0_20px_50px_-20px_rgba(11,40,39,0.25)] bg-white flex text-[11px]">
+      <!-- sidebar -->
+      <div class="hidden sm:flex flex-col gap-0.5 w-[130px] shrink-0 bg-primary p-3">
+        <span class="flex items-center justify-center w-8 h-8 rounded-[8px] bg-white/10 text-white font-bold mb-3">Z</span>
+        @for (nav of dashboardNav; track nav; let i = $index) {
+          <span class="px-2.5 py-1.5 rounded-[6px] text-[11px]" [ngClass]="i === 0 ? 'bg-white text-primary font-medium' : 'text-white/60'">{{ nav }}</span>
+        }
+      </div>
+      <!-- main -->
+      <div class="flex-1 min-w-0 p-3.5 bg-[#fafbfb]">
+        <div class="flex items-center justify-between">
+          <span class="text-primary text-[13px] font-semibold">Overview</span>
+          <span class="text-secondary">This Month ▾</span>
+        </div>
+        <div class="mt-3 grid grid-cols-2 lg:grid-cols-4 gap-2">
+          @for (stat of dashboardStats; track stat.label) {
+            <div class="rounded-[8px] border border-primary/10 bg-white p-2.5">
+              <p class="text-secondary text-[10px]">{{ stat.label }}</p>
+              <p class="text-primary text-[13px] font-bold leading-tight mt-0.5">{{ stat.value }}</p>
+              <p class="text-main text-[10px] font-medium">↑ {{ stat.change }}</p>
+            </div>
+          }
+        </div>
+        <div class="mt-2 grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-2">
+          <div class="rounded-[8px] border border-primary/10 bg-white p-2.5">
+            <div class="flex items-center justify-between">
+              <p class="text-primary text-[11px] font-semibold">Engagement Overview</p>
+              <span class="text-secondary text-[9px]">This Month ▾</span>
+            </div>
+            <svg class="mt-1 w-full h-[74px]" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true">
+              <defs><linearGradient id="smm-g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3DAFA9" stop-opacity="0.3"/><stop offset="1" stop-color="#3DAFA9" stop-opacity="0"/></linearGradient></defs>
+              <path d="M0 54 L18 50 L36 52 L54 42 L72 46 L90 32 L108 36 L126 24 L144 28 L162 16 L180 12 L200 6 V60 H0 Z" fill="url(#smm-g)"/>
+              <path d="M0 54 L18 50 L36 52 L54 42 L72 46 L90 32 L108 36 L126 24 L144 28 L162 16 L180 12 L200 6" fill="none" stroke="#3DAFA9" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="rounded-[8px] border border-primary/10 bg-white p-2.5">
+            <div class="flex items-center justify-between">
+              <p class="text-primary text-[11px] font-semibold">Top Performing Posts</p>
+              <span class="text-main text-[9px]">View all</span>
+            </div>
+            <ul class="mt-1.5 flex flex-col gap-1.5">
+              @for (post of topPosts; track post.title) {
+                <li class="flex items-center gap-2">
+                  <span class="flex items-center justify-center w-5 h-5 rounded-[6px] text-white shrink-0" [style.backgroundColor]="post.color">
+                    @switch (post.platform) {
+                      @case ('instagram') { <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17" cy="7" r="1"/></svg> }
+                      @case ('facebook') { <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5h2.5V5.5H14c-2.2 0-3.5 1.4-3.5 3.6v1.9H8v3h2.5V21h3v-6h2.3l.5-3h-2.8V9.4c0-.6.3-.9 1-.9Z"/></svg> }
+                      @case ('linkedin') { <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5A1.94 1.94 0 1 1 3.06 5a1.94 1.94 0 0 1 3.88 0ZM3.3 8.4h3.3V21H3.3V8.4Zm5.3 0h3.16v1.72h.05c.44-.83 1.5-1.7 3.1-1.7 3.32 0 3.93 2.18 3.93 5V21h-3.3v-6.7c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V21H8.6V8.4Z"/></svg> }
+                      @case ('x') { <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 3H21l-6.6 7.6L22 21h-5.9l-4.6-6-5.3 6H3.1l7.1-8.1L2.5 3h6l4.2 5.5L18.9 3Z"/></svg> }
+                      @case ('tiktok') { <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.3 2.3 1.8 4 4 4.3v3c-1.5 0-2.9-.5-4-1.3V15a6 6 0 1 1-6-6v3a3 3 0 1 0 3 3V3h3Z"/></svg> }
+                    }
+                  </span>
+                  <span class="min-w-0 flex-1"><span class="block text-primary text-[10px] font-medium leading-tight truncate">{{ post.title }}</span><span class="block text-secondary text-[9px] leading-tight">{{ post.date }}</span></span>
+                  <span class="text-secondary text-[9px] shrink-0">{{ post.value }}</span>
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Trusted by ─── -->
+<!-- <section class="bg-white px-5 md:px-10 lg:px-17.5 py-[10px]">
+  <div class="mx-auto  rounded-[15px] bg-[#f8f9fa] px-6 py-7">
+    <p class="text-center text-[14px] text-secondary">Trusted by 10,000+ brands and agencies worldwide</p>
+    <div class="mt-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+      @for (logo of trustedLogos; track logo) {
+        <span class="text-primary/70 text-[19px] font-bold tracking-tight">{{ logo }}</span>
+      }
+    </div>
+  </div>
+</section> -->
+
+<!-- ─── Features ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[30px]">
+  <div class="mx-auto ">
+    <h2 class="text-center text-primary text-[26px] font-semibold">Everything you need to manage social media successfully</h2>
+
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      @for (feature of features; track feature.title) {
+        <div class="flex gap-4 rounded-[15px] border border-primary/10 bg-white p-6 transition-shadow duration-200">
+          <span class="flex items-center justify-center w-12 h-12 rounded-full bg-main/10 text-main shrink-0">
+            @switch (feature.icon) {
+              @case ('calendar') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> }
+              @case ('pen') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> }
+              @case ('send') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z"/></svg> }
+              @case ('chat') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.6 8.6 0 0 1-3.9-.9L3 21l1.9-5.6A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5Z"/></svg> }
+              @case ('chart') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/></svg> }
+              @case ('team') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg> }
+            }
+          </span>
+          <div>
+            <h3 class="text-primary text-[16px] font-semibold">{{ feature.title }}</h3>
+            <p class="mt-2 text-[13px] leading-[20px] text-secondary">{{ feature.desc }}</p>
+            <a href="#" class="mt-3 inline-flex items-center gap-1.5 text-[13px] font-medium text-main">
+              Learn more
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ─── Real results ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[20px]">
+  <div class="mx-auto  rounded-[16px] bg-[#f8f9fa] p-6 md:p-8 flex flex-col lg:flex-row lg:items-center gap-8">
+    <div class="flex-1">
+      <h2 class="text-primary text-[20px] font-semibold">Real results for brands like yours</h2>
+      <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-6">
+        @for (stat of impactStats; track stat.label) {
+          <div>
+            <span class="flex items-center justify-center w-11 h-11 rounded-full bg-white text-main ">
+              @switch (stat.icon) {
+                @case ('chart') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg> }
+                @case ('userplus') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg> }
+                @case ('clock') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> }
+                @case ('reply') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 17 4 12l5-5"/><path d="M4 12h11a5 5 0 0 1 5 5v1"/></svg> }
+              }
+            </span>
+            <p class="mt-3 text-main text-[26px] font-bold leading-none">{{ stat.value }}</p>
+            <p class="mt-1.5 text-[13px] leading-[17px] text-secondary">{{ stat.label }}</p>
+          </div>
+        }
+      </div>
+    </div>
+    <div class="hidden lg:flex justify-center w-[220px] shrink-0">
+      <img src="/assets/images/smm/phone.png" alt="Social media app preview"
+        class="w-auto h-[220px] object-contain select-none" />
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA banner ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[40px]">
+  <div class="mx-auto  rounded-[16px] bg-[#f8f9fa] px-8 md:px-10 py-7 flex flex-col md:flex-row md:items-center gap-6">
+    <div class="flex flex-col lg:flex-row lg:items-center gap-5 flex-1">
+      <span class="shrink-0 flex items-center justify-center w-14 h-14 rounded-full bg-main text-white">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.6 8.6 0 0 1-3.9-.9L3 21l1.9-5.6A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5Z"/></svg>
+      </span>
+      <div>
+        <h2 class="text-primary text-[18px] md:text-[20px] font-semibold leading-[1.2]">Ready to grow your brand on social media?</h2>
+        <p class="mt-1 text-[14px] leading-[20px] text-secondary">Join thousands of businesses using ZarklyX to create, manage, and grow their social presence.</p>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center gap-3 shrink-0">
+      <a href="#" class="inline-flex items-center justify-center gap-2 h-12 px-7 rounded-[8px] bg-main text-white text-[15px] font-medium hover:bg-primary transition-colors">Start Free Trial
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a routerLink="/contact" class="inline-flex items-center justify-center gap-2 h-12 px-7 rounded-[8px] border border-primary/15 bg-white text-primary text-[15px] font-medium hover:border-main hover:text-main transition-colors">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Schedule a Demo
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,225 @@
+/* ═══════════════════════════════════════════════════════════
+   Module Hero 2  Split Layout
+   Text on left, image on right with decorative circles
+   (Similar to about-hero-section styling)
+   ═══════════════════════════════════════════════════════════ */
+
+.module-hero2 {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: 1024px) {
+    min-height: 80vh;
+  }
+
+  @media (min-width: 1280px) {
+    min-height: 100vh;
+  }
+}
+
+/* Container  flex row on desktop */
+.module-hero2__container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    gap: 90px;
+  }
+}
+
+/* Text block */
+.module-hero2__text {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 20px;
+  margin-top: 60px;
+  z-index: 10;
+
+  @media (min-width: 768px) {
+    padding: 0 40px;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 0 0 0 80px;
+    margin-top: -2%;
+  }
+}
+
+/* Badge */
+.module-hero2__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  padding: 0 16px;
+  background: #E8FFFD;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #3DAFA9;
+  margin-bottom: 10px;
+
+  @media (min-width: 768px) {
+    height: 29px;
+    font-size: 14px;
+    padding: 0 20px;
+  }
+}
+
+/* Title */
+.module-hero2__title {
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 1.15;
+  color: #232120;
+
+  @media (min-width: 768px) {
+    font-size: 50px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 54px;
+  }
+}
+
+/* Subtitle */
+.module-hero2__subtitle {
+  color: #747474;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  margin-top: 25px;
+
+  @media (min-width: 768px) {
+    width: 80%;
+  }
+}
+
+/* Image wrapper */
+.module-hero2__image-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  z-index: 10;
+
+  @media (min-width: 768px) {
+    margin-top: 48px;
+  }
+
+  @media (min-width: 1024px) {
+    margin-top: 0;
+  }
+}
+
+.module-hero2__image {
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+
+  @media (min-width: 768px) {
+    width: 70%;
+  }
+
+  @media (min-width: 1024px) {
+    width: 100%;
+  }
+}
+
+/* CTA Actions */
+.module-hero2__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.module-hero2__actions--desktop {
+  display: none;
+
+  @media (min-width: 768px) {
+    display: flex;
+    margin-top: 6%;
+  }
+}
+
+.module-hero2__actions--mobile {
+  display: flex;
+  padding: 0 20px;
+  padding-bottom: 40px;
+  margin-top: -32px;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+/* ─── Decorative Circles ─── */
+
+.module-hero2__circle {
+  display: none;
+  position: absolute;
+  border-radius: 50%;
+
+  @media (min-width: 1024px) {
+    display: flex;
+  }
+}
+
+.module-hero2__circle--teal {
+  width: 500px;
+  height: 500px;
+  background: #3DAFA9;
+  top: -20%;
+  right: -8%;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+
+  &::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 50%;
+  }
+}
+
+.module-hero2__circle--gray1 {
+  width: 267px;
+  height: 267px;
+  background: #F8F9FA;
+  top: 15%;
+  left: -8%;
+}
+
+.module-hero2__circle--gray2 {
+  width: 267px;
+  height: 267px;
+  background: #F8F9FA;
+  top: 36%;
+  right: 26%;
+}
+
+.module-hero2__circle--dot {
+  width: 30px;
+  height: 30px;
+  background: #3DAFA9;
+  top: 10%;
+  left: 42%;
+}

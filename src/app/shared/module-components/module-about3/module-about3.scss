@@ -1,0 +1,135 @@
+/* ═══════════════════════════════════════════════════════════
+   Module About 3  Grid Card / Bento Layout
+   ═══════════════════════════════════════════════════════════ */
+
+.module-about3 {
+  padding: 60px 20px;
+  background: #fff;
+
+  @media (min-width: 768px) {
+    padding: 80px 40px;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 100px 70px;
+  }
+}
+
+.module-about3__container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header */
+.module-about3__header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 48px;
+}
+
+.module-about3__title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #232120;
+  line-height: 1.2;
+  margin-bottom: 16px;
+
+  @media (min-width: 768px) {
+    font-size: 38px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 42px;
+  }
+}
+
+.module-about3__description {
+  font-size: 16px;
+  color: #747474;
+  line-height: 1.6;
+}
+
+/* Bento grid */
+.module-about3__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Featured image card */
+.module-about3__featured-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  min-height: 280px;
+
+  @media (min-width: 768px) {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    min-height: 100%;
+  }
+}
+
+.module-about3__featured-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.module-about3__featured-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.25) 100%);
+}
+
+/* Feature cards */
+.module-about3__card {
+  background: #F8F9FA;
+  border-radius: 16px;
+  padding: 24px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  }
+}
+
+.module-about3__card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #E8FFFD;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.module-about3__card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #232120;
+  margin-bottom: 8px;
+}
+
+.module-about3__card-desc {
+  font-size: 14px;
+  color: #747474;
+  line-height: 1.5;
+}

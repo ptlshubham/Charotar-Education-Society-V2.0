@@ -1,0 +1,61 @@
+/* --- Floating AI assistant button --- */
+.ai-fab {
+  // Animated "AI" gradient (violet -> blue -> cyan) that slowly shifts.
+  background: linear-gradient(135deg, #6d5ef6 0%, #4f9cf9 45%, #22d3ee 100%);
+  background-size: 200% 200%;
+  animation: ai-fab-gradient 6s ease infinite, ai-fab-pulse 2.6s ease-in-out infinite;
+  transition: transform 0.25s ease;
+  will-change: transform, background-position, box-shadow;
+
+  &:hover {
+    transform: scale(1.08);
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+}
+
+.ai-fab__icon {
+  // Gentle floating + breathing on the icon itself.
+  animation: ai-fab-float 3s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.ai-fab:hover .ai-fab__icon {
+  // A quick spin on hover for a little delight.
+  animation: ai-fab-spin 0.6s ease;
+}
+
+@keyframes ai-fab-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes ai-fab-pulse {
+  0%, 100% {
+    box-shadow: 0 6px 18px rgba(79, 156, 249, 0.35), 0 0 0 0 rgba(79, 156, 249, 0.45);
+  }
+  50% {
+    box-shadow: 0 8px 22px rgba(109, 94, 246, 0.45), 0 0 0 10px rgba(79, 156, 249, 0);
+  }
+}
+
+@keyframes ai-fab-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-2px) scale(1.08); }
+}
+
+@keyframes ai-fab-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-fab,
+  .ai-fab__icon,
+  .ai-fab:hover .ai-fab__icon {
+    animation: none;
+  }
+}

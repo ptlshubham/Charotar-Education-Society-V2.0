@@ -1,0 +1,21 @@
+<div class="min-h-screen md:min-h-[60vh] lg:min-h-[80vh] xl:min-h-[100vh] w-full flex flex-col justify-center items-center px-5 md:px-10 lg:px-20 xl:px-20 gap-[100px] pt-[100px]">
+    <div class="w-full flex flex-col justify-center items-center">
+        <h1 class="text-primary text-[34px] xl:text-[44px] font-medium text-center leading-[44px]">Frequently Asked Questions</h1>
+        <p class="text-[16px] font-normal text-[#0E0E0ECC]/80 text-center leading-[22px] mt-[25px] md:w-[65%] xl:w-[45%]">Everything you need to know about ZarklyX and how it helps your agency run on one platform.</p>
+    </div>
+    <div class="w-full flex flex-col justify-center items-center gap-[20px] lg:px-[120px] xl:px-[277px]">
+
+        <div class="faq-item w-full flex flex-col pb-[20px]" [class.border-b]="!isLast" [class.border-primary]="!isLast" *ngFor="let faq of faqs; let i = index; let isLast = last">
+            <div class="w-full flex justify-between items-center cursor-pointer" (click)="toggleFaq(i)">
+                <h2 class="text-[18px] text-[#3C3D3D] leading-[24px] font-medium max-w-[85%]">{{ faq.question }}</h2>
+                <button class="faq-icon">
+                    <img src="/assets/icons/about-faq-plus.svg" alt="Expand answer">
+                </button>
+            </div>
+            <div class="faq-answer overflow-hidden" [style.height]="'0px'">
+                <p class="text-[#0E0E0ECC]/80 pt-[20px]">{{ faq.answer }}</p>
+            </div>
+        </div>
+
+    </div>
+</div>

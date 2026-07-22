@@ -1,0 +1,238 @@
+<!-- ─── Hero ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 pt-[50px] pb-[40px]">
+  <div class="mx-auto grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-16">
+    <!-- Copy + search -->
+    <div>
+      <div class="h-[24px] w-fit md:h-[29px] bg-[#E8FFFD] rounded-full flex justify-center items-center z-10 px-[15px]">
+        <p class="text-[12px] md:text-[14px] font-semibold text-main ">Help Center</p>
+      </div>
+      <h1 class="mt-[10px] text-primary text-[40px] md:text-[48px] font-medium leading-[1.1]">
+        We're here to help<br />
+        you <span class="text-main">succeed</span>
+      </h1>
+
+      <p class="mt-6 max-w-[430px] text-[16px] leading-[26px] text-secondary">
+        Get the support you need, when you need it. Our team is always ready to help you make the most of ZarklyX.
+      </p>
+
+      <!-- <div class="relative mt-8 max-w-[460px]">
+        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-secondary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        </span>
+        <input type="text" placeholder="Search for help articles, topics or keywords..." class="w-full h-13 py-3.5 rounded-[10px] border border-primary/10 bg-white pl-4 pr-12 text-[14px] text-primary placeholder:text-secondary/70 outline-none focus:border-main transition-colors" />
+      </div> -->
+
+      <div class="mt-4 flex flex-wrap items-center gap-2 text-[13px]">
+        <span class="font-semibold text-primary">Popular searches:</span>
+        @for (term of popularSearches; track term) {
+          <a href="#" class="inline-flex items-center rounded-full border border-primary/10 bg-white px-3 py-1 text-secondary hover:border-main hover:text-main transition-colors">{{ term }}</a>
+        }
+      </div>
+    </div>
+
+    <!-- Visual + immediate-help card -->
+    <div class="relative">
+      <div class="relative ml-auto w-full max-w-[500px]">
+        <div class="overflow-hidden bg-main/5 rounded-tl-[100px] rounded-br-[100px] rounded-tr-[24px] rounded-bl-[24px]">
+          <img [src]="heroImage" alt="ZarklyX support specialist" class="w-full h-[320px] md:h-[380px] object-cover" />
+        </div>
+
+        <!-- Immediate help card -->
+        <div class="absolute left-0 lg:-left-10 top-12 w-[260px] rounded-[16px] bg-white p-5 shadow-[0_20px_50px_-16px_rgba(11,40,39,0.28)]">
+          <p class="text-[15px] font-semibold text-primary">Need immediate help?</p>
+          <p class="mt-2 text-[13px] leading-[19px] text-secondary">Our support team typically responds within a few minutes.</p>
+          <button type="button" class="mt-4 w-full inline-flex items-center justify-center gap-2 h-11 rounded-[8px] bg-main text-white text-[14px] font-medium hover:bg-primary transition-colors">
+            Contact Support
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <p class="mt-3 text-[12px] font-medium text-main text-center">Available 24/7 on all days</p>
+        </div>
+
+        <!-- Floating headset badge -->
+        <span class="absolute right-8 top-6 flex items-center justify-center w-11 h-11 rounded-full bg-white text-main shadow-[0_10px_24px_-8px_rgba(11,40,39,0.3)]">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 16a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2v2ZM3 16a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 2v2Z"/></svg>
+        </span>
+        <!-- Floating chat badge -->
+        <span class="absolute right-2 top-1/2 flex items-center justify-center w-11 h-11 rounded-full bg-white text-main shadow-[0_10px_24px_-8px_rgba(11,40,39,0.3)]">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="7" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="17" cy="12" r="1.4"/></svg>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Browse by category ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[30px]">
+  <div class="mx-auto">
+    <h2 class="text-primary text-[26px] font-semibold leading-[1.2]">Browse by category</h2>
+
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-5">
+      @for (cat of categories; track cat.title) {
+        <a href="#" class="flex flex-col items-center text-center rounded-[16px] border border-primary/10 bg-white p-6 transition-shadow duration-200 ">
+          <span class="flex items-center justify-center w-12 h-12 rounded-[14px] bg-main/10 text-main">
+            @switch (cat.icon) {
+              @case ('rocket') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2.1-.1-2.9a2.1 2.1 0 0 0-2.9 0Z"/><path d="M12 15 9 12a11 11 0 0 1 2-3.5C13.7 5 17.5 3 20.5 3c0 3-2 6.8-5.5 9.5A11 11 0 0 1 12 15Z"/><path d="M9 12H4s.5-2.8 2-4c1.7-1.4 5 0 5 0M12 15v5s2.8-.5 4-2c1.4-1.7 0-5 0-5"/></svg> }
+              @case ('gear') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 3.6 15H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 8.3a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 9 4.6h.1"/></svg> }
+              @case ('grid') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> }
+              @case ('link') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> }
+              @case ('shield') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg> }
+              @case ('code') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg> }
+            }
+          </span>
+          <h3 class="mt-4 text-primary text-[15px] font-semibold">{{ cat.title }}</h3>
+          <p class="mt-2 text-[12px] leading-[18px] text-secondary">{{ cat.desc }}</p>
+          <span class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-medium text-main">
+            {{ cat.articles }} articles
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ─── Other ways we can help ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[30px]">
+  <div class="mx-auto ">
+    <h2 class="text-primary text-[26px] font-semibold leading-[1.2]">Other ways we can help</h2>
+    <p class="mt-2 text-[15px] text-secondary">Choose the support option that works best for you.</p>
+
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      @for (opt of helpOptions; track opt.title) {
+        <div class="flex flex-col items-center text-center rounded-[16px] border border-primary/10 bg-white p-6 transition-shadow duration-200 ">
+          <span class="flex items-center justify-center w-14 h-14 rounded-full"
+            [style.color]="opt.color" [style.backgroundColor]="opt.color + '1a'">
+            @switch (opt.icon) {
+              @case ('chat') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.6 8.6 0 0 1-3.9-.9L3 21l1.9-5.6A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5Z"/></svg> }
+              @case ('mail') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> }
+              @case ('phone') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg> }
+              @case ('forum') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3h13a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H8l-4 3V5a2 2 0 0 1 0-2Z"/><path d="M8 8h7M8 11h4"/></svg> }
+            }
+          </span>
+
+          <div class="mt-4 flex items-center gap-2">
+            <h3 class="text-primary text-[16px] font-semibold">{{ opt.title }}</h3>
+            @if (opt.recommended) {
+              <span class="inline-flex items-center rounded-full bg-main/10 px-2 py-0.5 text-[10px] font-semibold text-main">Recommended</span>
+            }
+          </div>
+          <p class="mt-2 text-[13px] leading-[19px] text-secondary">{{ opt.desc }}</p>
+
+          <button type="button" class="mt-5 inline-flex items-center justify-center gap-2 h-11 px-5 rounded-[8px] border text-[14px] font-medium transition-colors"
+            [style.color]="opt.color" [style.borderColor]="opt.color + '40'">
+            {{ opt.btnText }}
+          </button>
+          <p class="mt-3 text-[12px] text-secondary">{{ opt.note }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ + System status ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[30px]">
+  <div class="mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+    <!-- FAQ -->
+    <div class="rounded-[16px] border border-primary/10 bg-white p-6 md:p-8">
+      <h2 class="text-primary text-[22px] font-semibold leading-[1.2]">Frequently asked questions</h2>
+      <div class="mt-5 flex flex-col divide-y divide-primary/10">
+        @for (faq of faqs; track faq.question; let i = $index) {
+          <div class="py-2">
+            <button type="button" (click)="toggleFaq(i)" class="w-full flex items-center justify-between gap-4 py-3 text-left">
+              <span class="text-primary text-[15px] font-medium">{{ faq.question }}</span>
+              <svg class="shrink-0 text-secondary transition-transform duration-200" [class.rotate-180]="faq.open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            @if (faq.open) {
+              <p class="pb-3 pr-8 text-[14px] leading-[22px] text-secondary">{{ faq.answer }}</p>
+            }
+          </div>
+        }
+      </div>
+      <div class="mt-5">
+        <a routerLink="/support/faq" class="inline-flex items-center gap-2 h-11 px-5 rounded-[8px] border border-primary/10 bg-white text-primary text-[14px] font-medium hover:border-main hover:text-main transition-colors">
+          View all FAQs
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- System status -->
+    <div class="rounded-[16px] border border-primary/10 bg-white p-6 md:p-8">
+      <div class="flex items-center justify-between gap-4">
+        <h2 class="text-primary text-[22px] font-semibold leading-[1.2]">System status</h2>
+        <a routerLink="/support/system-status" class="inline-flex items-center gap-1.5 text-[13px] font-medium text-main hover:gap-2.5 transition-all whitespace-nowrap">
+          View status page
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+
+      <div class="mt-5 flex items-center gap-3">
+        <span class="flex items-center justify-center w-9 h-9 rounded-full bg-main/10 text-main shrink-0">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </span>
+        <div>
+          <p class="text-main text-[15px] font-semibold">All systems operational</p>
+          <p class="text-[12px] text-secondary">Last updated: May 12, 2026, 10:30 AM IST</p>
+        </div>
+      </div>
+
+      <div class="mt-7 flex items-center justify-between gap-4">
+        <h3 class="text-primary text-[16px] font-semibold">Recent updates</h3>
+        <a href="#" class="inline-flex items-center gap-1.5 text-[13px] font-medium text-main hover:gap-2.5 transition-all whitespace-nowrap">
+          View all updates
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+
+      <ul class="mt-4 flex flex-col gap-4">
+        @for (update of recentUpdates; track update.text) {
+          <li class="flex items-start gap-3">
+            <span class="flex items-center justify-center w-8 h-8 rounded-[10px] shrink-0 bg-primary/[0.04] text-secondary"
+             >
+              @switch (update.icon) {
+                @case ('new') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg> }
+                @case ('improve') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 6-6 4 4 8-8"/><path d="M17 7h4v4"/></svg> }
+                @case ('fix') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> }
+              }
+            </span>
+            <div class="flex-1 flex items-center justify-between gap-4 mt-1">
+              <p class="text-[14px] leading-[20px] text-primary">{{ update.text }}</p>
+              <span class="text-[12px] text-secondary whitespace-nowrap">{{ update.date }}</span>
+            </div>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA banner ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[50px]">
+  <div class="mx-auto">
+    <div class="relative overflow-hidden rounded-[16px] bg-main bg-[radial-gradient(circle_at_100%_0%,rgba(11,40,39,0.35),transparent_55%)] px-8 md:px-12 py-9 flex flex-col lg:flex-row lg:items-center gap-8">
+      <!-- Decorative dots -->
+      <div class="pointer-events-none absolute left-40 bottom-4 hidden md:grid grid-cols-6 gap-2 opacity-25" aria-hidden="true">
+        @for (dot of [1,2,3,4,5,6,7,8,9,10,11,12]; track dot) {
+          <span class="w-1.5 h-1.5 rounded-full bg-white/70"></span>
+        }
+      </div>
+
+      <div class="flex items-center gap-5 flex-1 relative z-10">
+        <span class="shrink-0 flex items-center justify-center w-16 h-16 rounded-full bg-white text-main">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 16a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2v2ZM3 16a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 2v2Z"/></svg>
+        </span>
+        <div>
+          <h2 class="text-white text-[24px] md:text-[26px] font-semibold leading-[1.2]">Still need help?</h2>
+          <p class="mt-2 text-[15px] leading-[22px] text-white/85 max-w-[430px]">
+            Our support team is just a message away. We're here for you 24/7.
+          </p>
+        </div>
+      </div>
+
+      <button type="button" class="relative z-10 shrink-0 inline-flex items-center gap-2 h-12 px-7 rounded-[8px] bg-white text-primary text-[15px] font-medium hover:bg-primary hover:text-white transition-colors">
+        Contact Support
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </div>
+</section>

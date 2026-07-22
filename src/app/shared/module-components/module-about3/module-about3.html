@@ -1,0 +1,34 @@
+<!-- Module About 3  Grid Card / Bento Layout -->
+<section class="module-about3">
+  <div class="module-about3__container">
+
+    <!-- Section header -->
+    <div class="module-about3__header">
+      <h2 class="module-about3__title">{{ title }}</h2>
+      <p class="module-about3__description">{{ description }}</p>
+    </div>
+
+    <!-- Bento grid -->
+    <div class="module-about3__grid">
+
+      <!-- Featured image card (spans 2 rows on desktop) -->
+      <div class="module-about3__featured-card">
+        <img [src]="image" [alt]="title" class="module-about3__featured-img" />
+        <div class="module-about3__featured-overlay"></div>
+      </div>
+
+      <!-- Feature cards -->
+      @for (feature of features; track feature.title) {
+        <div class="module-about3__card">
+          <div class="module-about3__card-icon">
+            <img [src]="feature.icon" [alt]="feature.title" />
+          </div>
+          <h3 class="module-about3__card-title">{{ feature.title }}</h3>
+          <p class="module-about3__card-desc">{{ feature.description }}</p>
+        </div>
+      }
+
+    </div>
+
+  </div>
+</section>

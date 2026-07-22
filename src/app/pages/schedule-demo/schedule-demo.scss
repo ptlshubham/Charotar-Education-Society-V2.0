@@ -1,0 +1,70 @@
+/* ── "Get Started" orbit illustration ──
+   People icons sit on a slowly-rotating dashed ring around the ZarklyX mark, each drifting
+   gently on its own rhythm while the centre pulses  echoing the community-hero motion.
+   Only transform animates, so it stays smooth on mobile. */
+
+/* SVG circle  rotate around its own centre so the dashes appear to travel round the ring. */
+.gs-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: gs-spin 40s linear infinite;
+  will-change: transform;
+}
+
+@keyframes gs-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Nodes are centred on their ring point via the -translate-x/y-1/2 utilities. The keyframe
+   re-states that base translate and only breathes the scale  so each icon stays locked on
+   the ring instead of drifting off it. */
+.gs-node {
+  animation: gs-float 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes gs-float {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50%      { transform: translate(-50%, -50%) scale(1.08); }
+}
+
+/* Centred via a flex overlay, so the pulse only scales  no translate to fight the centring. */
+.gs-center {
+  animation: gs-pulse 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes gs-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.04); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gs-ring,
+  .gs-node,
+  .gs-center {
+    animation: none;
+  }
+}
+
+/* ── Thank-you popup: confetti bursts outward from the check mark ── */
+.sd-confetti {
+  animation: sd-pop 0.6s ease-out backwards;
+}
+
+.sd-confetti:nth-child(2) { animation-delay: 0.05s; }
+.sd-confetti:nth-child(3) { animation-delay: 0.1s; }
+.sd-confetti:nth-child(4) { animation-delay: 0.15s; }
+.sd-confetti:nth-child(5) { animation-delay: 0.2s; }
+.sd-confetti:nth-child(6) { animation-delay: 0.25s; }
+.sd-confetti:nth-child(7) { animation-delay: 0.3s; }
+
+@keyframes sd-pop {
+  0%   { opacity: 0; transform: scale(0.2); }
+  60%  { opacity: 1; transform: scale(1.15); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sd-confetti { animation: none; }
+}

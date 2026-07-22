@@ -1,0 +1,38 @@
+<!-- Module About 1  Image Left, Content Right -->
+<section class="module-about1">
+  <div class="module-about1__container">
+
+    <!-- Left  Image -->
+    <div class="module-about1__image-col">
+      <div class="module-about1__image-wrapper">
+        <img [src]="image" [alt]="title" class="module-about1__image" />
+        <!-- Decorative accent -->
+        <div class="module-about1__accent"></div>
+      </div>
+    </div>
+
+    <!-- Right  Content -->
+    <div class="module-about1__content-col">
+      <h2 class="module-about1__title">{{ title }}</h2>
+      <p class="module-about1__description">{{ description }}</p>
+
+      <!-- Feature cards -->
+      @if (features.length) {
+        <div class="module-about1__features">
+          @for (feature of features; track feature.title) {
+            <div class="module-about1__feature-card">
+              <div class="module-about1__feature-icon">
+                <img [src]="feature.icon" [alt]="feature.title" />
+              </div>
+              <div class="module-about1__feature-text">
+                <h3 class="module-about1__feature-title">{{ feature.title }}</h3>
+                <p class="module-about1__feature-desc">{{ feature.description }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+  </div>
+</section>

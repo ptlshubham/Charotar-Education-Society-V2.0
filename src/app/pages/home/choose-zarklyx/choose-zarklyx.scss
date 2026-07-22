@@ -1,0 +1,56 @@
+/* Torch reveal: teal words are hidden by a radial mask whose visible circle
+   follows the cursor (centre + radius set as inline CSS vars from the component). */
+
+@property --torch-r {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+.torch-layer {
+  color: #38cdb7;
+
+  --torch-x: 50%;
+  --torch-y: 50%;
+  --torch-r: 0px;
+
+  -webkit-mask-image: radial-gradient(
+    circle var(--torch-r) at var(--torch-x) var(--torch-y),
+    #000 0%,
+    #000 55%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    circle var(--torch-r) at var(--torch-x) var(--torch-y),
+    #000 0%,
+    #000 55%,
+    transparent 100%
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  /* fade the torch in/out; position vars are not transitioned so the
+     light tracks the cursor without lag */
+  transition: --torch-r 0.25s ease;
+
+  span {
+    pointer-events: none;
+  }
+}
+
+/* Rotary tab strip */
+.tab-viewport {
+  /* The strip slides inside this clipped container */
+  position: relative;
+  min-height: 48px;
+}
+
+.tab-item {
+  user-select: none;
+
+  p {
+    /* Initial colour set by GSAP; this is the fallback */
+    color: #38CDB7;
+    will-change: color, transform;
+  }
+}

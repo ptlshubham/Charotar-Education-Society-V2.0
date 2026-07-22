@@ -1,0 +1,71 @@
+<div class="w-full bg-white border-b border-primary/10 shadow-[0_25px_50px_rgba(11,40,39,0.08)] px-6 lg:px-17.5 py-6" (click)="$event.stopPropagation()">
+  <div class="mx-auto  grid grid-cols-1 lg:grid-cols-[1fr_1fr_1fr_320px] gap-6">
+
+    <!-- Feature columns -->
+    @for (col of columns; track col.title) {
+      <div class="rounded-[16px] border border-primary/10 p-5">
+        <div class="flex items-center gap-2">
+          <p class="text-primary text-[15px] font-semibold">{{ col.title }}</p>
+        </div>
+        <div class="mt-4 flex flex-col gap-3">
+          @for (item of col.items; track item.title) {
+            <a [routerLink]="item.link" (click)="onClose()" class="flex items-start gap-3 rounded-[10px] p-2 hover:bg-[#f8f9fa] transition-colors group">
+              <span class="flex items-center justify-center w-8 h-8 rounded-[9px] bg-primary/[0.04] text-secondary group-hover:text-main shrink-0" [innerHTML]="item.icon | safeHtml"></span>
+              <span class="min-w-0 flex-1">
+                <span class="flex items-center gap-1.5">
+                  <span class="text-primary text-[13px] font-semibold leading-tight group-hover:text-main transition-colors">{{ item.title }}</span>
+                  @if (item.soon) {
+                    <span class="inline-flex items-center rounded-full bg-main/10 px-1.5 py-0.5 text-[9px] font-semibold text-main uppercase shrink-0">Soon</span>
+                  }
+                </span>
+                <span class="mt-0.5 block text-secondary text-[11px] leading-[15px]">{{ item.desc }}</span>
+              </span>
+            </a>
+          }
+        </div>
+        <!-- <a href="#" (click)="onClose()" class="mt-4 inline-flex items-center gap-2 text-[13px] font-semibold text-main hover:gap-3 transition-all">
+          {{ col.exploreLabel }}
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a> -->
+      </div>
+    }
+
+    <!-- Powerful features sidebar -->
+    <div class="rounded-[16px] border border-primary/10 p-5">
+      <span class="inline-flex items-center gap-1.5 text-main text-[11px] font-semibold uppercase tracking-wide"><span class="text-main" [innerHTML]="sparklesIcon | safeHtml"></span> Powerful Features</span>
+      <p class="mt-2 text-primary text-[18px] font-bold leading-tight">All the tools you need.<br /><span class="text-main">One smart platform.</span></p>
+      <p class="mt-2 text-[12px] leading-[17px] text-secondary">ZarklyX brings all your business operations, teams and data together in one place.</p>
+
+      <!-- mini dashboard -->
+      <div class="mt-3 rounded-[10px] bg-primary p-2">
+        <div class="rounded-[8px] bg-white p-2">
+          <p class="text-primary text-[10px] font-semibold">Dashboard</p>
+          <div class="mt-1.5 grid grid-cols-3 gap-1">
+            <div class="rounded-[5px] bg-[#f8f9fa] p-1"><p class="text-[7px] text-secondary">Revenue</p><p class="text-[9px] font-bold text-primary">₹48L</p></div>
+            <div class="rounded-[5px] bg-[#f8f9fa] p-1"><p class="text-[7px] text-secondary">Leads</p><p class="text-[9px] font-bold text-primary">2,453</p></div>
+            <div class="rounded-[5px] bg-[#f8f9fa] p-1"><p class="text-[7px] text-secondary">Tasks</p><p class="text-[9px] font-bold text-primary">1,248</p></div>
+          </div>
+          <div class="mt-1.5 flex items-end gap-1.5">
+            <svg class="flex-1 h-8" viewBox="0 0 100 32" preserveAspectRatio="none"><path d="M0 26 L20 20 L40 22 L60 12 L80 16 L100 6" fill="none" stroke="#3DAFA9" stroke-width="1.5"/></svg>
+            <svg class="w-8 h-8" viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" fill="none" stroke="#e5efee" stroke-width="5"/><circle cx="18" cy="18" r="14" fill="none" stroke="#3DAFA9" stroke-width="5" stroke-dasharray="66 88" stroke-linecap="round" transform="rotate(-90 18 18)"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <a routerLink="/contact" (click)="onClose()" class="mt-3 inline-flex items-center gap-2 h-9 px-4 rounded-[8px] bg-main text-white text-[12px] font-medium hover:bg-primary transition-colors">
+        Take a Product Tour
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Bottom strip -->
+  <div class="mx-auto max-w-[1360px] mt-5 rounded-[14px] bg-[#f8f9fa] px-6 py-4 grid grid-cols-2 lg:grid-cols-4 gap-4">
+    @for (item of bottomStrip; track item.title) {
+      <div class="flex items-center gap-3">
+        <span class="flex items-center justify-center w-9 h-9 rounded-[10px] bg-main/10 text-main shrink-0" [innerHTML]="item.icon | safeHtml"></span>
+        <div><p class="text-primary text-[12px] font-semibold leading-tight">{{ item.title }}</p><p class="text-[11px] text-secondary">{{ item.desc }}</p></div>
+      </div>
+    }
+  </div>
+</div>

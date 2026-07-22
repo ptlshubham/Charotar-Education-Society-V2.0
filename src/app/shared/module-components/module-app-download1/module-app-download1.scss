@@ -1,0 +1,138 @@
+/* ═══════════════════════════════════════════════════════════
+   Module App Download 1  Side-by-side
+   Phone mockup on left, text & store badges on right
+   ═══════════════════════════════════════════════════════════ */
+
+.module-appdownload1 {
+  padding: 60px 20px;
+  background: #fff;
+
+  @media (min-width: 768px) {
+    padding: 80px 40px;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 100px 70px;
+  }
+}
+
+.module-appdownload1__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    gap: 80px;
+  }
+}
+
+/* Phone mockup column */
+.module-appdownload1__phone-col {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  @media (min-width: 1024px) {
+    width: 40%;
+  }
+}
+
+.module-appdownload1__phone-wrapper {
+  position: relative;
+  max-width: 320px;
+}
+
+.module-appdownload1__phone-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.12));
+}
+
+/* Content column */
+.module-appdownload1__content-col {
+  width: 100%;
+  text-align: center;
+
+  @media (min-width: 1024px) {
+    width: 60%;
+    text-align: left;
+  }
+}
+
+.module-appdownload1__title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #232120;
+  line-height: 1.2;
+  margin-bottom: 16px;
+
+  @media (min-width: 768px) {
+    font-size: 38px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 42px;
+  }
+}
+
+.module-appdownload1__description {
+  font-size: 16px;
+  color: #747474;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+/* Store badges */
+.module-appdownload1__badges {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 24px;
+
+  @media (min-width: 1024px) {
+    justify-content: flex-start;
+  }
+}
+
+.module-appdownload1__store-badge {
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  img {
+    height: 48px;
+    width: auto;
+  }
+}
+
+/* QR code */
+.module-appdownload1__qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+  @media (min-width: 1024px) {
+    align-items: flex-start;
+  }
+}
+
+.module-appdownload1__qr-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  border: 1px solid #E7EAE9;
+}
+
+.module-appdownload1__qr-label {
+  font-size: 12px;
+  color: #747474;
+  font-weight: 500;
+}

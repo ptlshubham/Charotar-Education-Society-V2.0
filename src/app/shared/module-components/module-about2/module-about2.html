@@ -1,0 +1,44 @@
+<!-- Module About 2  Full-width with Stats Bar -->
+<section class="module-about2">
+  <div class="module-about2__container">
+
+    <!-- Top  Text content -->
+    <div class="module-about2__header">
+      <h2 class="module-about2__title">{{ title }}</h2>
+      <p class="module-about2__description">{{ description }}</p>
+    </div>
+
+    <!-- Stats bar -->
+    @if (stats.length) {
+      <div class="module-about2__stats">
+        @for (stat of stats; track stat.label) {
+          <div class="module-about2__stat-item">
+            <span class="module-about2__stat-value">{{ stat.value }}</span>
+            <span class="module-about2__stat-label">{{ stat.label }}</span>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Image -->
+    <div class="module-about2__image-wrapper">
+      <img [src]="image" [alt]="title" class="module-about2__image" />
+    </div>
+
+    <!-- Feature cards -->
+    @if (features.length) {
+      <div class="module-about2__features">
+        @for (feature of features; track feature.title) {
+          <div class="module-about2__feature-card">
+            <div class="module-about2__feature-icon">
+              <img [src]="feature.icon" [alt]="feature.title" />
+            </div>
+            <h3 class="module-about2__feature-title">{{ feature.title }}</h3>
+            <p class="module-about2__feature-desc">{{ feature.description }}</p>
+          </div>
+        }
+      </div>
+    }
+
+  </div>
+</section>

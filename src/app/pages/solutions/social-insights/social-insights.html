@@ -1,0 +1,208 @@
+<!-- ─── Breadcrumb ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 pt-[24px]">
+  <div class="mx-auto">
+    <nav class="flex items-center gap-2 text-[13px] text-secondary">
+      <a routerLink="/" class="hover:text-main transition-colors">Home</a>
+      <span class="text-secondary/50">&#8250;</span>
+      <span>Solutions</span>
+      <span class="text-secondary/50">&#8250;</span>
+      <span class="text-primary font-medium">Social Insights</span>
+    </nav>
+  </div>
+</section>
+
+<!-- ─── Hero ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 pt-[30px] pb-[30px]">
+  <div class="mx-auto grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-16">
+    <!-- Copy -->
+    <div>
+      <div class="h-[24px] w-fit md:h-[29px] bg-[#E8FFFD] rounded-full flex justify-center items-center z-10 px-[15px]">
+        <p class="text-[12px] md:text-[14px] font-semibold text-main ">Social Insights Solution</p>
+      </div>
+      <h1 class="mt-[10px] text-primary text-[38px] md:text-[44px] font-medium leading-[1.15]">
+        Turn social data into meaningful <span class="text-main">business insights.</span>
+      </h1>
+
+      <p class="mt-6 max-w-[440px] text-[16px] leading-[26px] text-secondary">
+        ZarklyX Social Insights helps you track conversations, analyze trends, measure brand performance, and make data-driven decisions with confidence.
+      </p>
+
+      <ul class="mt-6 grid lg:grid-cols-2 gap-2.5">
+        @for (item of heroChecklist; track item) {
+          <li class="flex items-center gap-2.5 text-[14px] text-primary">
+            <svg class="shrink-0 text-main" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>
+            {{ item }}
+          </li>
+        }
+      </ul>
+
+      <div class="mt-8 flex flex-wrap items-center gap-4">
+        <a href="#" class="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-[8px] bg-main text-white text-[15px] font-medium hover:bg-primary transition-colors">
+          Start Free Trial
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a routerLink="/contact" class="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-[8px] border border-primary/15 text-primary text-[15px] font-medium hover:border-main hover:text-main transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Schedule a Demo
+        </a>
+      </div>
+    </div>
+
+    <!-- Dashboard mockup -->
+    <div class="rounded-[16px] overflow-hidden border border-primary/10 shadow-[0_20px_50px_-20px_rgba(11,40,39,0.25)] bg-white flex text-[11px]">
+      <!-- sidebar -->
+      <div class="hidden sm:flex flex-col gap-0.5 w-[130px] shrink-0 bg-primary p-3">
+        <span class="flex items-center justify-center w-8 h-8 rounded-[8px] bg-white/10 text-white font-bold mb-3">Z</span>
+        @for (nav of dashboardNav; track nav; let i = $index) {
+          <span class="px-2.5 py-1.5 rounded-[6px] text-[11px]" [ngClass]="i === 0 ? 'bg-white text-primary font-medium' : 'text-white/60'">{{ nav }}</span>
+        }
+      </div>
+      <!-- main -->
+      <div class="flex-1 min-w-0 p-3.5 bg-[#fafbfb]">
+        <div class="flex items-center justify-between">
+          <span class="text-primary text-[13px] font-semibold">Overview</span>
+          <span class="text-secondary">May 1 – May 31, 2026 ▾</span>
+        </div>
+        <div class="mt-3 grid grid-cols-2 lg:grid-cols-4 gap-2">
+          @for (stat of dashboardStats; track stat.label) {
+            <div class="rounded-[8px] border border-primary/10 bg-white p-2.5">
+              <p class="text-secondary text-[10px]">{{ stat.label }}</p>
+              <p class="text-primary text-[13px] font-bold leading-tight mt-0.5">{{ stat.value }}</p>
+              <p class="text-main text-[10px] font-medium">↑ {{ stat.change }}</p>
+              <svg class="mt-1 w-full h-[16px]" viewBox="0 0 48 16" preserveAspectRatio="none" aria-hidden="true"><polyline [attr.points]="stat.points" fill="none" [attr.stroke]="stat.color" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          }
+        </div>
+        <div class="mt-2 grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-2">
+          <div class="rounded-[8px] border border-primary/10 bg-white p-2.5">
+            <div class="flex items-center justify-between">
+              <p class="text-primary text-[11px] font-semibold">Mentions Over Time</p>
+              <span class="text-secondary text-[9px]">Daily ▾</span>
+            </div>
+            <svg class="mt-1 w-full h-[74px]" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true">
+              <defs><linearGradient id="si-g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3DAFA9" stop-opacity="0.3"/><stop offset="1" stop-color="#3DAFA9" stop-opacity="0"/></linearGradient></defs>
+              <path d="M0 50 L18 44 L36 46 L54 34 L72 40 L90 30 L108 36 L126 20 L144 28 L162 12 L180 20 L200 8 V60 H0 Z" fill="url(#si-g)"/>
+              <path d="M0 50 L18 44 L36 46 L54 34 L72 40 L90 30 L108 36 L126 20 L144 28 L162 12 L180 20 L200 8" fill="none" stroke="#3DAFA9" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="rounded-[8px] border border-primary/10 bg-white p-2.5">
+            <p class="text-primary text-[11px] font-semibold">Sentiment Breakdown</p>
+            <div class="mt-1 flex items-center justify-center">
+              <svg class="w-[70px] h-[70px] -rotate-90" viewBox="0 0 36 36" aria-hidden="true">
+                <circle cx="18" cy="18" r="15.915" fill="none" stroke="#3DAFA9" stroke-width="4" stroke-dasharray="68 32" stroke-dashoffset="25"/>
+                <circle cx="18" cy="18" r="15.915" fill="none" stroke="#3772FF" stroke-width="4" stroke-dasharray="24 76" stroke-dashoffset="-43"/>
+                <circle cx="18" cy="18" r="15.915" fill="none" stroke="#EF4444" stroke-width="4" stroke-dasharray="8 92" stroke-dashoffset="-67"/>
+              </svg>
+              <div class="-ml-[54px] w-[54px] text-center leading-none">
+                <p class="text-primary text-[12px] font-bold">24.8K</p>
+                <p class="text-secondary text-[8px]">Total</p>
+              </div>
+            </div>
+            <div class="mt-1 flex items-center justify-between text-[9px]">
+              <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-main"></span>68%</span>
+              <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#3772FF]"></span>24%</span>
+              <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>8%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Trusted by ─── -->
+<!-- <section class="bg-white px-5 md:px-10 lg:px-17.5 py-[10px]">
+  <div class="mx-auto rounded-[15px] bg-[#f8f9fa] px-6 py-7">
+    <p class="text-center text-[14px] text-secondary">Trusted by leading brands and agencies</p>
+    <div class="mt-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+      @for (logo of trustedLogos; track logo) {
+        <span class="text-primary/70 text-[19px] font-bold tracking-tight">{{ logo }}</span>
+      }
+    </div>
+  </div>
+</section> -->
+
+<!-- ─── Features ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[30px]">
+  <div class="mx-auto">
+    <h2 class="text-center text-primary text-[26px] font-semibold">Everything you need to uncover powerful social insights</h2>
+
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+      @for (feature of features; track feature.title) {
+        <div class="flex gap-4 rounded-[15px] border border-primary/10 bg-white p-6 transition-shadow duration-200">
+          <span class="flex items-center justify-center w-12 h-12 rounded-full bg-main/10 text-main shrink-0">
+            @switch (feature.icon) {
+              @case ('chat') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.6 8.6 0 0 1-3.9-.9L3 21l1.9-5.6A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5Z"/></svg> }
+              @case ('smile') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg> }
+              @case ('users') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg> }
+              @case ('chart') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/></svg> }
+              @case ('trophy') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M6 4h12v5a6 6 0 0 1-12 0V4ZM8 21h8M12 15v6"/></svg> }
+              @case ('doc') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg> }
+            }
+          </span>
+          <div>
+            <h3 class="text-primary text-[16px] font-semibold">{{ feature.title }}</h3>
+            <p class="mt-2 text-[13px] leading-[20px] text-secondary">{{ feature.desc }}</p>
+            <a href="#" class="mt-3 inline-flex items-center gap-1.5 text-[13px] font-medium text-main">
+              Learn more
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ─── Smarter insights ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[20px]">
+  <div class="mx-auto rounded-[15px] bg-[#f8f9fa] p-6 md:p-8 flex flex-col lg:flex-row lg:items-center gap-8">
+    <div class="shrink-0">
+      <h2 class="text-primary text-[22px] font-semibold leading-[1.2]">Smarter insights.<br /><span class="text-main">Better decisions.</span></h2>
+    </div>
+    <div class="flex-1 grid grid-cols-2 sm:grid-cols-4 gap-6">
+      @for (stat of impactStats; track stat.label) {
+        <div>
+          <span class="flex items-center justify-center w-11 h-11 rounded-full bg-white text-main ">
+            @switch (stat.icon) {
+              @case ('chart') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg> }
+              @case ('chat') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.6 8.6 0 0 1-3.9-.9L3 21l1.9-5.6A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5Z"/></svg> }
+              @case ('pie') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15.5A9 9 0 1 1 8.5 3"/><path d="M21.2 8A9 9 0 0 0 16 2.8V8Z"/></svg> }
+              @case ('users') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg> }
+            }
+          </span>
+          <p class="mt-3 text-main text-[24px] font-bold leading-none">{{ stat.value }}</p>
+          <p class="mt-1.5 text-[13px] leading-[17px] text-secondary">{{ stat.label }}</p>
+        </div>
+      }
+    </div>
+    <div class="hidden xl:block w-[240px] shrink-0">
+      <img src="/assets/images/smm/social-insights.png" alt="Social insights analytics"
+        class="w-full h-auto object-contain select-none" />
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA banner ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[40px]">
+  <div class="mx-auto rounded-[16px] bg-[#f8f9fa] px-8 md:px-10 py-7 flex flex-col md:flex-row md:items-center gap-6">
+    <div class="flex flex-col lg:flex-row lg:items-center gap-5 flex-1">
+      <span class="shrink-0 flex items-center justify-center w-14 h-14 rounded-full bg-main text-white">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg>
+      </span>
+      <div>
+        <h2 class="text-primary text-[18px] md:text-[20px] font-semibold leading-[1.2]">Unlock the power of social data</h2>
+        <p class="mt-1 text-[14px] leading-[20px] text-secondary">Join thousands of brands that use ZarklyX Social Insights to grow smarter and stay ahead.</p>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center gap-3 shrink-0">
+      <a href="#" class="inline-flex items-center justify-center gap-2 h-12 px-7 rounded-[8px] bg-main text-white text-[15px] font-medium hover:bg-primary transition-colors">Start Free Trial
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a routerLink="/contact" class="inline-flex items-center justify-center gap-2 h-12 px-7 rounded-[8px] border border-primary/15 bg-white text-primary text-[15px] font-medium hover:border-main hover:text-main transition-colors">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Schedule a Demo
+      </a>
+    </div>
+  </div>
+</section>

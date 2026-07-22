@@ -1,0 +1,25 @@
+<div
+  class="min-h-[60vh] md:min-h-[40vh] w-full flex flex-col justify-center items-center gap-5 px-5 py-6 md:py-14 lg:py-10 md:px-8.5 lg:px-17.5">
+  <h2 class="text-[34px] font-medium text-primary text-center">
+    Built for how agencies actually work
+  </h2>
+  <p class="text-lg text-secondary text-center">
+    Everything your agency runs on, in one platform
+  </p>
+
+  <swiper-container class="testimonials-swiper w-full mt-[40px]" slides-per-view="1" slides-per-group="1"
+    space-between="20" loop="true" grab-cursor="true" pagination="true" pagination-clickable="true"
+    autoplay-delay="5000" autoplay-disable-on-interaction="false"
+    breakpoints='{"768":{"slidesPerView":2},"1024":{"slidesPerView":3}}'>
+    @for (card of cards; track $index) {
+    <swiper-slide class="h-auto">
+      <div
+        class="bg-[#F8F9F9] min-h-[200px] h-full p-[24px] w-full rounded-[12px] flex flex-col justify-start items-start gap-[10px]">
+        <span class="w-8 h-1 bg-main rounded-r-full shrink-0"></span>
+        <p class="text-primary text-[16px] font-medium">{{ card.title }}</p>
+        <p class="text-secondary text-[14px] font-normal leading-[22px]">{{ card.desc }}</p>
+      </div>
+    </swiper-slide>
+    }
+  </swiper-container>
+</div>

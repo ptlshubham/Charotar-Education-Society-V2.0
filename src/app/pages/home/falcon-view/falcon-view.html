@@ -1,0 +1,588 @@
+<section #falconSection (click)="collapseActive()"
+  class="relative z-10 w-full py-4 overflow-hidden flex flex-col items-center justify-start min-h-[116vh] md:min-h-[100vh] lg:min-h-[126vh] px-5 md:px-10 lg:px-17.5">
+  <!-- 3-layer background (mobile/md)  pulsing wave animation -->
+  <img loading="lazy" decoding="async" #bgLayer3 src="/assets/images/falcon-view-middle3.svg" alt="ZarklyX dashboard preview" aria-hidden="true"
+    class="md:hidden lg:hidden pointer-events-none select-none absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 object-cover" />
+  <img loading="lazy" decoding="async" #bgLayer2 src="/assets/images/falcon-view-middle2.svg" alt="ZarklyX dashboard preview" aria-hidden="true"
+    class="md:hidden lg:hidden pointer-events-none select-none absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-[1]" />
+  <img loading="lazy" decoding="async" #bgLayer1 src="/assets/images/falcon-view-middle1.svg" alt="ZarklyX dashboard preview" aria-hidden="true"
+    class="md:hidden lg:hidden pointer-events-none select-none absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-[2]" />
+  <!-- 3-layer background (md/lg)  pulsing wave animation -->
+  <img loading="lazy" decoding="async" #bgLayerLg3 src="/assets/images/falcon-view-middle3-lg.svg" alt="ZarklyX dashboard preview" aria-hidden="true"
+    class="hidden md:block pointer-events-none select-none absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 object-contain" />
+  <img loading="lazy" decoding="async" #bgLayerLg2 src="/assets/images/falcon-view-middle2-lg.svg" alt="ZarklyX dashboard preview" aria-hidden="true"
+    class="hidden md:block pointer-events-none select-none absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-[1] object-contain" />
+  <img loading="lazy" decoding="async" #bgLayerLg1 src="/assets/images/falcon-view-middle1-lg.svg" alt="ZarklyX dashboard preview" aria-hidden="true"
+    class="hidden md:block pointer-events-none select-none absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-[2] object-contain" />
+
+
+  <div aria-hidden="true"
+    class="falcon-frame pointer-events-none select-none absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-15 h-15 rounded-md flex items-center justify-center">
+    <img loading="lazy" decoding="async" src="/assets/images/falcon-view-z-icon.svg" alt="ZarklyX Z icon" aria-hidden="true"
+      class="pointer-events-none select-none z-20" />
+  </div>
+
+  <h2
+    class="text-[30px] md:text-[36px] lg:text-[44px] mt-[10%] lg:mt-[6%] flex items-center justify-center font-medium text-center text-primary z-20">
+    Stop juggling tools
+  </h2>
+
+  <h2
+    class="text-[30px] md:text-[36px] lg:text-[44px]  lg:mt-0 flex flex-col lg:flex-row items-center justify-center gap-2 font-medium text-center text-primary z-20">
+    Start scaling with
+    <div class="flex items-center gap-2 ml-8 lg:ml-0 lg:gap-4">
+      <img loading="lazy" decoding="async" src="/assets/images/falcon-text.svg" alt="Falcon View" aria-hidden="true"
+        class="pointer-events-none select-none w-[50%]" />
+      view.
+    </div>
+
+  </h2>
+
+
+  <div class="w-full flex justify-between items-center mt-6 md:mt-8 lg:mt-[-2%]">
+    <div class="w-fit z-10 flex flex-col items-start relative ">
+      <p class="text-[24px] text-primary font-medium z-20 ">Early Access</p>
+      <p class="text-[10px] font-normal mb-2 z-20">Be among the first agencies on ZarklyX</p>
+      <img loading="lazy" decoding="async" src="/assets/images/fv-img-1.svg" alt="ZarklyX feature preview" aria-hidden="true"
+        class="pointer-events-none select-none z-20 " />
+      <div
+        class="w-full h-[40%] absolute top-10 rounded-full blur-2xl bg-[linear-gradient(83.06deg,#3DAFA9_50.84%,#069890_73.22%,#3DAFA9_92.93%)]">
+      </div>
+    </div>
+    <img loading="lazy" decoding="async" src="/assets/icons/google-my-business.svg" alt="Google My Business" aria-hidden="true"
+      class="pointer-events-none select-none z-20 mr-[4%] lg:hidden" />
+    <img loading="lazy" decoding="async" src="/assets/icons/google-my-business-lg.svg" alt="Google My Business" aria-hidden="true"
+      class="pointer-events-none select-none z-20 mr-[4%] hidden lg:flex" />
+  </div>
+
+  <img loading="lazy" decoding="async" src="/assets/icons/youtube.svg" alt="YouTube" aria-hidden="true"
+    class="pointer-events-none select-none z-20 absolute top-[44%] left-[20%] md:left-[26%] lg:hidden" />
+
+  <img loading="lazy" decoding="async" src="/assets/icons/youtube-lg.svg" alt="YouTube" aria-hidden="true"
+    class="pointer-events-none select-none z-20 absolute top-[44%] left-[30%] hidden lg:flex" />
+
+  <img loading="lazy" decoding="async" src="/assets/icons/instagram2.svg" alt="Instagram" aria-hidden="true"
+    class="pointer-events-none select-none z-20 absolute top-[67%] left-[1%] md:left-[6%] lg:hidden" />
+
+  <img loading="lazy" decoding="async" src="/assets/icons/instagram2-lg.svg" alt="Instagram" aria-hidden="true"
+    class="pointer-events-none select-none z-20 absolute top-[67%] left-[2%] hidden lg:flex" />
+
+
+  <img loading="lazy" decoding="async" src="/assets/icons/facebook.svg" alt="Facebook" aria-hidden="true"
+    class="pointer-events-none select-none z-20 absolute top-[82%] right-[36%] md:right-[46%] lg:hidden" />
+
+  <img loading="lazy" decoding="async" src="/assets/icons/facebook-lg.svg" alt="Facebook" aria-hidden="true"
+    class="pointer-events-none select-none z-20 absolute top-[82%] lg:top-[81%] right-[42%] hidden lg:flex" />
+
+
+
+  <img loading="lazy" decoding="async" src="/assets/images/fv-img-2.svg" alt="ZarklyX feature preview" aria-hidden="true"
+    class="pointer-events-none h-8 select-none z-20 absolute top-[34%] md:left-[44%] left-[40%] lg:left-[44%]" />
+
+  <!-- panel - mobile -->
+  <div #mobileChipsContainer
+    class=" flex lg:hidden flex-col gap-1.5 md:gap-4 z-20 w-[90%] absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <!-- first panel -->
+    <div class="w-full  flex items-center justify-between px-14 md:px-60">
+      <!-- first panel icon 1 (left side  text expands RIGHT) -->
+      <div (click)="toggleChip('p1-1', $event)"
+        class="falcon-progress-dot rounded-full bg-white p-1 flex items-center cursor-pointer h-9 w-fit select-none">
+        <div class="bg-[#3BAEA9] h-full aspect-square rounded-full flex items-center justify-center shrink-0">
+          <img loading="lazy" decoding="async" src="/assets/icons/first-panel-icon1.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+        <div class="text-container overflow-hidden flex items-center h-full" style="width: 0px; opacity: 0;">
+          <p class="text-[12px] font-medium text-primary px-2 whitespace-nowrap">Project Management</p>
+        </div>
+      </div>
+      <!-- first panel icon 2 (right side  text expands LEFT) -->
+      <div (click)="toggleChip('p1-2', $event)"
+        class="falcon-progress-dot rounded-full bg-white p-1 flex items-center cursor-pointer h-10 w-fit select-none">
+        <div class="text-container overflow-hidden flex items-center h-full" style="width: 0px; opacity: 0;">
+          <p class="text-[12px] font-medium text-primary px-2 whitespace-nowrap">Bills & Utility</p>
+        </div>
+        <div class="bg-[#3BAEA9] h-full aspect-square rounded-full flex items-center justify-center shrink-0">
+          <img loading="lazy" decoding="async" src="/assets/icons/first-panel-icon2.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+      </div>
+    </div>
+    <!-- second panel -->
+    <div class="w-full  flex items-center justify-between px-0 md:px-24">
+      <!-- second panel icon 1 (left side  text expands RIGHT) -->
+      <div (click)="toggleChip('p2-1', $event)"
+        class="falcon-progress-dot rounded-full bg-white p-1 flex items-center cursor-pointer h-9 w-fit select-none">
+        <div class="bg-[#3BAEA9] h-full aspect-square rounded-full flex items-center justify-center shrink-0">
+          <img loading="lazy" decoding="async" src="/assets/icons/second-panel-icon1.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+        <div class="text-container overflow-hidden flex items-center h-full" style="width: 0px; opacity: 0;">
+          <p class="text-[12px] font-medium text-primary px-2 whitespace-nowrap">Influencers</p>
+        </div>
+      </div>
+      <!-- second panel icon 2 (right side  text expands LEFT) -->
+      <div (click)="toggleChip('p2-2', $event)"
+        class="falcon-progress-dot rounded-full bg-white p-1 flex items-center cursor-pointer h-10 w-fit select-none">
+        <div class="text-container overflow-hidden flex items-center h-full" style="width: 0px; opacity: 0;">
+          <p class="text-[12px] font-medium text-primary px-2 whitespace-nowrap">Token & Queue</p>
+        </div>
+        <div class="bg-[#3BAEA9] h-full aspect-square rounded-full flex items-center justify-center shrink-0">
+          <img loading="lazy" decoding="async" src="/assets/icons/second-panel-icon2.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+      </div>
+    </div>
+    <!-- third panel -->
+    <div class="w-full  flex items-center justify-between px-22 md:px-66">
+      <!-- third panel icon 1 (left side  text expands RIGHT) -->
+      <div (click)="toggleChip('p3-1', $event)"
+        class="falcon-progress-dot rounded-full bg-white p-1 flex items-center cursor-pointer h-9 w-fit select-none">
+        <div class="bg-[#3BAEA9] h-full aspect-square rounded-full flex items-center justify-center shrink-0">
+          <img loading="lazy" decoding="async" src="/assets/icons/third-panel-icon1.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+        <div class="text-container overflow-hidden flex items-center h-full" style="width: 0px; opacity: 0;">
+          <p class="text-[12px] font-medium text-primary px-2 whitespace-nowrap">SEO</p>
+        </div>
+      </div>
+      <!-- third panel icon 2 (right side  text expands LEFT) -->
+      <div (click)="toggleChip('p3-2', $event)"
+        class="falcon-progress-dot rounded-full bg-white p-1 flex items-center cursor-pointer h-10 w-fit select-none">
+        <div class="text-container overflow-hidden flex items-center h-full" style="width: 0px; opacity: 0;">
+          <p class="text-[12px] font-medium text-primary px-2 whitespace-nowrap">Sales & Marketing</p>
+        </div>
+        <div class="bg-[#3BAEA9] h-full aspect-square rounded-full flex items-center justify-center shrink-0">
+          <img loading="lazy" decoding="async" src="/assets/icons/third-panel-icon2.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+      </div>
+    </div>
+    <!-- fourth panel -->
+    <div class="w-full  flex items-center justify-between px-4 md:px-40">
+      <!-- fourth panel icon 1 (left side  text expands RIGHT) -->
+      <div (click)="toggleChip('p4-1', $event)"
+        class="falcon-progress-dot rounded-full bg-white p-1 flex items-center cursor-pointer h-9 w-fit select-none">
+        <div class="bg-[#3BAEA9] h-full aspect-square rounded-full flex items-center justify-center shrink-0">
+          <img loading="lazy" decoding="async" src="/assets/icons/fourth-panel-icon1.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+        <div class="text-container overflow-hidden flex items-center h-full" style="width: 0px; opacity: 0;">
+          <p class="text-[12px] font-medium text-primary px-2 whitespace-nowrap">Attendance</p>
+        </div>
+      </div>
+      <!-- fourth panel icon 2 (right side  text expands LEFT) -->
+      <div (click)="toggleChip('p4-2', $event)"
+        class="falcon-progress-dot rounded-full bg-white p-1 flex items-center cursor-pointer h-10 w-fit select-none">
+        <div class="text-container overflow-hidden flex items-center h-full" style="width: 0px; opacity: 0;">
+          <p class="text-[12px] font-medium text-primary px-2 whitespace-nowrap">Payroll</p>
+        </div>
+        <div class="bg-[#3BAEA9] h-full aspect-square rounded-full flex items-center justify-center shrink-0">
+          <img loading="lazy" decoding="async" src="/assets/icons/fourth-panel-icon2.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+      </div>
+    </div>
+    <!-- fifth panel -->
+    <div class="w-full  flex items-center justify-between px-18.5 md:px-58">
+      <!-- fifth panel icon 1 (left side  text expands RIGHT) -->
+      <div (click)="toggleChip('p5-1', $event)"
+        class="falcon-progress-dot rounded-full bg-white p-1 flex items-center cursor-pointer h-9 w-fit select-none">
+        <div class="bg-[#3BAEA9] h-full aspect-square rounded-full flex items-center justify-center shrink-0">
+          <img loading="lazy" decoding="async" src="/assets/icons/fifth-panel-icon1.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+        <div class="text-container overflow-hidden flex items-center h-full" style="width: 0px; opacity: 0;">
+          <p class="text-[12px] font-medium text-primary px-2 whitespace-nowrap">Client Management</p>
+        </div>
+      </div>
+      <!-- fifth panel icon 2 (right side  text expands LEFT) -->
+      <div (click)="toggleChip('p5-2', $event)"
+        class="falcon-progress-dot rounded-full bg-white p-1 flex items-center cursor-pointer h-10 w-fit select-none">
+        <div class="text-container overflow-hidden flex items-center h-full" style="width: 0px; opacity: 0;">
+          <p class="text-[12px] font-medium text-primary px-2 whitespace-nowrap">Social Media</p>
+        </div>
+        <div class="bg-[#3BAEA9] h-full aspect-square rounded-full flex items-center justify-center shrink-0">
+          <img loading="lazy" decoding="async" src="/assets/icons/fifth-panel-icon2.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+      </div>
+    </div>
+    <!-- sixth panel -->
+    <div class="w-full  flex items-center justify-between px-4 md:px-40">
+      <!-- sixth panel icon 1 (left side  text expands RIGHT) -->
+      <div (click)="toggleChip('p6-1', $event)"
+        class="falcon-progress-dot rounded-full bg-white p-1 flex items-center cursor-pointer h-9 w-fit select-none">
+        <div class="bg-[#3BAEA9] h-full aspect-square rounded-full flex items-center justify-center shrink-0">
+          <img loading="lazy" decoding="async" src="/assets/icons/sixth-panel-icon1.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+        <div class="text-container overflow-hidden flex items-center h-full" style="width: 0px; opacity: 0;">
+          <p class="text-[12px] font-medium text-primary px-2 whitespace-nowrap">Todo List</p>
+        </div>
+      </div>
+      <!-- sixth panel icon 2 (right side  text expands LEFT) -->
+      <div (click)="toggleChip('p6-2', $event)"
+        class="falcon-progress-dot rounded-full bg-white p-1 flex items-center cursor-pointer h-10 w-fit select-none">
+        <div class="text-container overflow-hidden flex items-center h-full" style="width: 0px; opacity: 0;">
+          <p class="text-[12px] font-medium text-primary px-2 whitespace-nowrap">HRMS</p>
+        </div>
+        <div class="bg-[#3BAEA9] h-full aspect-square rounded-full flex items-center justify-center shrink-0">
+          <img loading="lazy" decoding="async" src="/assets/icons/sixth-panel-icon2.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+      </div>
+    </div>
+    <!-- seventh panel -->
+    <div class="w-full  flex items-center justify-between px-22 md:px-66">
+      <!-- seventh panel icon 1 (left side  text expands RIGHT) -->
+      <div (click)="toggleChip('p7-1', $event)"
+        class="falcon-progress-dot rounded-full bg-white p-1 flex items-center cursor-pointer h-9 w-fit select-none">
+        <div class="bg-[#3BAEA9] h-full aspect-square rounded-full flex items-center justify-center shrink-0">
+          <img loading="lazy" decoding="async" src="/assets/icons/seventh-panel-icon1.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+        <div class="text-container overflow-hidden flex items-center h-full" style="width: 0px; opacity: 0;">
+          <p class="text-[12px] font-medium text-primary px-2 whitespace-nowrap">Daily Works</p>
+        </div>
+      </div>
+      <!-- seventh panel icon 2 (right side  text expands LEFT) -->
+      <div (click)="toggleChip('p7-2', $event)"
+        class="falcon-progress-dot rounded-full bg-white p-1 flex items-center cursor-pointer h-10 w-fit select-none">
+        <div class="text-container overflow-hidden flex items-center h-full" style="width: 0px; opacity: 0;">
+          <p class="text-[12px] font-medium text-primary px-2 whitespace-nowrap">Accounting</p>
+        </div>
+        <div class="bg-[#3BAEA9] h-full aspect-square rounded-full flex items-center justify-center shrink-0">
+          <img loading="lazy" decoding="async" src="/assets/icons/seventh-panel-icon2.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+      </div>
+    </div>
+    <!-- eighth panel -->
+    <div class="w-full  flex items-center justify-between px-0 md:px-24">
+      <!-- eighth panel icon 1 (left side  text expands RIGHT) -->
+      <div (click)="toggleChip('p8-1', $event)"
+        class="falcon-progress-dot rounded-full bg-white p-1 flex items-center cursor-pointer h-9 w-fit select-none">
+        <div class="bg-[#3BAEA9] h-full aspect-square rounded-full flex items-center justify-center shrink-0">
+          <img loading="lazy" decoding="async" src="/assets/icons/eighth-panel-icon1.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+        <div class="text-container overflow-hidden flex items-center h-full" style="width: 0px; opacity: 0;">
+          <p class="text-[12px] font-medium text-primary px-2 whitespace-nowrap">Reports & Analytics</p>
+        </div>
+      </div>
+      <!-- eighth panel icon 2 (right side  text expands LEFT) -->
+      <div (click)="toggleChip('p8-2', $event)"
+        class="falcon-progress-dot rounded-full bg-white p-1 flex items-center cursor-pointer h-10 w-fit select-none">
+        <div class="text-container overflow-hidden flex items-center h-full" style="width: 0px; opacity: 0;">
+          <p class="text-[12px] font-medium text-primary px-2 whitespace-nowrap">Cloud Storage</p>
+        </div>
+        <div class="bg-[#3BAEA9] h-full aspect-square rounded-full flex items-center justify-center shrink-0">
+          <img loading="lazy" decoding="async" src="/assets/icons/eighth-panel-icon2.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+      </div>
+    </div>
+    <!-- ninth panel -->
+    <div class="w-full  flex items-center justify-between px-14 md:px-60">
+      <!-- ninth panel icon 1 (left side  text expands RIGHT) -->
+      <div (click)="toggleChip('p9-1', $event)"
+        class="falcon-progress-dot rounded-full bg-white p-1 flex items-center cursor-pointer h-9 w-fit select-none">
+        <div class="bg-[#3BAEA9] h-full aspect-square rounded-full flex items-center justify-center shrink-0">
+          <img loading="lazy" decoding="async" src="/assets/icons/ninth-panel-icon1.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+        <div class="text-container overflow-hidden flex items-center h-full" style="width: 0px; opacity: 0;">
+          <p class="text-[12px] font-medium text-primary px-2 whitespace-nowrap">Inventory</p>
+        </div>
+      </div>
+      <!-- ninth panel icon 2 (right side  text expands LEFT) -->
+      <div (click)="toggleChip('p9-2', $event)"
+        class="falcon-progress-dot rounded-full bg-white p-1 flex items-center cursor-pointer h-10 w-fit select-none">
+        <div class="text-container overflow-hidden flex items-center h-full" style="width: 0px; opacity: 0;">
+          <p class="text-[12px] font-medium text-primary px-2 whitespace-nowrap">Employee Management</p>
+        </div>
+        <div class="bg-[#3BAEA9] h-full aspect-square rounded-full flex items-center justify-center shrink-0">
+          <img loading="lazy" decoding="async" src="/assets/icons/ninth-panel-icon2.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div #lgChipsContainer
+    class="hidden lg:flex flex-col gap-8 z-20 lg:w-[90%] xl:w-[90%] absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <!-- first panel -->
+    <div class="w-full h-4 flex items-center justify-between lg:px-30 xl:px-66 rounded-full">
+      <div (mouseenter)="onLgChipEnter($event, 'Project Management')" (mouseleave)="onLgChipLeave()"
+        class="bg-white rounded-full flex items-center justify-center gap-2 falcon-progress-dot py-1 pl-2 pr-1 cursor-pointer">
+        <p class="text-[12px] font-medium text-primary">Project Management</p>
+
+        <div class="bg-[#3BAEA9] p-1 rounded-full flex items-center justify-center">
+          <img loading="lazy" decoding="async" src="/assets/icons/first-panel-icon1.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+
+      </div>
+      <div (mouseenter)="onLgChipEnter($event, 'Bills & Utility')" (mouseleave)="onLgChipLeave()"
+        class="bg-white rounded-full flex items-center justify-center gap-2 falcon-progress-dot py-1 pl-1 pr-2 mr-[5%] cursor-pointer">
+
+
+        <div class="bg-[#3BAEA9] p-1 rounded-full flex items-center justify-center">
+          <img loading="lazy" decoding="async" src="/assets/icons/first-panel-icon2.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+        <p class="text-[12px] font-medium text-primary">Bills & Utility</p>
+
+      </div>
+    </div>
+    <!-- second panel -->
+    <div class="w-full  h-4 flex items-center justify-between xl:px-26 rounded-full">
+      <div (mouseenter)="onLgChipEnter($event, 'Influencers')" (mouseleave)="onLgChipLeave()"
+        class="bg-white rounded-full flex items-center justify-center gap-2 falcon-progress-dot py-1 pl-2 pr-1 cursor-pointer">
+        <p class="text-[12px] font-medium text-primary">Influencers</p>
+
+        <div class="bg-[#3BAEA9] p-1 rounded-full flex items-center justify-center">
+          <img loading="lazy" decoding="async" src="/assets/icons/second-panel-icon1.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+
+      </div>
+      <div (mouseenter)="onLgChipEnter($event, 'Token & Queue')" (mouseleave)="onLgChipLeave()"
+        class="bg-white rounded-full flex items-center justify-center gap-2 falcon-progress-dot py-1 pl-1 pr-2 cursor-pointer">
+
+
+        <div class="bg-[#3BAEA9] p-1 rounded-full flex items-center justify-center">
+          <img loading="lazy" decoding="async" src="/assets/icons/second-panel-icon2.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+        <p class="text-[12px] font-medium text-primary">Token & Queue</p>
+
+      </div>
+    </div>
+    <!-- third panel -->
+    <div class="w-full  h-4 flex items-center justify-between lg:px-80 xl:px-110 rounded-full">
+      <div (mouseenter)="onLgChipEnter($event, 'SEO')" (mouseleave)="onLgChipLeave()"
+        class="bg-white rounded-full flex items-center justify-center gap-2 falcon-progress-dot py-1 pl-2 pr-1 ml-[16%] cursor-pointer">
+        <p class="text-[12px] font-medium text-primary">SEO</p>
+
+        <div class="bg-[#3BAEA9] p-1 rounded-full flex items-center justify-center">
+          <img loading="lazy" decoding="async" src="/assets/icons/third-panel-icon1.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+
+      </div>
+      <div (mouseenter)="onLgChipEnter($event, 'Sales & Marketing')" (mouseleave)="onLgChipLeave()"
+        class="bg-white rounded-full flex items-center justify-center gap-2 falcon-progress-dot py-1 pl-1 pr-2 cursor-pointer">
+
+
+        <div class="bg-[#3BAEA9] p-1 rounded-full flex items-center justify-center">
+          <img loading="lazy" decoding="async" src="/assets/icons/third-panel-icon2.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+        <p class="text-[12px] font-medium text-primary">Sales & Marketing</p>
+
+      </div>
+    </div>
+    <!-- fourth panel -->
+    <div class="w-full  h-4 flex items-center justify-between lg:px-28 xl:px-62 rounded-full">
+      <div (mouseenter)="onLgChipEnter($event, 'Attendance')" (mouseleave)="onLgChipLeave()"
+        class="bg-white rounded-full flex items-center justify-center gap-2 falcon-progress-dot py-1 pl-2 pr-1 cursor-pointer">
+        <p class="text-[12px] font-medium text-primary">Attendance</p>
+
+        <div class="bg-[#3BAEA9] p-1 rounded-full flex items-center justify-center">
+          <img loading="lazy" decoding="async" src="/assets/icons/fourth-panel-icon1.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+
+      </div>
+      <div (mouseenter)="onLgChipEnter($event, 'Payroll')" (mouseleave)="onLgChipLeave()"
+        class="bg-white rounded-full flex items-center justify-center gap-2 falcon-progress-dot py-1 pl-1 pr-2 mr-[3%] cursor-pointer">
+
+
+        <div class="bg-[#3BAEA9] p-1 rounded-full flex items-center justify-center">
+          <img loading="lazy" decoding="async" src="/assets/icons/fourth-panel-icon2.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+        <p class="text-[12px] font-medium text-primary">Payroll</p>
+
+      </div>
+    </div>
+    <!-- fifth panel -->
+    <div class="w-full  h-4 flex items-center justify-between lg:px-64 xl:px-100 rounded-full">
+      <div (mouseenter)="onLgChipEnter($event, 'Client Management')" (mouseleave)="onLgChipLeave()"
+        class="bg-white rounded-full flex items-center justify-center gap-2 falcon-progress-dot py-1 pl-2 pr-1 cursor-pointer">
+        <p class="text-[12px] font-medium text-primary">Client Management</p>
+
+        <div class="bg-[#3BAEA9] p-1 rounded-full flex items-center justify-center">
+          <img loading="lazy" decoding="async" src="/assets/icons/fifth-panel-icon1.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+
+      </div>
+      <div (mouseenter)="onLgChipEnter($event, 'Social Media')" (mouseleave)="onLgChipLeave()"
+        class="bg-white rounded-full flex items-center justify-center gap-2 falcon-progress-dot py-1 pl-1 pr-2 mr-[8%] cursor-pointer">
+
+
+        <div class="bg-[#3BAEA9] p-1 rounded-full flex items-center justify-center">
+          <img loading="lazy" decoding="async" src="/assets/icons/fifth-panel-icon2.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+        <p class="text-[12px] font-medium text-primary">Social Media</p>
+
+      </div>
+    </div>
+    <!-- sixth panel -->
+    <div class="w-full  h-4 flex items-center justify-between lg:px-32 xl:px-68 rounded-full">
+      <div (mouseenter)="onLgChipEnter($event, 'Todo List')" (mouseleave)="onLgChipLeave()"
+        class="bg-white rounded-full flex items-center justify-center gap-2 falcon-progress-dot py-1 pl-2 pr-1 cursor-pointer">
+        <p class="text-[12px] font-medium text-primary">Todo List</p>
+
+        <div class="bg-[#3BAEA9] p-1 rounded-full flex items-center justify-center">
+          <img loading="lazy" decoding="async" src="/assets/icons/sixth-panel-icon1.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+
+      </div>
+      <div (mouseenter)="onLgChipEnter($event, 'HRMS')" (mouseleave)="onLgChipLeave()"
+        class="bg-white rounded-full flex items-center justify-center gap-2 falcon-progress-dot py-1 pl-1 pr-2 cursor-pointer">
+
+
+        <div class="bg-[#3BAEA9] p-1 rounded-full flex items-center justify-center">
+          <img loading="lazy" decoding="async" src="/assets/icons/sixth-panel-icon2.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+        <p class="text-[12px] font-medium text-primary">HRMS</p>
+
+      </div>
+    </div>
+    <!-- seventh panel -->
+    <div class="w-full  h-4 flex items-center justify-between lg:px-80 xl:px-114 rounded-full">
+      <div (mouseenter)="onLgChipEnter($event, 'Daily Works')" (mouseleave)="onLgChipLeave()"
+        class="bg-white rounded-full flex items-center justify-center gap-2 falcon-progress-dot py-1 pl-2 pr-1 cursor-pointer">
+        <p class="text-[12px] font-medium text-primary">Daily Works</p>
+
+        <div class="bg-[#3BAEA9] p-1 rounded-full flex items-center justify-center">
+          <img loading="lazy" decoding="async" src="/assets/icons/seventh-panel-icon1.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+
+      </div>
+      <div (mouseenter)="onLgChipEnter($event, 'Accounting')" (mouseleave)="onLgChipLeave()"
+        class="bg-white rounded-full flex items-center justify-center gap-2 falcon-progress-dot py-1 pl-1 pr-2 mr-[4%] cursor-pointer">
+
+
+        <div class="bg-[#3BAEA9] p-1 rounded-full flex items-center justify-center">
+          <img loading="lazy" decoding="async" src="/assets/icons/seventh-panel-icon2.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+        <p class="text-[12px] font-medium text-primary">Accounting</p>
+
+      </div>
+    </div>
+    <!-- eighth panel -->
+    <div class="w-full  h-4 flex items-center justify-between xl:px-26 rounded-full">
+      <div (mouseenter)="onLgChipEnter($event, 'Reports & Analytics')" (mouseleave)="onLgChipLeave()"
+        class="bg-white rounded-full flex items-center justify-center gap-2 falcon-progress-dot py-1 pl-2 pr-1 cursor-pointer">
+        <p class="text-[12px] font-medium text-primary">Reports & Analytics</p>
+
+        <div class="bg-[#3BAEA9] p-1 rounded-full flex items-center justify-center">
+          <img loading="lazy" decoding="async" src="/assets/icons/eighth-panel-icon1.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+
+      </div>
+      <div (mouseenter)="onLgChipEnter($event, 'Cloud Storage')" (mouseleave)="onLgChipLeave()"
+        class="bg-white rounded-full flex items-center justify-center gap-2 falcon-progress-dot py-1 pl-1 pr-2 cursor-pointer">
+
+
+        <div class="bg-[#3BAEA9] p-1 rounded-full flex items-center justify-center">
+          <img loading="lazy" decoding="async" src="/assets/icons/eighth-panel-icon2.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+        <p class="text-[12px] font-medium text-primary">Cloud Storage</p>
+
+      </div>
+    </div>
+    <!-- ninth panel -->
+    <div class="w-full  h-4 flex items-center justify-between lg:px-30 xl:px-64 rounded-full">
+      <div (mouseenter)="onLgChipEnter($event, 'Inventory')" (mouseleave)="onLgChipLeave()"
+        class="bg-white rounded-full flex items-center justify-center gap-2 falcon-progress-dot py-1 pl-2 pr-1 ml-[10%] cursor-pointer">
+        <p class="text-[12px] font-medium text-primary">Inventory</p>
+
+        <div class="bg-[#3BAEA9] p-1 rounded-full flex items-center justify-center">
+          <img loading="lazy" decoding="async" src="/assets/icons/ninth-panel-icon1.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+
+      </div>
+      <div (mouseenter)="onLgChipEnter($event, 'Employee Management')" (mouseleave)="onLgChipLeave()"
+        class="bg-white rounded-full flex items-center justify-center gap-2 falcon-progress-dot py-1 pl-1 pr-2 cursor-pointer">
+
+
+        <div class="bg-[#3BAEA9] p-1 rounded-full flex items-center justify-center">
+          <img loading="lazy" decoding="async" src="/assets/icons/ninth-panel-icon2.svg" alt="Feature panel icon" aria-hidden="true"
+            class="pointer-events-none select-none z-20" />
+        </div>
+        <p class="text-[12px] font-medium text-primary">Employee Management</p>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- LG Chip Hover Tooltip -->
+  <div #lgTooltip class="hidden lg:block absolute z-50 pointer-events-none"
+    style="visibility: hidden; transform: translateX(-50%); filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));">
+    <div class="tooltip-card bg-white rounded-xl p-3 min-w-[190px] max-w-[220px] mt-2 border border-gray-100"
+      style="transform-origin: center top;">
+      <div class="flex items-center gap-2 mb-2">
+        <div class="bg-[#3BAEA9] p-1.5 rounded-full shrink-0">
+          <img loading="lazy" decoding="async" src="" alt="Feature icon" class="tooltip-icon w-3.5 h-3.5 pointer-events-none" />
+        </div>
+        <h3 class="tooltip-title text-[13px] font-semibold text-primary leading-tight"></h3>
+        <span class="tooltip-soon-badge shrink-0 items-center rounded-full bg-main/10 px-1.5 py-0.5 text-[9px] font-semibold text-main uppercase" style="display: none;">Soon</span>
+      </div>
+      <ul class="tooltip-list flex flex-col gap-1.5 pl-0.5">
+      </ul>
+    </div>
+  </div>
+
+  <!-- Mobile/MD Chip Tooltip -->
+  <div #mobileTooltip class="lg:hidden absolute z-50 pointer-events-none"
+    style="visibility: hidden; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));">
+    <div class="tooltip-card bg-white rounded-xl p-3 min-w-[170px] max-w-[200px] mt-2 border border-gray-100"
+      style="transform-origin: center top;">
+      <div class="flex items-center gap-2 mb-2">
+        <div class="bg-[#3BAEA9] p-1.5 rounded-full shrink-0">
+          <img loading="lazy" decoding="async" src="" alt="Feature icon" class="tooltip-icon w-3.5 h-3.5 pointer-events-none" />
+        </div>
+        <h3 class="tooltip-title text-[12px] font-semibold text-primary leading-tight"></h3>
+        <span class="tooltip-soon-badge shrink-0 items-center rounded-full bg-main/10 px-1.5 py-0.5 text-[9px] font-semibold text-main uppercase" style="display: none;">Soon</span>
+      </div>
+      <ul class="tooltip-list flex flex-col gap-1 pl-0.5">
+      </ul>
+    </div>
+  </div>
+
+  <div class="absolute bottom-[1%] w-full px-5">
+    <div class="w-full flex justify-between ">
+      <!-- Built to Scale card -->
+      <div class="growth-card bg-white rounded-[10px] p-4 h-25.5 w-48.5 md:ml-[20%]  lg:ml-[35%] lg:mt-[-8%]">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-[20px] font-medium text-primary leading-tight mb-1.5">Built to Scale</p>
+            <p class="text-[9px] text-[#000000] mt-1 leading-snug">
+              Agencies scale faster once every tool runs on one platform.
+            </p>
+          </div>
+          <img loading="lazy" decoding="async" src="/assets/images/Graph.png" alt="Growth graph trending upward" width="34" height="20" aria-hidden="true"
+            class="shrink-0 ml-2 object-contain" />
+        </div>
+
+
+      </div>
+      <img loading="lazy" decoding="async" src="/assets/images/fv-img-3.svg" alt="ZarklyX feature preview" aria-hidden="true"
+        class="shrink-0 h-8 ml-2 object-contain mt-6 lg:mt-[-8%] md:mr-30 lg:mr-52" />
+    </div>
+
+  </div>
+</section>

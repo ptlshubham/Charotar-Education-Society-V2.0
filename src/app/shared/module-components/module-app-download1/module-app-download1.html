@@ -1,0 +1,41 @@
+<!-- Module App Download 1  Side-by-side: phone mockup + text content -->
+<section class="module-appdownload1">
+  <div class="module-appdownload1__container">
+
+    <!-- Left  Phone mockup -->
+    <div class="module-appdownload1__phone-col">
+      <div class="module-appdownload1__phone-wrapper">
+        <img [src]="phoneImage" [alt]="title" class="module-appdownload1__phone-img" />
+      </div>
+    </div>
+
+    <!-- Right  Content -->
+    <div class="module-appdownload1__content-col">
+      <h2 class="module-appdownload1__title">{{ title }}</h2>
+      <p class="module-appdownload1__description">{{ description }}</p>
+
+      <!-- Store badges -->
+      <div class="module-appdownload1__badges">
+        @if (appStoreLink) {
+          <a [href]="appStoreLink" target="_blank" rel="noopener noreferrer" class="module-appdownload1__store-badge">
+            <img src="/assets/icons/app-store-badge.svg" alt="Download on App Store" />
+          </a>
+        }
+        @if (playStoreLink) {
+          <a [href]="playStoreLink" target="_blank" rel="noopener noreferrer" class="module-appdownload1__store-badge">
+            <img src="/assets/icons/play-store-badge.svg" alt="Get it on Google Play" />
+          </a>
+        }
+      </div>
+
+      <!-- QR code -->
+      @if (qrCodeImage) {
+        <div class="module-appdownload1__qr">
+          <img [src]="qrCodeImage" alt="Scan to download" class="module-appdownload1__qr-img" />
+          <span class="module-appdownload1__qr-label">Scan to download</span>
+        </div>
+      }
+    </div>
+
+  </div>
+</section>

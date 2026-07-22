@@ -1,0 +1,27 @@
+<!-- Global back-to-top button  sits above the AI button, on all routes.
+     Hidden at the top; fades in once scrolled down. Transparent centre (no fill);
+     the ring fills to show scroll progress. -->
+<button
+  type="button"
+  aria-label="Scroll back to top"
+  (click)="scrollToTop()"
+  [class.opacity-0]="!visible()"
+  [class.translate-y-3]="!visible()"
+  [class.pointer-events-none]="!visible()"
+  class="group fixed bottom-[84px] right-6 z-50 w-[52px] h-[52px] rounded-full flex items-center justify-center cursor-pointer bg-transparent transition-all duration-300">
+  <!-- Progress ring (rotated so the arc starts at the top) -->
+  <svg class="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 50 50" aria-hidden="true"
+    style="filter: drop-shadow(0 2px 5px rgba(11,40,39,0.18));" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="25" cy="25" r="23" fill="none" stroke="#E5E7EB" stroke-width="2.5" />
+    <circle cx="25" cy="25" r="23" fill="none" stroke="#3BAEA9" stroke-width="2.5" stroke-linecap="round"
+      [attr.stroke-dasharray]="circumference" [attr.stroke-dashoffset]="dashOffset"
+      style="transition: stroke-dashoffset 0.12s linear;" />
+  </svg>
+  <!-- Up arrow -->
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"
+    class="relative text-[#3BAEA9] group-hover:text-[#0B2827] transition-colors duration-200"
+    xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 19V5M12 5L5 12M12 5L19 12" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+</button>

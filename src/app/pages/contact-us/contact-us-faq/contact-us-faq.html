@@ -1,0 +1,23 @@
+<div class="bg-white w-full rounded-[20px] border border-primary/10 p-[25px] md:p-[30px] lg:p-[35px]">
+    <h3 class="text-primary text-[22px] md:text-[24px] font-semibold leading-tight">Frequently asked questions</h3>
+    <p class="mt-2 text-[14px] leading-[20px] text-[#0E0E0ECC]/80">Quick answers to common questions.</p>
+
+    <div class="mt-6 flex flex-col">
+        <div class="faq-item w-full flex flex-col py-[16px]" [class.border-b]="!isLast" [class.border-primary]="!isLast" *ngFor="let faq of faqs; let i = index; let isLast = last">
+            <div class="w-full flex justify-between items-center gap-4 cursor-pointer" (click)="toggleFaq(i)">
+                <h2 class="text-[15px] md:text-[16px] text-[#3C3D3D] leading-[22px] font-medium max-w-[85%]">{{ faq.question }}</h2>
+                <button class="faq-icon shrink-0">
+                    <img src="/assets/icons/about-faq-plus.svg" alt="Expand answer">
+                </button>
+            </div>
+            <div class="faq-answer overflow-hidden" [style.height]="'0px'">
+                <p class="text-[14px] leading-[20px] text-[#0E0E0ECC]/80 pt-[14px]">{{ faq.answer }}</p>
+            </div>
+        </div>
+    </div>
+
+    <a routerLink="/support/faq" class="mt-6 inline-flex items-center gap-2 text-[14px] font-semibold text-main hover:gap-3 transition-all">
+        View All FAQs
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+</div>

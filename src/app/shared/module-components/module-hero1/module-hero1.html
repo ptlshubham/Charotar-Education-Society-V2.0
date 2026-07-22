@@ -1,0 +1,48 @@
+<!-- Module Hero 1  Dark Immersive: full-bleed background image with gradient overlay -->
+<section class="module-hero1">
+
+  <!-- Background image -->
+  <div class="module-hero1__bg">
+    <img [src]="backgroundImage" [alt]="title" aria-hidden="true" />
+  </div>
+
+  <!-- Dark gradient overlay -->
+  <div class="module-hero1__overlay"></div>
+
+  <!-- Content -->
+  <div class="module-hero1__content">
+
+    <!-- Badge -->
+    @if (badgeText) {
+      <span class="module-hero1__badge">{{ badgeText }}</span>
+    }
+
+    <!-- Headline -->
+    <h1 class="module-hero1__title">{{ title }}</h1>
+
+    <!-- Subtitle -->
+    <p class="module-hero1__subtitle">{{ subtitle }}</p>
+
+    <!-- CTA Buttons -->
+    @if (primaryBtnText || secondaryBtnText) {
+      <div class="module-hero1__actions">
+        @if (primaryBtnText) {
+          <a
+            [routerLink]="primaryBtnLink || null"
+            class="primary-btn text-white font-semibold text-[16px] gap-2 flex items-center justify-center">
+            {{ primaryBtnText }}
+            <img src="/assets/icons/right-arrow.svg" alt="Right arrow" aria-hidden="true" width="20" height="20" />
+          </a>
+        }
+        @if (secondaryBtnText) {
+          <a
+            [routerLink]="secondaryBtnLink || null"
+            class="outline-btn text-white font-semibold text-[16px]">
+            {{ secondaryBtnText }}
+          </a>
+        }
+      </div>
+    }
+
+  </div>
+</section>

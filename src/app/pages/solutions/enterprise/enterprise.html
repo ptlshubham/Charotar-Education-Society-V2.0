@@ -1,0 +1,239 @@
+<!-- ─── Breadcrumb ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 pt-[24px]">
+  <div class="mx-auto ">
+    <nav class="flex items-center gap-2 text-[13px] text-secondary">
+      <a routerLink="/" class="hover:text-main transition-colors">Home</a>
+      <span class="text-secondary/50">&#8250;</span>
+      <span>Solutions</span>
+      <span class="text-secondary/50">&#8250;</span>
+      <span class="text-primary font-medium">Enterprise</span>
+    </nav>
+  </div>
+</section>
+
+<!-- ─── Hero ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 pt-[30px] pb-[30px]">
+  <div class="mx-auto  grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-16">
+    <!-- Copy -->
+    <div>
+       <div
+            class="h-[24px] w-fit md:h-[29px] bg-[#E8FFFD] rounded-full flex justify-center items-center z-10 px-[15px]">
+            <p class="text-[12px] md:text-[14px] font-semibold text-main ">Enterprise Solutions</p>
+
+        </div>
+      <h1 class="mt-[10px] text-primary text-[40px] md:text-[48px] font-medium leading-[1.1]">
+        Enterprise power.<br />
+        <span class="text-main">Tailored for scale.</span>
+      </h1>
+
+      <p class="mt-6 max-w-[440px] text-[16px] leading-[26px] text-secondary">
+        ZarklyX Enterprise gives large organizations the flexibility, control, and security they need to scale with confidence and deliver exceptional results.
+      </p>
+
+      <ul class="mt-6 grid lg:grid-cols-2 gap-2.5">
+        @for (item of heroChecklist; track item) {
+          <li class="flex items-center gap-2.5 text-[14px] text-primary">
+            <svg class="shrink-0 text-main" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>
+            {{ item }}
+          </li>
+        }
+      </ul>
+
+      <div class="mt-8 flex flex-wrap items-center gap-4">
+        <a routerLink="/contact" class="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-[8px] bg-main text-white text-[15px] font-medium hover:bg-primary transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Schedule a Demo
+        </a>
+        <a routerLink="/contact" class="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-[8px] border border-primary/15 text-primary text-[15px] font-medium hover:border-main hover:text-main transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.6 8.6 0 0 1-3.9-.9L3 21l1.9-5.6A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5Z"/></svg>
+          Talk to Sales
+        </a>
+      </div>
+    </div>
+
+    <!-- Dashboard mockup -->
+    <div class="rounded-[16px] overflow-hidden border border-primary/10 shadow-[0_20px_50px_-20px_rgba(11,40,39,0.25)] bg-white flex text-[11px]">
+      <!-- sidebar -->
+      <div class="hidden sm:flex flex-col gap-1 w-[130px] shrink-0 bg-primary p-3">
+        <span class="flex items-center justify-center w-8 h-8 rounded-[8px] bg-white/10 text-white font-bold mb-3">Z</span>
+        @for (nav of dashboardNav; track nav; let i = $index) {
+          <span class="px-2.5 py-1.5 rounded-[6px] text-[11px]" [ngClass]="i === 0 ? 'bg-white text-primary font-medium' : 'text-white/60'">{{ nav }}</span>
+        }
+      </div>
+      <!-- main -->
+      <div class="flex-1 min-w-0 p-3.5 bg-[#fafbfb]">
+        <div class="flex items-center justify-between">
+          <span class="text-primary text-[13px] font-semibold">Overview</span>
+          <span class="text-secondary">This Year ▾</span>
+        </div>
+        <div class="mt-3 grid grid-cols-2 lg:grid-cols-4 gap-2">
+          @for (stat of dashboardStats; track stat.label) {
+            <div class="rounded-[8px] border border-primary/10 bg-white p-2.5">
+              <p class="text-secondary text-[10px]">{{ stat.label }}</p>
+              <p class="text-primary text-[13px] font-bold leading-tight mt-0.5">{{ stat.value }}</p>
+              <p class="text-main text-[10px] font-medium">{{ stat.change }}</p>
+            </div>
+          }
+        </div>
+        <div class="mt-2 grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-2">
+          <div class="rounded-[8px] border border-primary/10 bg-white p-2.5">
+            <p class="text-primary text-[11px] font-semibold">Performance Overview</p>
+            <svg class="mt-1 w-full h-[70px]" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true">
+              <defs><linearGradient id="ent-g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3DAFA9" stop-opacity="0.3"/><stop offset="1" stop-color="#3DAFA9" stop-opacity="0"/></linearGradient></defs>
+              <path d="M0 50 L20 44 L40 46 L60 34 L80 38 L100 24 L120 28 L140 16 L160 22 L180 10 L200 14 V60 H0 Z" fill="url(#ent-g)"/>
+              <path d="M0 50 L20 44 L40 46 L60 34 L80 38 L100 24 L120 28 L140 16 L160 22 L180 10 L200 14" fill="none" stroke="#3DAFA9" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="rounded-[8px] border border-primary/10 bg-white p-2.5">
+            <p class="text-primary text-[11px] font-semibold">Team Activity</p>
+            <ul class="mt-1.5 flex flex-col gap-1.5">
+              @for (act of teamActivity; track act.name) {
+                <li class="flex items-center gap-2">
+                  <span class="flex items-center justify-center w-5 h-5 rounded-full bg-main/10 text-main text-[9px] font-semibold shrink-0">{{ act.name.charAt(0) }}</span>
+                  <span class="min-w-0 flex-1"><span class="block text-primary text-[10px] font-medium leading-tight truncate">{{ act.name }}</span><span class="block text-secondary text-[9px] leading-tight">{{ act.action }}</span></span>
+                  <span class="text-secondary text-[9px] shrink-0">{{ act.time }}</span>
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Trusted by ─── -->
+<!-- <section class="bg-white px-5 md:px-10 lg:px-17.5 py-[10px]">
+  <div class="mx-auto  rounded-[16px] bg-[#f8f9fa] px-6 py-7">
+    <p class="text-center text-[14px] text-secondary">Trusted by leading enterprises and agencies worldwide</p>
+    <div class="mt-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+      @for (logo of trustedLogos; track logo) {
+        <span class="text-primary/70 text-[20px] font-bold tracking-tight">{{ logo }}</span>
+      }
+    </div>
+  </div>
+</section> -->
+
+<!-- ─── Features ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[30px]">
+  <div class="mx-auto ">
+    <h2 class="text-center text-primary text-[26px] font-semibold">Everything enterprises need to succeed</h2>
+
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+      @for (feature of features; track feature.title) {
+        <div class="flex gap-4 rounded-[15px] border border-primary/10 bg-white p-6 transition-shadow duration-200">
+          <span class="flex items-center justify-center w-12 h-12 rounded-full bg-main/10 text-main shrink-0">
+            @switch (feature.icon) {
+              @case ('shield') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg> }
+              @case ('users') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg> }
+              @case ('sliders') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg> }
+              @case ('headset') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 16a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2v2ZM3 16a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 2v2Z"/></svg> }
+              @case ('badge') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg> }
+              @case ('pie') { <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15.5A9 9 0 1 1 8.5 3"/><path d="M21.2 8A9 9 0 0 0 16 2.8V8Z"/></svg> }
+            }
+          </span>
+          <div>
+            <h3 class="text-primary text-[16px] font-semibold">{{ feature.title }}</h3>
+            <p class="mt-2 text-[13px] leading-[20px] text-secondary">{{ feature.desc }}</p>
+            <a href="#" class="mt-3 inline-flex items-center gap-1.5 text-[13px] font-medium text-main">
+              Learn more
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ─── Enterprise-grade benefits ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[20px]">
+  <div class="mx-auto rounded-[15px] bg-primary p-6 md:p-8">
+    <h2 class="text-white text-[18px] font-semibold">Enterprise-grade benefits</h2>
+    <div class="mt-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
+      @for (benefit of benefits; track benefit.label) {
+        <div class="flex flex-col gap-2">
+          <span class="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 text-main">
+            @switch (benefit.icon) {
+              @case ('sso') { <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 21v-1a6 6 0 0 1 12 0v1"/></svg> }
+              @case ('permissions') { <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> }
+              @case ('audit') { <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg> }
+              @case ('backup') { <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 .5-9 6 6 0 0 0-11.6-1.5A4 4 0 0 0 6.5 19h11Z"/></svg> }
+              @case ('uptime') { <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> }
+              @case ('global') { <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20Z"/></svg> }
+            }
+          </span>
+          <p class="text-white text-[13px] font-medium leading-[18px]">{{ benefit.label }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ─── Proven impact + CTA ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[20px]">
+  <div class="mx-auto  grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+    <!-- impact -->
+    <div class="rounded-[15px] border border-primary/10 bg-white p-6 md:p-8">
+      <h2 class="text-primary text-[20px] font-semibold">Proven impact for enterprises</h2>
+      <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-6">
+        @for (stat of impactStats; track stat.label) {
+          <div>
+            <span class="flex items-center justify-center w-11 h-11 rounded-full bg-main/10 text-main">
+              @switch (stat.icon) {
+                @case ('chart') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg> }
+                @case ('clock') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> }
+                @case ('users') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg> }
+                @case ('smile') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg> }
+              }
+            </span>
+            <p class="mt-3 text-main text-[26px] font-bold leading-none">{{ stat.value }}</p>
+            <p class="mt-1.5 text-[13px] leading-[17px] text-secondary">{{ stat.label }}</p>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="relative overflow-hidden rounded-[16px] bg-main/[0.06] p-6 md:p-8 flex flex-col justify-center">
+      <img src="/assets/images/enterprise/building.png" alt="Enterprise office building" aria-hidden="true"
+        class="pointer-events-none absolute right-0 bottom-0 w-[600px] max-w-[85%] h-auto select-none" />
+      <div class="relative">
+        <h2 class="text-primary text-[22px] font-semibold leading-[1.2]">Ready to scale with confidence?</h2>
+        <p class="mt-2 max-w-[360px] text-[14px] leading-[21px] text-secondary">Our team will understand your needs and build a solution that grows with your business.</p>
+        <a routerLink="/contact" class="mt-5 inline-flex items-center justify-center gap-2 h-12 px-7 rounded-[8px] bg-main text-white text-[15px] font-medium hover:bg-primary transition-colors w-fit">
+          Schedule a Demo
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <div class="mt-3 flex items-center gap-3 text-[13px] text-secondary">
+          <span class="flex-1 h-px bg-primary/10 max-w-[40px]"></span>
+          or
+          <span class="flex-1 h-px bg-primary/10 max-w-[40px]"></span>
+        </div>
+        <a routerLink="/contact" class="mt-2 inline-flex items-center gap-2 text-[14px] font-medium text-main hover:gap-3 transition-all">
+          Talk to Our Sales Team
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Contact banner ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[40px]">
+  <div class="mx-auto  rounded-[15px] border border-primary/10 bg-white px-8 md:px-10 py-7 flex flex-col md:flex-row md:items-center gap-6">
+    <div class="flex flex-col lg:flex-row lg:items-center gap-5 flex-1">
+      <span class="shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-main/10 text-main">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+      </span>
+      <div>
+        <h2 class="text-primary text-[18px] md:text-[20px] font-semibold leading-[1.2]">Have questions about enterprise solutions?</h2>
+        <p class="mt-1 text-[14px] leading-[20px] text-secondary">Our experts are here to help you find the right plan for your organization.</p>
+      </div>
+    </div>
+    <a routerLink="/contact" class="shrink-0 inline-flex items-center justify-center gap-2 h-12 px-7 rounded-[8px] bg-main text-white text-[15px] font-medium hover:bg-primary transition-colors">
+      Contact Sales
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</section>

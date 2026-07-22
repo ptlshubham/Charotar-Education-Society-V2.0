@@ -1,0 +1,5 @@
+/* GSAP sets visibility via autoAlpha, so start invisible */
+.cookie-banner {
+  visibility: hidden;
+  opacity: 0;
+}

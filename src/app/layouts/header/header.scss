@@ -1,0 +1,76 @@
+/* Animated burger menu icon (from Uiverse.io by Cevorob) */
+.burger {
+  position: relative;
+  width: 28px;
+  height: 18px;
+  background: transparent;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+.burger span {
+  display: block;
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background: #0B2827;
+  border-radius: 9px;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: 0.25s ease-in-out;
+}
+
+.burger span:nth-of-type(1) {
+  top: 0;
+  transform-origin: left center;
+}
+
+.burger span:nth-of-type(2) {
+  top: 50%;
+  transform: translateY(-50%);
+  transform-origin: left center;
+}
+
+.burger span:nth-of-type(3) {
+  top: 100%;
+  transform-origin: left center;
+  transform: translateY(-100%);
+}
+
+/* Open state  controlled by Angular [class.open] */
+.burger.open span:nth-of-type(1) {
+  transform: rotate(45deg);
+  top: -1px;
+  left: 4px;
+}
+
+.burger.open span:nth-of-type(2) {
+  width: 0%;
+  opacity: 0;
+}
+
+.burger.open span:nth-of-type(3) {
+  transform: rotate(-45deg);
+  top: 19px;
+  left: 4px;
+}
+
+/* Desktop megamenu open animation  replays whenever the active tab changes
+   because the element is re-created by @if. */
+@keyframes megamenuIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.megamenu-anim {
+  animation: megamenuIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: top center;
+}

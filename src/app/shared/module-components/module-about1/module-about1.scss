@@ -1,0 +1,146 @@
+/* ═══════════════════════════════════════════════════════════
+   Module About 1  Image Left, Content Right
+   ═══════════════════════════════════════════════════════════ */
+
+.module-about1 {
+  padding: 60px 20px;
+  background: #fff;
+
+  @media (min-width: 768px) {
+    padding: 80px 40px;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 100px 70px;
+  }
+}
+
+.module-about1__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    gap: 60px;
+  }
+}
+
+/* Image column */
+.module-about1__image-col {
+  width: 100%;
+
+  @media (min-width: 1024px) {
+    width: 45%;
+  }
+}
+
+.module-about1__image-wrapper {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.module-about1__image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+}
+
+/* Decorative accent bar */
+.module-about1__accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #3DAFA9 0%, #2A8A85 100%);
+  border-radius: 0 0 16px 16px;
+}
+
+/* Content column */
+.module-about1__content-col {
+  width: 100%;
+
+  @media (min-width: 1024px) {
+    width: 55%;
+  }
+}
+
+.module-about1__title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #232120;
+  line-height: 1.2;
+  margin-bottom: 16px;
+
+  @media (min-width: 768px) {
+    font-size: 38px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 42px;
+  }
+}
+
+.module-about1__description {
+  font-size: 16px;
+  color: #747474;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+/* Feature cards */
+.module-about1__features {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.module-about1__feature-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  background: #F8F9FA;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  }
+}
+
+.module-about1__feature-icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 10px;
+  background: #E8FFFD;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.module-about1__feature-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #232120;
+  margin-bottom: 4px;
+}
+
+.module-about1__feature-desc {
+  font-size: 14px;
+  color: #747474;
+  line-height: 1.5;
+}

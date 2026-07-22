@@ -1,0 +1,299 @@
+<!-- ─── Hero ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-20 pt-[60px] pb-[20px]">
+  <div class="mx-auto max-w-[760px] text-center flex flex-col justify-center items-center">
+    <div class="h-[24px] w-fit md:h-[29px] bg-[#E8FFFD] rounded-full flex justify-center items-center z-10 px-[15px]">
+      <p class="text-[12px] md:text-[14px] font-semibold text-main ">Pricing</p>
+
+    </div>
+    <h1 class="mt-[10px] text-primary text-[34px] md:text-[42px] font-medium leading-[1.15]">
+      Simple, transparent pricing<br />
+      <span class="text-main">for every stage of your growth</span>
+    </h1>
+    <p class="mt-4 mx-auto max-w-[520px] text-[16px] leading-[25px] text-secondary">
+      Choose the perfect plan to manage your agency, customers and teams with ZarklyX. Upgrade or downgrade anytime.
+    </p>
+
+    <!-- Billing toggle — only rendered when plans of both cycles actually exist -->
+    @if (showBillingToggle()) {
+    <div class="mt-7 flex items-center justify-center gap-3">
+      <span class="text-[14px] font-medium transition-colors"
+        [ngClass]="yearly() ? 'text-secondary' : 'text-primary'">Monthly billing</span>
+      <button type="button" role="switch" [attr.aria-checked]="yearly()" (click)="yearly.set(!yearly())"
+        class="relative w-12 h-6.5 rounded-full transition-colors" [ngClass]="yearly() ? 'bg-main' : 'bg-primary/20'">
+        <span class="absolute top-1 left-1 w-4.5 h-4.5 rounded-full bg-white shadow transition-transform"
+          [ngClass]="{ 'translate-x-[22px]': yearly() }"></span>
+      </button>
+      <span class="text-[14px] font-medium transition-colors"
+        [ngClass]="yearly() ? 'text-primary' : 'text-secondary'">Yearly billing</span>
+      @if (yearlySaving()) {
+      <span
+        class="hidden md:inline-flex items-center rounded-full bg-main/10 px-2.5 py-1 text-[12px] font-medium text-main">Save
+        up to {{ yearlySaving() }}%</span>
+      }
+    </div>
+    @if (yearlySaving()) {
+    <span
+      class="inline-flex md:hidden items-center rounded-full bg-main/10 px-2.5 py-1 text-[12px] font-medium text-main mt-[20px]">Save
+      up to {{ yearlySaving() }}%</span>
+    }
+    }
+  </div>
+</section>
+
+<!-- ─── Plan cards ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[20px]">
+  @if (loading()) {
+  <div class="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-start">
+    @for (n of [1, 2, 3, 4]; track n) {
+    <div class="rounded-[16px] border border-primary/10 p-6 animate-pulse">
+      <div class="h-5 w-24 rounded bg-primary/10"></div>
+      <div class="mt-3 h-4 w-full rounded bg-primary/5"></div>
+      <div class="mt-6 h-8 w-32 rounded bg-primary/10"></div>
+      <div class="mt-5 h-11 w-full rounded-[8px] bg-primary/5"></div>
+      <div class="mt-6 flex flex-col gap-3">
+        @for (m of [1, 2, 3, 4]; track m) {
+        <div class="h-3.5 w-full rounded bg-primary/5"></div>
+        }
+      </div>
+    </div>
+    }
+  </div>
+  } @else if (failed()) {
+  <div class="mx-auto max-w-[520px] text-center py-[40px]">
+    <p class="text-primary text-[18px] font-semibold">We couldn't load our plans</p>
+    <p class="mt-2 text-[14px] text-secondary">Something went wrong on our side. Please refresh the page, or
+      <a routerLink="/contact" class="text-main font-medium hover:underline">contact us</a> and we'll walk you through
+      the options.
+    </p>
+  </div>
+  } @else {
+  <div class="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-start">
+    @for (plan of plans(); track plan.id) {
+    <div class="relative flex flex-col rounded-[16px] bg-white transition-shadow duration-200"
+      [ngClass]="plan.popular ? 'border-2 border-main ' : 'border border-primary/10 '">
+      @if (plan.popular) {
+      <span
+        class="absolute -top-px left-0 right-0 mx-auto w-full rounded-t-[14px] bg-main py-1.5 text-center text-[11px] font-semibold tracking-wide uppercase text-white">Most
+        Popular</span>
+      }
+
+      <div class="flex flex-col flex-1 p-6" [class.pt-10]="plan.popular">
+        <div class="flex items-start justify-between gap-2">
+          <h3 class="text-primary text-[20px] font-bold">{{ plan.name }}</h3>
+          @if (plan.discount) {
+          <span
+            class="shrink-0 inline-flex items-center rounded-full bg-main/10 px-2.5 py-1 text-[11px] font-semibold text-main">{{
+            plan.discount }}% off</span>
+          }
+        </div>
+        <p class="mt-2 text-[13px] leading-[19px] text-secondary min-h-[38px]">{{ plan.tagline }}</p>
+
+        <div class="mt-5">
+          @if (plan.originalPrice) {
+          <p class="text-[13px] text-secondary line-through leading-none">{{ plan.originalPrice }}</p>
+          }
+          <p class="text-primary text-[30px] font-bold leading-none" [class.mt-1.5]="plan.originalPrice">
+            {{ plan.price }} <span class="text-[14px] font-normal text-secondary">/{{ plan.perLabel }}</span>
+          </p>
+          <p class="mt-2 text-[12px] text-secondary">{{ plan.free ? 'Free forever' : plan.billedLabel }}</p>
+        </div>
+
+        <a [href]="signupUrl"
+          class="mt-5 inline-flex items-center justify-center h-11 rounded-[8px] text-[14px] font-medium transition-colors"
+          [ngClass]="plan.popular ? 'bg-main text-white hover:bg-primary' : 'border border-main/40 text-main hover:bg-main hover:text-white'">
+          {{ plan.cta }}
+        </a>
+
+        <ul class="mt-6 flex flex-col gap-3">
+          @for (feature of plan.features; track feature) {
+          <li class="flex items-center gap-2.5 text-[13px] text-secondary">
+            <svg class="shrink-0 text-main" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <path d="m8.5 12 2.5 2.5 4.5-5" />
+            </svg>
+            {{ feature }}
+          </li>
+          }
+        </ul>
+      </div>
+    </div>
+    }
+
+    <!-- Enterprise — no plan row backs this; large teams are quoted individually. -->
+    <div class="relative flex flex-col rounded-[16px] bg-white border border-dashed border-main/40">
+      <div class="flex flex-col flex-1 p-6">
+        <h3 class="text-primary text-[20px] font-bold">Enterprise</h3>
+        <p class="mt-2 text-[13px] leading-[19px] text-secondary min-h-[38px]">Custom solutions for large agencies and
+          businesses.</p>
+
+        <div class="mt-5">
+          <p class="text-primary text-[30px] font-bold leading-none">Custom</p>
+          <p class="mt-2 text-[12px] text-secondary">Tailored to your needs</p>
+        </div>
+
+        <a routerLink="/contact"
+          class="mt-5 inline-flex items-center justify-center h-11 rounded-[8px] border border-main/40 text-main text-[14px] font-medium hover:bg-main hover:text-white transition-colors">
+          Contact Sales
+        </a>
+
+        <ul class="mt-6 flex flex-col gap-3">
+          @for (feature of enterpriseFeatures; track feature) {
+          <li class="flex items-center gap-2.5 text-[13px] text-secondary">
+            <svg class="shrink-0 text-main" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <path d="m8.5 12 2.5 2.5 4.5-5" />
+            </svg>
+            {{ feature }}
+          </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+  }
+</section>
+
+<!-- ─── Trust strip ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[20px]">
+  <div class="mx-auto rounded-[15px] bg-main/[0.06] px-6 md:px-10 py-6 grid grid-cols-1 sm:grid-cols-3 gap-6">
+    @for (item of trustStrip; track item.title) {
+    <div class="flex items-center gap-3 justify-center sm:justify-start">
+      <span class="flex items-center justify-center w-11 h-11 rounded-full bg-white text-main shrink-0">
+        @switch (item.icon) {
+        @case ('gift') { <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="8" width="18" height="4" rx="1" />
+          <path d="M12 8v13M5 12v9h14v-9M12 8S10.5 3 8 3a2.5 2.5 0 0 0 0 5h4Zm0 0s1.5-5 4-5a2.5 2.5 0 0 1 0 5h-4Z" />
+        </svg> }
+        @case ('shield') { <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
+          <path d="m9 12 2 2 4-4" />
+        </svg> }
+        @case ('dollar') { <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <path
+            d="M15 9a3 3 0 0 0-3-2h-.5a2.5 2.5 0 0 0 0 5h1a2.5 2.5 0 0 1 0 5H12a3 3 0 0 1-3-2M12 6v1.5M12 16.5V18" />
+        </svg> }
+        }
+      </span>
+      <div>
+        <p class="text-primary text-[14px] font-semibold">{{ item.title }}</p>
+        <p class="text-[13px] text-secondary">{{ item.desc }}</p>
+      </div>
+    </div>
+    }
+  </div>
+</section>
+
+<!-- ─── Compare plans ─── -->
+@if (!loading() && !failed() && compareRows().length) {
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[30px]">
+  <div class="mx-auto">
+    <h2 class="text-primary text-[24px] font-semibold">Compare plans</h2>
+
+    <div class="mt-6 overflow-x-auto">
+      <table class="w-full min-w-[720px] border-collapse">
+        <thead>
+          <tr class="border-b border-primary/10">
+            <th class="w-[30%] py-4 pr-4 text-left"></th>
+            @for (col of plans(); track col.id) {
+            <th class="py-4 px-3 text-center align-top" [ngClass]="{ 'bg-main/[0.05] rounded-t-[10px]': col.popular }">
+              <p class="text-primary text-[15px] font-semibold">{{ col.name }}</p>
+              @if (col.popular) {
+              <span
+                class="mt-1 inline-flex items-center rounded-full bg-main/10 px-2 py-0.5 text-[10px] font-medium text-main">Most
+                Popular</span>
+              }
+              <p class="mt-1 text-[12px] text-secondary">{{ col.price }} /{{ col.perLabel }}</p>
+            </th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of compareRows(); track row.label) {
+          <tr class="border-b border-primary/10">
+            <td class="py-3.5 pr-4">
+              <span class="flex items-center gap-2.5 text-[14px] text-primary">
+                <span class="text-secondary shrink-0">
+                  @switch (row.icon) {
+                  @case ('accounts') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="16" rx="2" />
+                    <path d="M3 9h18" />
+                  </svg> }
+                  @case ('users') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                  </svg> }
+                  @case ('database') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <ellipse cx="12" cy="5" rx="9" ry="3" />
+                    <path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5" />
+                    <path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3" />
+                  </svg> }
+                  @case ('calendar') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" />
+                    <path d="M16 2v4M8 2v4M3 10h18" />
+                  </svg> }
+                  @case ('chart') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7" rx="1" />
+                    <rect x="14" y="3" width="7" height="7" rx="1" />
+                    <rect x="3" y="14" width="7" height="7" rx="1" />
+                    <rect x="14" y="14" width="7" height="7" rx="1" />
+                  </svg> }
+                  @case ('feature') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3v18M3 12h18" />
+                    <path d="m5.6 5.6 12.8 12.8M18.4 5.6 5.6 18.4" />
+                  </svg> }
+                  }
+                </span>
+                {{ row.label }}
+              </span>
+            </td>
+            @for (val of row.values; track $index) {
+            <td class="py-3.5 px-3 text-center" [ngClass]="{ 'bg-main/[0.04]': plans()[$index].popular }">
+              @switch (val) {
+              @case ('check') { <svg class="inline text-main" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6 9 17l-5-5" />
+              </svg> }
+              @case ('dash') { <span class="text-secondary/50">–</span> }
+              @default { <span class="text-[14px] text-primary font-medium">{{ val }}</span> }
+              }
+            </td>
+            }
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+}
+
+<!-- ─── CTA ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-20 py-[40px]">
+  <div
+    class="mx-auto max-w-[1280px] flex flex-col sm:flex-row items-center justify-center gap-6 text-center sm:text-left">
+    <div>
+      <h2 class="text-primary text-[20px] font-semibold">Still not sure which plan is right for you?</h2>
+      <p class="mt-1 text-[14px] text-secondary">Our experts can help you choose the best plan for your business.</p>
+    </div>
+    <a routerLink="/contact"
+      class="shrink-0 inline-flex items-center justify-center gap-2 h-12 px-7 rounded-[8px] border border-primary/15 text-primary text-[15px] font-medium hover:border-main hover:text-main transition-colors">
+      Schedule a Demo
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M13 6l6 6-6 6" />
+      </svg>
+    </a>
+  </div>
+</section>

@@ -1,0 +1,51 @@
+<!-- Module Hero 3  Centered: center-aligned text with full-width image showcase below -->
+<section class="module-hero3">
+
+  <!-- Gradient accent background -->
+  <div class="module-hero3__gradient-bg"></div>
+
+  <!-- Text content (centered) -->
+  <div class="module-hero3__content">
+
+    <!-- Badge -->
+    @if (badgeText) {
+      <span class="module-hero3__badge">{{ badgeText }}</span>
+    }
+
+    <!-- Title -->
+    <h1 class="module-hero3__title">{{ title }}</h1>
+
+    <!-- Subtitle -->
+    <p class="module-hero3__subtitle">{{ subtitle }}</p>
+
+    <!-- CTA Buttons -->
+    @if (primaryBtnText || secondaryBtnText) {
+      <div class="module-hero3__actions">
+        @if (primaryBtnText) {
+          <a
+            [routerLink]="primaryBtnLink || null"
+            class="primary-btn text-white font-semibold text-[16px] gap-2 flex items-center justify-center">
+            {{ primaryBtnText }}
+            <img src="/assets/icons/right-arrow.svg" alt="Right arrow" aria-hidden="true" width="20" height="20" />
+          </a>
+        }
+        @if (secondaryBtnText) {
+          <a
+            [routerLink]="secondaryBtnLink || null"
+            class="outline-btn-dark font-semibold text-[16px] flex items-center justify-center">
+            {{ secondaryBtnText }}
+          </a>
+        }
+      </div>
+    }
+
+  </div>
+
+  <!-- Showcase image -->
+  <div class="module-hero3__showcase">
+    <div class="module-hero3__showcase-inner">
+      <img [src]="backgroundImage" [alt]="title" class="module-hero3__showcase-img" />
+    </div>
+  </div>
+
+</section>

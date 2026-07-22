@@ -1,0 +1,99 @@
+<form [formGroup]="contactForm" (ngSubmit)="onSubmit()"
+        class="bg-white w-full rounded-[20px] border border-primary/10 p-[25px] md:p-[30px] lg:p-[35px] flex flex-col gap-[20px]">
+
+        <!-- Full Name -->
+        <div class="flex flex-col gap-[6px]">
+            <label for="fullName" class="text-[14px] font-medium text-[#0E0E0ECC]/80">Full Name</label>
+            <input type="text" id="fullName" formControlName="fullName" placeholder="Enter your full name"
+                class="w-full h-[48px] border border-[#D0D5DD] rounded-[8px] px-[14px] text-[14px] text-[#0E0E0E] outline-none focus:border-main transition-colors duration-200"
+                [class.border-red-500]="f['fullName'].touched && f['fullName'].invalid" />
+            @if (f['fullName'].touched && f['fullName'].errors) {
+                <div class="text-[12px] text-red-500 mt-[2px]">
+                    @if (f['fullName'].errors['required']) {
+                        <span>Full name is required.</span>
+                    } @else if (f['fullName'].errors['minlength']) {
+                        <span>Full name must be at least 3 characters.</span>
+                    }
+                </div>
+            }
+        </div>
+
+        <!-- Email & Phone Row -->
+        <div class="flex flex-col md:flex-row gap-[20px]">
+            <!-- Email -->
+            <div class="flex flex-col gap-[6px] w-full md:w-1/2">
+                <label for="email" class="text-[14px] font-medium text-[#0E0E0ECC]/80">Email Address</label>
+                <input type="email" id="email" formControlName="email" placeholder="Enter your email"
+                    class="w-full h-[48px] border border-[#D0D5DD] rounded-[8px] px-[14px] text-[14px] text-[#0E0E0E] outline-none focus:border-main transition-colors duration-200"
+                    [class.border-red-500]="f['email'].touched && f['email'].invalid" />
+                @if (f['email'].touched && f['email'].errors) {
+                    <div class="text-[12px] text-red-500 mt-[2px]">
+                        @if (f['email'].errors['required']) {
+                            <span>Email is required.</span>
+                        } @else if (f['email'].errors['email']) {
+                            <span>Please enter a valid email address.</span>
+                        }
+                    </div>
+                }
+            </div>
+
+            <!-- Phone -->
+            <div class="flex flex-col gap-[6px] w-full md:w-1/2">
+                <label for="phone" class="text-[14px] font-medium text-[#0E0E0ECC]/80">Phone Number</label>
+                <input type="tel" id="phone" formControlName="phone" placeholder="Enter your phone number"
+                    class="w-full h-[48px] border border-[#D0D5DD] rounded-[8px] px-[14px] text-[14px] text-[#0E0E0E] outline-none focus:border-main transition-colors duration-200"
+                    [class.border-red-500]="f['phone'].touched && f['phone'].invalid" />
+                @if (f['phone'].touched && f['phone'].errors) {
+                    <div class="text-[12px] text-red-500 mt-[2px]">
+                        @if (f['phone'].errors['required']) {
+                            <span>Phone number is required.</span>
+                        } @else if (f['phone'].errors['pattern']) {
+                            <span>Please enter a valid phone number (10-15 digits).</span>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Subject -->
+        <div class="flex flex-col gap-[6px]">
+            <label for="subject" class="text-[14px] font-medium text-[#0E0E0ECC]/80">Subject</label>
+            <input type="text" id="subject" formControlName="subject" placeholder="Enter subject"
+                class="w-full h-[48px] border border-[#D0D5DD] rounded-[8px] px-[14px] text-[14px] text-[#0E0E0E] outline-none focus:border-main transition-colors duration-200"
+                [class.border-red-500]="f['subject'].touched && f['subject'].invalid" />
+            @if (f['subject'].touched && f['subject'].errors) {
+                <div class="text-[12px] text-red-500 mt-[2px]">
+                    @if (f['subject'].errors['required']) {
+                        <span>Subject is required.</span>
+                    }
+                </div>
+            }
+        </div>
+
+        <!-- Message -->
+        <div class="flex flex-col gap-[6px]">
+            <label for="message" class="text-[14px] font-medium text-[#0E0E0ECC]/80">Message</label>
+            <textarea id="message" formControlName="message" placeholder="Type your message here..." rows="5"
+                class="w-full border border-[#D0D5DD] rounded-[8px] px-[14px] py-[12px] text-[14px] text-[#0E0E0E] outline-none focus:border-main transition-colors duration-200 resize-none"
+                [class.border-red-500]="f['message'].touched && f['message'].invalid"></textarea>
+            @if (f['message'].touched && f['message'].errors) {
+                <div class="text-[12px] text-red-500 mt-[2px]">
+                    @if (f['message'].errors['required']) {
+                        <span>Message is required.</span>
+                    } @else if (f['message'].errors['minlength']) {
+                        <span>Message must be at least 10 characters.</span>
+                    }
+                </div>
+            }
+        </div>
+
+        <!-- Submit Button -->
+         <button type="submit" [disabled]="submitting"
+                class="w-[167px] h-[48px] rounded-lg mt-[10px] bg-[linear-gradient(86.25deg,#0B2827_0.45%,#005351_73.41%,#0B2827_99.36%)] disabled:opacity-70">
+                <p class="text-white text-[16px] font-medium">{{ submitting ? 'Sending...' : 'Send Message' }}</p>
+            </button>
+
+        @if (errorMsg) {
+            <p class="text-[13px] text-red-500 font-medium">{{ errorMsg }}</p>
+        }
+    </form>

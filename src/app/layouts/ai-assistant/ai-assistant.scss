@@ -1,0 +1,89 @@
+/* The Ceadx AI brand gradient, as used on the launcher.
+   Lives here because the icon (ai-icon.svg) is filled white, so it only reads
+   against this gradient — on the plain white/tinted circles it used to sit on, it
+   was white-on-white and effectively invisible. */
+.ai-badge {
+  background: linear-gradient(0deg, #f17c9f 0%, #c587ce 25.21%, #7fa6ff 75%, #3fd5ff 100%);
+}
+
+/* Panel pops up from the launcher */
+.ai-panel {
+  animation: ai-panel-in 0.22s cubic-bezier(0.34, 1.2, 0.5, 1);
+  transform-origin: bottom right;
+}
+
+@keyframes ai-panel-in {
+  0%   { opacity: 0; transform: translateY(10px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Landing greeting — pops out of the launcher, same easing as the panel */
+.ai-greeting {
+  animation: ai-greeting-in 0.28s cubic-bezier(0.34, 1.2, 0.5, 1);
+  transform-origin: bottom right;
+}
+
+@keyframes ai-greeting-in {
+  0%   { opacity: 0; transform: translateY(8px) scale(0.94); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Expanding ring on the launcher while the greeting is up, to draw the eye to it */
+.ai-launcher-ping {
+  animation: ai-launcher-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ai-launcher-ping {
+  0%        { opacity: 0.7; transform: scale(1); }
+  70%, 100% { opacity: 0;   transform: scale(1.6); }
+}
+
+/* Slim scrollbar so the thread doesn't get the chunky default one */
+.ai-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(11, 40, 39, 0.18) transparent;
+}
+
+.ai-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ai-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ai-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(11, 40, 39, 0.18);
+  border-radius: 999px;
+}
+
+.ai-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(11, 40, 39, 0.3);
+}
+
+/* "typing…" dots while awaiting a reply */
+.ai-typing span {
+  animation: ai-typing 1s ease-in-out infinite;
+}
+
+.ai-typing span:nth-child(2) { animation-delay: 0.15s; }
+.ai-typing span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes ai-typing {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30%           { transform: translateY(-3px); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-panel,
+  .ai-greeting,
+  .ai-typing span {
+    animation: none;
+  }
+
+  /* The ping is pure attention-grabbing motion — drop it entirely rather than
+     leaving a static ring sitting on the launcher. */
+  .ai-launcher-ping {
+    display: none;
+  }
+}

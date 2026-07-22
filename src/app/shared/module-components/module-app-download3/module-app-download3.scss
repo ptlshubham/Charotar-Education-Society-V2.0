@@ -1,0 +1,190 @@
+/* ═══════════════════════════════════════════════════════════
+   Module App Download 3  Dark Theme with Floating Elements
+   ═══════════════════════════════════════════════════════════ */
+
+.module-appdownload3 {
+  position: relative;
+  overflow: hidden;
+  padding: 60px 20px;
+  background: #0B1B2B;
+
+  @media (min-width: 768px) {
+    padding: 80px 40px;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 100px 70px;
+  }
+}
+
+/* Floating decorative blobs */
+.module-appdownload3__float {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.15;
+  animation: appdownload3-float 8s ease-in-out infinite;
+}
+
+.module-appdownload3__float--1 {
+  width: 300px;
+  height: 300px;
+  background: #3DAFA9;
+  top: -10%;
+  right: -5%;
+  animation-delay: 0s;
+}
+
+.module-appdownload3__float--2 {
+  width: 200px;
+  height: 200px;
+  background: #4F9CF9;
+  bottom: -8%;
+  left: -3%;
+  animation-delay: 2s;
+}
+
+.module-appdownload3__float--3 {
+  width: 120px;
+  height: 120px;
+  background: #6D5EF6;
+  top: 40%;
+  left: 30%;
+  animation-delay: 4s;
+}
+
+@keyframes appdownload3-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.05); }
+}
+
+/* Container */
+.module-appdownload3__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 40px;
+  position: relative;
+  z-index: 10;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    gap: 80px;
+  }
+}
+
+/* Content */
+.module-appdownload3__content {
+  width: 100%;
+  text-align: center;
+
+  @media (min-width: 1024px) {
+    width: 55%;
+    text-align: left;
+  }
+}
+
+.module-appdownload3__title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 16px;
+
+  @media (min-width: 768px) {
+    font-size: 38px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 42px;
+  }
+}
+
+.module-appdownload3__description {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+/* Store badges */
+.module-appdownload3__badges {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 24px;
+
+  @media (min-width: 1024px) {
+    justify-content: flex-start;
+  }
+}
+
+.module-appdownload3__store-badge {
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  img {
+    height: 48px;
+    width: auto;
+  }
+}
+
+/* QR code */
+.module-appdownload3__qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+  @media (min-width: 1024px) {
+    align-items: flex-start;
+  }
+}
+
+.module-appdownload3__qr-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px;
+}
+
+.module-appdownload3__qr-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+}
+
+/* Phone mockup */
+.module-appdownload3__phone {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  @media (min-width: 1024px) {
+    width: 45%;
+  }
+}
+
+.module-appdownload3__phone-img {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 20px 60px rgba(61, 175, 169, 0.2));
+
+  @media (min-width: 768px) {
+    max-width: 340px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .module-appdownload3__float {
+    animation: none;
+  }
+}

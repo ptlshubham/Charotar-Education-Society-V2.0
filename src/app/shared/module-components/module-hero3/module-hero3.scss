@@ -1,0 +1,163 @@
+/* ═══════════════════════════════════════════════════════════
+   Module Hero 3  Centered
+   Center-aligned text + full-width image showcase below
+   with gradient accent background
+   ═══════════════════════════════════════════════════════════ */
+
+.module-hero3 {
+  position: relative;
+  overflow: hidden;
+  padding-top: 80px;
+  padding-bottom: 0;
+  background: #fff;
+
+  @media (min-width: 1024px) {
+    padding-top: 100px;
+  }
+}
+
+/* Gradient accent background  subtle top gradient */
+.module-hero3__gradient-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: linear-gradient(180deg, #F0FFFE 0%, #ffffff 100%);
+  z-index: 0;
+}
+
+/* Content  centered text */
+.module-hero3__content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+  max-width: 800px;
+  margin: 0 auto;
+
+  @media (min-width: 768px) {
+    padding: 0 40px;
+  }
+}
+
+/* Badge */
+.module-hero3__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 0 20px;
+  background: #E8FFFD;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #3DAFA9;
+  margin-bottom: 20px;
+
+  @media (min-width: 768px) {
+    height: 32px;
+    font-size: 14px;
+    padding: 0 24px;
+    margin-bottom: 24px;
+  }
+}
+
+/* Title */
+.module-hero3__title {
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.15;
+  color: #232120;
+  margin-bottom: 16px;
+
+  @media (min-width: 768px) {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 54px;
+  }
+}
+
+/* Subtitle */
+.module-hero3__subtitle {
+  color: #747474;
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 600px;
+
+  @media (min-width: 768px) {
+    font-size: 18px;
+  }
+}
+
+/* CTA Actions */
+.module-hero3__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 32px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    gap: 16px;
+    margin-top: 40px;
+  }
+}
+
+/* Outline button  dark variant for light bg */
+.outline-btn-dark {
+  width: 147px;
+  height: 48px;
+  border: 1px solid #232120;
+  border-radius: 8px;
+  color: #232120;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #232120;
+    color: #fff;
+  }
+}
+
+/* Showcase image */
+.module-hero3__showcase {
+  position: relative;
+  z-index: 10;
+  margin-top: 48px;
+  padding: 0 20px;
+
+  @media (min-width: 768px) {
+    margin-top: 60px;
+    padding: 0 40px;
+  }
+
+  @media (min-width: 1024px) {
+    margin-top: 80px;
+    padding: 0 70px;
+  }
+}
+
+.module-hero3__showcase-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: 16px 16px 0 0;
+  overflow: hidden;
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.08);
+
+  @media (min-width: 768px) {
+    border-radius: 24px 24px 0 0;
+  }
+}
+
+.module-hero3__showcase-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}

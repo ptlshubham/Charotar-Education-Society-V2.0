@@ -1,0 +1,295 @@
+<!-- ─── Top bar: breadcrumb + actions ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-20 pt-[30px]">
+  <div class="mx-auto max-w-[1360px] flex flex-wrap items-center justify-between gap-4">
+    <nav class="flex items-center gap-2 text-[13px] text-secondary">
+      <a routerLink="/support/tutorials" class="hover:text-main transition-colors">Tutorials</a>
+      <span class="text-secondary/50">&#8250;</span>
+      <span>Getting Started</span>
+      <span class="text-secondary/50">&#8250;</span>
+      <span class="text-primary font-medium">{{ title() }}</span>
+    </nav>
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <span class="absolute right-3 top-1/2 -translate-y-1/2 text-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        </span>
+        <input #searchBox type="text" placeholder="Search tutorials..." [value]="searchQuery()" (input)="searchQuery.set(searchBox.value)" class="h-10 w-[200px] rounded-[8px] border border-primary/10 bg-white pl-3 pr-9 text-[13px] text-primary placeholder:text-secondary/70 outline-none focus:border-main transition-colors" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 3-column layout ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-20 py-[24px]">
+  <div class="mx-auto max-w-[1360px] flex flex-col lg:flex-row gap-8 items-start">
+
+    <!-- ── Left: category nav ── -->
+    <aside class="w-full lg:w-[240px] lg:shrink-0 flex flex-col gap-6">
+      <nav class="rounded-[16px] border border-primary/10 bg-white p-4">
+        <h2 class="px-2 text-primary text-[15px] font-semibold">Tutorial Categories</h2>
+        <ul class="mt-3 flex flex-col gap-1">
+          @for (cat of categories(); track cat.module) {
+            <li>
+              <button type="button" (click)="toggleCategory(cat.module)" class="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-[8px] text-left transition-colors"
+                [ngClass]="expandedModule() === cat.module ? 'text-main' : 'text-primary hover:bg-[#f8f9fa]'">
+                <span class="text-main" aria-hidden="true">
+                  @switch (cat.icon) {
+                    @case ('rocket') { <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2.1-.1-2.9a2.1 2.1 0 0 0-2.9 0Z"/><path d="M12 15 9 12a11 11 0 0 1 2-3.5C13.7 5 17.5 3 20.5 3c0 3-2 6.8-5.5 9.5A11 11 0 0 1 12 15Z"/></svg> }
+                    @case ('user') { <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> }
+                    @case ('folder') { <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9L9.9 3.9A2 2 0 0 0 8.2 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg> }
+                    @case ('users') { <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg> }
+                    @case ('puzzle') { <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3a2 2 0 0 1 4 0v1h3a1 1 0 0 1 1 1v3h1a2 2 0 0 1 0 4h-1v3a1 1 0 0 1-1 1h-3v-1a2 2 0 0 0-4 0v1H5a1 1 0 0 1-1-1v-3H3a2 2 0 0 1 0-4h1V5a1 1 0 0 1 1-1h3Z"/></svg> }
+                    @case ('card') { <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg> }
+                    @case ('chart') { <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg> }
+                    @case ('star') { <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3 6.9 7.6.6-5.8 5 1.8 7.5L12 18l-6.4 4 1.8-7.5-5.8-5 7.6-.6L12 2Z"/></svg> }
+                  }
+                </span>
+                <span class="flex-1 text-[14px] font-medium">{{ cat.name }}</span>
+                @if (cat.items.length) {
+                  <svg class="text-secondary transition-transform duration-200" [ngClass]="{ 'rotate-180': isOpen(cat.module) }" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                } @else {
+                  <svg class="text-secondary" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                }
+              </button>
+
+              @if (cat.items.length && isOpen(cat.module)) {
+                <ul class="mt-1 ml-4 flex flex-col border-l border-primary/10">
+                  @for (item of cat.items; track item.id) {
+                    <li>
+                      <a [routerLink]="['/support/tutorials', item.id]" class="w-full flex items-center gap-2 pl-4 pr-2 py-2 -ml-px border-l-2 text-left text-[13px] transition-colors"
+                        [ngClass]="item.id === currentId() ? 'border-main text-main font-medium bg-main/[0.06]' : 'border-transparent text-secondary hover:text-main'">
+                        {{ item.title }}
+                        @if (item.id === currentId()) {
+                          <span class="ml-auto w-1.5 h-1.5 rounded-full bg-main"></span>
+                        }
+                      </a>
+                    </li>
+                  }
+                </ul>
+              }
+            </li>
+          }
+        </ul>
+      </nav>
+
+      <!-- New to ZarklyX -->
+      <div class="rounded-[16px] bg-main/[0.07] p-6 text-center">
+        <span class="mx-auto flex items-center justify-center w-12 h-12 rounded-full bg-white text-main">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5"/></svg>
+        </span>
+        <h3 class="mt-3 text-primary text-[15px] font-semibold">New to ZarklyX?</h3>
+        <p class="mt-2 text-[13px] leading-[18px] text-secondary">Start with our Getting Started learning path.</p>
+        <a routerLink="/support/tutorials" class="mt-4 w-full inline-flex items-center justify-center gap-2 h-10 rounded-[8px] bg-main text-white text-[13px] font-medium hover:bg-primary transition-colors">
+          Start Learning Path
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ── Center: article ── -->
+    <article class="flex-1 min-w-0">
+      <!-- meta -->
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-[13px] text-secondary">
+        <span class="inline-flex items-center rounded-full bg-main/10 px-3 py-1 font-medium text-main">{{ meta().level }}</span>
+        @if (meta().readTime) { <span>{{ meta().readTime }}</span> }
+        <span class="w-1 h-1 rounded-full bg-secondary/50"></span>
+        <span>{{ meta().lessons }}</span>
+      </div>
+
+      <h1 class="mt-4 text-primary text-[30px] md:text-[36px] font-bold leading-[1.15]">{{ title() }}</h1>
+      <p class="mt-3 text-[16px] leading-[24px] text-secondary">{{ subtitle() }}</p>
+
+      <!-- author + actions -->
+      <div class="mt-5 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <span class="flex items-center justify-center w-10 h-10 rounded-full bg-main/10 text-main text-[15px] font-bold">Z</span>
+          <div>
+            <p class="text-primary text-[14px] font-semibold leading-[18px]">{{ author }}</p>
+            <p class="text-[12px] text-secondary">{{ updated() }}</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="relative">
+            <button type="button" (click)="toggleShare()" class="inline-flex items-center gap-2 h-9 px-4 rounded-[8px] border text-[13px] font-medium transition-colors"
+              [ngClass]="shareOpen() ? 'border-main text-main' : 'border-primary/10 text-primary hover:border-main hover:text-main'">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5 8.6 10.5"/></svg>
+              Share
+            </button>
+
+            @if (shareOpen()) {
+              <!-- backdrop closes the box on outside click -->
+              <div class="fixed inset-0 z-40" (click)="closeShare()"></div>
+              <!-- share box -->
+              <div class="absolute right-0 top-full mt-2 z-50 w-56 rounded-[12px] border border-primary/10 bg-white p-2 shadow-[0_20px_50px_-16px_rgba(11,40,39,0.35)]">
+                <p class="px-2 py-1.5 text-[12px] font-semibold text-secondary">Share this tutorial</p>
+                <div class="flex flex-col">
+                  <button type="button" (click)="shareTo('facebook')" class="flex items-center gap-2.5 px-2 py-2 rounded-[8px] text-[13px] text-primary hover:bg-[#f8f9fa] transition-colors">
+                    <img src="/assets/images/smm/icons/facebook.svg" alt="Facebook" width="18" height="18" class="w-[18px] h-[18px] object-contain" /> Facebook
+                  </button>
+                  <button type="button" (click)="shareTo('x')" class="flex items-center gap-2.5 px-2 py-2 rounded-[8px] text-[13px] text-primary hover:bg-[#f8f9fa] transition-colors">
+                    <img src="/assets/images/smm/icons/x.svg" alt="X" width="18" height="18" class="w-[18px] h-[18px] object-contain" /> X (Twitter)
+                  </button>
+                  <button type="button" (click)="shareTo('linkedin')" class="flex items-center gap-2.5 px-2 py-2 rounded-[8px] text-[13px] text-primary hover:bg-[#f8f9fa] transition-colors">
+                    <img src="/assets/images/smm/icons/linkedin.svg" alt="LinkedIn" width="18" height="18" class="w-[18px] h-[18px] object-contain" /> LinkedIn
+                  </button>
+                  <button type="button" (click)="shareTo('whatsapp')" class="flex items-center gap-2.5 px-2 py-2 rounded-[8px] text-[13px] text-primary hover:bg-[#f8f9fa] transition-colors">
+                    <img src="/assets/images/smm/icons/whatsapp.svg" alt="WhatsApp" width="18" height="18" class="w-[18px] h-[18px] object-contain" /> WhatsApp
+                  </button>
+                </div>
+                <div class="my-1 border-t border-primary/10"></div>
+                <button type="button" (click)="copyLink()" class="w-full flex items-center gap-2.5 px-2 py-2 rounded-[8px] text-[13px] font-medium transition-colors"
+                  [ngClass]="copied() ? 'text-main' : 'text-primary hover:bg-[#f8f9fa]'">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1.5-1.5"/></svg>
+                  {{ copied() ? 'Link copied!' : 'Copy link' }}
+                </button>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- video / hero -->
+      @if (videoEmbedUrl()) {
+        <div class="mt-6 relative rounded-[16px] overflow-hidden bg-black aspect-video">
+          <iframe class="absolute inset-0 w-full h-full" [src]="videoEmbedUrl()" [title]="title()"
+            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      } @else {
+        <div class="mt-6 relative rounded-[16px] overflow-hidden bg-[#f8f9fa] grid grid-cols-1 sm:grid-cols-2">
+          <div class="p-8 flex flex-col justify-center">
+            <p class="text-primary text-[18px]">Welcome to</p>
+            <p class="text-main text-[30px] font-bold leading-tight">ZarklyX</p>
+            <p class="mt-2 text-[13px] text-secondary max-w-[200px]">All-in-one platform to manage your agency and grow faster.</p>
+          </div>
+          <div class="relative bg-primary min-h-[200px] flex items-center justify-center p-4">
+            <div class="w-full rounded-[10px] bg-white/95 h-full min-h-[170px]"></div>
+            <span class="absolute flex items-center justify-center w-14 h-14 rounded-full bg-main text-white shadow-[0_10px_30px_-8px_rgba(0,0,0,0.4)]">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </span>
+          </div>
+        </div>
+      }
+
+      <!-- about this tutorial -->
+      @if (subtitle()) {
+        <div class="mt-6 flex items-start gap-3 rounded-[12px] bg-main/[0.06] px-5 py-4">
+          <span class="shrink-0 mt-0.5 text-main">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V17h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2Z"/></svg>
+          </span>
+          <div>
+            <h2 class="text-primary text-[15px] font-semibold">About this tutorial</h2>
+            <p class="mt-1 text-[14px] leading-[21px] text-secondary">{{ subtitle() }}</p>
+          </div>
+        </div>
+      }
+
+      <!-- helpful -->
+      <div class="mt-8 pt-6 border-t border-primary/10 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <span class="text-[14px] text-secondary">Was this lesson helpful?</span>
+          <button type="button" (click)="setHelpful('yes')" class="inline-flex items-center gap-1.5 h-9 px-4 rounded-[8px] border text-[13px] font-medium transition-colors"
+            [ngClass]="helpful === 'yes' ? 'border-main bg-main/10 text-main' : 'border-primary/10 text-secondary hover:border-main hover:text-main'">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12M15 5.9 14 10h5.5a2 2 0 0 1 2 2.3l-1.4 8A2 2 0 0 1 18 22H7"/></svg>
+            Yes
+          </button>
+          <button type="button" (click)="setHelpful('no')" class="inline-flex items-center gap-1.5 h-9 px-4 rounded-[8px] border text-[13px] font-medium transition-colors"
+            [ngClass]="helpful === 'no' ? 'border-main bg-main/10 text-main' : 'border-primary/10 text-secondary hover:border-main hover:text-main'">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 14V2M9 18.1 10 14H4.5a2 2 0 0 1-2-2.3l1.4-8A2 2 0 0 1 6 2h11"/></svg>
+            No
+          </button>
+        </div>
+        <div class="text-[13px] text-secondary text-right">
+          Still have questions?
+          <a href="mailto:support@zarklyx.com" class="block font-medium text-main hover:underline">Contact Support &#8594;</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- ── Right: learning path + extras ── -->
+    <aside class="w-full lg:w-[300px] lg:shrink-0 flex flex-col gap-6">
+      <!-- Learning path -->
+      <div class="rounded-[16px] border border-primary/10 bg-white p-6">
+        <h3 class="text-primary text-[16px] font-semibold">Learning Path</h3>
+        <div class="mt-4 flex items-center justify-between">
+          <p class="text-[14px] font-semibold text-primary">{{ pathTitle() }}</p>
+          <span class="text-[13px] font-semibold text-primary tabular-nums">{{ pathPercent() }}%</span>
+        </div>
+        <p class="mt-1 text-[12px] text-secondary">{{ pathCompleted() }} / {{ pathTotal() }} completed</p>
+        <div class="mt-2 h-1.5 rounded-full bg-primary/10 overflow-hidden">
+          <span class="block h-full rounded-full bg-main" [style.width.%]="pathPercent()"></span>
+        </div>
+
+        <ul class="mt-5 flex flex-col">
+          @for (lesson of pathVideos(); track lesson.id; let last = $last) {
+            <li class="flex gap-3">
+              <div class="flex flex-col items-center">
+                <span class="flex items-center justify-center w-7 h-7 rounded-full text-[12px] font-semibold shrink-0 transition-colors"
+                  [ngClass]="lesson.current ? 'bg-main text-white' : 'bg-main/10 text-main'">{{ lesson.num }}</span>
+                @if (!last) {
+                  <span class="w-px flex-1 min-h-5 bg-primary/10 my-1"></span>
+                }
+              </div>
+              <a [routerLink]="['/support/tutorials', lesson.id]" class="pb-4 block group">
+                <p class="text-[14px] font-medium leading-[18px] group-hover:text-main transition-colors" [ngClass]="lesson.current ? 'text-main' : 'text-primary'">{{ lesson.title }}</p>
+                <p class="text-[12px] text-secondary">{{ lesson.duration }}</p>
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- Need help -->
+      <div class="rounded-[16px] bg-primary p-6">
+        <div class="flex items-center gap-2 text-white">
+          <span class="flex items-center justify-center w-8 h-8 rounded-full bg-white/15">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.6 8.6 0 0 1-3.9-.9L3 21l1.9-5.6A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5Z"/></svg>
+          </span>
+          <h3 class="text-[16px] font-semibold">Need help?</h3>
+        </div>
+        <p class="mt-3 text-[13px] leading-[19px] text-white/75">Our support team is here to help you at every step.</p>
+        <a href="mailto:support@zarklyx.com" class="mt-4 inline-flex items-center gap-2 h-10 px-5 rounded-[8px] bg-main text-white text-[13px] font-medium hover:bg-white hover:text-primary transition-colors">
+          Contact Support
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+
+      <!-- Related articles -->
+      <div class="rounded-[16px] border border-primary/10 bg-white p-6">
+        <h3 class="text-primary text-[16px] font-semibold">Related Articles</h3>
+        <ul class="mt-4 flex flex-col gap-4">
+          @for (article of relatedArticles(); track article.id) {
+            <li>
+              <a [routerLink]="['/support/tutorials', article.id]" class="flex items-center gap-3 group">
+                <span class="flex items-center justify-center w-9 h-9 rounded-[10px] bg-main/10 text-main shrink-0">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+                </span>
+                <div class="min-w-0">
+                  <p class="text-primary text-[14px] font-medium leading-[18px] group-hover:text-main transition-colors">{{ article.title }}</p>
+                  <p class="text-[12px] text-secondary">{{ article.readTime }}</p>
+                </div>
+              </a>
+            </li>
+          }
+        </ul>
+        <a href="#" class="mt-5 inline-flex items-center gap-2 text-[14px] font-medium text-main hover:gap-3 transition-all">
+          View all articles
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+
+      <!-- Popular topics -->
+      <div class="rounded-[16px] border border-primary/10 bg-white p-6">
+        <h3 class="text-primary text-[16px] font-semibold">Popular Topics</h3>
+        <div class="mt-4 flex flex-wrap gap-2">
+          @for (topic of popularTopics(); track topic) {
+            <a routerLink="/support/tutorials" class="inline-flex items-center rounded-full bg-main/[0.08] px-3 py-1.5 text-[13px] text-primary hover:bg-main hover:text-white transition-colors">{{ topic }}</a>
+          }
+        </div>
+        <a href="#" class="mt-5 inline-flex items-center gap-2 text-[14px] font-medium text-main hover:gap-3 transition-all">
+          View all topics
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </aside>
+  </div>
+</section>

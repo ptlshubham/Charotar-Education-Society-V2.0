@@ -1,0 +1,89 @@
+# ZarklyX
+
+> ZarklyX is an all-in-one business management platform that streamlines operations and boosts productivity — social media, projects, finance, HR, CRM and more, for agencies, enterprises and small businesses.
+
+## Solutions
+
+- [Enterprise](https://zarklyx.com/solutions/enterprise)
+- [Agencies](https://zarklyx.com/solutions/agencies)
+- [Small & Medium Business](https://zarklyx.com/solutions/small-medium-business)
+- [Professional Services](https://zarklyx.com/solutions/professional-services)
+- [Social Media Management](https://zarklyx.com/solutions/social-media-management)
+- [Social Insights](https://zarklyx.com/solutions/social-insights)
+- [Brand Awareness](https://zarklyx.com/solutions/brand-awareness)
+- [Industries](https://zarklyx.com/solutions/industries)
+
+## Modules
+
+- [Social Media Management](https://zarklyx.com/modules/social-media-management)
+- [Project Management](https://zarklyx.com/modules/project-management)
+- [Token Management](https://zarklyx.com/modules/token-management)
+- [Employee Management](https://zarklyx.com/modules/employee-management)
+- [Finance & Accounting](https://zarklyx.com/modules/finance-accounting)
+- [HRMS](https://zarklyx.com/modules/hrms)
+- [CRM](https://zarklyx.com/modules/crm)
+- [Payroll](https://zarklyx.com/modules/payroll)
+- [Influencer Management](https://zarklyx.com/modules/influencer-management)
+- [IT Management](https://zarklyx.com/modules/it-management)
+
+## Integrations
+
+- [All Integrations](https://zarklyx.com/integrations)
+- [Facebook](https://zarklyx.com/integrations/facebook)
+- [Instagram](https://zarklyx.com/integrations/instagram)
+- [X (Twitter)](https://zarklyx.com/integrations/x)
+- [LinkedIn](https://zarklyx.com/integrations/linkedin)
+- [Pinterest](https://zarklyx.com/integrations/pinterest)
+- [Threads](https://zarklyx.com/integrations/threads)
+- [Google Drive](https://zarklyx.com/integrations/google-drive)
+- [Dropbox](https://zarklyx.com/integrations/dropbox)
+
+## Company
+
+- [About Us](https://zarklyx.com/about)
+- [Our Team](https://zarklyx.com/team)
+- [Customer Stories](https://zarklyx.com/company/customer-stories)
+- [Careers](https://zarklyx.com/company/careers)
+- [Newsroom](https://zarklyx.com/company/newsroom)
+- [Trust Center](https://zarklyx.com/company/trust-center)
+
+## Resources
+
+- [Blog](https://zarklyx.com/blogs)
+- [Podcast](https://zarklyx.com/podcast)
+- [Guides & Tutorials](https://zarklyx.com/support/tutorials)
+- [Expert Sessions](https://zarklyx.com/support/expert-sessions)
+- [Feature Requests](https://zarklyx.com/support/feature-request)
+
+## Support & Help
+
+- [Support Center](https://zarklyx.com/support)
+- [FAQ](https://zarklyx.com/support/faq)
+- [Community](https://zarklyx.com/support/community)
+- [Changelog](https://zarklyx.com/support/change-log)
+- [System Status](https://zarklyx.com/support/system-status)
+- [Report Abuse](https://zarklyx.com/support/report-abuse)
+- [Data Deletion](https://zarklyx.com/support/data-deletion)
+- [Delete Your Account](https://zarklyx.com/support/delete-your-account)
+
+## Pricing
+
+- [Pricing Plans](https://zarklyx.com/pricing)
+- [Book a Demo](https://zarklyx.com/demo)
+
+## Other Pages
+
+- [Home](https://zarklyx.com/)
+- [Contact Us](https://zarklyx.com/contact)
+- [Sitemap](https://zarklyx.com/sitemap)
+
+## Optional
+
+- [Privacy Policy](https://zarklyx.com/support/privacy-policy)
+- [Terms of Service](https://zarklyx.com/support/terms-of-service)
+- [Cookie Policy](https://zarklyx.com/support/cookie-policy)
+- [Refund Policy](https://zarklyx.com/support/refund-policy)
+- [Beta Policy](https://zarklyx.com/support/beta-policy)
+- [Website Terms](https://zarklyx.com/support/website-terms)
+- [Disclosure Policy](https://zarklyx.com/support/disclosure-policy)
+- [Do Not Sell My Info](https://zarklyx.com/support/do-not-sell)

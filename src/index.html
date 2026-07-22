@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- ─── Document setup ───
+       charset must stay first; base must precede any relative URL below. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="/">
+
+  <!-- ─── Connection hints ───
+       Kept above the font/analytics requests so DNS + TLS start while the rest
+       of the head is still parsing. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- ─── Primary meta ───
+       FALLBACKS ONLY. SeoService overrides title/description/keywords/robots/
+       canonical/OG/Twitter per route from the values in
+       super admin → Website Control → SEO Management.
+       These apply only until that data loads, or if the SEO API is unreachable.
+       To change a page's meta, edit it in super admin — not here. -->
+  <title>
+    ZarklyX - All-in-One Agency Operations Platform | CRM, Social Media, HR & Client Management
+  </title>
+  <meta name="description"
+    content="ZarklyX is the all-in-one operations platform for marketing and social media agencies. Manage clients, schedule content across every platform, and run your CRM, HR, payroll, and invoicing from one login  with modular, per-client pricing built for agencies done juggling five tools." />
+  <meta name="keywords"
+    content="ZarklyX, agency management software, agency operations platform, agency CRM, client management software, multi-client dashboard, agency back office software, agency HR software, agency payroll software, agency invoicing software, white label client portal, marketing agency software, social media management platform, social media scheduler, social media analytics, content publishing, influencer marketing, social media automation, Facebook management, Instagram management, LinkedIn management, Twitter management, YouTube management, team collaboration, brand monitoring, digital workflow, marketing productivity, multi-channel marketing, audience analysis, social media reporting, content strategy" />
+  <meta name="author" content="ZarklyX">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="canonical" href="https://zarklyx.com/">
+
+  <!-- ─── Open Graph / Facebook ─── -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://zarklyx.com/">
+  <meta property="og:site_name" content="ZarklyX">
+  <meta property="og:title"
+    content="ZarklyX - All-in-One Agency Operations Platform | CRM, Social Media, HR & Client Management">
+  <meta property="og:description"
+    content="ZarklyX replaces scheduling, storage, CRM, and back-office tools with one platform built for marketing and social media agencies. Manage every client, campaign, and team member from a single login." />
+  <meta property="og:image" content="https://zarklyx.com/og-image.png">
+  <meta property="og:locale" content="en_US">
+
+  <!-- ─── Twitter Card ─── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@zarklyX">
+  <meta name="twitter:creator" content="@zarklyX">
+  <meta name="twitter:title"
+    content="ZarklyX - All-in-One Agency Operations Platform | CRM, Social Media, HR & Client Management">
+  <meta name="twitter:description"
+    content="ZarklyX replaces scheduling, storage, CRM, and back-office tools with one platform built for marketing and social media agencies. Manage every client, campaign, and team member from a single login." />
+  <meta name="twitter:image" content="https://zarklyx.com/og-image.png">
+
+  <!-- ─── Structured data ─── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "ZarklyX",
+    "applicationCategory": "BusinessApplication",
+    "applicationSubCategory": "Agency Management Software",
+    "operatingSystem": "Web",
+    "url": "https://zarklyx.com/",
+    "image": "https://zarklyx.com/og-image.png",
+    "description": "All-in-one operations platform for marketing and social media agencies: CRM, client management, HR, payroll, invoicing, and multi-platform social media scheduling in one login.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "ZarklyX",
+      "url": "https://zarklyx.com/"
+    }
+  }
+  </script>
+
+  <!-- ─── Icons ─── -->
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" id="favicon-32">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" id="favicon-16">
+  <link rel="shortcut icon" href="favicon.ico" id="favicon-ico">
+  <!-- Android Chrome Icons -->
+  <link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
+
+  <script>
+    // Update favicons immediately based on browser dark mode
+    (function () {
+      var isBrowserDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var favicon16 = document.getElementById('favicon-16');
+      var favicon32 = document.getElementById('favicon-32');
+      var faviconIco = document.getElementById('favicon-ico');
+
+      function setDark() {
+        if (favicon16) favicon16.href = 'favicon-16x16-white.png';
+        if (favicon32) favicon32.href = 'favicon-32x32-white.png';
+        if (faviconIco) faviconIco.href = 'favicon-white.ico';
+      }
+
+      function setLight() {
+        if (favicon16) favicon16.href = 'favicon-16x16.png';
+        if (favicon32) favicon32.href = 'favicon-32x32.png';
+        if (faviconIco) faviconIco.href = 'favicon.ico';
+      }
+
+      if (isBrowserDark) setDark();
+
+      // Listen for browser dark mode changes
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+        if (e.matches) setDark();
+        else setLight();
+      });
+    })();
+  </script>
+
+  <!-- ─── Fonts ─── -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+    rel="stylesheet">
+
+  <!-- ─── Analytics ───
+       Both load async, so they sit last and never delay first render. -->
+
+  <!-- Google Tag Manager -->
+  <script>
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-PTMRTRGS');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YZ9SJDH8ML"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-YZ9SJDH8ML');
+  </script>
+</head>
+
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PTMRTRGS" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <app-root></app-root>
+</body>
+
+</html>

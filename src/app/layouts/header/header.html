@@ -1,0 +1,205 @@
+<header
+  class="relative z-60 flex items-center justify-between px-5 py-5.75 md:px-10 lg:px-17.5 lg:py-3.5 lg:border-gray-200 bg-white shadow md:shadow-xs">
+
+  <!-- Left: Logo + Desktop Nav -->
+  <div class="flex items-center gap-10 lg:gap-6 ">
+    <a class="shrink-0" routerLink="/">
+      <img src="/assets/logo/default-logo.svg" alt="ZarklyX" width="135" height="34" class="block" />
+    </a>
+
+    <nav class="hidden lg:flex xl:ml-7.5 ">
+      <ul class="flex items-center gap-6.75 list-none m-0 p-0">
+        @for (tab of ['solutions','features','resources']; track tab) {
+          <li>
+            <button type="button" (click)="toggleDropdown(tab)"
+              class="inline-flex items-center gap-1  xl:text-[16px] font-medium bg-transparent border-b-2 border-transparent pb-0.5 cursor-pointer whitespace-nowrap transition-colors hover:text-main capitalize"
+              [class.text-main]="activeDropdown ? activeDropdown === tab : tabActive(tab)" [class.border-main]="activeDropdown ? activeDropdown === tab : tabActive(tab)" [class.text-primary]="!(activeDropdown ? activeDropdown === tab : tabActive(tab))">
+              {{ tab }}
+              <svg class="transition-transform duration-200" [class.rotate-180]="activeDropdown === tab" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+          </li>
+        }
+        <li>
+          <a routerLink="/integrations" (click)="closeDropdown()"
+            class="inline-flex items-center text-[16px] font-medium no-underline whitespace-nowrap border-b-2 border-transparent pb-0.5 transition-colors hover:text-main"
+            [class.text-main]="!activeDropdown && linkActive('/integrations')" [class.border-main]="!activeDropdown && linkActive('/integrations')" [class.text-primary]="!(!activeDropdown && linkActive('/integrations'))">Integrations</a>
+        </li>
+        <li>
+          <a routerLink="/pricing" (click)="closeDropdown()"
+            class="inline-flex items-center text-[16px] font-medium no-underline whitespace-nowrap border-b-2 border-transparent pb-0.5 transition-colors hover:text-main"
+            [class.text-main]="!activeDropdown && linkActive('/pricing')" [class.border-main]="!activeDropdown && linkActive('/pricing')" [class.text-primary]="!(!activeDropdown && linkActive('/pricing'))">Pricing</a>
+        </li>
+        <!-- <li>
+          <a class="inline-flex items-center gap-1.5 text-[16px] font-medium text-primary no-underline whitespace-nowrap"
+            routerLink="/solutions/enterprise">Enterprise
+            <span class="inline-flex items-center rounded-full bg-main/10 px-1.5 py-0.5 text-[10px] font-semibold text-main uppercase">New</span>
+          </a>
+        </li> -->
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Right: Desktop Actions -->
+  <div class="hidden lg:flex items-center gap-2.5">
+    <a target="_blank" class="text-sm h-10 w-21.25 font-medium text-primary no-underline rounded-lg whitespace-nowrap flex justify-center items-center bg-[#0B282708]"
+      href="https://app.zarklyx.com/auth/login">Log in</a>
+      <a class="text-sm h-10 font-medium text-main no-underline rounded-lg whitespace-nowrap flex justify-center items-center border-1 border-main px-[20px] "
+      routerLink="/demo">Book a demo</a>
+    <a target="_blank" class="text-sm h-10  font-medium text-white flex justify-center items-center no-underline rounded-[8px] bg-main whitespace-nowrap px-[20px]"
+      href="https://app.zarklyx.com/auth/signup">Early Access</a>
+  </div>
+
+  <!-- Mobile: Animated Burger ↔ X toggle -->
+  <div class="burger lg:hidden"
+    [class.open]="mobileMenuOpen"
+    [attr.aria-label]="mobileMenuOpen ? 'Close menu' : 'Open menu'"
+    role="button"
+    tabindex="0"
+    (click)="mobileMenuOpen ? closeMobileMenu() : openMobileMenu()"
+    (keydown.enter)="mobileMenuOpen ? closeMobileMenu() : openMobileMenu()"
+    (keydown.space)="mobileMenuOpen ? closeMobileMenu() : openMobileMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Megamenu Dropdowns Container (Desktop only) -->
+  @if (activeDropdown) {
+    <div class="hidden lg:block absolute left-1/2 -translate-x-1/2 top-full w-full z-50">
+      @if (activeDropdown === 'solutions') {
+        <app-solutions-dropdown class="megamenu-anim block" (closeDropdown)="closeDropdown()"></app-solutions-dropdown>
+      } @else if (activeDropdown === 'features') {
+        <app-features-dropdown class="megamenu-anim block" (closeDropdown)="closeDropdown()"></app-features-dropdown>
+      } @else if (activeDropdown === 'resources') {
+        <app-resources-dropdown class="megamenu-anim block" (closeDropdown)="closeDropdown()"></app-resources-dropdown>
+      }
+    </div>
+  }
+
+</header>
+
+<!-- Desktop Dropdown Backdrop for Click-Outside closing -->
+@if (activeDropdown) {
+  <div class="hidden lg:block fixed inset-0 z-30 bg-transparent" (click)="closeDropdown()"></div>
+}
+
+<!-- ─── Overlay: full screen, covers entire viewport when open ─── -->
+<div #mobileOverlay class="fixed inset-0 z-[75] bg-black/40 cursor-pointer invisible opacity-0"
+  (click)="closeMobileMenu()">
+</div>
+
+<!-- ─── Sidebar: mobile / tablet menu, slides from right ─── -->
+<aside #mobileSidebar
+  class="fixed top-0 right-0 h-dvh w-full  translate-x-full bg-white z-[80] flex flex-col shadow-2xl">
+
+  <!-- Header row -->
+  <div class="shrink-0 flex items-center justify-between px-5 h-[68px] border-b border-primary/10">
+    <img src="/assets/logo/default-logo.svg" alt="ZarklyX" width="120" height="30" />
+    <button type="button" aria-label="Close menu" (click)="closeMobileMenu()"
+      class="flex items-center justify-center w-9 h-9 rounded-full bg-[#f8f9fa] text-secondary">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <!-- Scrollable content -->
+  <div class="flex-1 overflow-y-auto flex flex-col">
+
+    <!-- Nav -->
+    <nav class="px-4 py-2">
+      @for (group of mobileNav; track group.id) {
+        <div class="border-b border-primary/10">
+          <button type="button" (click)="toggleMobileSection(group.id)"
+            class="w-full flex items-center gap-3 my-2 px-3 py-2.5 rounded-[12px] text-left transition-colors"
+            [ngClass]="tabActive(group.id) ? 'bg-main/[0.06] ring-1 ring-inset ring-main' : ''">
+            <!-- <span class="flex items-center justify-center w-11 h-11 rounded-[12px] bg-main/10 text-main shrink-0">
+              <ng-container [ngTemplateOutlet]="navIcon" [ngTemplateOutletContext]="{ $implicit: group.icon }"></ng-container>
+            </span> -->
+            <span class="flex-1 text-[17px] font-bold" [ngClass]="tabActive(group.id) ? 'text-main' : 'text-primary'">{{ group.label }}</span>
+            <svg class="transition-transform duration-200" [class.rotate-90]="activeMobileSection === group.id" [ngClass]="tabActive(group.id) ? 'text-main' : 'text-primary/50'" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+          @if (activeMobileSection === group.id) {
+            <ul class="flex flex-col  pr-2 pb-3">
+              @for (item of group.links; track item.link) {
+                <li>
+                  <a [routerLink]="item.link" routerLinkActive="!text-main !bg-main/10 font-medium" (click)="closeMobileMenu()" class="block px-3 py-2.5 rounded-[8px] text-[14px] text-secondary hover:bg-[#f8f9fa] hover:text-main transition-colors">{{ item.label }}</a>
+                </li>
+              }
+            </ul>
+          }
+        </div>
+      }
+
+      @for (item of mobileDirect; track item.link) {
+        <a [routerLink]="item.link" (click)="closeMobileMenu()"
+          class="flex items-center gap-3 my-2 px-3 py-2.5 rounded-[12px] transition-colors border-b border-primary/10 rounded-b-none last:border-b-0"
+          >
+          <!-- <span class="flex items-center justify-center w-11 h-11 rounded-[12px] bg-main/10 text-main shrink-0">
+            <ng-container [ngTemplateOutlet]="navIcon" [ngTemplateOutletContext]="{ $implicit: item.icon }"></ng-container>
+          </span> -->
+          <span class="flex-1 text-[17px] font-bold" [ngClass]="linkActive(item.prefix) ? 'text-main' : 'text-primary'">{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+
+    <!-- Promo card -->
+    <div class="px-4 mt-3">
+      <a routerLink="/pricing" (click)="closeMobileMenu()" class="flex items-center gap-3 rounded-[14px] bg-[#f8f9fa] px-4 py-3.5">
+        <span class="flex items-center justify-center w-11 h-11 rounded-[12px] bg-main/10 text-main shrink-0">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v9h14v-9M12 8S10.5 3 8 3a2.5 2.5 0 0 0 0 5h4Zm0 0s1.5-5 4-5a2.5 2.5 0 0 1 0 5h-4Z"/></svg>
+        </span>
+        <div class="flex-1">
+          <p class="text-main text-[15px] font-bold leading-tight">Limited Time Offer!</p>
+          <p class="text-[14px] text-secondary">Get 20% OFF on Annual Plans</p>
+        </div>
+        <svg class="text-primary/50" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="px-4 mt-5 flex flex-col gap-3">
+      <a href="https://app.zarklyx.com/auth/login" (click)="closeMobileMenu()" class="flex items-center justify-center gap-2 h-12 rounded-[10px] text-primary text-[15px] font-semibold bg-[#0B282708]">
+        Log in
+      </a>
+      <a routerLink="/contact" (click)="closeMobileMenu()" class="flex items-center justify-center gap-2 h-12 rounded-[10px] border-1 border-main text-main text-[15px] font-semibold ">
+        Book a demo
+      </a>
+      <a href="https://app.zarklyx.com/auth/signup" (click)="closeMobileMenu()" class="flex items-center justify-center gap-2 h-12 rounded-[10px] bg-main text-white text-[15px] font-semibold hover:bg-primary transition-colors">
+        Free Trial
+      </a>
+    </div>
+
+    <!-- Socials -->
+    <div class="mt-6 bg-[#f6faf9] px-4 py-6 text-center">
+      <p class="text-[14px] font-semibold text-secondary mb-4">Follow us on</p>
+      <div class="flex items-center justify-center gap-3">
+        <a href="#" aria-label="Instagram" class="flex items-center justify-center w-12 h-12 rounded-[12px] border border-primary/10 bg-white text-primary hover:bg-primary hover:text-white transition-colors">
+        <img src="/assets/images/smm/icons/instagram.svg" alt="Instagram"/>
+        </a>
+        <a href="#" aria-label="LinkedIn" class="flex items-center justify-center w-12 h-12 rounded-[12px] border border-primary/10 bg-white text-primary hover:bg-primary hover:text-white transition-colors">
+            <img src="/assets/images/smm/icons/linkedin.svg" alt="LinkedIn"/>
+        </a>
+        <a href="#" aria-label="Facebook" class="flex items-center justify-center w-12 h-12 rounded-[12px] border border-primary/10 bg-white text-primary hover:bg-primary hover:text-white transition-colors">
+          <img src="/assets/images/smm/icons/facebook.svg" alt="Facebook"/>
+        </a>
+        <a href="#" aria-label="YouTube" class="flex items-center justify-center w-12 h-12 rounded-[12px] border border-primary/10 bg-white text-primary hover:bg-primary hover:text-white transition-colors">
+          <img src="/assets/images/smm/icons/youtube.svg" alt="YouTube"/>
+        </a>
+        <a href="#" aria-label="X" class="flex items-center justify-center w-12 h-12 rounded-[12px] border border-primary/10 bg-white text-primary hover:bg-primary hover:text-white transition-colors">
+           <img src="/assets/images/smm/icons/x.svg" alt="X" class="w-8 h-8"/>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</aside>
+
+<!-- mobile nav icon template -->
+<ng-template #navIcon let-icon>
+  @switch (icon) {
+    @case ('grid') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="3"/><circle cx="16.5" cy="7.5" r="3"/><circle cx="7.5" cy="16.5" r="3"/><circle cx="16.5" cy="16.5" r="3"/></svg> }
+    @case ('star') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3 6.9 7.6.6-5.8 5 1.8 7.5L12 18l-6.4 4 1.8-7.5-5.8-5 7.6-.6L12 2Z"/></svg> }
+    @case ('book') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5a2 2 0 0 1 2-2h6v16H4a2 2 0 0 0-2 2V5ZM22 5a2 2 0 0 0-2-2h-6v16h6a2 2 0 0 1 2 2V5Z"/></svg> }
+    @case ('link') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> }
+    @case ('tag') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0l-7.2-7.2A2 2 0 0 1 2.8 12V4.8A2 2 0 0 1 4.8 2.8H12a2 2 0 0 1 1.4.6l7.2 7.2a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg> }
+  }
+</ng-template>

@@ -1,0 +1,220 @@
+<section
+  class="relative overflow-hidden rounded-br-[80px] md:rounded-br-[160px] lg:rounded-br-[320px] bg-[#0B1B2B] min-h-[calc(94vh-56px)]">
+
+  <!-- Background images  CSS crossfades between these, driven by current() -->
+  @for (slide of imageSlides; track slide.mobile; let i = $index) {
+  <div class="hero-slide" [class.active]="i === current()">
+    <picture>
+      <source media="(min-width: 1024px)" [srcset]="slide.lg" />
+      <!-- Only the first (LCP) image is high-priority + eager; the rest defer so they
+           don't compete with the initial paint. -->
+      <img [src]="slide.mobile" [alt]="slide.alt" [attr.fetchpriority]="i === 0 ? 'high' : 'low'"
+        [attr.loading]="i === 0 ? 'eager' : 'lazy'" decoding="async" />
+    </picture>
+  </div>
+  }
+
+  <!-- Dark gradient overlay -->
+  <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.25)_8%,rgba(0,0,0,0.65)_65%)] lg:bg-[linear-gradient(270deg,rgba(0,0,0,0.25)_8.18%,rgba(0,0,0,0.65)_65.31%)]"></div>
+
+  <!-- Content -->
+  <div class="relative z-10 px-5 md:px-10 lg:px-17.5 pt-12.5 pb-8 flex flex-col min-h-[calc(90vh-56px)]">
+
+    <!-- Headline -->
+    <h1
+      class="text-white text-[44px] md:text-[50px] lg:text-[54px] xl:text-[54px] font-normal leading-[1.2] mb-5 md:w-[78%] lg:w-[65%] xl:w-[50%] md:mt-[10%] lg:mt-[3%] 2xl:mt-[6%]">
+      One Platform for Everything Your Agency Runs On. Simplified. Supercharged
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="text-white text-[16px] leading-6 mt-4 lg:mt-8 text-start w-70 md:w-[50%] lg:w-[36%]">
+      From CRM and project management to invoicing, HR, social media management, and client
+      portals, ZarklyX gives your agency everything needed to manage daily operations in one
+      place.
+    </p>
+
+    <!-- Floating cards -->
+    <div
+      class="mt-8 md:mt-[8%] lg:mt-0 relative lg:static h-[280px] md:h-[300px] lg:h-auto overflow-hidden lg:overflow-visible flex flex-col lg:items-end">
+
+      <!-- first image cards -->
+      <div class="hidden lg:absolute lg:mt-[-10%]" data-card-group="0">
+        <p
+          class="text-primary bg-white h-6 w-35 text-[10px] md:text-[12px] lg:text-[10px] font-semibold rounded-md flex justify-start items-center pl-3.5 py-1 mb-1 md:mb-2 lg:mb-[4px]">
+          Task Overview</p>
+
+        <!-- Task Overview card -->
+        <div class="bg-white rounded-lg p-3 w-55 shadow-lg mb-6">
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center justify-between pb-[4px] border-b border-[#F2F2F2]">
+              <div class="flex items-start gap-2">
+                <div class="flex justify-center items-center overflow-hidden rounded-full bg-gray-300 shrink-0">
+                  <img src="/assets/images/token-summary-img1.svg" alt="Token summary chart">
+                </div>
+                <div>
+                  <p class="text-[10px] md:text-[12px] lg:text-[10px] font-medium text-primary leading-tight">Client
+                    Onboarding</p>
+                  <p class="text-[9px] text-gray-400 leading-tight">3 new agencies this week</p>
+                  <div class="w-full flex justify-between">
+                    <div class="flex justify-start items-center">
+                      <img src="/assets/icons/yellow-arrow-up.svg" alt="Upward trend arrow">
+                      <p class="text-[7px] font-semibold leading-[8px] text-[#FFBD21]">Medium</p>
+                    </div>
+                    <p class="text-[7px] text-[#0885FE] font-semibold">In Progress</p>
+                  </div>
+                </div>
+              </div>
+              <div class="h-full flex flex-col justify-between items-center gap-[2px]">
+                <p class="text-[7px] font-bold flex items-center gap-1">{{ onboardingDue }} <span
+                    class="h-[3px] w-[3px] bg-[#000000] rounded-full"></span></p>
+                <img src="/assets/images/hero-avatar-group.svg" alt="Group of ZarklyX customer avatars" class="">
+              </div>
+            </div>
+            <div class="flex items-center justify-between pb-[4px] border-b border-[#F2F2F2]">
+              <div class="flex items-start gap-2">
+                <div class="flex justify-center items-center overflow-hidden rounded-full bg-gray-300 shrink-0">
+                  <img src="/assets/images/token-summary-img2.svg" alt="Token usage chart">
+                </div>
+                <div>
+                  <p class="text-[10px] md:text-[12px] lg:text-[10px] font-medium text-primary leading-tight">Invoice
+                    Approvals</p>
+                  <p class="text-[9px] text-gray-400 leading-tight">5 invoices pending review</p>
+                  <div class="w-full flex justify-between">
+                    <div class="flex justify-start items-center">
+                      <img src="/assets/icons/hero-red-arrow-up.svg" alt="Upward trend arrow">
+                      <p class="text-[7px] font-semibold leading-[8px] text-[#CD0000]">High</p>
+                    </div>
+                    <p class="text-[7px] text-[#0885FE] font-semibold">In Progress</p>
+                  </div>
+                </div>
+              </div>
+              <div class="h-full flex flex-col justify-between items-center gap-[2px]">
+                <p class="text-[7px] font-bold flex items-center gap-1">{{ invoiceDue }} <span
+                    class="h-[3px] w-[3px] bg-[#000000] rounded-full"></span></p>
+                <img src="/assets/images/hero-avatar-group.svg" alt="Group of ZarklyX customer avatars" class="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hidden lg:absolute bottom-[5%] left-[50%] right-[50%]" data-card-group="0">
+        <!-- Built to Scale card -->
+        <div class="bg-white rounded-[10px] p-4 h-25.5 w-58.75 shadow-lg ml-7.5 lg:ml-0">
+          <div class="flex items-start justify-between">
+            <div>
+              <p class="text-[24px] font-medium text-primary leading-tight mb-2.5">Built to Scale</p>
+              <p class="text-[10px] text-[#000000] mt-1 leading-snug">
+                Agencies scale faster once CRM, HR, and social media run on one platform.
+              </p>
+            </div>
+            <img src="/assets/images/Graph.png" alt="Growth graph trending upward" width="41" height="23" aria-hidden="true"
+              class="shrink-0 ml-2 object-contain" />
+          </div>
+        </div>
+      </div>
+
+      <!-- second image cards -->
+      <div class="hidden w-[50%] md:w-[20%] lg:absolute lg:w-[12%] lg:top-[22%] lg:right-[3%] ml-[14%] md:ml-[9%]"
+        data-card-group="1">
+        <div class=" bg-white rounded-[6px] flex flex-col justify-center py-[10px] px-[10px] gap-[6px]">
+          <p class="text-[16px] text-primary font-medium">One Workflow</p>
+          <p class="text-[8px] font-normal">Streamline your entire agency workflow  from strategy to delivery.</p>
+        </div>
+      </div>
+
+      <div
+        class="hidden w-[220px] h-[82px] bg-white rounded-[8px] lg:absolute lg:bottom-[20%] xl:bottom-[10%] lg:right-[30%] xl:right-[35%] flex justify-center items-center px-[12px] py-[8px] mt-[30px]"
+        data-card-group="1">
+        <div class="flex flex-col justify-center items-start -mt-2 ">
+          <p class="font-medium text-[#232120] text-[10px]">Weekly Team Sync</p>
+          <p class="text-[#747474] text-[8px] leading-[14px]">Review client campaigns and project
+            deliverables together.</p>
+          <p class="text-[#747474] text-[8px] leading-[14px]">Assign tasks across every department.</p>
+        </div>
+        <div class="h-full flex items-end">
+
+          <img src="/assets/images/hero-avatar-group.svg " alt="Group of ZarklyX customer avatars" class="w-12 md:w-18">
+        </div>
+      </div>
+
+      <!-- third image cards  -->
+      <div
+        class=" w-fit lg:absolute lg:top-[45%] lg:left-[45%] bg-white flex flex-col justify-center items-center mt-[10%] gap-[10px] pt-[7px] px-[18px] pb-[18px] rounded-[7px] ml-4 md:-mt-0"
+        data-card-group="2">
+        <div class="flex justify-between items-center">
+          <p class="flex justify-center items-center border-r border-[#E7EAE9] px-[26px] gap-[4px]">
+            <span class="text-[10px]">{{ calYear }}</span>
+            <span><img src="/assets/icons/hero-down-arrow.svg" alt="Scroll down arrow" class="w-2"></span>
+          </p>
+          <p class="flex justify-center items-center px-[26px] gap-[4px]">
+            <span class="text-[10px]">{{ calMonth }}</span>
+            <span><img src="/assets/icons/hero-down-arrow.svg" alt="Scroll down arrow" class="w-2"></span>
+          </p>
+        </div>
+        <div class="flex justify-center items-center gap-[14px] -ml-2">
+          @for (d of weekDays; track $index) {
+          <div class="flex flex-col items-center gap-[8px] rounded-[4px]" [class.bg-main]="d.isToday"
+            [class.p-2]="d.isToday">
+            <p class="font-semibold text-[10px]"
+              [style.color]="d.isToday ? '#FFFFFF' : (d.isSunday ? '#FF3030' : '#747474')">{{ d.letter }}</p>
+            <p class="text-[10px] font-medium"
+              [style.color]="d.isToday ? '#FFFFFF' : (d.inMonth ? '#232120' : '#74747499')">{{ d.day }}</p>
+          </div>
+          }
+        </div>
+      </div>
+
+      <div
+        class="hidden lg:absolute lg:top-[60%] lg:left-[46%] mt-[24px] w-[206px] bg-white flex h-[84px] rounded-[7px] justify-center items-start px-[17px] py-[6px] relative ml-8"
+        data-card-group="2">
+        <div class="w-full flex justify-between items-center">
+          <p class="font-semibold text-[6px] xl:text-[8px] text-[#000000]">{{ eventDate }}</p>
+          <div class="h-[18.6px] w-[53.96px] bg-main rounded-full flex justify-center items-center gap-[2px]">
+            <img src="/assets/icons/add-event-plus.svg" alt="Add event">
+            <p class="text-[6px] font-semibold text-white">Add Event</p>
+          </div>
+
+        </div>
+        <div
+          class="absolute -left-4 top-6 bg-white rounded font-semibold text-[7px] text-[#000000] shadow-[0px_2px_3px_0px_#0000001F,0px_-1px_3px_0px_#00000026] px-[10px] py-[4px]">
+          12:30PM
+        </div>
+        <div
+          class="flex flex-col justify-center items-start bg-[#FFF8E6] py-[8px] px-[10px] absolute w-[100%] rounded-[8px] -right-10 -bottom-4 shadow-[-2.15px_-2.15px_4px_0px_#00000033]">
+          <p class="text-[#232120] font-medium text-[10px]">Client Strategy Call</p>
+          <p class="text-[#747474] font-medium text-[8px] mt-[3px]">Align on the Q3 social media roadmap and
+            content calendar. </p>
+        </div>
+      </div>
+
+      <div
+        class="hidden lg:flex lg:absolute top-[36%] xl:top-[45%] right-[15%] xl:right-[19%] bg-white rounded font-semibold text-[7px] xl:text-[10px] text-[#000000] shadow-[0px_2px_3px_0px_#0000001F,0px_-1px_3px_0px_#00000026] px-[10px] py-[4px]"
+        data-card-group-lg="2">
+        12:30PM
+      </div>
+
+      <div
+        class="hidden lg:absolute top-[40%] xl:top-[50%] right-[2%] xl:right-[6%] lg:w-[16%] lg:flex flex-col justify-center items-start bg-[#D8FFFC] py-[8px] px-[10px]  rounded-[8px]  shadow-[-2.15px_-2.15px_4px_0px_#00000033]"
+        data-card-group-lg="2">
+        <p class="text-[#232120] font-medium text-[10px]">Content Review</p>
+        <p class="text-[#747474] font-medium text-[8px] mt-[3px]">Approve scheduled posts across every social
+          channel. </p>
+      </div>
+
+    </div>
+
+    <!-- CTA Buttons -->
+    <div class="flex flex-col md:flex-row lg:flex-row flex-wrap gap-3.75 mt-8 md:mt-[6%] lg:mt-10 xl:mt-16">
+      <a target="_blank" href="https://app.zarklyx.com"
+        class="primary-btn text-white font-semibold text-[16px] gap-2 flex items-center justify-center">
+        Get Started
+        <img src="/assets/icons/right-arrow.svg" alt="Right arrow" aria-hidden="true" width="20" height="20" />
+    </a>
+      <button routerLink="/support" type="button" class="outline-btn text-white font-semibold text-[16px]">
+        Learn More
+      </button>
+    </div>
+
+  </div>
+</section>

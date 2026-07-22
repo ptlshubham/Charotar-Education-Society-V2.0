@@ -1,0 +1,97 @@
+<div
+  class="min-h-screen relative w-full lg:w-[94%] xl:w-[95%] flex flex-col justify-start items-center  bg-[#000000] overflow-hidden rounded-r-[80px] pb-12 md:py-8 lg:py-12">
+  <img loading="lazy" decoding="async" src="/assets/images/choose-zarklyx-gradient.svg" alt="Gradient background"
+    class="absolute top-0 left-0 md:top-[-5%] lg:top-[-2%] xl:top-[-4%]">
+  <!-- Torch wrapper: spans the whole dark band (heading row + Z row). Mouse is
+       tracked here so the entire area reveals the hidden words. -->
+  <div class="w-full relative" (mousemove)="onTorchMove($event)" (mouseleave)="onTorchLeave()">
+
+    <!-- Hidden teal words (desktop only). pointer-events-none so the button stays
+         clickable; sits behind the heading (z-3) so headings/Z stay on top. -->
+    <div #torchLayer class="torch-layer hidden lg:block absolute inset-0 z-3 select-none pointer-events-none">
+      @for (word of torchWords; track $index) {
+      <span class="absolute whitespace-nowrap text-[28px] font-medium" [style.left]="word.left"
+        [style.top]="word.top">{{ word.text }}</span>
+      }
+    </div>
+
+    <div class="w-full relative flex flex-col justify-center items-start z-20 mt-25 gap-10 px-5 md:px-10 lg:px-17.5">
+      <h2 class="text-white text-[34px] md:text-[40px] lg:text-[36px] font-medium md:w-[60%] lg:w-[40%]">Manage your
+        entire
+        business on ZarklyX.</h2>
+      <p class="text-white text-[16px] font-normal md:w-[60%] lg:w-[45%]">Tell us about your agency and we'll recommend
+        the
+        right ZarklyX plan for your team size, client load, and workflow  in seconds.</p>
+      <button type="button" routerLink="/pricing"
+        class="w-44 h-12 border-2 border-white rounded-lg  text-white font-semibold text-[16px] xl:hover:bg-white xl:hover:text-black xl:hover:cursor-pointer transition-discrete duration-150">
+        View Plan
+      </button>
+    </div>
+    <div
+      class="w-full h-auto relative flex flex-col items-end lg:mt-[-26%] xl:mt-[-18%] z-4 pointer-events-none select-none">
+      <img loading="lazy" decoding="async" src="/assets/images/z 1.png" alt="ZarklyX Z monogram" draggable="false" class="">
+      <img loading="lazy" decoding="async" src="/assets/images/Ellipse 248.png" alt="Decorative circle" draggable="false"
+        class=" mt-[-40%] md:mt-[-16%] lg:mt-[-10%]">
+    </div>
+  </div>
+  <!-- <div class="w-full flex flex-col justify-center items-center px-5 md:px-10 gap-10 lg:mt-[-10%] xl:mt-[-5%]">
+    <h2 class="text-white text-[24px] md:text-[30px] lg:text-[36px] font-medium">Choose <span
+        class="text-[#38CDB7]">ZarklyX</span></h2>
+    <p class="text-white/85 text-[16px] text-center md:w-[60%] lg:w-[45%]">One platform for CRM, HR, accounting, SEO,
+      and social
+      media  pick the modules your agency needs and scale up as you grow.</p>
+    <div class="relative flex justify-center items-center w-full">
+      <div
+        class="w-7.5 h-7.5 lg:hidden flex justify-center items-center rounded-full bg-[#ffffff]/20 cursor-pointer shrink-0"
+        (click)="prev()">
+        <img loading="lazy" decoding="async" src="/assets/icons/left-arrow.svg" alt="Left arrow" />
+      </div>
+      <div class="relative flex-1 mx-2 md:mx-4 lg:mx-0">
+        <div #tabViewport class="tab-viewport overflow-hidden relative h-10">
+          <div #tabStrip class="flex items-center whitespace-nowrap will-change-transform absolute top-0 left-0 h-full">
+            @for (slide of displayTabs; track $index) {
+            <div #tabItem
+              class="tab-item shrink-0 cursor-pointer px-3 md:px-6 lg:px-[25px] flex items-center h-full text-center"
+              (click)="selectTab($index)">
+              <p class="text-[14px] md:text-[15px] lg:text-[16px] font-medium whitespace-nowrap">{{ slide.label }}</p>
+            </div>
+            }
+          </div>
+        </div>
+        <div class="flex flex-col items-center pointer-events-none w-full mt-1.5">
+          <div class="w-25 h-0.5 bg-white rounded-full"></div>
+          <img loading="lazy" decoding="async" src="/assets/icons/Rectangle cz.svg" alt="Decorative rectangle" class="-mt-1" />
+        </div>
+      </div>
+      <div
+        class="w-7.5 h-7.5 lg:hidden flex justify-center items-center rounded-full bg-[#ffffff]/20 cursor-pointer shrink-0"
+        (click)="next()">
+        <img loading="lazy" decoding="async" src="/assets/icons/right-arrow-cz.svg" alt="Next slide arrow" />
+      </div>
+    </div>
+  </div>
+  <div class="px-3.75 w-full md:px-10 lg:hidden" (pointerdown)="onPointerDown($event)"
+    (pointerup)="onPointerUp($event)">
+    <div class="h-64 md:h-[500px] w-full rounded-[10px] border-2 border-[#ffffff]/20 overflow-hidden">
+      <div class="h-full w-full bg-[#ffffff]/12 flex justify-center items-center p-2">
+        <img loading="lazy" decoding="async" [src]="slides[activeIndex()].image"
+          [alt]="slides[activeIndex()].label + ' module in ZarklyX'" draggable="false"
+          class="w-full h-full object-cover rounded-[10px]" />
+      </div>
+    </div>
+  </div>
+  <div class="hidden lg:block relative w-full h-150 overflow-hidden " (pointerdown)="onPointerDown($event)"
+    (pointerup)="onPointerUp($event)">
+    @for (slide of slides; track $index) {
+    <div #slideCard
+      class="absolute top-0 left-1/2 -ml-90 w-180 h-115 rounded-[10px] border-2 border-[#ffffff]/20 overflow-hidden cursor-pointer will-change-transform"
+      [style.transform]="cardTransform($index)" [style.opacity]="cardOpacity($index)" [style.zIndex]="cardZ($index)"
+      (click)="select($index)">
+      <div class="h-full w-full bg-[#ffffff]/12 flex justify-center items-center p-2">
+        <img loading="lazy" decoding="async" [src]="slide.image" [alt]="slide.label + ' module in ZarklyX'"
+          draggable="false" class="w-full h-full object-cover rounded-[10px]" />
+      </div>
+    </div>
+    }
+  </div> -->
+</div>

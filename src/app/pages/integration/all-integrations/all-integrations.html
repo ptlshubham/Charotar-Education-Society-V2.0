@@ -1,0 +1,440 @@
+<!-- ─── Breadcrumb ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 pt-[24px]">
+  <div class="mx-auto ">
+    <nav class="flex items-center gap-2 text-[13px] text-secondary">
+      <a routerLink="/" class="hover:text-main transition-colors">Home</a>
+      <span class="text-secondary/50">&#8250;</span>
+      <span>Integrations</span>
+      <span class="text-secondary/50">&#8250;</span>
+      <span class="text-primary font-medium">All Integrations</span>
+    </nav>
+  </div>
+</section>
+
+<!-- ─── Hero ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 pt-[30px] pb-[20px]">
+  <div class="mx-auto  grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-16">
+    <!-- Copy -->
+    <div>
+
+        <div
+            class="h-[24px] w-fit md:h-[29px] bg-[#E8FFFD] rounded-full flex justify-center items-center z-10 px-[15px]">
+            <p class="text-[12px] md:text-[14px] font-semibold text-main ">All
+        Integrations</p>
+
+        </div>
+
+      <h1 class="mt-[10px] text-primary text-[38px] md:text-[44px] font-medium leading-[1.12]">
+        Connect the tools you love. <span class="text-main">Supercharge your workflow.</span>
+      </h1>
+
+      <p class="mt-6 max-w-[440px] text-[16px] leading-[26px] text-secondary">
+        Seamlessly integrate ZarklyX with your favorite apps and tools. Automate tasks, sync data, and work smarter
+        across your entire tech stack.
+      </p>
+
+      <ul class="mt-6 grid grid-cols-2 w-full lg:w-[50%] gap-2.5">
+        @for (item of heroChecklist; track item) {
+        <li class="flex items-center gap-2.5 text-[14px] text-primary">
+          <svg class="shrink-0 text-main" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <path d="m8.5 12 2.5 2.5 4.5-5" />
+          </svg>
+          {{ item }}
+        </li>
+        }
+      </ul>
+    </div>
+
+    <!-- Hub illustration -->
+    <div class="flex lg:flex justify-center">
+      <div class="relative h-[400px] w-[400px]">
+        <!-- Dashed spokes + two-way data-flow pulses (out to every platform AND back into ZarklyX) -->
+        <svg class="absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 100 100" fill="none"
+          aria-hidden="true">
+          <!-- rounded radiation rippling continuously out of the hub as it takes in energy -->
+          <circle cx="50" cy="50" r="9" fill="none" stroke="#3DAFA9" stroke-width="0.5" opacity="0">
+            <animate attributeName="r" dur="3.4s" repeatCount="indefinite" begin="0s" values="9;27"
+              calcMode="spline" keyTimes="0;1" keySplines="0.15 0.6 0.35 1" />
+            <animate attributeName="opacity" dur="3.4s" repeatCount="indefinite" begin="0s" values="0.5;0" />
+          </circle>
+          <circle cx="50" cy="50" r="9" fill="none" stroke="#3DAFA9" stroke-width="0.5" opacity="0">
+            <animate attributeName="r" dur="3.4s" repeatCount="indefinite" begin="1.1s" values="9;27"
+              calcMode="spline" keyTimes="0;1" keySplines="0.15 0.6 0.35 1" />
+            <animate attributeName="opacity" dur="3.4s" repeatCount="indefinite" begin="1.1s" values="0.5;0" />
+          </circle>
+          <circle cx="50" cy="50" r="9" fill="none" stroke="#3DAFA9" stroke-width="0.5" opacity="0">
+            <animate attributeName="r" dur="3.4s" repeatCount="indefinite" begin="2.2s" values="9;27"
+              calcMode="spline" keyTimes="0;1" keySplines="0.15 0.6 0.35 1" />
+            <animate attributeName="opacity" dur="3.4s" repeatCount="indefinite" begin="2.2s" values="0.5;0" />
+          </circle>
+
+          @for (app of hubFlows; track app.name) {
+          <!-- static connecting spoke -->
+          <line x1="50" y1="50" [attr.x2]="app.x" [attr.y2]="app.y" stroke="#0B2827" stroke-opacity="0.12"
+            stroke-width="0.4" stroke-dasharray="1.5 1.5" />
+
+          <!-- platform sends inward at its own scattered timing (dark) → feeds the hub -->
+          <circle r="1.3" fill="#0A2827" opacity="0">
+            <animateMotion [attr.dur]="app.inDur + 's'" repeatCount="indefinite" [attr.begin]="app.inBegin + 's'"
+              [attr.path]="'M' + app.x + ',' + app.y + ' L50,50'" calcMode="spline" keyPoints="0;1" keyTimes="0;1"
+              keySplines="0.4 0 0.3 1" />
+            <animate attributeName="opacity" [attr.dur]="app.inDur + 's'" repeatCount="indefinite"
+              [attr.begin]="app.inBegin + 's'" values="0;1;1;0" keyTimes="0;0.1;0.85;1" />
+          </circle>
+
+          <!-- hub sends back out at its own scattered timing (teal) -->
+          <circle r="1.3" fill="#3DAFA9" opacity="0">
+            <animateMotion [attr.dur]="app.outDur + 's'" repeatCount="indefinite" [attr.begin]="app.outBegin + 's'"
+              [attr.path]="'M50,50 L' + app.x + ',' + app.y" calcMode="spline" keyPoints="0;1" keyTimes="0;1"
+              keySplines="0.4 0 0.3 1" />
+            <animate attributeName="opacity" [attr.dur]="app.outDur + 's'" repeatCount="indefinite"
+              [attr.begin]="app.outBegin + 's'" values="0;1;1;0" keyTimes="0;0.1;0.85;1" />
+          </circle>
+          }
+        </svg>
+
+        <!-- Center brand mark  glows as energy radiates in -->
+        <span
+          class="hub-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-24 h-24 rounded-[20px] bg-white">
+          <svg width="46" height="44" viewBox="0 0 23 22" xmlns="http://www.w3.org/2000/svg" aria-label="ZarklyX">
+            <polygon fill="#3DAFA9" points="3.9,0.7 22.7,0.7 11.7,11 11.7,4.9 3.9,4.9" />
+            <polygon fill="#0A2827" points="19.5,21.3 0.7,21.3 11.7,11 11.7,17.1 19.5,17.1" />
+          </svg>
+        </span>
+
+        <!-- Orbiting integration icons  a tile's border turns teal exactly when the hub's
+             reply pulse reaches it (border-flash timing matches that platform's outbound pulse) -->
+        @for (app of hubFlows; track app.name) {
+        <span
+          class="absolute -ml-7 -mt-7 cursor-pointer transition-transform duration-300 hover:-translate-y-2 hover:scale-105"
+          [style.left.%]="app.x" [style.top.%]="app.y">
+          <span class="hub-tile flex items-center justify-center w-14 h-14 rounded-[14px] bg-white"
+            [style.animationDuration]="app.outDur + 's'" [style.animationDelay]="app.outBegin + 's'">
+            <img [src]="'/assets/images/smm/icons/' + app.icon" [alt]="app.name" width="28" height="28"
+              class="w-7 h-7 object-contain" />
+          </span>
+        </span>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <!-- <div class="mx-auto mt-8">
+    <div class="relative max-w-[600px] mx-auto lg:mx-0 lg:ml-auto lg:max-w-[560px]">
+      <span class="absolute right-4 top-1/2 -translate-y-1/2 text-secondary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m21 21-4.3-4.3" />
+        </svg>
+      </span>
+      <input type="text" placeholder="Search integrations..."
+        class="w-full h-13 py-3.5 rounded-[10px] border border-primary/10 bg-white pl-4 pr-12 text-[14px] text-primary placeholder:text-secondary/70 outline-none focus:border-main transition-colors " />
+    </div>
+  </div> -->
+</section>
+
+<!-- ─── Categories + Popular ─── -->
+<section id="categories" class="bg-white px-5 md:px-10 lg:px-17.5 py-[20px] scroll-mt-24">
+  <div class="mx-auto  flex flex-col lg:flex-row gap-8 items-start">
+    <!-- Sidebar -->
+    <aside class="w-full lg:w-[230px] lg:shrink-0">
+      <div class="rounded-[16px] border border-primary/10 bg-white p-4">
+        <h2 class="px-2 text-primary text-[15px] font-semibold">Categories</h2>
+        <ul class="mt-3 flex flex-col gap-1">
+          @for (cat of categories; track cat.name) {
+          <li>
+            <button type="button" (click)="selectCategory(cat.name)"
+              class="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-[8px] text-left text-[14px] transition-colors"
+              [ngClass]="activeCategory === cat.name ? 'bg-main/10 text-main font-medium' : 'text-secondary hover:text-main hover:bg-[#f8f9fa]'">
+              <span aria-hidden="true">
+                @switch (cat.icon) {
+                @case ('grid') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="7" height="7" rx="1" />
+                  <rect x="14" y="3" width="7" height="7" rx="1" />
+                  <rect x="3" y="14" width="7" height="7" rx="1" />
+                  <rect x="14" y="14" width="7" height="7" rx="1" />
+                </svg> }
+                @case ('star') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m12 2 3 6.9 7.6.6-5.8 5 1.8 7.5L12 18l-6.4 4 1.8-7.5-5.8-5 7.6-.6L12 2Z" />
+                </svg> }
+                @case ('contact') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="16" rx="2" />
+                  <circle cx="9" cy="10" r="2" />
+                  <path d="M13 8h5M13 12h5M6 16s.5-2 3-2 3 2 3 2" />
+                </svg> }
+                @case ('megaphone') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m3 11 18-5v12L3 14v-3Z" />
+                  <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
+                </svg> }
+                @case ('chat') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.6 8.6 0 0 1-3.9-.9L3 21l1.9-5.6A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5Z" />
+                </svg> }
+                @case ('pen') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 20h9" />
+                  <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
+                </svg> }
+                @case ('card') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="5" width="20" height="14" rx="2" />
+                  <path d="M2 10h20" />
+                </svg> }
+                @case ('bag') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+                  <path d="M3 6h18M16 10a4 4 0 0 1-8 0" />
+                </svg> }
+                @case ('chart') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 3v18h18" />
+                  <rect x="7" y="12" width="3" height="6" />
+                  <rect x="12" y="8" width="3" height="10" />
+                  <rect x="17" y="5" width="3" height="13" />
+                </svg> }
+                @case ('headset') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 14v-2a9 9 0 0 1 18 0v2" />
+                  <path d="M21 16a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2v2ZM3 16a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 2v2Z" />
+                </svg> }
+                @case ('code') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m16 18 6-6-6-6M8 6l-6 6 6 6" />
+                </svg> }
+                @case ('cloud') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17.5 19a4.5 4.5 0 0 0 .5-8.98A6 6 0 0 0 6.34 9 4.5 4.5 0 0 0 7 18h10.5Z" />
+                </svg> }
+                @case ('clock') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 7v5l3 2" />
+                </svg> }
+                @case ('award') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="8" r="5" />
+                  <path d="M8.2 12.5 7 22l5-3 5 3-1.2-9.5" />
+                </svg> }
+                @case ('flow') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="6" height="6" rx="1" />
+                  <rect x="15" y="15" width="6" height="6" rx="1" />
+                  <path d="M9 6h6a3 3 0 0 1 3 3v6" />
+                </svg> }
+                }
+              </span>
+              {{ cat.name }}
+            </button>
+          </li>
+          }
+        </ul>
+        <div class="mt-3 pt-3 border-t border-primary/10">
+          <a href="#"
+            class="flex items-center gap-2.5 px-2.5 py-2 rounded-[8px] text-[14px] text-main hover:bg-main/[0.06] transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V17h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2Z" />
+            </svg>
+            Suggest an Integration
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Popular integrations -->
+    <div class="flex-1 min-w-0">
+      <div class="flex items-center justify-between gap-4">
+        <h2 class="text-primary text-[20px] font-semibold">{{ activeCategory }}</h2>
+        <a href="#"
+          class="inline-flex items-center gap-2 text-[14px] font-medium text-main hover:gap-3 transition-all whitespace-nowrap">
+          View all integrations
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        @for (app of filteredIntegrations; track app.name) {
+        <a [routerLink]="app.route ?? null" [attr.href]="app.route ? null : '#'"
+          class="flex flex-col rounded-[15px] border border-primary/10 bg-white p-5 transition-shadow duration-200 "
+          [class.opacity-75]="app.comingSoon" [class.pointer-events-none]="app.comingSoon"
+          [class.cursor-pointer]="app.route && !app.comingSoon">
+          <div class="flex items-center gap-3">
+            <span class="flex items-center justify-center w-10 h-10 rounded-[10px]"
+              [style.backgroundColor]="app.icon ? '#f8f9fa' : (app.color + '1a')">
+              @if (app.icon) {
+              <img [src]="'/assets/images/smm/icons/' + app.icon" [alt]="app.name" width="24" height="24"
+                class="w-6 h-6 object-contain" />
+              } @else {
+              <span class="text-[14px] font-bold" [style.color]="app.color">{{ app.letter }}</span>
+              }
+            </span>
+            <span class="text-primary text-[15px] font-semibold">{{ app.name }}</span>
+          </div>
+          <p class="mt-4 text-[13px] leading-[19px] text-secondary flex-1">{{ app.desc }}</p>
+          @if (app.comingSoon) {
+          <span
+            class="mt-4 inline-flex w-fit items-center rounded-full bg-primary/[0.05] text-primary px-2.5 py-0.5 text-[11px] font-medium ">Coming
+            Soon</span>
+          } @else {
+          <span
+            class="mt-4 inline-flex w-fit items-center rounded-full bg-main/10 px-2.5 py-0.5 text-[11px] font-medium text-main">Available</span>
+          }
+        </a>
+        }
+      </div>
+
+      <div class="mt-6 flex justify-center">
+        <a href="#"
+          class="inline-flex items-center gap-2 h-11 px-6 rounded-[8px] border border-primary/10 bg-white text-primary text-[14px] font-medium hover:border-main hover:text-main transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1" />
+            <rect x="14" y="3" width="7" height="7" rx="1" />
+            <rect x="3" y="14" width="7" height="7" rx="1" />
+            <rect x="14" y="14" width="7" height="7" rx="1" />
+          </svg>
+          View all integrations
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Better connected experience ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[20px]">
+  <div class="mx-auto  rounded-[16px] bg-[#f8f9fa] p-6 md:p-8">
+    <h2 class="text-center text-primary text-[22px] font-semibold">Built for a better connected experience</h2>
+    <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      @for (item of experience; track item.title) {
+      <div class="flex items-start gap-3">
+        <span class="flex items-center justify-center w-11 h-11 rounded-full bg-white text-main shrink-0 ">
+          @switch (item.icon) {
+          @case ('shield') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
+            <path d="m9 12 2 2 4-4" />
+          </svg> }
+          @case ('sync') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 2v6h-6M3 22v-6h6" />
+            <path d="M21 8a9 9 0 0 0-15-3.5L3 8M3 16a9 9 0 0 0 15 3.5L21 16" />
+          </svg> }
+          @case ('bolt') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z" />
+          </svg> }
+          @case ('puzzle') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M8 3a2 2 0 0 1 4 0v1h3a1 1 0 0 1 1 1v3h1a2 2 0 0 1 0 4h-1v3a1 1 0 0 1-1 1h-3v-1a2 2 0 0 0-4 0v1H5a1 1 0 0 1-1-1v-3H3a2 2 0 0 1 0-4h1V5a1 1 0 0 1 1-1h3Z" />
+          </svg> }
+          }
+        </span>
+        <div>
+          <h3 class="text-primary text-[14px] font-semibold">{{ item.title }}</h3>
+          <p class="mt-1 text-[12px] leading-[17px] text-secondary">{{ item.desc }}</p>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ─── Browse by popular categories ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[20px]">
+  <div class="mx-auto ">
+    <h2 class="text-primary text-[20px] font-semibold">Browse by popular categories</h2>
+    <div class="mt-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+      @for (cat of browseCategories; track cat.name) {
+      <a href="#"
+        class="group flex flex-col rounded-[15px] border border-primary/10 bg-white p-5 hover:border-main/40 transition-colors">
+        <span class="flex items-center justify-center w-10 h-10 rounded-[10px]" [style.color]="cat.color"
+          [style.backgroundColor]="cat.color + '1a'">
+          @switch (cat.icon) {
+          @case ('contact') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="16" rx="2" />
+            <circle cx="9" cy="10" r="2" />
+            <path d="M13 8h5M13 12h5M6 16s.5-2 3-2 3 2 3 2" />
+          </svg> }
+          @case ('megaphone') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 11 18-5v12L3 14v-3Z" />
+            <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
+          </svg> }
+          @case ('chat') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.6 8.6 0 0 1-3.9-.9L3 21l1.9-5.6A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5Z" />
+          </svg> }
+          @case ('pen') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20h9" />
+            <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
+          </svg> }
+          @case ('card') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="5" width="20" height="14" rx="2" />
+            <path d="M2 10h20" />
+          </svg> }
+          @case ('chart') { <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3v18h18" />
+            <path d="m7 14 4-4 3 3 5-6" />
+          </svg> }
+          }
+        </span>
+        <div class="mt-3 flex items-center justify-between gap-2">
+          <p class="text-primary text-[14px] font-semibold">{{ cat.name }}</p>
+          <span class="shrink-0 text-secondary group-hover:text-main group-hover:translate-x-0.5 transition-all"><svg
+              width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg></span>
+        </div>
+        <p class="text-[12px] text-secondary">{{ cat.count }} integrations</p>
+      </a>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ─── Request an integration ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[40px]">
+  <div class="mx-auto rounded-[16px] bg-main/[0.06] px-6 md:px-10 py-7 flex flex-col md:flex-row md:items-center gap-6">
+    <span class="shrink-0 flex items-center justify-center w-16 h-16 rounded-[14px] bg-white text-main -rotate-6">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path
+          d="M8 3a2 2 0 0 1 4 0v1h3a1 1 0 0 1 1 1v3h1a2 2 0 0 1 0 4h-1v3a1 1 0 0 1-1 1h-3v-1a2 2 0 0 0-4 0v1H5a1 1 0 0 1-1-1v-3H3a2 2 0 0 1 0-4h1V5a1 1 0 0 1 1-1h3Z" />
+      </svg>
+    </span>
+    <div class="flex-1">
+      <h2 class="text-primary text-[18px] md:text-[20px] font-semibold leading-[1.2]">Can't find the integration you
+        need?</h2>
+      <p class="mt-1 text-[14px] leading-[20px] text-secondary">Let us know which tools you'd like to connect with
+        ZarklyX. We're always working to bring you more integrations.</p>
+    </div>
+    <a routerLink="/contact"
+      class="shrink-0 inline-flex items-center justify-center gap-2 h-12 px-7 rounded-[8px] bg-main text-white text-[15px] font-medium hover:bg-primary transition-colors">
+      Request an Integration
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M13 6l6 6-6 6" />
+      </svg>
+    </a>
+  </div>
+</section>

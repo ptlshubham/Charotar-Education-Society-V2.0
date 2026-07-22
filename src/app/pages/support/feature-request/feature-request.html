@@ -1,0 +1,372 @@
+<!-- ═══════════════ Hero ═══════════════ -->
+<section class="bg-[#F7FAF9] px-5 md:px-10 lg:px-17.5 pt-[70px] pb-[44px]">
+  <div class="mx-auto  grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+    <!-- Left copy -->
+    <div>
+       <div class="h-[24px] w-fit md:h-[29px] bg-[#E8FFFD] rounded-full flex justify-center items-center z-10 px-[15px]">
+        <p class="text-[12px] md:text-[14px] font-semibold text-main ">Feature Request</p>
+      </div>
+      <h1 class="mt-[10px] text-primary text-[36px] md:text-[46px] font-medium leading-[1.12]">
+        Help shape the future<br class="hidden md:block" /> of <span class="text-main">ZarklyX</span>
+      </h1>
+      <p class="mt-4 max-w-[440px] text-[16px] leading-[26px] text-secondary">
+        We believe the best ideas come from our users. Share your feature requests, vote for suggestions, and help us build a better ZarklyX for everyone.
+      </p>
+      <div class="mt-7 flex flex-col sm:flex-row gap-3">
+        <button type="button" (click)="openSubmit()" class="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-[8px] bg-main text-white text-[15px] font-medium hover:bg-primary transition-colors">
+          Submit a Feature Request
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <a href="#requests" class="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-[8px] border border-primary/15 bg-white text-primary text-[15px] font-medium hover:border-main hover:text-main transition-colors">
+          View Roadmap
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+        </a>
+      </div>
+
+      <!-- stats -->
+      <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-5">
+        @for (s of heroStats(); track s.label) {
+          <div class="flex items-center gap-2.5">
+            <span class="flex items-center justify-center w-9 h-9 rounded-[9px] bg-main/10 text-main shrink-0">
+              @switch (s.icon) {
+                @case ('bulb') { <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V17h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2Z"/></svg> }
+                @case ('vote') { <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v11H3V10zM7 10l4-7a2 2 0 0 1 2 2v3h5.5a2 2 0 0 1 2 2.3l-1.4 8A2 2 0 0 1 17 21H7"/></svg> }
+                @case ('calendar') { <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> }
+                @case ('ship') { <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4.5 20.3a1 1 0 0 0 1.3 1.3L12 19l6.2 2.6a1 1 0 0 0 1.3-1.3L12 2Z"/></svg> }
+              }
+            </span>
+            <div>
+              <p class="text-primary text-[18px] font-bold leading-none">{{ s.value }}</p>
+              <p class="mt-0.5 text-[11px] text-secondary">{{ s.label }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Right: roadmap illustration card -->
+    <div class="relative">
+      <div class="rounded-[16px] bg-white border border-primary/10 shadow-[0_20px_50px_-20px_rgba(11,40,39,0.25)] p-5 md:p-6">
+        <div class="flex items-center gap-3">
+          <span class="flex items-center justify-center w-10 h-10 rounded-[10px] bg-main/10 text-main shrink-0">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 2.4 7.4H22l-6 4.5 2.3 7.1L12 16.6 5.7 21l2.3-7.1-6-4.5h7.6L12 2Z"/></svg>
+          </span>
+          <div>
+            <p class="text-primary text-[15px] font-semibold leading-tight">Your ideas. Our roadmap.</p>
+            <p class="text-[13px] text-secondary">Better together.</p>
+          </div>
+        </div>
+
+        <div class="mt-5 flex flex-col gap-3">
+          @for (item of roadmap(); track item.id) {
+            <div class="flex items-center gap-3 rounded-[10px] border border-primary/10 px-3.5 py-3">
+              <span class="flex items-center justify-center w-8 h-8 rounded-full bg-main/10 text-main shrink-0">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V17h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2Z"/></svg>
+              </span>
+              <p class="flex-1 text-[13px] font-medium text-primary">{{ item.title }}</p>
+              <span class="inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-semibold whitespace-nowrap" [ngClass]="statusClass(item.status)">{{ statusLabel(item.status) }}</span>
+              <span class="inline-flex items-center gap-1 text-[12px] font-medium text-secondary shrink-0">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v11M18 10l-1.4 8a2 2 0 0 1-2 1.7H7V10l4-7a2 2 0 0 1 2 2v3h4a2 2 0 0 1 2 2Z"/></svg>
+                {{ item.votes }}
+              </span>
+            </div>
+          }
+        </div>
+      </div>
+      <!-- decorative accents -->
+      <span class="absolute -top-3 -right-3 flex items-center justify-center w-11 h-11 rounded-[12px] bg-primary text-main shadow-lg">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3 6.5 7 .9-5 4.8 1.3 7L12 17.8 5.4 21.2 6.7 14.2 1.7 9.4l7-.9L12 2Z"/></svg>
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ Toolbar ═══════════════ -->
+<section id="submit" class="bg-white px-5 md:px-10 lg:px-17.5 pt-[36px] scroll-mt-24">
+  <div class="mx-auto  flex flex-col lg:flex-row gap-3">
+    <div class="relative flex-1">
+      <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 text-secondary" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" placeholder="Search for ideas..." [(ngModel)]="searchTerm" (keyup.enter)="onFilterChange()" (change)="onFilterChange()" class="w-full h-11 pl-10 pr-4 rounded-[8px] border border-primary/15 text-[14px] text-primary placeholder:text-secondary/60 outline-none focus:border-main focus:ring-1 focus:ring-main appearance-none" />
+    </div>
+    <div class="flex flex-wrap gap-3">
+      <select [(ngModel)]="statusFilter" (change)="onFilterChange()" class="h-11 px-3.5 rounded-[8px] border border-primary/15 text-[14px] text-primary bg-white outline-none focus:border-main appearance-none">
+        <option value="">Status: All</option>
+        <option value="PLANNED">Planned</option>
+        <option value="IN_PROGRESS">In Progress</option>
+        <option value="SHIPPED">Shipped</option>
+        <option value="UNDER_REVIEW">Under Review</option>
+      </select>
+      <select [(ngModel)]="categoryFilter" (change)="onFilterChange()" class="h-11 px-3.5 rounded-[8px] border border-primary/15 text-[14px] text-primary bg-white outline-none focus:border-main appearance-none">
+        <option value="">Category: All</option>
+        @for (c of categoryOptions; track c) { <option [value]="c">{{ c }}</option> }
+      </select>
+      <select [(ngModel)]="sortBy" (change)="onFilterChange()" class="h-11 px-3.5 rounded-[8px] border border-primary/15 text-[14px] text-primary bg-white outline-none focus:border-main appearance-none">
+        <option value="trending">Sort by: Trending</option>
+        <option value="top">Sort by: Most Voted</option>
+        <option value="recent">Sort by: Newest</option>
+      </select>
+      <button type="button" class="inline-flex items-center gap-2 h-11 px-4 rounded-[8px] border border-primary/15 text-[14px] font-medium text-primary hover:border-main hover:text-main transition-colors">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10Z"/></svg>
+        My Feedback
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ Content ═══════════════ -->
+<section id="requests" class="bg-white px-5 md:px-10 lg:px-17.5 py-[28px] scroll-mt-24">
+  <div class="mx-auto  grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
+    <!-- Sidebar -->
+    <aside class="flex flex-col gap-4">
+      <div class="rounded-[14px] border border-primary/10 p-4">
+        <p class="text-primary text-[15px] font-semibold px-1">Categories</p>
+        <ul class="mt-3 flex flex-col gap-0.5">
+          @for (c of categories(); track c.name) {
+            <li>
+              <button type="button" (click)="selectCategory(c.name)"
+                class="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-[8px] text-[13px] transition-colors"
+                [ngClass]="activeCategory() === c.name ? 'bg-main/10 text-main font-medium' : 'text-secondary hover:bg-primary/[0.04]'">
+                <span class="shrink-0">
+                  @switch (c.icon) {
+                    @case ('grid') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> }
+                    @case ('dashboard') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg> }
+                    @case ('chart') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/></svg> }
+                    @case ('projects') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/></svg> }
+                    @case ('finance') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M15 9a3 3 0 0 0-3-2h-.5a2.5 2.5 0 0 0 0 5h1a2.5 2.5 0 0 1 0 5H12a3 3 0 0 1-3-2"/></svg> }
+                    @case ('hr') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg> }
+                    @case ('crm') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m19 8 2 2 3-3"/></svg> }
+                    @case ('integrations') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6M15 2v6M6 8h12v3a6 6 0 0 1-12 0V8ZM12 17v5"/></svg> }
+                    @case ('automation') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2 2M16.4 16.4l2 2M5.6 18.4l2-2M16.4 7.6l2-2"/><circle cx="12" cy="12" r="3.5"/></svg> }
+                    @case ('mobile') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg> }
+                    @case ('others') { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg> }
+                  }
+                </span>
+                <span class="flex-1 text-left">{{ c.name }}</span>
+                <span class="text-[12px]" [ngClass]="activeCategory() === c.name ? 'text-main' : 'text-secondary/70'">{{ c.count }}</span>
+              </button>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div class="rounded-[14px] bg-main/[0.06] border border-main/15 p-5">
+        <p class="text-primary text-[15px] font-semibold">We're Listening</p>
+        <p class="mt-1.5 text-[13px] leading-[19px] text-secondary">Your feedback helps us prioritize what matters most. Vote, comment, and subscribe to stay updated.</p>
+        <div class="mt-4 flex items-center justify-center gap-2 text-main">
+          <span class="flex items-center justify-center w-9 h-9 rounded-full bg-white text-secondary text-[12px] font-semibold">JD</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9.5-8.5C.5 9 2 5.5 5.5 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3C21 5.5 22.5 9 21.5 12.5 19 16.5 12 21 12 21Z"/></svg>
+          <span class="flex items-center justify-center w-9 h-9 rounded-full bg-white text-secondary text-[12px] font-semibold">AM</span>
+        </div>
+      </div>
+
+      <div class="rounded-[14px] border border-primary/10 p-5">
+        <p class="text-primary text-[14px] font-semibold">Need help or have questions?</p>
+        <p class="mt-1 text-[13px] text-secondary">Contact our support team.</p>
+        <a href="/support" class="mt-3 inline-flex items-center justify-center gap-2 w-full h-10 rounded-[8px] border border-primary/15 text-[13px] font-medium text-primary hover:border-main hover:text-main transition-colors">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 16a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2v2ZM3 16a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 2v2Z"/></svg>
+          Contact Support
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main column -->
+    <div>
+      <!-- Popular Ideas -->
+      <div class="flex items-center justify-between">
+        <h2 class="text-primary text-[18px] font-semibold">Popular Ideas</h2>
+        <a href="#requests" class="text-[13px] font-medium text-main hover:underline">View all</a>
+      </div>
+      <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+        @for (idea of popularIdeas(); track idea.id) {
+          <div class="rounded-[14px] border border-primary/10 p-4 flex flex-col hover:border-main/40 hover:shadow-[0_10px_30px_-15px_rgba(11,40,39,0.18)] transition-all">
+            <div class="flex items-start gap-3">
+              <span class="flex flex-col items-center justify-center w-11 h-12 rounded-[9px] bg-main/[0.08] text-main shrink-0">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+                <span class="text-[13px] font-bold leading-none">{{ idea.votes }}</span>
+              </span>
+              <div class="min-w-0">
+                <p class="text-primary text-[14px] font-semibold leading-tight">{{ idea.title }}</p>
+                <span class="mt-1.5 inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-semibold" [ngClass]="statusClass(idea.status)">{{ statusLabel(idea.status) }}</span>
+              </div>
+            </div>
+            <p class="mt-3 text-[12px] leading-[18px] text-secondary flex-1">{{ idea.desc }}</p>
+            <div class="mt-4 flex items-center justify-between">
+              <span class="inline-flex items-center gap-1.5 text-[12px] text-secondary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+                {{ idea.comments }}
+              </span>
+              <button type="button" (click)="vote(idea.id)" class="inline-flex items-center gap-1.5 h-8 px-3.5 rounded-[7px] border border-main/40 text-main text-[12px] font-medium hover:bg-main hover:text-white transition-colors">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v11M18 10l-1.4 8a2 2 0 0 1-2 1.7H7V10l4-7a2 2 0 0 1 2 2v3h4a2 2 0 0 1 2 2Z"/></svg>
+                Vote
+              </button>
+            </div>
+          </div>
+        } @empty {
+          <div class="md:col-span-3 rounded-[14px] border border-dashed border-primary/15 py-10 text-center text-[13px] text-secondary">No ideas yet  be the first to submit one!</div>
+        }
+      </div>
+
+      <!-- All Feature Requests table -->
+      <div class="mt-8 rounded-[14px] border border-primary/10 overflow-hidden">
+        <div class="px-5 py-4 border-b border-primary/10">
+          <h2 class="text-primary text-[18px] font-semibold">All Feature Requests</h2>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[720px] border-collapse">
+            <thead>
+              <tr class="bg-primary/[0.02] border-b border-primary/10 text-left">
+                <th class="py-3 px-5 text-[12px] font-medium text-secondary">Title</th>
+                <th class="py-3 px-3 text-[12px] font-medium text-secondary">Category</th>
+                <th class="py-3 px-3 text-[12px] font-medium text-secondary">Status</th>
+                <th class="py-3 px-3 text-[12px] font-medium text-secondary">Votes</th>
+                <th class="py-3 px-3 text-[12px] font-medium text-secondary">Activity</th>
+                <th class="py-3 px-3 w-10"></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (req of requests(); track req.id) {
+                <tr class="border-b border-primary/[0.07] last:border-0 hover:bg-primary/[0.02] transition-colors">
+                  <td class="py-3.5 px-5">
+                    <p class="text-[13px] font-medium text-primary">{{ req.title }}</p>
+                    <span class="mt-1 inline-flex items-center gap-1 text-[11px] text-secondary">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+                      {{ req.comments }}
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-3">
+                    <span class="inline-flex items-center rounded-[6px] bg-primary/[0.05] px-2.5 py-1 text-[11px] font-medium text-secondary whitespace-nowrap">{{ req.category }}</span>
+                  </td>
+                  <td class="py-3.5 px-3">
+                    <span class="inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold whitespace-nowrap" [ngClass]="statusClass(req.status)">{{ statusLabel(req.status) }}</span>
+                  </td>
+                  <td class="py-3.5 px-3">
+                    <button type="button" (click)="vote(req.id)" class="inline-flex items-center gap-1.5 rounded-[7px] border border-primary/15 px-2.5 py-1 text-[12px] font-medium text-primary hover:border-main hover:text-main transition-colors">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="text-main"><path d="M7 10v11M18 10l-1.4 8a2 2 0 0 1-2 1.7H7V10l4-7a2 2 0 0 1 2 2v3h4a2 2 0 0 1 2 2Z"/></svg>
+                      {{ req.votes }}
+                    </button>
+                  </td>
+                  <td class="py-3.5 px-3 text-[12px] text-secondary whitespace-nowrap">{{ req.activity }}</td>
+                  <td class="py-3.5 px-3 text-center">
+                    <button type="button" (click)="vote(req.id)" class="text-secondary hover:text-main" title="Upvote">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+                    </button>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="6" class="py-10 text-center text-[13px] text-secondary">No feature requests match your filters.</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      @if (hasMore()) {
+      <div class="mt-6 flex justify-center">
+        <button type="button" (click)="loadMore()" [disabled]="loading()" class="inline-flex items-center gap-2 h-11 px-6 rounded-[8px] border border-primary/15 text-[14px] font-medium text-primary hover:border-main hover:text-main transition-colors disabled:opacity-60">
+          {{ loading() ? 'Loading…' : 'Load more ideas' }}
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ How It Works ═══════════════ -->
+<section class="bg-[#F7FAF9] px-5 md:px-10 lg:px-17.5 py-[44px]">
+  <div class="mx-auto">
+    <h2 class="text-primary text-[24px] font-semibold text-center">How It Works</h2>
+    <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-4">
+      @for (step of steps; track step.n; let last = $last) {
+        <div class="relative flex flex-col items-center text-center">
+          @if (!last) {
+            <span class="hidden lg:block absolute top-8 left-1/2 w-full h-px border-t border-dashed border-primary/25"></span>
+          }
+          <span class="relative z-10 flex items-center justify-center w-6 h-6 rounded-full bg-primary text-white text-[12px] font-semibold mb-3">{{ step.n }}</span>
+          <span class="relative z-10 flex items-center justify-center w-14 h-14 rounded-full bg-white border border-primary/10 text-main ring-4 ring-[#F7FAF9]">
+            @switch (step.icon) {
+              @case ('idea') { <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V17h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2Z"/></svg> }
+              @case ('vote') { <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v11H3V10zM7 10l4-7a2 2 0 0 1 2 2v3h5.5a2 2 0 0 1 2 2.3l-1.4 8A2 2 0 0 1 17 21H7"/></svg> }
+              @case ('review') { <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M9 11h4M11 9v4"/></svg> }
+              @case ('build') { <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6a2 2 0 0 0 2.8 2.8l6-6a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.8-.4-.4-2.8 2.5-2.5Z"/></svg> }
+              @case ('ship') { <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5 3 21l4.5-1.5M9 15l6-6M14 4s5 1 6 6c-1 5-6 6-6 6l-2-2M14 4l6 6M9 15l-3-3s1-5 6-6"/></svg> }
+            }
+          </span>
+          <p class="mt-3 text-primary text-[14px] font-semibold">{{ step.title }}</p>
+          <p class="mt-1 max-w-[180px] text-[12px] leading-[17px] text-secondary">{{ step.desc }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ Newsletter ═══════════════ -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[44px]">
+  <div class="mx-auto rounded-[15px] bg-main/[0.06] border border-main/15 px-6 md:px-10 py-8 flex flex-col lg:flex-row items-center justify-between gap-6">
+    <div class="flex items-center gap-4 text-center lg:text-left">
+      <span class="hidden sm:flex items-center justify-center w-12 h-12 rounded-[12px] bg-white text-main shrink-0">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+      </span>
+      <div>
+        <h2 class="text-primary text-[20px] font-semibold">Stay updated on new features</h2>
+        <p class="mt-1 text-[14px] text-secondary">Subscribe to our newsletter and be the first to know what's coming next.</p>
+      </div>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+      <input type="email" placeholder="Enter your email address" class="h-12 px-4 rounded-[8px] border border-primary/15 bg-white text-[14px] text-primary placeholder:text-secondary/60 outline-none focus:border-main focus:ring-1 focus:ring-main appearance-none sm:w-[280px]" />
+      <button type="button" class="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-[8px] bg-main text-white text-[15px] font-medium hover:bg-primary transition-colors whitespace-nowrap">
+        Subscribe
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ Submit Idea modal ═══════════════ -->
+@if (showSubmit()) {
+<div class="fixed inset-0 z-[100] flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-primary/40 backdrop-blur-sm" (click)="closeSubmit()"></div>
+  <div class="relative z-10 w-full max-w-[520px] max-h-[90vh] overflow-y-auto rounded-[16px] bg-white shadow-[0_30px_70px_-20px_rgba(11,40,39,0.4)]">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-primary/10">
+      <h3 class="text-primary text-[18px] font-semibold">Submit a Feature Request</h3>
+      <button type="button" (click)="closeSubmit()" class="text-secondary hover:text-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="px-6 py-5 flex flex-col gap-4">
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[13px] font-medium text-primary">Title <span class="text-red-500">*</span></label>
+        <input type="text" [(ngModel)]="submitForm.title" placeholder="A short, clear title for your idea" class="h-11 px-3.5 rounded-[8px] border border-primary/15 text-[14px] text-primary placeholder:text-secondary/60 outline-none focus:border-main focus:ring-1 focus:ring-main" />
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[13px] font-medium text-primary">Description <span class="text-red-500">*</span></label>
+        <textarea [(ngModel)]="submitForm.description" rows="4" placeholder="Describe the problem this solves and how it should work" class="px-3.5 py-2.5 rounded-[8px] border border-primary/15 text-[14px] text-primary placeholder:text-secondary/60 outline-none focus:border-main focus:ring-1 focus:ring-main resize-none"></textarea>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[13px] font-medium text-primary">Category</label>
+        <select [(ngModel)]="submitForm.category" class="h-11 px-3 rounded-[8px] border border-primary/15 text-[14px] text-primary bg-white outline-none focus:border-main appearance-none">
+          @for (c of categoryOptions; track c) { <option [value]="c">{{ c }}</option> }
+        </select>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="flex flex-col gap-1.5">
+          <label class="text-[13px] font-medium text-primary">Your name</label>
+          <input type="text" [(ngModel)]="submitForm.submittedName" placeholder="Optional" class="h-11 px-3.5 rounded-[8px] border border-primary/15 text-[14px] text-primary placeholder:text-secondary/60 outline-none focus:border-main focus:ring-1 focus:ring-main" />
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label class="text-[13px] font-medium text-primary">Your email</label>
+          <input type="email" [(ngModel)]="submitForm.submittedEmail" placeholder="Optional" class="h-11 px-3.5 rounded-[8px] border border-primary/15 text-[14px] text-primary placeholder:text-secondary/60 outline-none focus:border-main focus:ring-1 focus:ring-main" />
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-end gap-3 px-6 py-4 border-t border-primary/10">
+      <button type="button" (click)="closeSubmit()" class="h-11 px-5 rounded-[8px] border border-primary/15 text-[14px] font-medium text-primary hover:border-main hover:text-main transition-colors">Cancel</button>
+      <button type="button" (click)="submitIdea()" [disabled]="submitting() || !submitForm.title.trim() || !submitForm.description.trim()" class="inline-flex items-center gap-2 h-11 px-6 rounded-[8px] bg-main text-white text-[14px] font-medium hover:bg-primary transition-colors disabled:opacity-60">
+        {{ submitting() ? 'Submitting…' : 'Submit Idea' }}
+      </button>
+    </div>
+  </div>
+</div>
+}

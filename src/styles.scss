@@ -1,0 +1,84 @@
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  app-root,
+  app-main-layout,
+  app-offer-banner,
+  app-header,
+  app-footer,
+  app-hero,
+  app-falcon-view {
+    display: block;
+  }
+
+  app-main-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+  }
+
+  app-main-layout .page-content {
+    flex: 1;
+  }
+}
+
+.primary-btn {
+  width: 183px;
+  height: 48px;
+  border-radius: 8px;
+  background: #3BAEA9;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.outline-btn {
+  width: 147px;
+  height: 48px;
+  border-radius: 8px;
+  border: 1px solid #FFFFFF;
+  background: transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.zx-gradient {
+  background: linear-gradient(90deg, #F17C9F 0%, #C587CE 28.52%, #7FA6FF 69.83%, #3772FF 100%);
+}
+
+app-header {
+  position: sticky;
+  top: 0;
+  z-index: 70;
+  background: #fff;
+}
+
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent],
+.lenis [data-lenis-prevent-wheel],
+.lenis [data-lenis-prevent-touch] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+

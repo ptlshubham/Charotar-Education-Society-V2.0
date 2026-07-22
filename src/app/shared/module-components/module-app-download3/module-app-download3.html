@@ -1,0 +1,45 @@
+<!-- Module App Download 3  Dark Theme with Floating Elements -->
+<section class="module-appdownload3">
+
+  <!-- Decorative floating elements -->
+  <div class="module-appdownload3__float module-appdownload3__float--1"></div>
+  <div class="module-appdownload3__float module-appdownload3__float--2"></div>
+  <div class="module-appdownload3__float module-appdownload3__float--3"></div>
+
+  <div class="module-appdownload3__container">
+
+    <!-- Content side -->
+    <div class="module-appdownload3__content">
+      <h2 class="module-appdownload3__title">{{ title }}</h2>
+      <p class="module-appdownload3__description">{{ description }}</p>
+
+      <!-- Store badges -->
+      <div class="module-appdownload3__badges">
+        @if (appStoreLink) {
+          <a [href]="appStoreLink" target="_blank" rel="noopener noreferrer" class="module-appdownload3__store-badge">
+            <img src="/assets/icons/app-store-badge.svg" alt="Download on App Store" />
+          </a>
+        }
+        @if (playStoreLink) {
+          <a [href]="playStoreLink" target="_blank" rel="noopener noreferrer" class="module-appdownload3__store-badge">
+            <img src="/assets/icons/play-store-badge.svg" alt="Get it on Google Play" />
+          </a>
+        }
+      </div>
+
+      <!-- QR code -->
+      @if (qrCodeImage) {
+        <div class="module-appdownload3__qr">
+          <img [src]="qrCodeImage" alt="Scan to download" class="module-appdownload3__qr-img" />
+          <span class="module-appdownload3__qr-label">Scan to download</span>
+        </div>
+      }
+    </div>
+
+    <!-- Phone mockup -->
+    <div class="module-appdownload3__phone">
+      <img [src]="phoneImage" [alt]="title" class="module-appdownload3__phone-img" />
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg1"
+   width="669.86536"
+   height="501.56"
+   viewBox="0 0 669.86536 501.56"
+   sodipodi:docname="Bynder Symbol - Blue.ai"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath2">
+      <path
+         d="M 0,376.17 H 502.399 V 0 H 0 Z"
+         transform="translate(-315.88231,-280.78021)"
+         id="path2" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1">
+    <inkscape:page
+       x="0"
+       y="0"
+       inkscape:label="1"
+       id="page1"
+       width="669.86536"
+       height="501.56"
+       margin="122.78973 169.22133 127.18667 167.04401"
+       bleed="0" />
+  </sodipodi:namedview>
+  <g
+     id="layer-MC0"
+     inkscape:groupmode="layer"
+     inkscape:label="Layer 1">
+    <path
+       id="path1"
+       d="m 0,0 c -17.863,0 -33.899,-7.865 -44.811,-20.328 l -79.956,-79.873 -22.876,22.876 c -3.961,4.486 -6.038,9.915 -6.01,16.063 0,13.377 10.801,24.067 24.178,24.067 6.065,0 11.41,-2.049 15.869,-5.982 1.412,-1.274 5.484,-5.456 5.484,-5.456 l 25.313,25.314 -7.311,7.283 C -100.728,-5.982 -115.185,0 -130.943,0 c -32.902,0 -59.656,-26.643 -59.656,-59.573 0,-15.066 5.65,-29.107 14.651,-39.382 l 51.347,-51.541 107.264,107.264 c 4.486,3.96 9.832,6.065 15.952,6.037 13.405,-0.027 24.067,-10.829 24.04,-24.233 0,-6.065 -2.077,-11.466 -6.01,-15.925 l -71.288,-71.288 c -2.686,-2.852 -6.619,-4.458 -10.856,-4.486 -4.238,0.028 -8.004,1.8 -10.691,4.653 l -5.373,5.317 -25.202,-25.203 5.151,-5.095 c 9.25,-9.417 22.129,-15.233 36.198,-15.233 h 0.027 c 14.097,0 26.782,5.788 36.004,15.205 l 74.307,74.472 c 9.001,10.275 14.706,24.317 14.678,39.411 0,32.902 -26.698,59.572 -59.628,59.572"
+       style="fill:#126dfe;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       transform="matrix(1.3333333,0,0,-1.3333333,421.1764,127.1864)"
+       clip-path="url(#clipPath2)" />
+  </g>
+</svg>

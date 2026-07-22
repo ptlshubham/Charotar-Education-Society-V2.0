@@ -1,0 +1,12 @@
+.faq-item {
+  .faq-answer {
+    overflow: hidden;
+  }
+
+  .faq-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center center;
+  }
+}

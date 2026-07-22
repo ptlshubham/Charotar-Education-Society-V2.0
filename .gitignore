@@ -1,0 +1,63 @@
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/mcp.json
+.history/*
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+__screenshots__/
+
+# System files
+.DS_Store
+Thumbs.db
+node_modules.env
+
+# Project logs
+/logs
+/src/public/logs
+*.log
+
+# Graphify
+graphify-out/
+**/graphify-out/
+
+# Local Graphify Scripts (not committed)
+scripts/run-graphify-frontend-slices.ps1
+scripts/run-graphify-scopes.ps1
+scripts/run-graphify-team.ps1
+scripts/run-graphify-watch.ps1
+
+# Playwright screenshot QA output
+/screenshots/

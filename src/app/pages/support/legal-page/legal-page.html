@@ -1,0 +1,102 @@
+<!-- ─── Hero ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 pt-[50px] pb-[30px]">
+  <div class="mx-auto grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-16">
+    <!-- Copy -->
+    <div>
+      <span class="inline-flex items-center rounded-full bg-main/10 px-4 py-1 text-[10px] font-semibold tracking-wide  text-main">{{ badge }}</span>
+
+      <h1 class="mt-6 text-primary text-[36px] md:text-[46px] font-medium leading-[1.12]">
+        {{ title }} @if (titleAccent) {<span class="text-main">{{ titleAccent }}</span>}
+      </h1>
+
+      <p class="mt-6 max-w-[480px] text-[16px] leading-[26px] text-secondary [&_a]:text-main [&_a]:font-medium [&_a:hover]:underline" [innerHTML]="intro"></p>
+
+      @if (heroCtaText) {
+        <a [href]="heroCtaLink" class="mt-7 inline-flex items-center justify-center gap-2 h-12 px-7 rounded-[8px] bg-main text-white text-[15px] font-medium hover:bg-primary transition-colors">
+          {{ heroCtaText }}
+        </a>
+      }
+    </div>
+
+    <!-- Vector (team will swap the illustration) -->
+    <div class="relative flex items-center justify-center min-h-[280px] md:min-h-[360px]">
+      <!-- soft organic backdrop -->
+      <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+        <span class="absolute right-[12%] top-[8%] w-44 h-44 rounded-full bg-main/15 blur-3xl"></span>
+        <span class="absolute left-[10%] bottom-[6%] w-36 h-36 rounded-full bg-main/10 blur-3xl"></span>
+      </div>
+      <!-- decorative dots -->
+      <div class="pointer-events-none absolute right-0 top-4 hidden md:grid grid-cols-5 gap-2 opacity-40" aria-hidden="true">
+        @for (dot of [1,2,3,4,5,6,7,8,9,10]; track dot) {
+          <span class="w-1.5 h-1.5 rounded-full bg-main/50"></span>
+        }
+      </div>
+      <img [src]="heroImage" [alt]="title" class="relative w-full max-w-[520px] max-h-[360px] object-contain" />
+    </div>
+  </div>
+</section>
+
+<!-- ─── Sections accordion ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[30px]">
+  <div class="mx-auto max-w-[1000px]">
+    <div class="rounded-[16px] border border-primary/10 bg-white overflow-hidden divide-y divide-primary/10">
+      @for (section of sections; track section.title; let i = $index) {
+        <div>
+          <button type="button" (click)="toggle(i)" class="w-full flex items-center gap-4 px-5 md:px-6 py-4 text-left group">
+            <span class="flex items-center justify-center w-9 h-9 rounded-full bg-main/10 text-main shrink-0">
+              @switch (iconFor(section, i)) {
+                @case ('doc') { <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg> }
+                @case ('list') { <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg> }
+                @case ('user') { <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> }
+                @case ('card') { <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg> }
+                @case ('shield') { <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg> }
+                @case ('folder') { <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9L9.9 3.9A2 2 0 0 0 8.2 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg> }
+                @case ('puzzle') { <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3a2 2 0 0 1 4 0v1h3a1 1 0 0 1 1 1v3h1a2 2 0 0 1 0 4h-1v3a1 1 0 0 1-1 1h-3v-1a2 2 0 0 0-4 0v1H5a1 1 0 0 1-1-1v-3H3a2 2 0 0 1 0-4h1V5a1 1 0 0 1 1-1h3Z"/></svg> }
+                @case ('copyright') { <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M15 9.4a4 4 0 1 0 0 5.2"/></svg> }
+                @case ('lock') { <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> }
+                @case ('cloud') { <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 .5-9 6 6 0 0 0-11.6-1.5A4 4 0 0 0 6.5 19h11Z"/></svg> }
+                @case ('ban') { <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m5 5 14 14"/></svg> }
+                @case ('alert') { <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg> }
+                @default { <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg> }
+              }
+            </span>
+
+            <h2 class="flex-1 text-[16px] md:text-[17px] font-medium leading-[24px] transition-colors" [ngClass]="section.isOpen ? 'text-main' : 'text-primary group-hover:text-main'">
+              <span class="text-secondary tabular-nums">{{ i + 1 }}.</span> {{ section.title }}
+            </h2>
+
+            <svg class="shrink-0 text-secondary transition-transform duration-300" [ngClass]="{ 'rotate-180': section.isOpen }" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+
+          <!-- Expandable content -->
+          @if (section.isOpen) {
+            <div class="overflow-hidden">
+              <div class="legal-accordion-detail px-5 md:px-6 pb-5 pl-[68px] md:pl-[76px] text-[15px] leading-[24px] text-secondary whitespace-pre-line [&_strong]:text-primary [&_strong]:font-semibold [&_a]:text-main" [innerHTML]="section.content"></div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ─── Help CTA ─── -->
+<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[50px]">
+  <div class="mx-auto max-w-[1000px]">
+    <div class="rounded-[16px] bg-main/[0.07] px-8 md:px-10 py-8 flex flex-col md:flex-row md:items-center gap-6">
+      <div class="flex items-center gap-5 flex-1">
+        <span class="shrink-0 flex items-center justify-center w-14 h-14 rounded-full bg-white text-main ">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 16a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2v2ZM3 16a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 2v2Z"/></svg>
+        </span>
+        <div>
+          <h2 class="text-primary text-[20px] md:text-[22px] font-semibold leading-[1.2]">{{ ctaTitle }}</h2>
+          <p class="mt-1 text-[15px] leading-[22px] text-secondary">{{ ctaText }}</p>
+        </div>
+      </div>
+      <a [routerLink]="ctaButtonLink" class="shrink-0 inline-flex items-center justify-center gap-2 h-12 px-7 rounded-[8px] bg-main text-white text-[15px] font-medium hover:bg-primary transition-colors">
+        {{ ctaButtonText }}
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>

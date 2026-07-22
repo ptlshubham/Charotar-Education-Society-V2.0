@@ -1,0 +1,39 @@
+<!-- Module App Download 2  Centered with Gradient Background -->
+<section class="module-appdownload2">
+  <div class="module-appdownload2__inner">
+
+    <!-- Text content (centered) -->
+    <div class="module-appdownload2__content">
+      <h2 class="module-appdownload2__title">{{ title }}</h2>
+      <p class="module-appdownload2__description">{{ description }}</p>
+
+      <!-- Store badges -->
+      <div class="module-appdownload2__badges">
+        @if (appStoreLink) {
+          <a [href]="appStoreLink" target="_blank" rel="noopener noreferrer" class="module-appdownload2__store-badge">
+            <img src="/assets/icons/app-store-badge.svg" alt="Download on App Store" />
+          </a>
+        }
+        @if (playStoreLink) {
+          <a [href]="playStoreLink" target="_blank" rel="noopener noreferrer" class="module-appdownload2__store-badge">
+            <img src="/assets/icons/play-store-badge.svg" alt="Get it on Google Play" />
+          </a>
+        }
+      </div>
+    </div>
+
+    <!-- Phone mockup (centered) -->
+    <div class="module-appdownload2__phone">
+      <img [src]="phoneImage" [alt]="title" class="module-appdownload2__phone-img" />
+    </div>
+
+    <!-- QR code -->
+    @if (qrCodeImage) {
+      <div class="module-appdownload2__qr">
+        <img [src]="qrCodeImage" alt="Scan to download" class="module-appdownload2__qr-img" />
+        <span class="module-appdownload2__qr-label">Scan to download</span>
+      </div>
+    }
+
+  </div>
+</section>

@@ -1,0 +1,114 @@
+<section
+  class="relative w-full overflow-hidden bg-white px-5 md:px-10 lg:px-17.5 pt-[50px] pb-[70px] lg:pt-[70px] lg:pb-[90px]">
+  <!-- decorative glow -->
+  <div class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_82%_45%,rgba(61,175,169,0.16),transparent_45%)]"></div>
+  <!-- decorative blob + faint squares -->
+  <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+    <span class="absolute -left-16 top-4 h-48 w-48 rounded-full bg-main/[0.06] blur-2xl"></span>
+    <span class="absolute left-[46%] top-[14%] h-10 w-10 rounded-[8px] bg-primary/[0.04]"></span>
+    <span class="absolute left-[38%] top-[46%] h-14 w-14 rounded-[10px] bg-primary/[0.03]"></span>
+    <span class="absolute left-[30%] top-[74%] h-8 w-8 rounded-[7px] bg-primary/[0.04]"></span>
+    <span class="absolute left-[58%] top-[80%] h-12 w-12 rounded-[9px] bg-main/[0.05]"></span>
+    <span class="absolute left-[88%] top-[24%] h-9 w-9 rounded-[8px] bg-primary/[0.03]"></span>
+  </div>
+
+  <div class="mx-auto flex flex-col-reverse items-center gap-[50px] lg:flex-row lg:justify-between">
+    <!-- copy -->
+    <div class="flex w-full max-w-[593px] flex-col items-start gap-[24px]">
+      <span class="rounded-[53px] bg-[#e8fffd] px-[15px] py-[3px] text-[12px] font-semibold text-main">
+        Social Media Management
+      </span>
+      <h1 class="text-[34px] font-medium leading-[44px] text-primary md:text-[40px] md:leading-[52px] xl:text-[44px] xl:leading-[54px]">
+        Create, Schedule &amp; <span class="bg-main px-1 text-white">Manage</span> Social Content Effortlessly
+      </h1>
+      <p class="text-[16px] font-normal leading-[22px] text-[#0E0E0E]/80">
+        Plan your content calendar, schedule posts to every channel, and track what's working  all from one
+        place. ZarklyX helps your team publish consistently across Facebook, Instagram, LinkedIn, and more
+        without switching tabs.
+      </p>
+      <div class="flex flex-wrap items-center gap-[16px]">
+        <button type="button"
+          class="flex h-[48px] items-center justify-center rounded-[8px] bg-main px-[31px] text-[16px] font-medium text-white transition hover:opacity-90">
+          Start Free Trial
+        </button>
+        <button type="button"
+          class="flex h-[48px] w-[147px] items-center justify-center rounded-[8px] border border-primary text-[16px] font-medium text-primary transition hover:bg-primary hover:text-white">
+          Book Demo
+        </button>
+      </div>
+    </div>
+
+    <!-- orbit graphic -->
+    <div class="smm-graphic relative aspect-square w-[300px] shrink-0 md:w-[400px] lg:w-[460px]">
+      <!-- floating background chips (Google / Drive)  dodge the cursor -->
+      <div #dodge class="smm-dodge absolute -left-2 top-2 z-20">
+        <span class="smm-float group flex h-[38px] w-[38px] items-center justify-center rounded-[10px] bg-white shadow-[0_10px_26px_-8px_rgba(11,40,39,0.28)] md:h-[46px] md:w-[46px]">
+          <img src="/assets/images/smm/icons/gmb.svg" alt="Google" class="h-[20px] w-[20px] object-contain transition-transform duration-300 group-hover:scale-125 md:h-[24px] md:w-[24px]" />
+        </span>
+      </div>
+      <div #dodge class="smm-dodge absolute -left-14 bottom-8 z-20">
+        <span class="smm-float--slow group flex h-[38px] w-[38px] items-center justify-center rounded-[10px] bg-white shadow-[0_10px_26px_-8px_rgba(11,40,39,0.28)] md:h-[46px] md:w-[46px]">
+          <img src="/assets/images/smm/icons/drive.svg" alt="Google Drive" class="h-[22px] w-[22px] object-contain transition-transform duration-300 group-hover:scale-125 md:h-[26px] md:w-[26px]" />
+        </span>
+      </div>
+
+      <!-- rings -->
+      <div class="absolute inset-0 rounded-full border border-main/50"></div>
+      <div class="absolute left-1/2 top-1/2 aspect-square w-[64%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-main/50"></div>
+
+      <!-- inner person circle -->
+      <div class="absolute left-1/2 top-1/2 flex aspect-square w-[52%] -translate-x-1/2 -translate-y-1/2 items-end justify-center overflow-hidden rounded-full border-2 border-main bg-[#eefdfb]">
+        <img src="/assets/images/social-media-management/hero-person.png" alt="Person managing social media on a phone"
+          class="h-[92%] w-auto object-contain" />
+      </div>
+
+      <!-- outer orbit (rotates) -->
+      <div class="smm-orbit smm-orbit--outer">
+        <span class="smm-node" style="--x:31%;--y:8%">
+          <span class="smm-node__inner group h-[38px] w-[38px] border border-main/20 shadow-[0_4px_14px_rgba(11,40,39,0.12)] transition-colors hover:border-main/60 md:h-[48px] md:w-[48px]">
+            <img src="/assets/images/smm/icons/linkedin.svg" alt="LinkedIn" class="h-[19px] w-[19px] object-contain transition-transform duration-300 group-hover:scale-125 md:h-[24px] md:w-[24px]" />
+          </span>
+        </span>
+        <span class="smm-node" style="--x:72%;--y:9%">
+          <span class="smm-node__inner group h-[38px] w-[38px] border border-main/20 shadow-[0_4px_14px_rgba(11,40,39,0.12)] transition-colors hover:border-main/60 md:h-[48px] md:w-[48px]">
+            <img src="/assets/images/smm/icons/youtube.svg" alt="YouTube" class="h-[19px] w-[19px] object-contain transition-transform duration-300 group-hover:scale-125 md:h-[24px] md:w-[24px]" />
+          </span>
+        </span>
+        <span class="smm-node" style="--x:96%;--y:44%">
+          <span class="smm-node__inner group h-[38px] w-[38px] border border-main/20 shadow-[0_4px_14px_rgba(11,40,39,0.12)] transition-colors hover:border-main/60 md:h-[48px] md:w-[48px]">
+            <img src="/assets/images/smm/icons/facebook.svg" alt="Facebook" class="h-[19px] w-[19px] object-contain transition-transform duration-300 group-hover:scale-125 md:h-[24px] md:w-[24px]" />
+          </span>
+        </span>
+        <span class="smm-node" style="--x:67%;--y:93%">
+          <span class="smm-node__inner group h-[38px] w-[38px] border border-main/20 shadow-[0_4px_14px_rgba(11,40,39,0.12)] transition-colors hover:border-main/60 md:h-[48px] md:w-[48px]">
+            <img src="/assets/images/smm/icons/threads.svg" alt="Threads" class="h-[19px] w-[19px] object-contain transition-transform duration-300 group-hover:scale-125 md:h-[24px] md:w-[24px]" />
+          </span>
+        </span>
+        <span class="smm-node" style="--x:7%;--y:66%">
+          <span class="smm-node__inner group h-[38px] w-[38px] border border-main/20 shadow-[0_4px_14px_rgba(11,40,39,0.12)] transition-colors hover:border-main/60 md:h-[48px] md:w-[48px]">
+            <img src="/assets/images/smm/icons/pintrest.svg" alt="Pinterest" class="h-[19px] w-[19px] object-contain transition-transform duration-300 group-hover:scale-125 md:h-[24px] md:w-[24px]" />
+          </span>
+        </span>
+        <span class="smm-node" style="--x:92%;--y:16%">
+          <span class="smm-node__inner group h-[38px] w-[38px] border border-main/20 shadow-[0_4px_14px_rgba(11,40,39,0.12)] transition-colors hover:border-main/60 md:h-[48px] md:w-[48px]">
+            <img src="/assets/images/smm/icons/dropbox.svg" alt="Dropbox" class="h-[19px] w-[19px] object-contain transition-transform duration-300 group-hover:scale-125 md:h-[24px] md:w-[24px]" />
+          </span>
+        </span>
+      </div>
+
+      <!-- inner orbit (rotates opposite) -->
+      <div class="smm-orbit smm-orbit--inner">
+        <span class="smm-node" style="--x:25%;--y:32%">
+          <span class="smm-node__inner group h-[36px] w-[36px] border border-main/20 shadow-[0_4px_14px_rgba(11,40,39,0.12)] transition-colors hover:border-main/60 md:h-[44px] md:w-[44px]">
+            <img src="/assets/images/smm/icons/instagram.svg" alt="Instagram" class="h-[18px] w-[18px] object-contain transition-transform duration-300 group-hover:scale-125 md:h-[22px] md:w-[22px]" />
+          </span>
+        </span>
+        <span class="smm-node" style="--x:77%;--y:66%">
+          <span class="smm-node__inner group h-[36px] w-[36px] border border-main/20 shadow-[0_4px_14px_rgba(11,40,39,0.12)] transition-colors hover:border-main/60 md:h-[44px] md:w-[44px]">
+            <img src="/assets/images/smm/icons/whatsapp.svg" alt="WhatsApp" class="h-[18px] w-[18px] object-contain transition-transform duration-300 group-hover:scale-125 md:h-[22px] md:w-[22px]" />
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>

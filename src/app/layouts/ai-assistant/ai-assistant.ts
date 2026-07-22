@@ -71,7 +71,7 @@ export class AiAssistant implements OnDestroy {
   // ─── Landing greeting ───
 
   /** The proactive bubble beside the launcher, shown shortly after landing. */
-  readonly greeting = 'Need a hand? Ask me anything about ZarklyX.';
+  readonly greeting = 'Need a hand? Ask me anything about Charotar Education Society.';
   readonly greetingVisible = signal(false);
 
   /** Session-scoped so the bubble greets once, not on every page load. */
@@ -183,36 +183,36 @@ export class AiAssistant implements OnDestroy {
   readonly quickActions: QuickAction[] = [
     {
       icon: 'info',
-      title: 'Product Information',
-      desc: 'Learn about ZarklyX features',
-      prompt: 'Tell me about ZarklyX and its features.',
-    },
-    {
-      icon: 'tag',
-      title: 'Pricing & Plans',
-      desc: 'View pricing and plan details',
-      prompt: 'How does pricing work?',
-    },
-    {
-      icon: 'plug',
-      title: 'Integrations',
-      desc: 'Supported integrations',
-      prompt: 'Which integrations do you support?',
+      title: 'About Us',
+      desc: 'Learn about our institution',
+      prompt: 'Tell me about Charotar Education Society.',
     },
     {
       icon: 'calendar',
-      title: 'Get a Demo',
-      desc: 'Book a personalized demo',
-      prompt: 'I would like to book a demo.',
+      title: 'Admissions',
+      desc: 'Admission process and dates',
+      prompt: 'How does the admission process work?',
+    },
+    {
+      icon: 'plug',
+      title: 'Courses',
+      desc: 'Programmes we offer',
+      prompt: 'Which courses and programmes do you offer?',
+    },
+    {
+      icon: 'tag',
+      title: 'Contact',
+      desc: 'Reach the right team',
+      prompt: 'How do I get in touch with the institution?',
     },
   ];
 
   readonly suggested: readonly string[] = [
-    'What is ZarklyX?',
-    'What are the key features?',
-    'How does pricing work?',
-    'Which integrations do you support?',
-    'How can I get started?',
+    'What is Charotar Education Society?',
+    'Which courses do you offer?',
+    'How does the admission process work?',
+    'Where is the campus located?',
+    'How can I contact the institution?',
   ];
 
   toggle(): void {
@@ -277,9 +277,9 @@ export class AiAssistant implements OnDestroy {
 
   /** Quick action cards double as navigation when there's a page for it. */
   runAction(action: QuickAction): void {
-    if (action.title === 'Get a Demo') {
+    if (action.title === 'Contact') {
       this.close();
-      this.router.navigate(['/demo']);
+      this.router.navigate(['/contact']);
       return;
     }
     this.ask(action.prompt);

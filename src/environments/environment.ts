@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
   envName: 'local',
-  apiUrl: 'http://localhost:9005',
+  apiUrl: 'http://localhost:9000',
   frontendUrl: 'http://localhost:4300',
   firebase: {
     apiKey: 'AIzaSyAC1lI4B4FtpvIVAwJgZv2BoOgx6H6td9Q',

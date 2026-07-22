@@ -19,13 +19,6 @@ import { RenderMode, ServerRoute } from '@angular/ssr';
  */
 export const serverRoutes: ServerRoute[] = [
   {
-    // Tutorial detail pages are prerendered for the featured tutorials (ids 1–6)
-    path: 'support/tutorials/:id',
-    renderMode: RenderMode.Prerender,
-    getPrerenderParams: async () =>
-      Array.from({ length: 6 }, (_, i) => ({ id: String(i + 1) })),
-  },
-  {
     // Blog list + detail are fetched client-side at runtime (by slug). Prerender
     // can't cover them: it only bakes slugs that exist at build time, so a post
     // published afterwards would have no HTML file and 404 on static hosting.
@@ -36,11 +29,6 @@ export const serverRoutes: ServerRoute[] = [
   },
   {
     path: 'blogs/:id',
-    renderMode: RenderMode.Client,
-  },
-  {
-    // Same reasoning as blogs/:id  slugs aren't known at build time.
-    path: 'company/newsroom/:slug',
     renderMode: RenderMode.Client,
   },
   {

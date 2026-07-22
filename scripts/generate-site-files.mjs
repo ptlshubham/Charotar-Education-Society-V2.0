@@ -6,8 +6,8 @@
  *   public/llms.txt     LLMs / AI agents  (llmstxt.org convention)
  *
  * Only the groups' `links` are emitted. A group's own `path` is a display label on
- * the sitemap page and is deliberately excluded: /solutions and /company are
- * redirects, and /modules is an empty shell — none belong in either file.
+ * the sitemap page and is deliberately excluded — a group path may be a redirect
+ * or a bare shell route, so it does not belong in either file.
  *
  * Prerendered output is not usable as the source here — /blogs is RenderMode.Client
  * (see app.routes.server.ts) and so has no build-time HTML file, but it is still a
@@ -25,9 +25,8 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const OPTIONAL_SECTIONS = new Set(['Legal']);
 
 const SUMMARY =
-  'ZarklyX is an all-in-one business management platform that streamlines operations ' +
-  'and boosts productivity — social media, projects, finance, HR, CRM and more, for ' +
-  'agencies, enterprises and small businesses.';
+  'Charotar Education Society is an educational institution. This site covers the ' +
+  'institution, its team and careers, along with articles, support and policy pages.';
 
 // The live site is the only host worth advertising.
 const env = readFileSync(resolve(root, 'src/environments/environment.production.ts'), 'utf8');

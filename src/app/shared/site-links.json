@@ -1,77 +1,20 @@
 {
   "primary": [
     {
-      "icon": "solutions",
-      "title": "Solutions",
-      "path": "/solutions",
-      "links": [
-        { "label": "Enterprise", "path": "/solutions/enterprise" },
-        { "label": "Agencies", "path": "/solutions/agencies" },
-        { "label": "Small & Medium Business", "path": "/solutions/small-medium-business" },
-        { "label": "Professional Services", "path": "/solutions/professional-services" },
-        { "label": "Social Media Management", "path": "/solutions/social-media-management" },
-        { "label": "Social Insights", "path": "/solutions/social-insights" },
-        { "label": "Brand Awareness", "path": "/solutions/brand-awareness" },
-        { "label": "Industries", "path": "/solutions/industries" }
-      ]
-    },
-    {
-      "icon": "modules",
-      "title": "Modules",
-      "path": "/modules",
-      "links": [
-        { "label": "Social Media Management", "path": "/modules/social-media-management" },
-        { "label": "Project Management", "path": "/modules/project-management" },
-        { "label": "Token Management", "path": "/modules/token-management" },
-        { "label": "Employee Management", "path": "/modules/employee-management" },
-        { "label": "Finance & Accounting", "path": "/modules/finance-accounting" },
-        { "label": "HRMS", "path": "/modules/hrms" },
-        { "label": "CRM", "path": "/modules/crm" },
-        { "label": "Payroll", "path": "/modules/payroll" },
-        { "label": "Influencer Management", "path": "/modules/influencer-management" },
-        { "label": "IT Management", "path": "/modules/it-management" }
-      ]
-    },
-    {
-      "icon": "integrations",
-      "title": "Integrations",
-      "path": "/integrations",
-      "links": [
-        { "label": "All Integrations", "path": "/integrations" },
-        { "label": "Facebook", "path": "/integrations/facebook" },
-        { "label": "Instagram", "path": "/integrations/instagram" },
-        { "label": "X (Twitter)", "path": "/integrations/x" },
-        { "label": "LinkedIn", "path": "/integrations/linkedin" },
-        { "label": "Pinterest", "path": "/integrations/pinterest" },
-        { "label": "Threads", "path": "/integrations/threads" },
-        { "label": "Google Drive", "path": "/integrations/google-drive" },
-        { "label": "Dropbox", "path": "/integrations/dropbox" }
-      ]
-    },
-    {
       "icon": "company",
-      "title": "Company",
-      "path": "/company",
+      "title": "Institution",
+      "path": "/about",
       "links": [
         { "label": "About Us", "path": "/about" },
         { "label": "Our Team", "path": "/team" },
-        { "label": "Customer Stories", "path": "/company/customer-stories" },
-        { "label": "Careers", "path": "/company/careers" },
-        { "label": "Newsroom", "path": "/company/newsroom" },
-        { "label": "Trust Center", "path": "/company/trust-center" }
+        { "label": "Careers", "path": "/company/careers" }
       ]
     },
     {
       "icon": "resources",
       "title": "Resources",
       "path": "/blogs",
-      "links": [
-        { "label": "Blog", "path": "/blogs" },
-        { "label": "Podcast", "path": "/podcast" },
-        { "label": "Guides & Tutorials", "path": "/support/tutorials" },
-        { "label": "Expert Sessions", "path": "/support/expert-sessions" },
-        { "label": "Feature Requests", "path": "/support/feature-request" }
-      ]
+      "links": [{ "label": "Blog", "path": "/blogs" }]
     },
     {
       "icon": "legal",
@@ -81,11 +24,7 @@
         { "label": "Privacy Policy", "path": "/support/privacy-policy" },
         { "label": "Terms of Service", "path": "/support/terms-of-service" },
         { "label": "Cookie Policy", "path": "/support/cookie-policy" },
-        { "label": "Refund Policy", "path": "/support/refund-policy" },
-        { "label": "Beta Policy", "path": "/support/beta-policy" },
-        { "label": "Website Terms", "path": "/support/website-terms" },
-        { "label": "Disclosure Policy", "path": "/support/disclosure-policy" },
-        { "label": "Do Not Sell My Info", "path": "/support/do-not-sell" }
+        { "label": "Website Terms", "path": "/support/website-terms" }
       ]
     }
   ],
@@ -95,25 +34,10 @@
     "path": "/support",
     "links": [
       { "label": "Support Center", "path": "/support" },
-      { "label": "FAQ", "path": "/support/faq" },
-      { "label": "Community", "path": "/support/community" },
-      { "label": "Changelog", "path": "/support/change-log" },
-      { "label": "System Status", "path": "/support/system-status" },
-      { "label": "Report Abuse", "path": "/support/report-abuse" },
-      { "label": "Data Deletion", "path": "/support/data-deletion" },
-      { "label": "Delete Your Account", "path": "/support/delete-your-account" }
+      { "label": "FAQ", "path": "/support/faq" }
     ]
   },
   "secondary": [
-    {
-      "icon": "pricing",
-      "title": "Pricing",
-      "path": "/pricing",
-      "links": [
-        { "label": "Pricing Plans", "path": "/pricing" },
-        { "label": "Book a Demo", "path": "/demo" }
-      ]
-    },
     {
       "icon": "other",
       "title": "Other Pages",

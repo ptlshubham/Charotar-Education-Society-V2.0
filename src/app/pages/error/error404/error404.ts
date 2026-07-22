@@ -21,17 +21,17 @@ export class Error404 {
   }> = [
     {
       icon: 'grid',
-      title: 'All Features',
-      desc: 'Explore all powerful features ZarklyX has to offer.',
-      cta: 'Explore Features',
-      route: '/solutions',
+      title: 'About Us',
+      desc: 'Learn about Charotar Education Society.',
+      cta: 'About Us',
+      route: '/about',
     },
     {
       icon: 'layers',
-      title: 'Integrations',
-      desc: 'Connect ZarklyX with your favorite tools.',
-      cta: 'View Integrations',
-      route: '/integrations',
+      title: 'Blogs',
+      desc: 'Read our latest articles and updates.',
+      cta: 'Read Blogs',
+      route: '/blogs',
     },
     {
       icon: 'book',

@@ -61,7 +61,7 @@ ng build --configuration development
 
 # Production build
 ng build
-# Output → dist/zarklyx-website/
+# Output → dist/charotar-education-society-v2/
 ```
 
 ---

@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "zarklyx-website": {
+    "charotar-education-society-v2": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -21,7 +21,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "outputPath": "dist/zarklyx-website",
+            "outputPath": "dist/charotar-education-society-v2",
             "polyfills": [
               "zone.js"
             ],
@@ -140,19 +140,19 @@
           "options": {"allowedHosts": true},
           "configurations": {
             "production": {
-              "buildTarget": "zarklyx-website:build:production"
+              "buildTarget": "charotar-education-society-v2:build:production"
             },
             "staging": {
-              "buildTarget": "zarklyx-website:build:staging"
+              "buildTarget": "charotar-education-society-v2:build:staging"
             },
             "testing": {
-              "buildTarget": "zarklyx-website:build:testing"
+              "buildTarget": "charotar-education-society-v2:build:testing"
             },
             "local": {
-              "buildTarget": "zarklyx-website:build:local"
+              "buildTarget": "charotar-education-society-v2:build:local"
             },
             "development": {
-              "buildTarget": "zarklyx-website:build:development"
+              "buildTarget": "charotar-education-society-v2:build:development"
             }
           },
           "defaultConfiguration": "development"

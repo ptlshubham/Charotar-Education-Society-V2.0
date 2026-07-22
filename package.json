@@ -1,5 +1,5 @@
 {
-  "name": "zarklyx-website",
+  "name": "charotar-education-society-v2",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -18,7 +18,7 @@
     "test": "ng test",
     "site:files": "node scripts/generate-site-files.mjs",
     "screenshot": "node scripts/screenshot.mjs",
-    "serve:ssr:zarklyx-website": "node dist/zarklyx-website/server/server.mjs"
+    "serve:ssr:charotar-education-society-v2": "node dist/charotar-education-society-v2/server/server.mjs"
   },
   "private": true,
   "packageManager": "npm@11.6.2",

@@ -1,4 +1,11 @@
-import { Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  PLATFORM_ID,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { isPlatformBrowser, DecimalPipe } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ResourcesService } from '../../../../core/services/resources.service';
@@ -17,15 +24,22 @@ interface RelatedNews {
 const PLACEHOLDER_IMAGE = '/assets/images/blog-placeholder.png';
 
 const CATEGORY_COLOR: Record<string, string> = {
-  'Announcement': '#3DAFA9', 'Product Update': '#3772FF', 'Press Release': '#3772FF',
-  'Events': '#F17C9F', 'Event Recap': '#E8A33D', 'Company News': '#3DAFA9',
-  'Partnership': '#3DAFA9', 'Blog': '#C587CE', 'Resources': '#E8A33D',
+  Announcement: '#3DAFA9',
+  'Product Update': '#3772FF',
+  'Press Release': '#3772FF',
+  Events: '#F17C9F',
+  'Event Recap': '#E8A33D',
+  'Company News': '#3DAFA9',
+  Partnership: '#3DAFA9',
+  Blog: '#C587CE',
+  Resources: '#E8A33D',
 };
 
 @Component({
   selector: 'app-news-details',
   imports: [RouterLink, DecimalPipe],
   templateUrl: './news-details.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './news-details.scss',
 })
 export class NewsDetails implements OnInit {
@@ -66,7 +80,11 @@ export class NewsDetails implements OnInit {
     this.resourcesService.getPublicNewsBySlug(slug).subscribe({
       next: (res: any) => {
         const n = res?.data;
-        if (!n) { this.notFound.set(true); this.loading.set(false); return; }
+        if (!n) {
+          this.notFound.set(true);
+          this.loading.set(false);
+          return;
+        }
         const category = n.category || 'News';
         this.title.set(n.title || '');
         this.category.set(category);
@@ -78,13 +96,21 @@ export class NewsDetails implements OnInit {
         this.heroImage.set(this.resolveImage(n.thumbnail));
         this.excerpt.set(n.excerpt || '');
         this.content.set(n.content || '');
-        this.tags.set(String(n.tags || '').split(',').map((t: string) => t.trim()).filter(Boolean));
+        this.tags.set(
+          String(n.tags || '')
+            .split(',')
+            .map((t: string) => t.trim())
+            .filter(Boolean),
+        );
         this.applySeo(n, slug);
         this.loadRelated(slug);
         this.loading.set(false);
         if (isPlatformBrowser(this.platformId)) window.scrollTo({ top: 0 });
       },
-      error: () => { this.notFound.set(true); this.loading.set(false); },
+      error: () => {
+        this.notFound.set(true);
+        this.loading.set(false);
+      },
     });
   }
 
@@ -103,17 +129,19 @@ export class NewsDetails implements OnInit {
     this.resourcesService.getPublicNews({ limit: 4 }).subscribe({
       next: (res: any) => {
         const rows: any[] = res?.data?.data ?? [];
-        this.relatedNews.set(rows
-          .filter((n) => n.slug !== currentSlug)
-          .slice(0, 3)
-          .map((n) => ({
-            id: n.slug,
-            image: this.resolveImage(n.thumbnail),
-            title: n.title,
-            excerpt: n.excerpt || '',
-            date: this.formatDate(n.publishedAt || n.createdAt),
-            category: n.category || 'News',
-          })));
+        this.relatedNews.set(
+          rows
+            .filter((n) => n.slug !== currentSlug)
+            .slice(0, 3)
+            .map((n) => ({
+              id: n.slug,
+              image: this.resolveImage(n.thumbnail),
+              title: n.title,
+              excerpt: n.excerpt || '',
+              date: this.formatDate(n.publishedAt || n.createdAt),
+              category: n.category || 'News',
+            })),
+        );
       },
     });
   }
@@ -128,19 +156,25 @@ export class NewsDetails implements OnInit {
     const url = encodeURIComponent(isPlatformBrowser(this.platformId) ? window.location.href : '');
     const text = encodeURIComponent(this.title());
     switch (platform) {
-      case 'twitter': return `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
-      case 'facebook': return `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+      case 'twitter':
+        return `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
+      case 'facebook':
+        return `https://www.facebook.com/sharer/sharer.php?u=${url}`;
       case 'linkedin':
-      default: return `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+      default:
+        return `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
     }
   }
 
   copyLink(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-    navigator.clipboard?.writeText(window.location.href).then(() => {
-      this.copied.set(true);
-      setTimeout(() => this.copied.set(false), 2000);
-    }).catch(() => {});
+    navigator.clipboard
+      ?.writeText(window.location.href)
+      .then(() => {
+        this.copied.set(true);
+        setTimeout(() => this.copied.set(false), 2000);
+      })
+      .catch(() => {});
   }
 
   private resolveImage(thumbnail: string): string {

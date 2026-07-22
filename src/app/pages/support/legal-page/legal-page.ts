@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -18,6 +18,7 @@ export interface LegalSection {
   selector: 'app-legal-page',
   imports: [NgClass, RouterLink],
   templateUrl: './legal-page.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './legal-page.scss',
 })
 export class LegalPage {
@@ -40,8 +41,18 @@ export class LegalPage {
 
   /** Cycle of neutral icons so each row gets a distinct glyph like the design. */
   private readonly iconCycle = [
-    'doc', 'list', 'user', 'card', 'shield', 'folder',
-    'puzzle', 'copyright', 'lock', 'cloud', 'ban', 'alert',
+    'doc',
+    'list',
+    'user',
+    'card',
+    'shield',
+    'folder',
+    'puzzle',
+    'copyright',
+    'lock',
+    'cloud',
+    'ban',
+    'alert',
   ];
 
   iconFor(section: LegalSection, index: number): string {

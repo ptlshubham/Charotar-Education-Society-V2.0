@@ -1,10 +1,18 @@
-import { Component, ElementRef, ViewChild, afterNextRender, OnDestroy } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  afterNextRender,
+  OnDestroy,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { gsap } from 'gsap';
 
 @Component({
   selector: 'app-company-logos',
   imports: [],
   templateUrl: './company-logos.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './company-logos.scss',
 })
 export class CompanyLogos implements OnDestroy {
@@ -90,8 +98,8 @@ export class CompanyLogos implements OnDestroy {
               img.addEventListener('load', () => resolve(), { once: true });
               img.addEventListener('error', () => resolve(), { once: true });
             }
-          })
-      )
+          }),
+      ),
     );
     const timeout = new Promise<void>((resolve) => setTimeout(resolve, 1500));
 

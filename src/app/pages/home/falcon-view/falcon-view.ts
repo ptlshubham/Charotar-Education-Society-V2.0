@@ -1,6 +1,14 @@
 import {
-  Component, ElementRef, ViewChild, AfterViewInit,
-  OnDestroy, ChangeDetectorRef, inject, NgZone, PLATFORM_ID
+  Component,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  OnDestroy,
+  ChangeDetectorRef,
+  inject,
+  NgZone,
+  PLATFORM_ID,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { gsap } from 'gsap';
@@ -16,6 +24,7 @@ interface ChipTooltipData {
   selector: 'app-falcon-view',
   imports: [],
   templateUrl: './falcon-view.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './falcon-view.scss',
 })
 export class FalconView implements AfterViewInit, OnDestroy {
@@ -48,36 +57,216 @@ export class FalconView implements AfterViewInit, OnDestroy {
 
   // Ordered chip names matching DOM order (same for mobile & lg containers)
   private chipNames = [
-    'Project Management', 'Bills & Utility',
-    'Influencers', 'Token & Queue',
-    'SEO', 'Sales & Marketing',
-    'Attendance', 'Payroll',
-    'Client Management', 'Social Media',
-    'Todo List', 'HRMS',
-    'Daily Works', 'Accounting',
-    'Reports & Analytics', 'Cloud Storage',
-    'Inventory', 'Employee Management',
+    'Project Management',
+    'Bills & Utility',
+    'Influencers',
+    'Token & Queue',
+    'SEO',
+    'Sales & Marketing',
+    'Attendance',
+    'Payroll',
+    'Client Management',
+    'Social Media',
+    'Todo List',
+    'HRMS',
+    'Daily Works',
+    'Accounting',
+    'Reports & Analytics',
+    'Cloud Storage',
+    'Inventory',
+    'Employee Management',
   ];
 
   private chipTooltipData: Record<string, ChipTooltipData> = {
-    'Project Management': { name: 'Project Management', icon: '/assets/icons/first-panel-icon1.svg', points: ['Plan projects & milestones', 'Assign tasks & deadlines', 'Track progress in real time', 'Team collaboration & reports'] },
-    'Bills & Utility': { name: 'Bills & Utility', icon: '/assets/icons/first-panel-icon2.svg', points: ['Manage utility bills & payments', 'Track billing cycles', 'Automated invoice generation', 'Monitor recurring expenses'], soon: true },
-    'Influencers': { name: 'Influencers', icon: '/assets/icons/second-panel-icon1.svg', points: ['Discover & vet influencers', 'Manage collaborations', 'Track campaign performance', 'Automate influencer outreach'], soon: true },
-    'Token & Queue': { name: 'Token & Queue', icon: '/assets/icons/second-panel-icon2.svg', points: ['Smart queue management', 'Real-time token tracking', 'Reduce customer wait times', 'Automated status notifications'] },
-    'SEO': { name: 'SEO', icon: '/assets/icons/third-panel-icon1.svg', points: ['Keyword research & tracking', 'On-page SEO analysis', 'Monitor search rankings', 'Competitor & backlink insights'], soon: true },
-    'Sales & Marketing': { name: 'Sales & Marketing', icon: '/assets/icons/third-panel-icon2.svg', points: ['Lead generation & capture', 'Multi-channel campaigns', 'Sales funnel tracking', 'ROI & conversion analytics'] },
-    'Attendance': { name: 'Attendance', icon: '/assets/icons/fourth-panel-icon1.svg', points: ['Automated check-in / check-out', 'Leave & holiday management', 'Shift scheduling', 'Real-time attendance reports'], soon: true },
-    'Payroll': { name: 'Payroll', icon: '/assets/icons/fourth-panel-icon2.svg', points: ['Automated salary processing', 'Tax & deduction calculations', 'Instant payslip generation', 'Statutory compliance'], soon: true },
-    'Client Management': { name: 'Client Management', icon: '/assets/icons/fifth-panel-icon1.svg', points: ['Centralized client CRM', 'Communication history tracking', 'Contracts & document storage', 'Client insights & analytics'] },
-    'Social Media': { name: 'Social Media', icon: '/assets/icons/fifth-panel-icon2.svg', points: ['Multi-platform post scheduling', 'Visual content calendar', 'Engagement & reach analytics', 'Automated publishing'], soon: true },
-    'Todo List': { name: 'Todo List', icon: '/assets/icons/sixth-panel-icon1.svg', points: ['Create & organize tasks', 'Set priorities & deadlines', 'Collaborate with your team', 'Track task completion'] },
-    'HRMS': { name: 'HRMS', icon: '/assets/icons/sixth-panel-icon2.svg', points: ['Employee onboarding & records', 'Performance reviews', 'HR document management', 'Workforce analytics'], soon: true },
-    'Daily Works': { name: 'Daily Works', icon: '/assets/icons/seventh-panel-icon1.svg', points: ['Log daily tasks & activities', 'Track daily work progress', 'Team daily updates & summaries', 'Daily productivity reports'] },
-    'Accounting': { name: 'Accounting', icon: '/assets/icons/seventh-panel-icon2.svg', points: ['Financial reporting', 'Expense & income tracking', 'Budgeting & forecasting', 'Tax-ready books'] },
-    'Reports & Analytics': { name: 'Reports & Analytics', icon: '/assets/icons/eighth-panel-icon1.svg', points: ['Custom dashboards', 'Real-time data visualization', 'Automated reporting', 'Predictive business insights'], soon: true },
-    'Cloud Storage': { name: 'Cloud Storage', icon: '/assets/icons/eighth-panel-icon2.svg', points: ['Secure cloud file storage', 'Team file collaboration', 'Version control & history', 'Access files anywhere'], soon: true },
-    'Inventory': { name: 'Inventory', icon: '/assets/icons/ninth-panel-icon1.svg', points: ['Real-time stock tracking', 'Purchase & order management', 'Supplier management', 'Low-stock alerts & reports'] },
-    'Employee Management': { name: 'Employee Management', icon: '/assets/icons/ninth-panel-icon2.svg', points: ['Central employee directory', 'Performance tracking', 'Training & development', 'Role & team management'] },
+    'Project Management': {
+      name: 'Project Management',
+      icon: '/assets/icons/first-panel-icon1.svg',
+      points: [
+        'Plan projects & milestones',
+        'Assign tasks & deadlines',
+        'Track progress in real time',
+        'Team collaboration & reports',
+      ],
+    },
+    'Bills & Utility': {
+      name: 'Bills & Utility',
+      icon: '/assets/icons/first-panel-icon2.svg',
+      points: [
+        'Manage utility bills & payments',
+        'Track billing cycles',
+        'Automated invoice generation',
+        'Monitor recurring expenses',
+      ],
+      soon: true,
+    },
+    Influencers: {
+      name: 'Influencers',
+      icon: '/assets/icons/second-panel-icon1.svg',
+      points: [
+        'Discover & vet influencers',
+        'Manage collaborations',
+        'Track campaign performance',
+        'Automate influencer outreach',
+      ],
+      soon: true,
+    },
+    'Token & Queue': {
+      name: 'Token & Queue',
+      icon: '/assets/icons/second-panel-icon2.svg',
+      points: [
+        'Smart queue management',
+        'Real-time token tracking',
+        'Reduce customer wait times',
+        'Automated status notifications',
+      ],
+    },
+    SEO: {
+      name: 'SEO',
+      icon: '/assets/icons/third-panel-icon1.svg',
+      points: [
+        'Keyword research & tracking',
+        'On-page SEO analysis',
+        'Monitor search rankings',
+        'Competitor & backlink insights',
+      ],
+      soon: true,
+    },
+    'Sales & Marketing': {
+      name: 'Sales & Marketing',
+      icon: '/assets/icons/third-panel-icon2.svg',
+      points: [
+        'Lead generation & capture',
+        'Multi-channel campaigns',
+        'Sales funnel tracking',
+        'ROI & conversion analytics',
+      ],
+    },
+    Attendance: {
+      name: 'Attendance',
+      icon: '/assets/icons/fourth-panel-icon1.svg',
+      points: [
+        'Automated check-in / check-out',
+        'Leave & holiday management',
+        'Shift scheduling',
+        'Real-time attendance reports',
+      ],
+      soon: true,
+    },
+    Payroll: {
+      name: 'Payroll',
+      icon: '/assets/icons/fourth-panel-icon2.svg',
+      points: [
+        'Automated salary processing',
+        'Tax & deduction calculations',
+        'Instant payslip generation',
+        'Statutory compliance',
+      ],
+      soon: true,
+    },
+    'Client Management': {
+      name: 'Client Management',
+      icon: '/assets/icons/fifth-panel-icon1.svg',
+      points: [
+        'Centralized client CRM',
+        'Communication history tracking',
+        'Contracts & document storage',
+        'Client insights & analytics',
+      ],
+    },
+    'Social Media': {
+      name: 'Social Media',
+      icon: '/assets/icons/fifth-panel-icon2.svg',
+      points: [
+        'Multi-platform post scheduling',
+        'Visual content calendar',
+        'Engagement & reach analytics',
+        'Automated publishing',
+      ],
+      soon: true,
+    },
+    'Todo List': {
+      name: 'Todo List',
+      icon: '/assets/icons/sixth-panel-icon1.svg',
+      points: [
+        'Create & organize tasks',
+        'Set priorities & deadlines',
+        'Collaborate with your team',
+        'Track task completion',
+      ],
+    },
+    HRMS: {
+      name: 'HRMS',
+      icon: '/assets/icons/sixth-panel-icon2.svg',
+      points: [
+        'Employee onboarding & records',
+        'Performance reviews',
+        'HR document management',
+        'Workforce analytics',
+      ],
+      soon: true,
+    },
+    'Daily Works': {
+      name: 'Daily Works',
+      icon: '/assets/icons/seventh-panel-icon1.svg',
+      points: [
+        'Log daily tasks & activities',
+        'Track daily work progress',
+        'Team daily updates & summaries',
+        'Daily productivity reports',
+      ],
+    },
+    Accounting: {
+      name: 'Accounting',
+      icon: '/assets/icons/seventh-panel-icon2.svg',
+      points: [
+        'Financial reporting',
+        'Expense & income tracking',
+        'Budgeting & forecasting',
+        'Tax-ready books',
+      ],
+    },
+    'Reports & Analytics': {
+      name: 'Reports & Analytics',
+      icon: '/assets/icons/eighth-panel-icon1.svg',
+      points: [
+        'Custom dashboards',
+        'Real-time data visualization',
+        'Automated reporting',
+        'Predictive business insights',
+      ],
+      soon: true,
+    },
+    'Cloud Storage': {
+      name: 'Cloud Storage',
+      icon: '/assets/icons/eighth-panel-icon2.svg',
+      points: [
+        'Secure cloud file storage',
+        'Team file collaboration',
+        'Version control & history',
+        'Access files anywhere',
+      ],
+      soon: true,
+    },
+    Inventory: {
+      name: 'Inventory',
+      icon: '/assets/icons/ninth-panel-icon1.svg',
+      points: [
+        'Real-time stock tracking',
+        'Purchase & order management',
+        'Supplier management',
+        'Low-stock alerts & reports',
+      ],
+    },
+    'Employee Management': {
+      name: 'Employee Management',
+      icon: '/assets/icons/ninth-panel-icon2.svg',
+      points: [
+        'Central employee directory',
+        'Performance tracking',
+        'Training & development',
+        'Role & team management',
+      ],
+    },
   };
 
   // ─── Auto-play state ───
@@ -110,10 +299,14 @@ export class FalconView implements AfterViewInit, OnDestroy {
     }
     // Reset all bg layers to their CSS-defined positions
     const layers = [
-      this.bgLayer1, this.bgLayer2, this.bgLayer3,
-      this.bgLayerLg1, this.bgLayerLg2, this.bgLayerLg3,
+      this.bgLayer1,
+      this.bgLayer2,
+      this.bgLayer3,
+      this.bgLayerLg1,
+      this.bgLayerLg2,
+      this.bgLayerLg3,
     ];
-    layers.forEach(ref => {
+    layers.forEach((ref) => {
       if (ref?.nativeElement) {
         gsap.set(ref.nativeElement, { clearProps: 'all' });
       }
@@ -132,10 +325,14 @@ export class FalconView implements AfterViewInit, OnDestroy {
 
     // Reset all layers to their CSS defaults before starting
     const allLayers = [
-      this.bgLayer1, this.bgLayer2, this.bgLayer3,
-      this.bgLayerLg1, this.bgLayerLg2, this.bgLayerLg3,
+      this.bgLayer1,
+      this.bgLayer2,
+      this.bgLayer3,
+      this.bgLayerLg1,
+      this.bgLayerLg2,
+      this.bgLayerLg3,
     ];
-    allLayers.forEach(ref => {
+    allLayers.forEach((ref) => {
       if (ref?.nativeElement) {
         gsap.set(ref.nativeElement, { clearProps: 'all' });
         // Let GSAP own the centering via xPercent/yPercent instead of the
@@ -154,22 +351,25 @@ export class FalconView implements AfterViewInit, OnDestroy {
 
     // Helper  creates a smooth wave across 3 layers
     const addWave = (l1: HTMLElement, l2: HTMLElement, l3: HTMLElement) => {
-      tl.fromTo(l1,
+      tl.fromTo(
+        l1,
         { scale: 1, opacity: 1 },
         { scale: 1.04, opacity: 0.9, duration: 0.6, ease: 'sine.inOut', yoyo: true, repeat: 1 },
-        0
+        0,
       );
 
-      tl.fromTo(l2,
+      tl.fromTo(
+        l2,
         { scale: 1, opacity: 1 },
         { scale: 1.06, opacity: 0.78, duration: 0.65, ease: 'sine.inOut', yoyo: true, repeat: 1 },
-        0.2
+        0.2,
       );
 
-      tl.fromTo(l3,
+      tl.fromTo(
+        l3,
         { scale: 1, opacity: 1 },
         { scale: 1.08, opacity: 0.65, duration: 0.7, ease: 'sine.inOut', yoyo: true, repeat: 1 },
-        0.4
+        0.4,
       );
     };
 
@@ -286,7 +486,9 @@ export class FalconView implements AfterViewInit, OnDestroy {
       if (!this.isUserHovering) {
         this.hideTooltip(() => {
           if (this.isMobileAutoPlay && this.activeAutoChipEl) {
-            const textContainer = this.activeAutoChipEl.querySelector('.text-container') as HTMLElement;
+            const textContainer = this.activeAutoChipEl.querySelector(
+              '.text-container',
+            ) as HTMLElement;
             if (textContainer) {
               this.collapseChip(textContainer);
             }
@@ -320,12 +522,15 @@ export class FalconView implements AfterViewInit, OnDestroy {
 
     const listEl = tooltip.querySelector('.tooltip-list');
     if (listEl) {
-      listEl.innerHTML = data.points.map(p =>
-        `<li class="flex items-start gap-1.5 text-[11px] text-[#555] leading-snug">
+      listEl.innerHTML = data.points
+        .map(
+          (p) =>
+            `<li class="flex items-start gap-1.5 text-[11px] text-[#555] leading-snug">
           <span class="w-1.5 h-1.5 rounded-full bg-[#3BAEA9] mt-1 shrink-0"></span>
           ${p}
-        </li>`
-      ).join('');
+        </li>`,
+        )
+        .join('');
     }
 
     const chipRect = chipEl.getBoundingClientRect();
@@ -341,7 +546,10 @@ export class FalconView implements AfterViewInit, OnDestroy {
       tooltip.style.left = `${centerX}px`;
     } else {
       // Mobile/MD: position based on left/right side
-      const isLeft = chipIndex !== undefined ? this.isLeftChip(chipIndex) : (chipRect.left < sectionRect.left + sectionRect.width / 2);
+      const isLeft =
+        chipIndex !== undefined
+          ? this.isLeftChip(chipIndex)
+          : chipRect.left < sectionRect.left + sectionRect.width / 2;
 
       if (isLeft) {
         // Left chip → tooltip aligns to left edge of chip
@@ -362,9 +570,10 @@ export class FalconView implements AfterViewInit, OnDestroy {
     const card = tooltip.querySelector('.tooltip-card') as HTMLElement;
     if (card) {
       gsap.killTweensOf(card);
-      gsap.fromTo(card,
+      gsap.fromTo(
+        card,
         { clipPath: 'inset(0 0 100% 0)', opacity: 0 },
-        { clipPath: 'inset(0 0 0% 0)', opacity: 1, duration: 0.35, ease: 'power3.out' }
+        { clipPath: 'inset(0 0 0% 0)', opacity: 1, duration: 0.35, ease: 'power3.out' },
       );
     }
   }
@@ -398,9 +607,12 @@ export class FalconView implements AfterViewInit, OnDestroy {
     // Find the visible tooltip (could be lg or mobile)
     const lgTip = this.lgTooltip?.nativeElement;
     const mobileTip = this.mobileTooltip?.nativeElement;
-    const tooltip = lgTip?.style.visibility === 'visible' ? lgTip
-      : mobileTip?.style.visibility === 'visible' ? mobileTip
-      : null;
+    const tooltip =
+      lgTip?.style.visibility === 'visible'
+        ? lgTip
+        : mobileTip?.style.visibility === 'visible'
+          ? mobileTip
+          : null;
 
     if (!tooltip) {
       onComplete?.();
@@ -418,7 +630,7 @@ export class FalconView implements AfterViewInit, OnDestroy {
         onComplete: () => {
           tooltip.style.visibility = 'hidden';
           onComplete?.();
-        }
+        },
       });
     } else {
       onComplete?.();
@@ -493,11 +705,15 @@ export class FalconView implements AfterViewInit, OnDestroy {
 
     // Collapse the previously active chip if there is one
     if (this.activeChipId) {
-      const activeEl = document.querySelector('app-falcon-view .falcon-progress-dot.active .text-container') as HTMLElement;
+      const activeEl = document.querySelector(
+        'app-falcon-view .falcon-progress-dot.active .text-container',
+      ) as HTMLElement;
       if (activeEl) {
         this.collapseChip(activeEl);
       }
-      const activeDot = document.querySelector('app-falcon-view .falcon-progress-dot.active') as HTMLElement;
+      const activeDot = document.querySelector(
+        'app-falcon-view .falcon-progress-dot.active',
+      ) as HTMLElement;
       if (activeDot) {
         activeDot.classList.remove('active');
       }
@@ -546,11 +762,15 @@ export class FalconView implements AfterViewInit, OnDestroy {
 
   collapseActive(): void {
     if (this.activeChipId) {
-      const activeEl = document.querySelector('app-falcon-view .falcon-progress-dot.active .text-container') as HTMLElement;
+      const activeEl = document.querySelector(
+        'app-falcon-view .falcon-progress-dot.active .text-container',
+      ) as HTMLElement;
       if (activeEl) {
         this.collapseChip(activeEl);
       }
-      const activeDot = document.querySelector('app-falcon-view .falcon-progress-dot.active') as HTMLElement;
+      const activeDot = document.querySelector(
+        'app-falcon-view .falcon-progress-dot.active',
+      ) as HTMLElement;
       if (activeDot) {
         activeDot.classList.remove('active');
       }

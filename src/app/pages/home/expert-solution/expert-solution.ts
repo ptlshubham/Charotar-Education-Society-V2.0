@@ -1,4 +1,11 @@
-import { Component, ElementRef, OnDestroy, afterNextRender, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  afterNextRender,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 /**
@@ -7,8 +14,7 @@ import { RouterLink } from '@angular/router';
  * autoplay a video with sound  and `playsinline=1` stops iOS Safari from
  * hijacking playback into native fullscreen.
  */
-const VIDEO_SRC =
-  'https://www.youtube.com/embed/DwDjJQTHCMQ?autoplay=1&mute=1&playsinline=1&rel=0';
+const VIDEO_SRC = 'https://www.youtube.com/embed/DwDjJQTHCMQ?autoplay=1&mute=1&playsinline=1&rel=0';
 
 /** Fraction of the embed that must be on screen before it loads and plays. */
 const PLAY_THRESHOLD = 0.35;
@@ -17,6 +23,7 @@ const PLAY_THRESHOLD = 0.35;
   selector: 'app-expert-solution',
   imports: [RouterLink],
   templateUrl: './expert-solution.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './expert-solution.scss',
 })
 export class ExpertSolution implements OnDestroy {
@@ -38,7 +45,8 @@ export class ExpertSolution implements OnDestroy {
    * intersects and never costs a YouTube request.
    */
   private armVideos(): void {
-    const frames = this.host.nativeElement.querySelectorAll<HTMLIFrameElement>('iframe[data-video]');
+    const frames =
+      this.host.nativeElement.querySelectorAll<HTMLIFrameElement>('iframe[data-video]');
 
     frames.forEach((frame) => {
       let loaded = false;

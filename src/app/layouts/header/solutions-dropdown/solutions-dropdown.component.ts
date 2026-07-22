@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SafeHtmlPipe } from '../../../shared/safe-html.pipe';
@@ -32,29 +32,85 @@ const I = {
   standalone: true,
   imports: [RouterLink, CommonModule, SafeHtmlPipe],
   templateUrl: './solutions-dropdown.component.html',
-  styleUrl: './solutions-dropdown.component.scss'
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './solutions-dropdown.component.scss',
 })
 export class SolutionsDropdown {
   @Output() closeDropdown = new EventEmitter<void>();
 
   readonly coreAreas: LinkItem[] = [
-    { icon: I.layout, title: 'Enterprise', desc: 'Advanced control, security and scale for large teams.', link: '/solutions/enterprise' },
-    { icon: I.users, title: 'Agencies', desc: 'Run client work and grow your agency in one place.', link: '/solutions/agencies' },
-    { icon: I.clipboard, title: 'Professional Services', desc: 'Deliver billable projects on time and on budget.', link: '/solutions/professional-services' },
+    {
+      icon: I.layout,
+      title: 'Enterprise',
+      desc: 'Advanced control, security and scale for large teams.',
+      link: '/solutions/enterprise',
+    },
+    {
+      icon: I.users,
+      title: 'Agencies',
+      desc: 'Run client work and grow your agency in one place.',
+      link: '/solutions/agencies',
+    },
+    {
+      icon: I.clipboard,
+      title: 'Professional Services',
+      desc: 'Deliver billable projects on time and on budget.',
+      link: '/solutions/professional-services',
+    },
   ];
 
   readonly popularSolutions: LinkItem[] = [
-    { icon: I.cart, title: 'Small & Medium Business', desc: 'Everything a growing business needs to scale.', link: '/solutions/small-medium-business' },
-    { icon: I.workflow, title: 'Social Media Management', desc: 'Plan, schedule and publish across every channel.', link: '/solutions/social-media-management' },
-    { icon: I.pie, title: 'Social Insights', desc: 'Turn engagement data into smarter decisions.', link: '/solutions/social-insights' },
-    { icon: I.target, title: 'Brand Awareness', desc: 'Grow reach and build a brand people trust.', link: '/solutions/brand-awareness' },
-    { icon: I.grid, title: 'Industries', desc: 'Tailored solutions for your specific industry.', link: '/solutions/industries' },
+    {
+      icon: I.cart,
+      title: 'Small & Medium Business',
+      desc: 'Everything a growing business needs to scale.',
+      link: '/solutions/small-medium-business',
+    },
+    {
+      icon: I.workflow,
+      title: 'Social Media Management',
+      desc: 'Plan, schedule and publish across every channel.',
+      link: '/solutions/social-media-management',
+    },
+    {
+      icon: I.pie,
+      title: 'Social Insights',
+      desc: 'Turn engagement data into smarter decisions.',
+      link: '/solutions/social-insights',
+    },
+    {
+      icon: I.target,
+      title: 'Brand Awareness',
+      desc: 'Grow reach and build a brand people trust.',
+      link: '/solutions/brand-awareness',
+    },
+    {
+      icon: I.grid,
+      title: 'Industries',
+      desc: 'Tailored solutions for your specific industry.',
+      link: '/solutions/industries',
+    },
   ];
 
   readonly whatsNew: ReadonlyArray<{ icon: string; color: string; title: string; desc: string }> = [
-    { icon: I.target, color: '#3DAFA9', title: 'Enterprise-Grade Security', desc: 'SSO, audit logs and granular role-based access controls.' },
-    { icon: I.arrow, color: '#3772FF', title: 'Automation Studio', desc: 'Build custom workflows without writing any code.' },
-    { icon: I.shuffle, color: '#F17C9F', title: 'Unified Reporting', desc: 'All your metrics together in one live dashboard.' },
+    {
+      icon: I.target,
+      color: '#3DAFA9',
+      title: 'Enterprise-Grade Security',
+      desc: 'SSO, audit logs and granular role-based access controls.',
+    },
+    {
+      icon: I.arrow,
+      color: '#3772FF',
+      title: 'Automation Studio',
+      desc: 'Build custom workflows without writing any code.',
+    },
+    {
+      icon: I.shuffle,
+      color: '#F17C9F',
+      title: 'Unified Reporting',
+      desc: 'All your metrics together in one live dashboard.',
+    },
   ];
 
   readonly popularSearches: ReadonlyArray<{ label: string; link: string }> = [

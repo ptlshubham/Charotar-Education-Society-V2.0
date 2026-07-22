@@ -1,6 +1,14 @@
 import {
-  Component, AfterViewInit, OnDestroy, ViewChildren, QueryList,
-  ElementRef, Inject, PLATFORM_ID, NgZone,
+  Component,
+  AfterViewInit,
+  OnDestroy,
+  ViewChildren,
+  QueryList,
+  ElementRef,
+  Inject,
+  PLATFORM_ID,
+  NgZone,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -8,6 +16,7 @@ import { isPlatformBrowser } from '@angular/common';
   selector: 'app-hero',
   imports: [],
   templateUrl: './hero.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './hero.scss',
 })
 export class Hero implements AfterViewInit, OnDestroy {

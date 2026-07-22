@@ -1,4 +1,12 @@
-import { Component, inject, OnInit, PLATFORM_ID, signal, computed } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  PLATFORM_ID,
+  signal,
+  computed,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { NgClass, isPlatformBrowser } from '@angular/common';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -13,7 +21,7 @@ const MODULE_META: Record<string, { label: string; icon: string }> = {
   invoice: { label: 'Invoice', icon: 'card' },
   billing: { label: 'Billing', icon: 'card' },
 };
-const moduleLabel = (m: string) => MODULE_META[m]?.label ?? (m.charAt(0).toUpperCase() + m.slice(1));
+const moduleLabel = (m: string) => MODULE_META[m]?.label ?? m.charAt(0).toUpperCase() + m.slice(1);
 const moduleIcon = (m: string) => MODULE_META[m]?.icon ?? 'folder';
 
 interface NavCategory {
@@ -27,6 +35,7 @@ interface NavCategory {
   selector: 'app-tutorial-details',
   imports: [NgClass, RouterLink],
   templateUrl: './tutorial-details.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './tutorial-details.scss',
 })
 export class TutorialDetails implements OnInit {
@@ -98,8 +107,13 @@ export class TutorialDetails implements OnInit {
         });
         this.updated.set(
           v.updatedAt
-            ? 'Updated on ' + new Date(v.updatedAt).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })
-            : ''
+            ? 'Updated on ' +
+                new Date(v.updatedAt).toLocaleDateString('en-US', {
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric',
+                })
+            : '',
         );
         this.expandedModule.set(v.module || 'general');
         const embed = this.toEmbedUrl(v.videoUrl);
@@ -141,7 +155,12 @@ export class TutorialDetails implements OnInit {
     }
     return [...groups.entries()]
       .sort((a, b) => a[0].localeCompare(b[0]))
-      .map(([mod, items]) => ({ module: mod, name: moduleLabel(mod), icon: moduleIcon(mod), items }));
+      .map(([mod, items]) => ({
+        module: mod,
+        name: moduleLabel(mod),
+        icon: moduleIcon(mod),
+        items,
+      }));
   });
 
   /** A module's sub-items show when it's expanded, or whenever a search is active */
@@ -159,7 +178,7 @@ export class TutorialDetails implements OnInit {
         title: v.title || v.name || 'Untitled',
         duration: v.duration || '',
         current: v.id === this.currentId(),
-      }))
+      })),
   );
   readonly pathTitle = computed(() => moduleLabel(this.currentModule()));
   readonly pathTotal = computed(() => this.pathVideos().length);
@@ -178,7 +197,9 @@ export class TutorialDetails implements OnInit {
     const mod = this.currentModule();
     return this.allVideos()
       .filter((v) => v.id !== cur)
-      .sort((a, b) => Number((b.module || 'general') === mod) - Number((a.module || 'general') === mod))
+      .sort(
+        (a, b) => Number((b.module || 'general') === mod) - Number((a.module || 'general') === mod),
+      )
       .slice(0, 4)
       .map((v) => ({
         id: v.id,
@@ -230,7 +251,7 @@ export class TutorialDetails implements OnInit {
     if (!isPlatformBrowser(this.platformId)) return;
     navigator.clipboard?.writeText(window.location.href).then(
       () => this.copied.set(true),
-      () => {}
+      () => {},
     );
   }
 }

@@ -5,6 +5,7 @@ import {
   afterNextRender,
   inject,
   signal,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { gsap } from 'gsap';
 import { RouterLink } from '@angular/router';
@@ -74,6 +75,7 @@ const ALT = 'ZarklyX agency operations dashboard';
   selector: 'app-platform-overview',
   imports: [RouterLink],
   templateUrl: './platform-overview.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './platform-overview.scss',
 })
 export class PlatformOverview implements OnDestroy {

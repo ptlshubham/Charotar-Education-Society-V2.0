@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FaqItem, FAQ_SECTIONS } from './faq.data';
@@ -13,6 +13,7 @@ interface PopularArticle {
   selector: 'app-support-faq',
   imports: [NgClass, RouterLink],
   templateUrl: './faq.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './faq.scss',
 })
 export class Faq {
@@ -52,7 +53,10 @@ export class Faq {
 
   get heading(): string {
     if (this.activeCategory === 'all') return 'All Frequently Asked Questions';
-    return this.categories.find((c) => c.id === this.activeCategory)?.label ?? 'Frequently Asked Questions';
+    return (
+      this.categories.find((c) => c.id === this.activeCategory)?.label ??
+      'Frequently Asked Questions'
+    );
   }
 
   setCategory(id: string): void {

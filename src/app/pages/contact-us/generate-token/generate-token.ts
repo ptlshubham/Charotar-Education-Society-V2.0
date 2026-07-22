@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ResourcesService } from '../../../core/services/resources.service';
@@ -8,6 +8,7 @@ import { SuccessDialogService } from '../../../core/services/success-dialog.serv
   selector: 'app-generate-token',
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './generate-token.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './generate-token.scss',
 })
 export class GenerateToken {
@@ -49,7 +50,8 @@ export class GenerateToken {
         this.successDialog.open({
           titleLead: 'Message',
           titleAccent: 'sent!',
-          subtitle: 'Thank you for contacting us. Our team will get back to you as soon as possible.',
+          subtitle:
+            'Thank you for contacting us. Our team will get back to you as soon as possible.',
           infoTitle: "What's next?",
           infoText: 'You will receive a confirmation email shortly with your message details.',
           actions: [{ label: 'Close', primary: true }],

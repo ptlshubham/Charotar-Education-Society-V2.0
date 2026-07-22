@@ -1,4 +1,11 @@
-import { Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  PLATFORM_ID,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { NgClass, isPlatformBrowser } from '@angular/common';
 import { ResourcesService } from '../../../core/services/resources.service';
 
@@ -16,25 +23,53 @@ interface Discussion {
 
 /** Category icon key → the icon cases the discussion-row template supports */
 const DISCUSSION_ICON: Record<string, string> = {
-  grid: 'chat', code: 'code', card: 'dollar', users: 'users', bulb: 'megaphone', chat: 'chat', megaphone: 'megaphone',
+  grid: 'chat',
+  code: 'code',
+  card: 'dollar',
+  users: 'users',
+  bulb: 'megaphone',
+  chat: 'chat',
+  megaphone: 'megaphone',
 };
 
 @Component({
   selector: 'app-community',
   imports: [NgClass],
   templateUrl: './community.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './community.scss',
 })
 export class Community implements OnInit {
   private resourcesService = inject(ResourcesService);
   private platformId = inject(PLATFORM_ID);
   /** Value proposition cards */
-  readonly valueCards: ReadonlyArray<{ icon: string; color: string; title: string; desc: string }> = [
-    { icon: 'connect', color: '#3DAFA9', title: 'Connect', desc: 'Network with other users and experts.' },
-    { icon: 'learn', color: '#3772FF', title: 'Learn', desc: 'Discover tutorials, guides and best practices.' },
-    { icon: 'share', color: '#F17C9F', title: 'Share', desc: 'Share your ideas and help others.' },
-    { icon: 'grow', color: '#E8A33D', title: 'Grow', desc: 'Stay updated and grow with the community.' },
-  ];
+  readonly valueCards: ReadonlyArray<{ icon: string; color: string; title: string; desc: string }> =
+    [
+      {
+        icon: 'connect',
+        color: '#3DAFA9',
+        title: 'Connect',
+        desc: 'Network with other users and experts.',
+      },
+      {
+        icon: 'learn',
+        color: '#3772FF',
+        title: 'Learn',
+        desc: 'Discover tutorials, guides and best practices.',
+      },
+      {
+        icon: 'share',
+        color: '#F17C9F',
+        title: 'Share',
+        desc: 'Share your ideas and help others.',
+      },
+      {
+        icon: 'grow',
+        color: '#E8A33D',
+        title: 'Grow',
+        desc: 'Stay updated and grow with the community.',
+      },
+    ];
 
   /** Discussion filter tabs */
   readonly discussionTabs = ['All', 'Popular', 'Recent', 'Unanswered', 'Solved', 'Product Updates'];
@@ -70,9 +105,14 @@ export class Community implements OnInit {
     this.resourcesService.getCommunityCategories().subscribe({
       next: (res: any) => {
         const rows = res?.data ?? [];
-        this.categories.set(rows.map((c: any) => ({
-          icon: c.icon || 'chat', color: c.color || '#3DAFA9', name: c.name, count: c.count,
-        })));
+        this.categories.set(
+          rows.map((c: any) => ({
+            icon: c.icon || 'chat',
+            color: c.color || '#3DAFA9',
+            name: c.name,
+            count: c.count,
+          })),
+        );
       },
       error: () => this.categories.set([]),
     });
@@ -108,10 +148,30 @@ export class Community implements OnInit {
   }
 
   readonly involve: ReadonlyArray<{ icon: string; color: string; title: string; desc: string }> = [
-    { icon: 'chat', color: '#3DAFA9', title: 'Start a discussion', desc: 'Ask questions and get help from the community.' },
-    { icon: 'users', color: '#3772FF', title: 'Reply & help', desc: 'Share your knowledge and support others.' },
-    { icon: 'calendar', color: '#C587CE', title: 'Join events', desc: 'Participate in webinars, AMAs and workshops.' },
-    { icon: 'badge', color: '#E8A33D', title: 'Earn badges', desc: 'Contribute and earn exclusive badges.' },
+    {
+      icon: 'chat',
+      color: '#3DAFA9',
+      title: 'Start a discussion',
+      desc: 'Ask questions and get help from the community.',
+    },
+    {
+      icon: 'users',
+      color: '#3772FF',
+      title: 'Reply & help',
+      desc: 'Share your knowledge and support others.',
+    },
+    {
+      icon: 'calendar',
+      color: '#C587CE',
+      title: 'Join events',
+      desc: 'Participate in webinars, AMAs and workshops.',
+    },
+    {
+      icon: 'badge',
+      color: '#E8A33D',
+      title: 'Earn badges',
+      desc: 'Contribute and earn exclusive badges.',
+    },
   ];
 
   readonly stats = signal<{ icon: string; value: string; label: string }[]>([
@@ -121,18 +181,58 @@ export class Community implements OnInit {
     { icon: 'award', value: '', label: 'Expert Contributors' },
   ]);
 
-
-
   /** Hero members  the avatars sit in a ring around the ZarklyX mark and are linked to each
       OTHER (peer-to-peer), not to a hub. x/y are the avatar centre in the illustration's 0–100
       space. `talkBegin` staggers each member's typing bubble so a conversation appears to move
       around the group, following the bead that loops along `convoPath`. See community.scss. */
-  readonly members: ReadonlyArray<{ letter: string; color: string; x: number; y: number; floatDelay: string; img?: string }> = [
-    { letter: 'S', color: '#3DAFA9', x: 32.4, y: 25.7, floatDelay: '0s', img: '/assets/images/community/shubham.webp' },
-    { letter: 'S', color: '#3772FF', x: 67.6, y: 25.7, floatDelay: '-1.6s', img: '/assets/images/community/shiv.webp' },
-    { letter: 'H', color: '#C587CE', x: 78.5, y: 59.3, floatDelay: '-3.2s', img: '/assets/images/community/het.webp' },
-    { letter: 'D', color: '#E8A33D', x: 50, y: 80, floatDelay: '-4.8s', img: '/assets/images/community/darshan.webp' },
-    { letter: 'P', color: '#F17C9F', x: 21.5, y: 59.3, floatDelay: '-6.4s', img: '/assets/images/community/prarthan.webp' },
+  readonly members: ReadonlyArray<{
+    letter: string;
+    color: string;
+    x: number;
+    y: number;
+    floatDelay: string;
+    img?: string;
+  }> = [
+    {
+      letter: 'S',
+      color: '#3DAFA9',
+      x: 32.4,
+      y: 25.7,
+      floatDelay: '0s',
+      img: '/assets/images/community/shubham.webp',
+    },
+    {
+      letter: 'S',
+      color: '#3772FF',
+      x: 67.6,
+      y: 25.7,
+      floatDelay: '-1.6s',
+      img: '/assets/images/community/shiv.webp',
+    },
+    {
+      letter: 'H',
+      color: '#C587CE',
+      x: 78.5,
+      y: 59.3,
+      floatDelay: '-3.2s',
+      img: '/assets/images/community/het.webp',
+    },
+    {
+      letter: 'D',
+      color: '#E8A33D',
+      x: 50,
+      y: 80,
+      floatDelay: '-4.8s',
+      img: '/assets/images/community/darshan.webp',
+    },
+    {
+      letter: 'P',
+      color: '#F17C9F',
+      x: 21.5,
+      y: 59.3,
+      floatDelay: '-6.4s',
+      img: '/assets/images/community/prarthan.webp',
+    },
   ];
 
   /** Length of one full conversation loop (seconds). Every message beam + bubble shares this
@@ -142,16 +242,17 @@ export class Community implements OnInit {
   /** A scripted-but-random-looking conversation: `from`/`to` index into `members`, `begin` is
       the message's start time within the cycle. Pairs deliberately criss-cross the pentagon so
       messages fly member → member in every direction, not just around the ring. */
-  private readonly chats: ReadonlyArray<{ from: number; to: number; text: string; begin: number }> = [
-    { from: 0, to: 2, text: 'Hey team 👋', begin: 0 },
-    { from: 3, to: 1, text: 'This rocks 🔥', begin: 2.4 },
-    { from: 4, to: 0, text: 'Question for you', begin: 4.8 },
-    { from: 2, to: 4, text: 'On it! ✅', begin: 7.2 },
-    { from: 1, to: 3, text: 'Big win today 🚀', begin: 9.6 },
-    { from: 0, to: 3, text: 'Way to go! 🎉', begin: 12 },
-    { from: 4, to: 2, text: 'Got you covered', begin: 14.4 },
-    { from: 3, to: 0, text: 'Thanks a ton 🙏', begin: 16.8 },
-  ];
+  private readonly chats: ReadonlyArray<{ from: number; to: number; text: string; begin: number }> =
+    [
+      { from: 0, to: 2, text: 'Hey team 👋', begin: 0 },
+      { from: 3, to: 1, text: 'This rocks 🔥', begin: 2.4 },
+      { from: 4, to: 0, text: 'Question for you', begin: 4.8 },
+      { from: 2, to: 4, text: 'On it! ✅', begin: 7.2 },
+      { from: 1, to: 3, text: 'Big win today 🚀', begin: 9.6 },
+      { from: 0, to: 3, text: 'Way to go! 🎉', begin: 12 },
+      { from: 4, to: 2, text: 'Got you covered', begin: 14.4 },
+      { from: 3, to: 0, text: 'Thanks a ton 🙏', begin: 16.8 },
+    ];
 
   /** Each member enriched with the messages they send, so the template can render a text bubble
       above the sender at the right moment. */
@@ -167,7 +268,6 @@ export class Community implements OnInit {
     path: `M${this.members[c.from].x},${this.members[c.from].y} L${this.members[c.to].x},${this.members[c.to].y}`,
   }));
 
- 
   private loadStats(): void {
     this.resourcesService.getCommunityStats().subscribe({
       next: (res: any) => {
@@ -180,7 +280,9 @@ export class Community implements OnInit {
           { icon: 'award', value: this.formatCount(s.contributors), label: 'Expert Contributors' },
         ]);
       },
-      error: () => { /* keep placeholders */ },
+      error: () => {
+        /* keep placeholders */
+      },
     });
   }
 }

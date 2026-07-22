@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ModuleAboutFeature } from '../module-component.interfaces';
 
 @Component({
@@ -6,6 +6,7 @@ import { ModuleAboutFeature } from '../module-component.interfaces';
   imports: [],
   templateUrl: './module-about1.html',
   styleUrl: './module-about1.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   encapsulation: ViewEncapsulation.None,
 })
 export class ModuleAbout1 {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -12,17 +12,42 @@ interface PolicyLink {
   selector: 'app-trust-center',
   imports: [RouterLink, NgTemplateOutlet],
   templateUrl: './trust-center.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './trust-center.scss',
 })
 export class TrustCenter {
   /** "How we earn your trust" cards */
   readonly trustCards: ReadonlyArray<{ icon: string; title: string; desc: string }> = [
-    { icon: 'lock', title: 'Data Security', desc: 'Advanced encryption, regular vulnerability scans, and proactive threat detection.' },
-    { icon: 'shield', title: 'Privacy First', desc: 'We collect only what we need and never sell your data. Ever.' },
-    { icon: 'cloud', title: 'High Availability', desc: 'Built for reliability with 99.9% uptime and automatic failover.' },
-    { icon: 'medal', title: 'Compliance', desc: 'GDPR ready and aligned with SOC 2 and other globally recognized standards.' },
-    { icon: 'database', title: 'Data Ownership', desc: 'You own your data. Export anytime or delete it permanently.' },
-    { icon: 'users', title: 'Transparency', desc: 'We are open about our policies, practices, and performance.' },
+    {
+      icon: 'lock',
+      title: 'Data Security',
+      desc: 'Advanced encryption, regular vulnerability scans, and proactive threat detection.',
+    },
+    {
+      icon: 'shield',
+      title: 'Privacy First',
+      desc: 'We collect only what we need and never sell your data. Ever.',
+    },
+    {
+      icon: 'cloud',
+      title: 'High Availability',
+      desc: 'Built for reliability with 99.9% uptime and automatic failover.',
+    },
+    {
+      icon: 'medal',
+      title: 'Compliance',
+      desc: 'GDPR ready and aligned with SOC 2 and other globally recognized standards.',
+    },
+    {
+      icon: 'database',
+      title: 'Data Ownership',
+      desc: 'You own your data. Export anytime or delete it permanently.',
+    },
+    {
+      icon: 'users',
+      title: 'Transparency',
+      desc: 'We are open about our policies, practices, and performance.',
+    },
   ];
 
   /** Certification badges */

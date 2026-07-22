@@ -1,19 +1,66 @@
-import { Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  PLATFORM_ID,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { NgClass, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ResourcesService } from '../../../core/services/resources.service';
 
-interface Stat { icon: string; value: string; label: string; }
-interface Category { icon: string; name: string; count: string; }
-interface PopularIdea { id: string; votes: number; title: string; status: string; desc: string; comments: number; }
-interface RequestRow { id: string; title: string; comments: number; category: string; status: string; votes: number; activity: string; }
-interface RoadmapItem { id: string; title: string; status: string; votes: number; }
-interface Step { n: number; icon: string; title: string; desc: string; }
+interface Stat {
+  icon: string;
+  value: string;
+  label: string;
+}
+interface Category {
+  icon: string;
+  name: string;
+  count: string;
+}
+interface PopularIdea {
+  id: string;
+  votes: number;
+  title: string;
+  status: string;
+  desc: string;
+  comments: number;
+}
+interface RequestRow {
+  id: string;
+  title: string;
+  comments: number;
+  category: string;
+  status: string;
+  votes: number;
+  activity: string;
+}
+interface RoadmapItem {
+  id: string;
+  title: string;
+  status: string;
+  votes: number;
+}
+interface Step {
+  n: number;
+  icon: string;
+  title: string;
+  desc: string;
+}
 
 const CATEGORY_ICON: Record<string, string> = {
-  'Dashboard': 'dashboard', 'Reports & Analytics': 'chart', 'Projects': 'projects',
-  'Finance': 'finance', 'HR & Payroll': 'hr', 'CRM': 'crm', 'Integrations': 'integrations',
-  'Automation': 'automation', 'Mobile App': 'mobile', 'Others': 'others',
+  Dashboard: 'dashboard',
+  'Reports & Analytics': 'chart',
+  Projects: 'projects',
+  Finance: 'finance',
+  'HR & Payroll': 'hr',
+  CRM: 'crm',
+  Integrations: 'integrations',
+  Automation: 'automation',
+  'Mobile App': 'mobile',
+  Others: 'others',
 };
 
 const PAGE_SIZE = 10;
@@ -22,13 +69,25 @@ const PAGE_SIZE = 10;
   selector: 'app-feature-request',
   imports: [NgClass, FormsModule],
   templateUrl: './feature-request.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './feature-request.scss',
 })
 export class FeatureRequest implements OnInit {
   private resources = inject(ResourcesService);
   private platformId = inject(PLATFORM_ID);
 
-  readonly categoryOptions = ['Dashboard', 'Reports & Analytics', 'Projects', 'Finance', 'HR & Payroll', 'CRM', 'Integrations', 'Automation', 'Mobile App', 'Others'];
+  readonly categoryOptions = [
+    'Dashboard',
+    'Reports & Analytics',
+    'Projects',
+    'Finance',
+    'HR & Payroll',
+    'CRM',
+    'Integrations',
+    'Automation',
+    'Mobile App',
+    'Others',
+  ];
 
   // Filters
   searchTerm = '';
@@ -56,12 +115,28 @@ export class FeatureRequest implements OnInit {
   // Submit modal
   readonly showSubmit = signal(false);
   readonly submitting = signal(false);
-  submitForm = { title: '', description: '', category: 'Others', submittedName: '', submittedEmail: '' };
+  submitForm = {
+    title: '',
+    description: '',
+    category: 'Others',
+    submittedName: '',
+    submittedEmail: '',
+  };
 
   readonly steps: Step[] = [
-    { n: 1, icon: 'idea', title: 'Submit Your Idea', desc: 'Share your feature request with clear details.' },
+    {
+      n: 1,
+      icon: 'idea',
+      title: 'Submit Your Idea',
+      desc: 'Share your feature request with clear details.',
+    },
     { n: 2, icon: 'vote', title: 'Community Votes', desc: 'Others vote and comment on your idea.' },
-    { n: 3, icon: 'review', title: 'Under Review', desc: 'Top ideas are reviewed by our product team.' },
+    {
+      n: 3,
+      icon: 'review',
+      title: 'Under Review',
+      desc: 'Top ideas are reviewed by our product team.',
+    },
     { n: 4, icon: 'build', title: 'Planned & Built', desc: 'We build and update you on progress.' },
     { n: 5, icon: 'ship', title: 'Shipped', desc: 'The feature goes live and you get notified!' },
   ];
@@ -85,54 +160,78 @@ export class FeatureRequest implements OnInit {
           { icon: 'calendar', value: this.fmt(s.planned), label: 'Planned' },
           { icon: 'ship', value: this.fmt(s.shipped), label: 'Shipped' },
         ]);
-        const cats: Category[] = [{ icon: 'grid', name: 'All Ideas', count: this.fmt(s.ideasSubmitted) }];
-        for (const c of (res?.data?.categories ?? [])) {
-          cats.push({ icon: CATEGORY_ICON[c.name] || 'others', name: c.name, count: this.fmt(c.count) });
+        const cats: Category[] = [
+          { icon: 'grid', name: 'All Ideas', count: this.fmt(s.ideasSubmitted) },
+        ];
+        for (const c of res?.data?.categories ?? []) {
+          cats.push({
+            icon: CATEGORY_ICON[c.name] || 'others',
+            name: c.name,
+            count: this.fmt(c.count),
+          });
         }
         this.categories.set(cats);
       },
-      error: () => { },
+      error: () => {},
     });
   }
 
   private loadRoadmap(): void {
     this.resources.getFeatureRequestRoadmap(3).subscribe({
-      next: (res: any) => this.roadmap.set((res?.data ?? []).map((r: any) => ({ id: r.id, title: r.title, status: r.status, votes: r.voteCount || 0 }))),
+      next: (res: any) =>
+        this.roadmap.set(
+          (res?.data ?? []).map((r: any) => ({
+            id: r.id,
+            title: r.title,
+            status: r.status,
+            votes: r.voteCount || 0,
+          })),
+        ),
       error: () => this.roadmap.set([]),
     });
   }
 
   private loadPopular(): void {
     this.resources.getPublicFeatureRequests({ sort: 'top', limit: 3 }).subscribe({
-      next: (res: any) => this.popularIdeas.set((res?.data?.data ?? []).map((r: any) => this.toPopular(r))),
+      next: (res: any) =>
+        this.popularIdeas.set((res?.data?.data ?? []).map((r: any) => this.toPopular(r))),
       error: () => this.popularIdeas.set([]),
     });
   }
 
   private loadRequests(reset: boolean): void {
-    if (reset) { this.page = 1; }
+    if (reset) {
+      this.page = 1;
+    }
     this.loading.set(true);
-    this.resources.getPublicFeatureRequests({
-      page: this.page,
-      limit: PAGE_SIZE,
-      category: this.categoryFilter || undefined,
-      status: this.statusFilter || undefined,
-      search: this.searchTerm?.trim() || undefined,
-      sort: this.sortBy,
-    }).subscribe({
-      next: (res: any) => {
-        const rows = (res?.data?.data ?? []).map((r: any) => this.toRow(r));
-        this.total = res?.data?.total ?? rows.length;
-        this.requests.set(reset ? rows : [...this.requests(), ...rows]);
-        this.hasMore.set(this.requests().length < this.total);
-        this.loading.set(false);
-      },
-      error: () => { this.requests.set(reset ? [] : this.requests()); this.loading.set(false); },
-    });
+    this.resources
+      .getPublicFeatureRequests({
+        page: this.page,
+        limit: PAGE_SIZE,
+        category: this.categoryFilter || undefined,
+        status: this.statusFilter || undefined,
+        search: this.searchTerm?.trim() || undefined,
+        sort: this.sortBy,
+      })
+      .subscribe({
+        next: (res: any) => {
+          const rows = (res?.data?.data ?? []).map((r: any) => this.toRow(r));
+          this.total = res?.data?.total ?? rows.length;
+          this.requests.set(reset ? rows : [...this.requests(), ...rows]);
+          this.hasMore.set(this.requests().length < this.total);
+          this.loading.set(false);
+        },
+        error: () => {
+          this.requests.set(reset ? [] : this.requests());
+          this.loading.set(false);
+        },
+      });
   }
 
   // ── Filters ──
-  onFilterChange(): void { this.loadRequests(true); }
+  onFilterChange(): void {
+    this.loadRequests(true);
+  }
 
   selectCategory(name: string): void {
     this.activeCategory.set(name);
@@ -140,70 +239,110 @@ export class FeatureRequest implements OnInit {
     this.loadRequests(true);
   }
 
-  loadMore(): void { this.page += 1; this.loadRequests(false); }
+  loadMore(): void {
+    this.page += 1;
+    this.loadRequests(false);
+  }
 
   // ── Vote ──
   vote(id: string): void {
     if (!id) return;
     this.resources.voteFeatureRequest(id).subscribe({
       next: () => {
-        this.popularIdeas.update(list => list.map(i => i.id === id ? { ...i, votes: i.votes + 1 } : i));
-        this.requests.update(list => list.map(r => r.id === id ? { ...r, votes: r.votes + 1 } : r));
-        this.roadmap.update(list => list.map(r => r.id === id ? { ...r, votes: r.votes + 1 } : r));
+        this.popularIdeas.update((list) =>
+          list.map((i) => (i.id === id ? { ...i, votes: i.votes + 1 } : i)),
+        );
+        this.requests.update((list) =>
+          list.map((r) => (r.id === id ? { ...r, votes: r.votes + 1 } : r)),
+        );
+        this.roadmap.update((list) =>
+          list.map((r) => (r.id === id ? { ...r, votes: r.votes + 1 } : r)),
+        );
       },
-      error: () => { },
+      error: () => {},
     });
   }
 
   // ── Submit ──
-  openSubmit(): void { this.showSubmit.set(true); }
+  openSubmit(): void {
+    this.showSubmit.set(true);
+  }
   closeSubmit(): void {
     this.showSubmit.set(false);
-    this.submitForm = { title: '', description: '', category: 'Others', submittedName: '', submittedEmail: '' };
+    this.submitForm = {
+      title: '',
+      description: '',
+      category: 'Others',
+      submittedName: '',
+      submittedEmail: '',
+    };
   }
 
   submitIdea(): void {
     if (!this.submitForm.title.trim() || !this.submitForm.description.trim()) return;
     this.submitting.set(true);
-    this.resources.submitFeatureRequest({
-      title: this.submitForm.title,
-      description: this.submitForm.description,
-      category: this.submitForm.category,
-      submittedName: this.submitForm.submittedName || undefined,
-      submittedEmail: this.submitForm.submittedEmail || undefined,
-    }).subscribe({
-      next: () => {
-        this.submitting.set(false);
-        this.closeSubmit();
-        this.loadStats();
-        this.loadRequests(true);
-      },
-      error: () => this.submitting.set(false),
-    });
+    this.resources
+      .submitFeatureRequest({
+        title: this.submitForm.title,
+        description: this.submitForm.description,
+        category: this.submitForm.category,
+        submittedName: this.submitForm.submittedName || undefined,
+        submittedEmail: this.submitForm.submittedEmail || undefined,
+      })
+      .subscribe({
+        next: () => {
+          this.submitting.set(false);
+          this.closeSubmit();
+          this.loadStats();
+          this.loadRequests(true);
+        },
+        error: () => this.submitting.set(false),
+      });
   }
 
   // ── Helpers ──
   statusLabel(status: string): string {
-    return (status || '').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    return (status || '').replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
   }
 
   statusClass(status: string): string {
     switch (status) {
-      case 'PLANNED': return 'bg-main/10 text-main';
-      case 'IN_PROGRESS': return 'bg-amber-500/10 text-amber-600';
-      case 'SHIPPED': return 'bg-emerald-500/10 text-emerald-600';
-      case 'DECLINED': return 'bg-red-500/10 text-red-600';
-      case 'UNDER_REVIEW': return 'bg-blue-500/10 text-blue-600';
-      default: return 'bg-primary/10 text-secondary';
+      case 'PLANNED':
+        return 'bg-main/10 text-main';
+      case 'IN_PROGRESS':
+        return 'bg-amber-500/10 text-amber-600';
+      case 'SHIPPED':
+        return 'bg-emerald-500/10 text-emerald-600';
+      case 'DECLINED':
+        return 'bg-red-500/10 text-red-600';
+      case 'UNDER_REVIEW':
+        return 'bg-blue-500/10 text-blue-600';
+      default:
+        return 'bg-primary/10 text-secondary';
     }
   }
 
   private toPopular(r: any): PopularIdea {
-    return { id: r.id, votes: r.voteCount || 0, title: r.title, status: r.status, desc: r.description || '', comments: r.commentCount || 0 };
+    return {
+      id: r.id,
+      votes: r.voteCount || 0,
+      title: r.title,
+      status: r.status,
+      desc: r.description || '',
+      comments: r.commentCount || 0,
+    };
   }
 
   private toRow(r: any): RequestRow {
-    return { id: r.id, title: r.title, comments: r.commentCount || 0, category: r.category || 'Others', status: r.status, votes: r.voteCount || 0, activity: this.relativeTime(r.updatedAt || r.createdAt) };
+    return {
+      id: r.id,
+      title: r.title,
+      comments: r.commentCount || 0,
+      category: r.category || 'Others',
+      status: r.status,
+      votes: r.voteCount || 0,
+      activity: this.relativeTime(r.updatedAt || r.createdAt),
+    };
   }
 
   private fmt(n: number): string {

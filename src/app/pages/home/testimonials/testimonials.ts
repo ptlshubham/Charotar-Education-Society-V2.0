@@ -1,4 +1,9 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, afterNextRender } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  afterNextRender,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { register } from 'swiper/element/bundle';
 
 interface HighlightCard {
@@ -46,6 +51,7 @@ const CARDS: HighlightCard[] = [
   imports: [],
   templateUrl: './testimonials.html',
   styleUrl: './testimonials.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class Testimonials {

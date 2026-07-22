@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { SectionComingSoon } from '../../../layouts/section-coming-soon/section-coming-soon';
 
 interface Story {
@@ -17,6 +17,7 @@ const PLACEHOLDER_IMAGE = '/assets/images/blog-placeholder.png';
   selector: 'app-customer-stories',
   imports: [SectionComingSoon],
   templateUrl: './customer-stories.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './customer-stories.scss',
 })
 export class CustomerStories {

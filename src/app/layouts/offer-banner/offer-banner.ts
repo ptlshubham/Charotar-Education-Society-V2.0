@@ -6,6 +6,7 @@ import {
   signal,
   inject,
   PLATFORM_ID,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 
@@ -22,6 +23,7 @@ interface TimeLeft {
   imports: [CommonModule],
   templateUrl: './offer-banner.html',
   styleUrl: './offer-banner.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   encapsulation: ViewEncapsulation.None,
 })
 export class OfferBanner implements OnInit, OnDestroy {
@@ -37,9 +39,7 @@ export class OfferBanner implements OnInit, OnDestroy {
   private intervalId: any;
 
   // Example: 5 days 21 hours 8 min 23 sec
-  private deadline = new Date(
-    Date.now() + (5 * 86400 + 21 * 3600 + 8 * 60 + 23) * 1000
-  );
+  private deadline = new Date(Date.now() + (5 * 86400 + 21 * 3600 + 8 * 60 + 23) * 1000);
 
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId)) {

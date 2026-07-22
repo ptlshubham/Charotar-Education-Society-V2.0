@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { LegalPage } from '../legal-page/legal-page';
 import { DISCLOSURE_POLICY_SECTIONS } from './disclosure-policy.data';
 
@@ -6,6 +6,7 @@ import { DISCLOSURE_POLICY_SECTIONS } from './disclosure-policy.data';
   selector: 'app-disclosure-policy',
   imports: [LegalPage],
   templateUrl: './disclosure-policy.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './disclosure-policy.scss',
 })
 export class DisclosurePolicy {

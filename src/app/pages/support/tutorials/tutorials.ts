@@ -1,4 +1,12 @@
-import { Component, inject, OnInit, PLATFORM_ID, signal, computed } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  PLATFORM_ID,
+  signal,
+  computed,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ResourcesService } from '../../../core/services/resources.service';
 import { environment } from '../../../../environments/environment';
@@ -43,6 +51,7 @@ const MODULE_META: Record<string, { label: string; icon: string }> = {
   selector: 'app-tutorials',
   imports: [SectionComingSoon],
   templateUrl: './tutorials.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './tutorials.scss',
 })
 export class Tutorials implements OnInit {
@@ -72,7 +81,12 @@ export class Tutorials implements OnInit {
         };
       });
     return [
-      { id: 'all', label: 'All Tutorials', icon: 'grid', sublabel: `${this.allTutorials().length} total` },
+      {
+        id: 'all',
+        label: 'All Tutorials',
+        icon: 'grid',
+        sublabel: `${this.allTutorials().length} total`,
+      },
       ...fromData,
     ];
   });
@@ -131,10 +145,38 @@ export class Tutorials implements OnInit {
     return match ? `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg` : '';
   }
 
-  readonly learningPaths: ReadonlyArray<{ icon: string; color: string; title: string; completed: number; total: number; percent: number }> = [
-    { icon: 'rocket', color: '#3DAFA9', title: 'Getting Started', completed: 5, total: 6, percent: 83 },
-    { icon: 'bolt', color: '#E8A33D', title: 'Become a Power User', completed: 7, total: 10, percent: 70 },
-    { icon: 'shield', color: '#3772FF', title: 'Admin Essentials', completed: 6, total: 8, percent: 75 },
+  readonly learningPaths: ReadonlyArray<{
+    icon: string;
+    color: string;
+    title: string;
+    completed: number;
+    total: number;
+    percent: number;
+  }> = [
+    {
+      icon: 'rocket',
+      color: '#3DAFA9',
+      title: 'Getting Started',
+      completed: 5,
+      total: 6,
+      percent: 83,
+    },
+    {
+      icon: 'bolt',
+      color: '#E8A33D',
+      title: 'Become a Power User',
+      completed: 7,
+      total: 10,
+      percent: 70,
+    },
+    {
+      icon: 'shield',
+      color: '#3772FF',
+      title: 'Admin Essentials',
+      completed: 6,
+      total: 8,
+      percent: 75,
+    },
   ];
 
   readonly popularArticles: ReadonlyArray<{ title: string; readTime: string }> = [

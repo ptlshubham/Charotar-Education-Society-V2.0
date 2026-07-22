@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Location, NgClass } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -7,18 +7,19 @@ interface Integration {
   name: string;
   desc: string;
   category: string;
-  icon?: string;        // brand SVG in assets/images/smm/icons
-  letter?: string;      // fallback badge when no icon asset exists
-  color?: string;       // fallback badge tint
+  icon?: string; // brand SVG in assets/images/smm/icons
+  letter?: string; // fallback badge when no icon asset exists
+  color?: string; // fallback badge tint
   popular?: boolean;
   comingSoon?: boolean;
-  route?: string;       // dedicated integration page, if one exists
+  route?: string; // dedicated integration page, if one exists
 }
 
 @Component({
   selector: 'app-all-integrations',
   imports: [NgClass, RouterLink],
   templateUrl: './all-integrations.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './all-integrations.scss',
 })
 export class AllIntegrations {
@@ -94,57 +95,281 @@ export class AllIntegrations {
   /** Integration cards. Platforms our portal supports are live; the rest are Coming Soon. */
   readonly integrations: Integration[] = [
     // ── Social Media ──
-    { name: 'Facebook', icon: 'facebook.svg', category: 'Social Media', popular: true, route: '/integrations/facebook', desc: 'Connect your Facebook account to manage pages and posts.' },
-    { name: 'Instagram', icon: 'instagram.svg', category: 'Social Media', popular: true, route: '/integrations/instagram', desc: 'Showcase creativity through photos, reels and stories.' },
-    { name: 'LinkedIn', icon: 'linkedin.svg', category: 'Social Media', popular: true, route: '/integrations/linkedin', desc: 'Manage your professional profiles and content.' },
-    { name: 'YouTube', icon: 'youtube.svg', category: 'Social Media', popular: true, desc: 'Manage your channels and video publishing.' },
-    { name: 'X (Twitter)', icon: 'x.svg', category: 'Social Media', route: '/integrations/x', desc: 'Manage your posts and track analytics in real-time.' },
-    { name: 'Pinterest', icon: 'pintrest.svg', category: 'Social Media', route: '/integrations/pinterest', desc: 'Manage your boards, pins and content.' },
-    { name: 'Threads', icon: 'threads.svg', category: 'Social Media', route: '/integrations/threads', desc: 'Manage your short-form conversations and posts.' },
-    { name: 'TikTok', icon: 'tiktok.svg', category: 'Social Media', comingSoon: true, desc: 'Short-form video publishing and audience insights.' },
-    { name: 'Snapchat', icon: 'snapchat.svg', category: 'Social Media', comingSoon: true, desc: 'Share stories and reach a younger audience.' },
-    { name: 'WhatsApp', icon: 'whatsapp.svg', category: 'Social Media', comingSoon: true, desc: 'Message customers and automate conversations.' },
-    { name: 'Facebook Messenger', icon: 'facebook-messanger.svg', category: 'Social Media', comingSoon: true, desc: 'Respond to customer messages from one inbox.' },
-    { name: 'Reddit', icon: 'reddit.svg', category: 'Social Media', comingSoon: true, desc: 'Track conversations and engage with communities.' },
-    { name: 'Tumblr', icon: 'tumblr.svg', category: 'Social Media', comingSoon: true, desc: 'Publish and manage your Tumblr blog content.' },
+    {
+      name: 'Facebook',
+      icon: 'facebook.svg',
+      category: 'Social Media',
+      popular: true,
+      route: '/integrations/facebook',
+      desc: 'Connect your Facebook account to manage pages and posts.',
+    },
+    {
+      name: 'Instagram',
+      icon: 'instagram.svg',
+      category: 'Social Media',
+      popular: true,
+      route: '/integrations/instagram',
+      desc: 'Showcase creativity through photos, reels and stories.',
+    },
+    {
+      name: 'LinkedIn',
+      icon: 'linkedin.svg',
+      category: 'Social Media',
+      popular: true,
+      route: '/integrations/linkedin',
+      desc: 'Manage your professional profiles and content.',
+    },
+    {
+      name: 'YouTube',
+      icon: 'youtube.svg',
+      category: 'Social Media',
+      popular: true,
+      desc: 'Manage your channels and video publishing.',
+    },
+    {
+      name: 'X (Twitter)',
+      icon: 'x.svg',
+      category: 'Social Media',
+      route: '/integrations/x',
+      desc: 'Manage your posts and track analytics in real-time.',
+    },
+    {
+      name: 'Pinterest',
+      icon: 'pintrest.svg',
+      category: 'Social Media',
+      route: '/integrations/pinterest',
+      desc: 'Manage your boards, pins and content.',
+    },
+    {
+      name: 'Threads',
+      icon: 'threads.svg',
+      category: 'Social Media',
+      route: '/integrations/threads',
+      desc: 'Manage your short-form conversations and posts.',
+    },
+    {
+      name: 'TikTok',
+      icon: 'tiktok.svg',
+      category: 'Social Media',
+      comingSoon: true,
+      desc: 'Short-form video publishing and audience insights.',
+    },
+    {
+      name: 'Snapchat',
+      icon: 'snapchat.svg',
+      category: 'Social Media',
+      comingSoon: true,
+      desc: 'Share stories and reach a younger audience.',
+    },
+    {
+      name: 'WhatsApp',
+      icon: 'whatsapp.svg',
+      category: 'Social Media',
+      comingSoon: true,
+      desc: 'Message customers and automate conversations.',
+    },
+    {
+      name: 'Facebook Messenger',
+      icon: 'facebook-messanger.svg',
+      category: 'Social Media',
+      comingSoon: true,
+      desc: 'Respond to customer messages from one inbox.',
+    },
+    {
+      name: 'Reddit',
+      icon: 'reddit.svg',
+      category: 'Social Media',
+      comingSoon: true,
+      desc: 'Track conversations and engage with communities.',
+    },
+    {
+      name: 'Tumblr',
+      icon: 'tumblr.svg',
+      category: 'Social Media',
+      comingSoon: true,
+      desc: 'Publish and manage your Tumblr blog content.',
+    },
 
     // ── Cloud & DAM ──
-    { name: 'Google Drive', icon: 'drive.svg', category: 'Cloud & DAM', popular: true, route: '/integrations/google-drive', desc: 'Organize personal and professional documents, ideas and tasks.' },
-    { name: 'Dropbox', icon: 'dropbox.svg', category: 'Cloud & DAM', route: '/integrations/dropbox', desc: 'Manage and share your cloud files and folders.' },
-    { name: 'OneDrive', icon: 'onedrive.svg', category: 'Cloud & DAM', comingSoon: true, desc: 'Store and share your files across Microsoft 365.' },
-    { name: 'Box', icon: 'box.svg', category: 'Cloud & DAM', comingSoon: true, desc: 'Secure content management and file sharing.' },
-    { name: 'Canva', icon: 'canva.svg', category: 'Cloud & DAM', comingSoon: true, desc: 'Design and pull assets straight into your posts.' },
-    { name: 'Bynder', icon: 'bynder.svg', category: 'Cloud & DAM', comingSoon: true, desc: 'Access your digital asset management library.' },
-    { name: 'Adobe Experience Manager', icon: 'adobe-experience-manager.svg', category: 'Cloud & DAM', comingSoon: true, desc: 'Bring approved brand assets into your content.' },
+    {
+      name: 'Google Drive',
+      icon: 'drive.svg',
+      category: 'Cloud & DAM',
+      popular: true,
+      route: '/integrations/google-drive',
+      desc: 'Organize personal and professional documents, ideas and tasks.',
+    },
+    {
+      name: 'Dropbox',
+      icon: 'dropbox.svg',
+      category: 'Cloud & DAM',
+      route: '/integrations/dropbox',
+      desc: 'Manage and share your cloud files and folders.',
+    },
+    {
+      name: 'OneDrive',
+      icon: 'onedrive.svg',
+      category: 'Cloud & DAM',
+      comingSoon: true,
+      desc: 'Store and share your files across Microsoft 365.',
+    },
+    {
+      name: 'Box',
+      icon: 'box.svg',
+      category: 'Cloud & DAM',
+      comingSoon: true,
+      desc: 'Secure content management and file sharing.',
+    },
+    {
+      name: 'Canva',
+      icon: 'canva.svg',
+      category: 'Cloud & DAM',
+      comingSoon: true,
+      desc: 'Design and pull assets straight into your posts.',
+    },
+    {
+      name: 'Bynder',
+      icon: 'bynder.svg',
+      category: 'Cloud & DAM',
+      comingSoon: true,
+      desc: 'Access your digital asset management library.',
+    },
+    {
+      name: 'Adobe Experience Manager',
+      icon: 'adobe-experience-manager.svg',
+      category: 'Cloud & DAM',
+      comingSoon: true,
+      desc: 'Bring approved brand assets into your content.',
+    },
 
     // ── Analytics & Business ──
-    { name: 'Google My Business', icon: 'gmb.svg', category: 'Analytics & Business', desc: 'Manage locations, reviews and your business profile.' },
-    { name: 'Google Analytics 4', icon: 'google_analytics.svg', category: 'Analytics & Business', desc: 'Monitor real-time traffic, user behavior and SEO performance.' },
-    { name: 'Tableau', icon: 'tableau.svg', category: 'Analytics & Business', comingSoon: true, desc: 'Visualize your social data in custom dashboards.' },
-    { name: 'Bitly', icon: 'bitly.svg', category: 'Analytics & Business', comingSoon: true, desc: 'Shorten links and track click performance.' },
+    {
+      name: 'Google My Business',
+      icon: 'gmb.svg',
+      category: 'Analytics & Business',
+      desc: 'Manage locations, reviews and your business profile.',
+    },
+    {
+      name: 'Google Analytics 4',
+      icon: 'google_analytics.svg',
+      category: 'Analytics & Business',
+      desc: 'Monitor real-time traffic, user behavior and SEO performance.',
+    },
+    {
+      name: 'Tableau',
+      icon: 'tableau.svg',
+      category: 'Analytics & Business',
+      comingSoon: true,
+      desc: 'Visualize your social data in custom dashboards.',
+    },
+    {
+      name: 'Bitly',
+      icon: 'bitly.svg',
+      category: 'Analytics & Business',
+      comingSoon: true,
+      desc: 'Shorten links and track click performance.',
+    },
 
     // ── CRM & Marketing ──
-    { name: 'Salesforce', icon: 'salesforce.svg', category: 'CRM & Marketing', comingSoon: true, desc: 'Sync social data with your CRM records.' },
-    { name: 'HubSpot', icon: 'hubspot.svg', category: 'CRM & Marketing', comingSoon: true, desc: 'Connect contacts, deals and marketing activity.' },
-    { name: 'Marketo', icon: 'marketo.svg', category: 'CRM & Marketing', comingSoon: true, desc: 'Feed social engagement into marketing automation.' },
-    { name: 'Microsoft Dynamics 365', icon: 'dynamics-365.svg', category: 'CRM & Marketing', comingSoon: true, desc: 'Unify customer data across sales and service.' },
+    {
+      name: 'Salesforce',
+      icon: 'salesforce.svg',
+      category: 'CRM & Marketing',
+      comingSoon: true,
+      desc: 'Sync social data with your CRM records.',
+    },
+    {
+      name: 'HubSpot',
+      icon: 'hubspot.svg',
+      category: 'CRM & Marketing',
+      comingSoon: true,
+      desc: 'Connect contacts, deals and marketing activity.',
+    },
+    {
+      name: 'Marketo',
+      icon: 'marketo.svg',
+      category: 'CRM & Marketing',
+      comingSoon: true,
+      desc: 'Feed social engagement into marketing automation.',
+    },
+    {
+      name: 'Microsoft Dynamics 365',
+      icon: 'dynamics-365.svg',
+      category: 'CRM & Marketing',
+      comingSoon: true,
+      desc: 'Unify customer data across sales and service.',
+    },
 
     // ── Help Desk ──
-    { name: 'Zendesk', icon: 'zendesk.svg', category: 'Help Desk', comingSoon: true, desc: 'Turn social messages into support tickets.' },
+    {
+      name: 'Zendesk',
+      icon: 'zendesk.svg',
+      category: 'Help Desk',
+      comingSoon: true,
+      desc: 'Turn social messages into support tickets.',
+    },
 
     // ── Reviews ──
-    { name: 'Trustpilot', icon: 'trustpilot.svg', category: 'Reviews', comingSoon: true, desc: 'Monitor and respond to customer reviews.' },
-    { name: 'Yelp', icon: 'yelp.svg', category: 'Reviews', comingSoon: true, desc: 'Manage business reviews and ratings.' },
-    { name: 'Tripadvisor', icon: 'tripadvisor-icon.svg', category: 'Reviews', comingSoon: true, desc: 'Track traveler reviews for your locations.' },
-    { name: 'Google Play', icon: 'play.svg', category: 'Reviews', comingSoon: true, desc: 'Respond to your app store reviews.' },
-    { name: 'Glassdoor', icon: 'glassdoor.svg', category: 'Reviews', comingSoon: true, desc: 'Manage employer reviews and reputation.' },
+    {
+      name: 'Trustpilot',
+      icon: 'trustpilot.svg',
+      category: 'Reviews',
+      comingSoon: true,
+      desc: 'Monitor and respond to customer reviews.',
+    },
+    {
+      name: 'Yelp',
+      icon: 'yelp.svg',
+      category: 'Reviews',
+      comingSoon: true,
+      desc: 'Manage business reviews and ratings.',
+    },
+    {
+      name: 'Tripadvisor',
+      icon: 'tripadvisor-icon.svg',
+      category: 'Reviews',
+      comingSoon: true,
+      desc: 'Track traveler reviews for your locations.',
+    },
+    {
+      name: 'Google Play',
+      icon: 'play.svg',
+      category: 'Reviews',
+      comingSoon: true,
+      desc: 'Respond to your app store reviews.',
+    },
+    {
+      name: 'Glassdoor',
+      icon: 'glassdoor.svg',
+      category: 'Reviews',
+      comingSoon: true,
+      desc: 'Manage employer reviews and reputation.',
+    },
 
     // ── Commerce ──
-    { name: 'Shopify', icon: 'shopify.svg', category: 'Commerce', comingSoon: true, desc: 'Tag products and sell through social posts.' },
-    { name: 'Facebook Shops', icon: 'facebook-shops.svg', category: 'Commerce', comingSoon: true, desc: 'Manage your social storefront and catalog.' },
+    {
+      name: 'Shopify',
+      icon: 'shopify.svg',
+      category: 'Commerce',
+      comingSoon: true,
+      desc: 'Tag products and sell through social posts.',
+    },
+    {
+      name: 'Facebook Shops',
+      icon: 'facebook-shops.svg',
+      category: 'Commerce',
+      comingSoon: true,
+      desc: 'Manage your social storefront and catalog.',
+    },
 
     // ── Workflow ──
-    { name: 'Slack', icon: 'slack.svg', category: 'Workflow', comingSoon: true, desc: 'Get notifications and collaborate with your team.' },
+    {
+      name: 'Slack',
+      icon: 'slack.svg',
+      category: 'Workflow',
+      comingSoon: true,
+      desc: 'Get notifications and collaborate with your team.',
+    },
   ];
 
   /** Cards shown for the active sidebar category */
@@ -163,14 +388,27 @@ export class AllIntegrations {
 
   /** "Built for a better connected experience" */
   readonly experience: ReadonlyArray<{ icon: string; title: string; desc: string }> = [
-    { icon: 'shield', title: 'Secure by design', desc: 'Enterprise-grade security to keep your data safe.' },
-    { icon: 'sync', title: 'Real-time sync', desc: 'Keep your data up-to-date across all platforms.' },
+    {
+      icon: 'shield',
+      title: 'Secure by design',
+      desc: 'Enterprise-grade security to keep your data safe.',
+    },
+    {
+      icon: 'sync',
+      title: 'Real-time sync',
+      desc: 'Keep your data up-to-date across all platforms.',
+    },
     { icon: 'bolt', title: 'Easy setup', desc: 'Connect in minutes with simple, no-code setup.' },
     { icon: 'puzzle', title: 'More apps, more power', desc: 'New integrations added regularly.' },
   ];
 
   /** Browse by popular categories */
-  readonly browseCategories: ReadonlyArray<{ icon: string; color: string; name: string; count: number }> = [
+  readonly browseCategories: ReadonlyArray<{
+    icon: string;
+    color: string;
+    name: string;
+    count: number;
+  }> = [
     { icon: 'contact', color: '#C587CE', name: 'CRM', count: 12 },
     { icon: 'megaphone', color: '#F17C9F', name: 'Marketing', count: 18 },
     { icon: 'chat', color: '#E8A33D', name: 'Communication', count: 14 },

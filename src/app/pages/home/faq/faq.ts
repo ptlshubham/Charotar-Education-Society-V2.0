@@ -1,4 +1,4 @@
-import { Component, signal, ElementRef, inject } from '@angular/core';
+import { Component, signal, ElementRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { gsap } from 'gsap';
 
 interface FaqItem {
@@ -11,6 +11,7 @@ interface FaqItem {
   selector: 'app-faq',
   imports: [],
   templateUrl: './faq.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './faq.scss',
 })
 export class Faq {
@@ -19,22 +20,26 @@ export class Faq {
   faqs = signal<FaqItem[]>([
     {
       question: 'What is ZarklyX and who is it for?',
-      answer: 'ZarklyX is an all-in-one operating system for agencies. It brings CRM, project management, HR and payroll, invoicing, social media management, and client portals into a single platform, so growing agencies can run daily operations without stitching together a dozen separate tools.',
+      answer:
+        'ZarklyX is an all-in-one operating system for agencies. It brings CRM, project management, HR and payroll, invoicing, social media management, and client portals into a single platform, so growing agencies can run daily operations without stitching together a dozen separate tools.',
       isOpen: true,
     },
     {
       question: 'Which platforms and tools does ZarklyX integrate with?',
-      answer: 'ZarklyX connects natively with Google Drive, Dropbox, Facebook, Instagram, Threads, LinkedIn, Pinterest, WhatsApp, X, YouTube, and Google My Business  so you can manage content, files, and client communication without leaving the platform.',
+      answer:
+        'ZarklyX connects natively with Google Drive, Dropbox, Facebook, Instagram, Threads, LinkedIn, Pinterest, WhatsApp, X, YouTube, and Google My Business  so you can manage content, files, and client communication without leaving the platform.',
       isOpen: false,
     },
     {
       question: 'Can I control what each team member can see and do?',
-      answer: 'Yes. ZarklyX uses granular, role-based access control  from Agency Owner down to individual contributors  so managers can assign clients and permissions per module, and employees only see the clients and data relevant to their role.',
+      answer:
+        'Yes. ZarklyX uses granular, role-based access control  from Agency Owner down to individual contributors  so managers can assign clients and permissions per module, and employees only see the clients and data relevant to their role.',
       isOpen: false,
     },
     {
       question: 'Does ZarklyX help with SEO and marketing, not just operations?',
-      answer: 'Yes. ZarklyX includes comprehensive SEO analysis with AI-assisted recommendations alongside social media scheduling and sales & marketing tools, so client-facing work and internal operations run on the same platform.',
+      answer:
+        'Yes. ZarklyX includes comprehensive SEO analysis with AI-assisted recommendations alongside social media scheduling and sales & marketing tools, so client-facing work and internal operations run on the same platform.',
       isOpen: false,
     },
   ]);
@@ -50,7 +55,7 @@ export class Faq {
           return { ...item, isOpen: !wasOpen };
         }
         return { ...item, isOpen: false };
-      })
+      }),
     );
 
     const cardContainer = element.parentElement?.parentElement;
@@ -69,7 +74,7 @@ export class Faq {
                 opacity: 1,
                 duration: 0.4,
                 ease: 'power2.out',
-              }
+              },
             );
           } else {
             gsap.killTweensOf(el);
@@ -93,6 +98,3 @@ export class Faq {
     }
   }
 }
-
-
-

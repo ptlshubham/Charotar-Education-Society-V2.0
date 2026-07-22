@@ -1,4 +1,11 @@
-import { Component, inject, Input, PLATFORM_ID, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  Input,
+  PLATFORM_ID,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -16,6 +23,7 @@ import { ResourcesService } from '../../core/services/resources.service';
   selector: 'app-section-coming-soon',
   imports: [RouterLink, FormsModule],
   templateUrl: './section-coming-soon.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './section-coming-soon.scss',
 })
 export class SectionComingSoon {
@@ -26,7 +34,8 @@ export class SectionComingSoon {
   @Input() badge = 'New Feature';
   @Input() title = 'This Section is';
   @Input() highlight = 'Coming Soon!';
-  @Input() description = "We're working hard to build something amazing that will help you achieve even more with ZarklyX.";
+  @Input() description =
+    "We're working hard to build something amazing that will help you achieve even more with ZarklyX.";
 
   /** Tags the newsletter signup so you can tell which section they came from. */
   @Input() source = 'coming-soon';
@@ -68,18 +77,50 @@ export class SectionComingSoon {
 
   /** Small feature callouts under the heading */
   readonly highlights: ReadonlyArray<{ icon: string; title: string; desc: string }> = [
-    { icon: 'rocket', title: 'New & Improved', desc: "We're crafting a better experience for you." },
-    { icon: 'sparkle', title: 'Powerful Features', desc: 'Packed with capabilities to simplify your workflow.' },
-    { icon: 'shield', title: 'Secure & Reliable', desc: 'Built with the highest standards of security.' },
+    {
+      icon: 'rocket',
+      title: 'New & Improved',
+      desc: "We're crafting a better experience for you.",
+    },
+    {
+      icon: 'sparkle',
+      title: 'Powerful Features',
+      desc: 'Packed with capabilities to simplify your workflow.',
+    },
+    {
+      icon: 'shield',
+      title: 'Secure & Reliable',
+      desc: 'Built with the highest standards of security.',
+    },
     { icon: 'users', title: 'User Focused', desc: 'Designed based on your feedback and needs.' },
   ];
 
   /** "Why the wait?" cards */
   readonly reasons: ReadonlyArray<{ art: string; color: string; title: string; desc: string }> = [
-    { art: 'gauge', color: '#3DAFA9', title: 'Better Experience', desc: "We're optimizing every detail to make your experience smooth and effortless." },
-    { art: 'plus', color: '#7C3AED', title: 'More Value', desc: 'New features that bring more value and drive better results.' },
-    { art: 'lock', color: '#3772FF', title: 'Enterprise Ready', desc: 'Built to meet the needs of modern teams with enterprise-grade reliability.' },
-    { art: 'heart', color: '#F17C9F', title: 'Built for You', desc: 'Your feedback shapes what we build and how we build it.' },
+    {
+      art: 'gauge',
+      color: '#3DAFA9',
+      title: 'Better Experience',
+      desc: "We're optimizing every detail to make your experience smooth and effortless.",
+    },
+    {
+      art: 'plus',
+      color: '#7C3AED',
+      title: 'More Value',
+      desc: 'New features that bring more value and drive better results.',
+    },
+    {
+      art: 'lock',
+      color: '#3772FF',
+      title: 'Enterprise Ready',
+      desc: 'Built to meet the needs of modern teams with enterprise-grade reliability.',
+    },
+    {
+      art: 'heart',
+      color: '#F17C9F',
+      title: 'Built for You',
+      desc: 'Your feedback shapes what we build and how we build it.',
+    },
   ];
 
   get isBrowser(): boolean {

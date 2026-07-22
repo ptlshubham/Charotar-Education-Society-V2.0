@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { LegalPage } from '../legal-page/legal-page';
 import { PRIVACY_POLICY_SECTIONS } from './privacy-policy.data';
 
@@ -6,6 +6,7 @@ import { PRIVACY_POLICY_SECTIONS } from './privacy-policy.data';
   selector: 'app-privacy-policy',
   imports: [LegalPage],
   templateUrl: './privacy-policy.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './privacy-policy.scss',
 })
 export class PrivacyPolicy {

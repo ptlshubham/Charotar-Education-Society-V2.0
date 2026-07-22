@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { LegalPage } from '../legal-page/legal-page';
 import { DATA_DELETION_SECTIONS } from './data-deletion.data';
 
@@ -6,6 +6,7 @@ import { DATA_DELETION_SECTIONS } from './data-deletion.data';
   selector: 'app-data-deletion',
   imports: [LegalPage],
   templateUrl: './data-deletion.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './data-deletion.scss',
 })
 export class DataDeletion {

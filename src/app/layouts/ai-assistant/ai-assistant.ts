@@ -8,6 +8,7 @@ import {
   inject,
   PLATFORM_ID,
   signal,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -51,6 +52,7 @@ const ERROR_REPLY =
   selector: 'app-ai-assistant',
   imports: [FormsModule],
   templateUrl: './ai-assistant.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './ai-assistant.scss',
 })
 export class AiAssistant implements OnDestroy {
@@ -179,10 +181,30 @@ export class AiAssistant implements OnDestroy {
   readonly hasConversation = computed(() => this.messages().length > 0);
 
   readonly quickActions: QuickAction[] = [
-    { icon: 'info', title: 'Product Information', desc: 'Learn about ZarklyX features', prompt: 'Tell me about ZarklyX and its features.' },
-    { icon: 'tag', title: 'Pricing & Plans', desc: 'View pricing and plan details', prompt: 'How does pricing work?' },
-    { icon: 'plug', title: 'Integrations', desc: 'Supported integrations', prompt: 'Which integrations do you support?' },
-    { icon: 'calendar', title: 'Get a Demo', desc: 'Book a personalized demo', prompt: 'I would like to book a demo.' },
+    {
+      icon: 'info',
+      title: 'Product Information',
+      desc: 'Learn about ZarklyX features',
+      prompt: 'Tell me about ZarklyX and its features.',
+    },
+    {
+      icon: 'tag',
+      title: 'Pricing & Plans',
+      desc: 'View pricing and plan details',
+      prompt: 'How does pricing work?',
+    },
+    {
+      icon: 'plug',
+      title: 'Integrations',
+      desc: 'Supported integrations',
+      prompt: 'Which integrations do you support?',
+    },
+    {
+      icon: 'calendar',
+      title: 'Get a Demo',
+      desc: 'Book a personalized demo',
+      prompt: 'I would like to book a demo.',
+    },
   ];
 
   readonly suggested: readonly string[] = [
@@ -201,7 +223,7 @@ export class AiAssistant implements OnDestroy {
       this.minimized.set(false);
       return;
     }
-    this.open.update(v => !v);
+    this.open.update((v) => !v);
     this.minimized.set(false);
   }
 
@@ -234,7 +256,7 @@ export class AiAssistant implements OnDestroy {
     // Snapshot the thread before adding this turn — the backend wants the prior
     // conversation, not the question it is about to be asked.
     const history = this.messages();
-    this.messages.update(list => [...list, { role: 'user', text }]);
+    this.messages.update((list) => [...list, { role: 'user', text }]);
     this.scrollToBottom();
     this.thinking.set(true);
 
@@ -248,7 +270,7 @@ export class AiAssistant implements OnDestroy {
   }
 
   private pushReply(text: string): void {
-    this.messages.update(list => [...list, { role: 'assistant', text }]);
+    this.messages.update((list) => [...list, { role: 'assistant', text }]);
     this.thinking.set(false);
     this.scrollToBottom();
   }

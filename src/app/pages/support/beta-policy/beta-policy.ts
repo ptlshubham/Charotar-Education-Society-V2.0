@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { LegalPage } from '../legal-page/legal-page';
 import { BETA_POLICY_SECTIONS } from './beta-policy.data';
 
@@ -6,6 +6,7 @@ import { BETA_POLICY_SECTIONS } from './beta-policy.data';
   selector: 'app-beta-policy',
   imports: [LegalPage],
   templateUrl: './beta-policy.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './beta-policy.scss',
 })
 export class BetaPolicy {

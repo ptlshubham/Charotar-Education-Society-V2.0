@@ -1,4 +1,12 @@
-import { Component, inject, OnInit, PLATFORM_ID, signal, computed } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  PLATFORM_ID,
+  signal,
+  computed,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { NgClass, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -23,13 +31,13 @@ interface BlogPost {
 const PLACEHOLDER_IMAGE = '/assets/images/blog-placeholder.png';
 
 /** "Customer Stories" → "customer-stories" */
-const slugify = (value: string): string =>
-  value.trim().toLowerCase().replace(/\s+/g, '-');
+const slugify = (value: string): string => value.trim().toLowerCase().replace(/\s+/g, '-');
 
 @Component({
   selector: 'app-blogs',
   imports: [RouterLink, NgClass, FormsModule],
   templateUrl: './blogs.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './blogs.scss',
 })
 export class Blogs implements OnInit {

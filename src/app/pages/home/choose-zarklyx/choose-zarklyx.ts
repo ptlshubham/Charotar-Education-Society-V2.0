@@ -9,6 +9,7 @@ import {
   signal,
   PLATFORM_ID,
   inject,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
@@ -28,6 +29,7 @@ const SIDE_OPACITY = 0.4;
   selector: 'app-choose-zarklyx',
   imports: [CommonModule, RouterLink],
   templateUrl: './choose-zarklyx.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './choose-zarklyx.scss',
 })
 export class ChooseZarklyx implements AfterViewInit, OnDestroy {
@@ -37,7 +39,10 @@ export class ChooseZarklyx implements AfterViewInit, OnDestroy {
     { label: 'CRM & Sales', image: '/assets/images/choose-zarklyx/crm.png' },
     { label: 'Client Management', image: '/assets/images/choose-zarklyx/client-management.png' },
     { label: 'Project Management', image: '/assets/images/choose-zarklyx/project-management.png' },
-    { label: 'Social Media Management', image: '/assets/images/choose-zarklyx/social-media-management.png' },
+    {
+      label: 'Social Media Management',
+      image: '/assets/images/choose-zarklyx/social-media-management.png',
+    },
     { label: 'HR & Attendance', image: '/assets/images/choose-zarklyx-slider2.png' },
     { label: 'Payroll', image: '/assets/images/choose-zarklyx-slider1.png' },
     { label: 'Accounting & Invoicing', image: '/assets/images/choose-zarklyx/accounting.png' },

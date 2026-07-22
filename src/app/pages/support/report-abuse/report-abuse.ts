@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-report-abuse',
   imports: [NgClass],
   templateUrl: './report-abuse.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './report-abuse.scss',
 })
 export class ReportAbuse {
@@ -34,9 +35,21 @@ export class ReportAbuse {
 
   /** "What happens next?" steps */
   readonly steps: ReadonlyArray<{ icon: string; title: string; desc: string }> = [
-    { icon: 'doc', title: 'We receive your report', desc: 'Our team will review your report carefully.' },
-    { icon: 'search', title: 'We investigate', desc: 'We analyze the information and take appropriate action.' },
-    { icon: 'shield', title: 'Action is taken', desc: 'If a violation is found, we will enforce our policies.' },
+    {
+      icon: 'doc',
+      title: 'We receive your report',
+      desc: 'Our team will review your report carefully.',
+    },
+    {
+      icon: 'search',
+      title: 'We investigate',
+      desc: 'We analyze the information and take appropriate action.',
+    },
+    {
+      icon: 'shield',
+      title: 'Action is taken',
+      desc: 'If a violation is found, we will enforce our policies.',
+    },
   ];
 
   /** "What can be reported?" list */

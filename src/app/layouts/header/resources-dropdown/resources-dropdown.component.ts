@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SafeHtmlPipe } from '../../../shared/safe-html.pipe';
@@ -40,37 +40,106 @@ const I = {
   standalone: true,
   imports: [RouterLink, RouterLinkActive, CommonModule, SafeHtmlPipe],
   templateUrl: './resources-dropdown.component.html',
-  styleUrl: './resources-dropdown.component.scss'
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './resources-dropdown.component.scss',
 })
 export class ResourcesDropdown {
   @Output() closeDropdown = new EventEmitter<void>();
 
   readonly columns: Column[] = [
     {
-      title: 'Learn', subtitle: 'Guides and tutorials to help you get started', headerIcon: I.book,
+      title: 'Learn',
+      subtitle: 'Guides and tutorials to help you get started',
+      headerIcon: I.book,
       items: [
-        { icon: I.play, title: 'Tutorials', desc: 'Step-by-step guides to master ZarklyX', link: '/support/tutorials', soon: true },
-        { icon: I.rocket, title: 'Help Center', desc: 'Answers and how-tos for every feature', link: '/support' },
-        { icon: I.help, title: 'FAQs', desc: 'Quick answers to common questions', link: '/support/faq' },
-        { icon: I.calPlay, title: 'Expert Sessions', desc: 'Live and on-demand expert webinars', link: '/support/expert-sessions', soon: true },
+        {
+          icon: I.play,
+          title: 'Tutorials',
+          desc: 'Step-by-step guides to master ZarklyX',
+          link: '/support/tutorials',
+          soon: true,
+        },
+        {
+          icon: I.rocket,
+          title: 'Help Center',
+          desc: 'Answers and how-tos for every feature',
+          link: '/support',
+        },
+        {
+          icon: I.help,
+          title: 'FAQs',
+          desc: 'Quick answers to common questions',
+          link: '/support/faq',
+        },
+        {
+          icon: I.calPlay,
+          title: 'Expert Sessions',
+          desc: 'Live and on-demand expert webinars',
+          link: '/support/expert-sessions',
+          soon: true,
+        },
       ],
     },
     {
-      title: 'Explore', subtitle: 'Insights, stories and updates from ZarklyX', headerIcon: I.cap,
+      title: 'Explore',
+      subtitle: 'Insights, stories and updates from ZarklyX',
+      headerIcon: I.cap,
       items: [
-        { icon: I.pen, title: 'Blogs', desc: 'Latest trends, tips and product news', link: '/blogs' },
-        { icon: I.doc, title: 'Newsroom', desc: 'Announcements, press and company updates', link: '/company/newsroom' },
-        { icon: I.play, title: 'Podcast', desc: 'Conversations on growth and operations', link: '/podcast' },
-        { icon: I.users, title: 'Community', desc: 'Connect and learn with other users', link: '/support/community' },
+        {
+          icon: I.pen,
+          title: 'Blogs',
+          desc: 'Latest trends, tips and product news',
+          link: '/blogs',
+        },
+        {
+          icon: I.doc,
+          title: 'Newsroom',
+          desc: 'Announcements, press and company updates',
+          link: '/company/newsroom',
+        },
+        {
+          icon: I.play,
+          title: 'Podcast',
+          desc: 'Conversations on growth and operations',
+          link: '/podcast',
+        },
+        {
+          icon: I.users,
+          title: 'Community',
+          desc: 'Connect and learn with other users',
+          link: '/support/community',
+        },
       ],
     },
     {
-      title: 'Support', subtitle: 'Help and platform status when you need it', headerIcon: I.help,
+      title: 'Support',
+      subtitle: 'Help and platform status when you need it',
+      headerIcon: I.help,
       items: [
-        { icon: I.calendar, title: 'System Status', desc: 'Live uptime and incident history', link: '/support/system-status' },
-        { icon: I.bookOpen, title: 'Report Abuse', desc: 'Flag violations of our guidelines', link: '/support/report-abuse' },
-        { icon: I.pen, title: 'Feature Requests', desc: 'Suggest and vote on new features', link: '/support/feature-requests' },
-        { icon: I.handshake, title: 'Contact Support', desc: 'Get help from our support team', link: '/contact' },
+        {
+          icon: I.calendar,
+          title: 'System Status',
+          desc: 'Live uptime and incident history',
+          link: '/support/system-status',
+        },
+        {
+          icon: I.bookOpen,
+          title: 'Report Abuse',
+          desc: 'Flag violations of our guidelines',
+          link: '/support/report-abuse',
+        },
+        {
+          icon: I.pen,
+          title: 'Feature Requests',
+          desc: 'Suggest and vote on new features',
+          link: '/support/feature-requests',
+        },
+        {
+          icon: I.handshake,
+          title: 'Contact Support',
+          desc: 'Get help from our support team',
+          link: '/contact',
+        },
       ],
     },
   ];
@@ -84,7 +153,6 @@ export class ResourcesDropdown {
   readonly popularArticles: ReadonlyArray<{ title: string; link: string }> = [
     { title: 'How to Automate Your Workflow', link: '/blogs' },
     { title: '10 Ways to Improve Team Productivity', link: '/blogs' },
-   
   ];
 
   onClose(): void {

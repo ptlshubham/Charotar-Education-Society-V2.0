@@ -6,6 +6,7 @@ import {
   Inject,
   PLATFORM_ID,
   signal,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -15,6 +16,7 @@ import gsap from 'gsap';
   selector: 'app-cookie-consent',
   imports: [RouterLink],
   templateUrl: './cookie-consent.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './cookie-consent.scss',
 })
 export class CookieConsent implements AfterViewInit {

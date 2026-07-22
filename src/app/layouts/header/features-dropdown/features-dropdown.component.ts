@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SafeHtmlPipe } from '../../../shared/safe-html.pipe';
@@ -47,7 +47,8 @@ const I = {
   standalone: true,
   imports: [RouterLink, CommonModule, SafeHtmlPipe],
   templateUrl: './features-dropdown.component.html',
-  styleUrl: './features-dropdown.component.scss'
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './features-dropdown.component.scss',
 })
 export class FeaturesDropdown {
   @Output() closeDropdown = new EventEmitter<void>();
@@ -56,33 +57,129 @@ export class FeaturesDropdown {
 
   readonly columns: Column[] = [
     {
-      title: 'Marketing & Growth', headerIcon: I.chart, exploreLabel: 'Explore all modules',
+      title: 'Marketing & Growth',
+      headerIcon: I.chart,
+      exploreLabel: 'Explore all modules',
       items: [
-        { icon: I.workflow, title: 'Social Media Management', desc: 'Plan, schedule and publish across channels', link: '/modules/social-media-management', soon: true },
-        { icon: I.userPlus, title: 'Influencer Management', desc: 'Discover, manage and pay creators', link: '/modules/influencer-management', soon: true },
-        { icon: I.users, title: 'CRM', desc: 'Track leads, deals and relationships', link: '/modules/crm', soon: true },
-        { icon: I.clipboard, title: 'Project Management', desc: 'Plan, track and deliver projects on time', link: '/modules/project-management', soon: true },
-        { icon: I.seo, title: 'SEO', desc: 'Track keywords, rankings and search performance', link: '/modules/seo', soon: true },
-        { icon: I.chart, title: 'Reports & Analytics', desc: 'Custom dashboards and real-time insights', link: '/modules/reports-analytics', soon: true },
+        {
+          icon: I.workflow,
+          title: 'Social Media Management',
+          desc: 'Plan, schedule and publish across channels',
+          link: '/modules/social-media-management',
+          soon: true,
+        },
+        {
+          icon: I.userPlus,
+          title: 'Influencer Management',
+          desc: 'Discover, manage and pay creators',
+          link: '/modules/influencer-management',
+          soon: true,
+        },
+        {
+          icon: I.users,
+          title: 'CRM',
+          desc: 'Track leads, deals and relationships',
+          link: '/modules/crm',
+          soon: true,
+        },
+        {
+          icon: I.clipboard,
+          title: 'Project Management',
+          desc: 'Plan, track and deliver projects on time',
+          link: '/modules/project-management',
+          soon: true,
+        },
+        {
+          icon: I.seo,
+          title: 'SEO',
+          desc: 'Track keywords, rankings and search performance',
+          link: '/modules/seo',
+          soon: true,
+        },
+        {
+          icon: I.chart,
+          title: 'Reports & Analytics',
+          desc: 'Custom dashboards and real-time insights',
+          link: '/modules/reports-analytics',
+          soon: true,
+        },
       ],
     },
     {
-      title: 'People & HR', headerIcon: I.users, exploreLabel: 'Explore all modules',
+      title: 'People & HR',
+      headerIcon: I.users,
+      exploreLabel: 'Explore all modules',
       items: [
-        { icon: I.idcard, title: 'Employee Management', desc: 'Manage your entire workforce in one place', link: '/modules/employee-management', soon: true },
-        { icon: I.card, title: 'HRMS', desc: 'Automate core HR operations end to end', link: '/modules/hrms', soon: true },
-        { icon: I.receipt, title: 'Payroll', desc: 'Process accurate payroll every cycle', link: '/modules/payroll', soon: true },
-        { icon: I.calCheck, title: 'Attendance', desc: 'Check-ins, leave and shift scheduling', link: '/modules/attendance', soon: true },
+        {
+          icon: I.idcard,
+          title: 'Employee Management',
+          desc: 'Manage your entire workforce in one place',
+          link: '/modules/employee-management',
+          soon: true,
+        },
+        {
+          icon: I.card,
+          title: 'HRMS',
+          desc: 'Automate core HR operations end to end',
+          link: '/modules/hrms',
+          soon: true,
+        },
+        {
+          icon: I.receipt,
+          title: 'Payroll',
+          desc: 'Process accurate payroll every cycle',
+          link: '/modules/payroll',
+          soon: true,
+        },
+        {
+          icon: I.calCheck,
+          title: 'Attendance',
+          desc: 'Check-ins, leave and shift scheduling',
+          link: '/modules/attendance',
+          soon: true,
+        },
       ],
     },
     {
-      title: 'Finance & Operations', headerIcon: I.layers, exploreLabel: 'Explore all modules',
+      title: 'Finance & Operations',
+      headerIcon: I.layers,
+      exploreLabel: 'Explore all modules',
       items: [
-        { icon: I.doc, title: 'Finance & Accounting', desc: 'Invoices, expenses and reports in one hub', link: '/modules/finance-accounting', soon: true },
-        { icon: I.gear, title: 'IT Management', desc: 'Track assets, access and IT requests', link: '/modules/it-management', soon: true },
-        { icon: I.layers, title: 'Token System', desc: 'Manage credits, usage and billing tokens', link: '/modules/token-management', soon: true },
-        { icon: I.bill, title: 'Bills & Utility', desc: 'Manage utility bills and recurring expenses', link: '/modules/bills-utility', soon: true },
-        { icon: I.cloud, title: 'Cloud Storage', desc: 'Secure file storage and team collaboration', link: '/modules/cloud-storage', soon: true },
+        {
+          icon: I.doc,
+          title: 'Finance & Accounting',
+          desc: 'Invoices, expenses and reports in one hub',
+          link: '/modules/finance-accounting',
+          soon: true,
+        },
+        {
+          icon: I.gear,
+          title: 'IT Management',
+          desc: 'Track assets, access and IT requests',
+          link: '/modules/it-management',
+          soon: true,
+        },
+        {
+          icon: I.layers,
+          title: 'Token System',
+          desc: 'Manage credits, usage and billing tokens',
+          link: '/modules/token-management',
+          soon: true,
+        },
+        {
+          icon: I.bill,
+          title: 'Bills & Utility',
+          desc: 'Manage utility bills and recurring expenses',
+          link: '/modules/bills-utility',
+          soon: true,
+        },
+        {
+          icon: I.cloud,
+          title: 'Cloud Storage',
+          desc: 'Secure file storage and team collaboration',
+          link: '/modules/cloud-storage',
+          soon: true,
+        },
       ],
     },
   ];

@@ -1,10 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SuccessDialogService, SuccessDialogAction } from '../../core/services/success-dialog.service';
+import {
+  SuccessDialogService,
+  SuccessDialogAction,
+} from '../../core/services/success-dialog.service';
 
 @Component({
   selector: 'app-success-dialog',
   imports: [RouterLink],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './success-dialog.html',
 })
 export class SuccessDialog {

@@ -4,6 +4,7 @@ import {
   provideClientHydration,
   withEventReplay,
   withHttpTransferCacheOptions,
+  withNoIncrementalHydration
 } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
@@ -27,7 +28,7 @@ export const appConfig: ApplicationConfig = {
         // payload into the transfer cache. Excluding it makes the browser refetch,
         // so admin edits reach real visitors without waiting for a redeploy.
         filter: (req) => !req.url.startsWith(ApiService.GetPublicSeoURL),
-      }),
+      }), withNoIncrementalHydration()
     ),
     provideAnimations(),
     // withFetch is required for SSR: the default XHR shim never settles under

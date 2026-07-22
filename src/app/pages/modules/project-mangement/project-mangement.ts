@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { SectionComingSoon } from '../../../layouts/section-coming-soon/section-coming-soon';
 
 interface Testimonial {
@@ -22,6 +22,7 @@ interface BuildBlock {
   selector: 'app-project-mangement',
   imports: [SectionComingSoon],
   templateUrl: './project-mangement.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './project-mangement.scss',
 })
 export class ProjectMangement {

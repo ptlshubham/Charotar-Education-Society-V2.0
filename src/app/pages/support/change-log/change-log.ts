@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 /** A single inline run within a change bullet. */
 interface Segment {
@@ -19,6 +19,7 @@ interface ReleaseEntry {
   selector: 'app-change-log',
   imports: [],
   templateUrl: './change-log.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './change-log.scss',
 })
 export class ChangeLog {
@@ -84,8 +85,26 @@ export class ChangeLog {
   ];
 
   readonly releases: ReleaseEntry[] = [
-    { version: 'v2.4.0', date: '10 July, 2026', name: 'Summer Release', tag: 'Features', changes: this.summerRelease },
-    { version: 'v2.3.0', date: '18 June, 2026', name: 'Payroll & HR Update', tag: 'Improvements', changes: this.payrollRelease },
-    { version: 'v2.2.0', date: '22 May, 2026', name: 'Analytics Release', tag: 'Features', changes: this.analyticsRelease },
+    {
+      version: 'v2.4.0',
+      date: '10 July, 2026',
+      name: 'Summer Release',
+      tag: 'Features',
+      changes: this.summerRelease,
+    },
+    {
+      version: 'v2.3.0',
+      date: '18 June, 2026',
+      name: 'Payroll & HR Update',
+      tag: 'Improvements',
+      changes: this.payrollRelease,
+    },
+    {
+      version: 'v2.2.0',
+      date: '22 May, 2026',
+      name: 'Analytics Release',
+      tag: 'Features',
+      changes: this.analyticsRelease,
+    },
   ];
 }

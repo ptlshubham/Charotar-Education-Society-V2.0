@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { LegalPage } from '../legal-page/legal-page';
 import { COOKIE_POLICY_SECTIONS } from './cookie-policy.data';
 
@@ -6,6 +6,7 @@ import { COOKIE_POLICY_SECTIONS } from './cookie-policy.data';
   selector: 'app-cookie-policy',
   imports: [LegalPage],
   templateUrl: './cookie-policy.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './cookie-policy.scss',
 })
 export class CookiePolicy {

@@ -1,4 +1,13 @@
-import { Component, computed, inject, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { isPlatformBrowser, NgClass } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -57,6 +66,7 @@ const FILE_TYPES: Record<string, { label: string; iconClass: string }> = {
   selector: 'app-blog-details',
   imports: [RouterLink, NgClass],
   templateUrl: './blog-details.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './blog-details.scss',
 })
 export class BlogDetails implements OnInit, OnDestroy {
@@ -81,9 +91,7 @@ export class BlogDetails implements OnInit, OnDestroy {
   readonly attachments = signal<Attachment[]>([]);
 
   /** Only images can be previewed; the list below shows every attachment. */
-  readonly imageAttachments = computed(() =>
-    this.attachments().filter((a) => a.isImage),
-  );
+  readonly imageAttachments = computed(() => this.attachments().filter((a) => a.isImage));
 
   private lightbox?: PhotoSwipeLightbox;
   /** Natural dimensions per image URL, captured as each preview finishes loading. */
@@ -318,19 +326,16 @@ export class BlogDetails implements OnInit, OnDestroy {
   } {
     const toc: { id: string; label: string }[] = [];
     let index = 0;
-    const withIds = rawHtml.replace(
-      /<h2\b([^>]*)>([\s\S]*?)<\/h2>/gi,
-      (_match, attrs, inner) => {
-        const label = inner
-          .replace(/<[^>]+>/g, '')
-          .replace(/&nbsp;/g, ' ')
-          .trim();
-        if (!label) return `<h2${attrs}>${inner}</h2>`;
-        const id = `section-${++index}`;
-        toc.push({ id, label });
-        return `<h2 id="${id}"${attrs}>${inner}</h2>`;
-      },
-    );
+    const withIds = rawHtml.replace(/<h2\b([^>]*)>([\s\S]*?)<\/h2>/gi, (_match, attrs, inner) => {
+      const label = inner
+        .replace(/<[^>]+>/g, '')
+        .replace(/&nbsp;/g, ' ')
+        .trim();
+      if (!label) return `<h2${attrs}>${inner}</h2>`;
+      const id = `section-${++index}`;
+      toc.push({ id, label });
+      return `<h2 id="${id}"${attrs}>${inner}</h2>`;
+    });
     return { html: this.sanitizer.bypassSecurityTrustHtml(withIds), toc };
   }
 
@@ -355,9 +360,7 @@ export class BlogDetails implements OnInit, OnDestroy {
         const isImage = IMAGE_EXTENSIONS.includes(ext);
         const type = FILE_TYPES[ext] ?? {
           label: isImage ? 'Image' : ext.toUpperCase() || 'File',
-          iconClass: isImage
-            ? 'bg-main/10 text-main'
-            : 'bg-[#f8f9fa] text-secondary',
+          iconClass: isImage ? 'bg-main/10 text-main' : 'bg-[#f8f9fa] text-secondary',
         };
 
         return {

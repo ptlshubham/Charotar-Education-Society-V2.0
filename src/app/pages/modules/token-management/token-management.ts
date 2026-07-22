@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { SectionComingSoon } from '../../../layouts/section-coming-soon/section-coming-soon';
 
 interface BuildBlock {
@@ -22,6 +22,7 @@ interface Faq {
   selector: 'app-token-management',
   imports: [SectionComingSoon],
   templateUrl: './token-management.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './token-management.scss',
 })
 export class TokenManagement {
@@ -35,7 +36,7 @@ export class TokenManagement {
     {
       title: 'Move every token from raised to resolved',
       points: [
-        'Save a request as a draft, then convert it to a live token when it\'s ready',
+        "Save a request as a draft, then convert it to a live token when it's ready",
         'Track each token through Pending, Processing, Review, and Completed',
         'Assign multiple team members to a single token',
         'See every update and change in one threaded timeline',
@@ -57,7 +58,7 @@ export class TokenManagement {
   readonly testimonials: Testimonial[] = [
     {
       quote:
-        "Client requests used to live in email threads no one else could see. Now every request is a token with an owner, a status, and a due date.",
+        'Client requests used to live in email threads no one else could see. Now every request is a token with an owner, a status, and a due date.',
       name: 'Priya Shah',
       company: 'BrightPath Agency',
     },
@@ -79,7 +80,7 @@ export class TokenManagement {
     {
       question: 'What is a token in ZarklyX?',
       answer:
-        "A token is a work request or ticket raised for a client. It moves through a fixed pipeline  Pending, Processing, Review, and Completed  so you always know where it stands.",
+        'A token is a work request or ticket raised for a client. It moves through a fixed pipeline  Pending, Processing, Review, and Completed  so you always know where it stands.',
     },
     {
       question: 'How is Token Management different from Project Management?',
@@ -99,7 +100,7 @@ export class TokenManagement {
     {
       question: 'Can I track how long tokens take to resolve?',
       answer:
-        'Yes. ZarklyX times each token per assignee and reports average resolution time, so you can see where work is moving fast and where it\'s stuck.',
+        "Yes. ZarklyX times each token per assignee and reports average resolution time, so you can see where work is moving fast and where it's stuck.",
     },
   ];
 

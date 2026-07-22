@@ -9,6 +9,7 @@ import {
   signal,
   effect,
   ElementRef,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { gsap } from 'gsap';
@@ -19,13 +20,26 @@ import { RouterLink } from '@angular/router';
   imports: [RouterLink],
   templateUrl: './hero.html',
   styleUrl: './hero.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   encapsulation: ViewEncapsulation.None,
 })
 export class Hero implements OnInit, OnDestroy, AfterViewInit {
   readonly imageSlides = [
-    { mobile: '/assets/images/hero-img1.webp', lg: '/assets/images/hero-lg-img1.webp', alt: 'ZarklyX dashboard showing every client in one view' },
-    { mobile: '/assets/images/hero-img2.webp', lg: '/assets/images/hero-lg-img2.webp', alt: 'ZarklyX social media scheduling calendar' },
-    { mobile: '/assets/images/hero-img3.webp', lg: '/assets/images/hero-lg-img3.webp', alt: 'ZarklyX CRM and team management workspace' },
+    {
+      mobile: '/assets/images/hero-img1.webp',
+      lg: '/assets/images/hero-lg-img1.webp',
+      alt: 'ZarklyX dashboard showing every client in one view',
+    },
+    {
+      mobile: '/assets/images/hero-img2.webp',
+      lg: '/assets/images/hero-lg-img2.webp',
+      alt: 'ZarklyX social media scheduling calendar',
+    },
+    {
+      mobile: '/assets/images/hero-img3.webp',
+      lg: '/assets/images/hero-lg-img3.webp',
+      alt: 'ZarklyX CRM and team management workspace',
+    },
   ];
 
   current = signal(0);
@@ -49,7 +63,13 @@ export class Hero implements OnInit, OnDestroy, AfterViewInit {
     return `${d.getDate()} ${d.toLocaleString('en-US', { month: 'short' })}`;
   }
 
-  private buildWeek(): Array<{ letter: string; day: number; isToday: boolean; inMonth: boolean; isSunday: boolean }> {
+  private buildWeek(): Array<{
+    letter: string;
+    day: number;
+    isToday: boolean;
+    inMonth: boolean;
+    isSunday: boolean;
+  }> {
     const letters = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
     const start = new Date(this.today);
     start.setDate(this.today.getDate() - this.today.getDay()); // rewind to Sunday
@@ -60,7 +80,10 @@ export class Hero implements OnInit, OnDestroy, AfterViewInit {
       return {
         letter,
         day: d.getDate(),
-        isToday: d.getDate() === this.today.getDate() && d.getMonth() === month && d.getFullYear() === this.calYear,
+        isToday:
+          d.getDate() === this.today.getDate() &&
+          d.getMonth() === month &&
+          d.getFullYear() === this.calYear,
         inMonth: d.getMonth() === month,
         isSunday: i === 0,
       };
@@ -90,7 +113,7 @@ export class Hero implements OnInit, OnDestroy, AfterViewInit {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     this.timer = setInterval(() => {
-      this.current.update(i => (i + 1) % this.imageSlides.length);
+      this.current.update((i) => (i + 1) % this.imageSlides.length);
     }, 5000);
   }
 
@@ -124,17 +147,21 @@ export class Hero implements OnInit, OnDestroy, AfterViewInit {
           card.classList.remove('hidden');
 
           if (isLg) {
-            gsap.fromTo(card,
+            gsap.fromTo(
+              card,
               { opacity: 0, y: 20, scale: 0.95 },
               {
-                opacity: 1, y: 0, scale: 1,
+                opacity: 1,
+                y: 0,
+                scale: 1,
                 duration: fadeInDuration,
-                delay: fadeInDelay + (idx * staggerDelay),
+                delay: fadeInDelay + idx * staggerDelay,
                 ease: 'power3.out',
               },
             );
           } else {
-            gsap.fromTo(card,
+            gsap.fromTo(
+              card,
               { opacity: 0 },
               {
                 opacity: 1,
@@ -146,12 +173,14 @@ export class Hero implements OnInit, OnDestroy, AfterViewInit {
           }
         });
       } else {
-        cards.forEach(card => {
+        cards.forEach((card) => {
           gsap.killTweensOf(card);
 
           if (isLg) {
             gsap.to(card, {
-              opacity: 0, y: -10, scale: 0.97,
+              opacity: 0,
+              y: -10,
+              scale: 0.97,
               duration: fadeOutDuration,
               ease: 'power2.in',
               onComplete: () => {
@@ -168,23 +197,30 @@ export class Hero implements OnInit, OnDestroy, AfterViewInit {
 
       // Handle lg-only cards
       if (isLg) {
-        const lgCards = Array.from(host.querySelectorAll<HTMLElement>(`[data-card-group-lg="${i}"]`));
+        const lgCards = Array.from(
+          host.querySelectorAll<HTMLElement>(`[data-card-group-lg="${i}"]`),
+        );
         lgCards.forEach((card, idx) => {
           gsap.killTweensOf(card);
           if (i === activeIndex) {
             card.classList.remove('hidden');
-            gsap.fromTo(card,
+            gsap.fromTo(
+              card,
               { opacity: 0, y: 20, scale: 0.95 },
               {
-                opacity: 1, y: 0, scale: 1,
+                opacity: 1,
+                y: 0,
+                scale: 1,
                 duration: fadeInDuration,
-                delay: fadeInDelay + ((cards.length + idx) * staggerDelay),
+                delay: fadeInDelay + (cards.length + idx) * staggerDelay,
                 ease: 'power3.out',
               },
             );
           } else {
             gsap.to(card, {
-              opacity: 0, y: -10, scale: 0.97,
+              opacity: 0,
+              y: -10,
+              scale: 0.97,
               duration: fadeOutDuration,
               ease: 'power2.in',
               onComplete: () => {

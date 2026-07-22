@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -21,6 +21,7 @@ interface SitemapGroup {
   selector: 'app-sitemap',
   imports: [RouterLink, FormsModule, NgTemplateOutlet],
   templateUrl: './sitemap.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './sitemap.scss',
 })
 export class Sitemap {

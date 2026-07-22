@@ -1,4 +1,12 @@
-import { Component, ElementRef, ViewChild, afterNextRender, OnDestroy, signal } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  afterNextRender,
+  OnDestroy,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { gsap } from 'gsap';
 
@@ -14,6 +22,7 @@ interface Slide {
   selector: 'app-trusted-integrations',
   imports: [RouterLink],
   templateUrl: './trusted-integrations.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './trusted-integrations.scss',
 })
 export class TrustedIntegrations implements OnDestroy {
@@ -25,21 +34,24 @@ export class TrustedIntegrations implements OnDestroy {
   slides: Slide[] = [
     {
       title: 'Trusted integrations across leading platforms',
-      description: 'Connect Google Drive, Dropbox, Meta, LinkedIn, and more  sync your data and content without leaving ZarklyX.',
+      description:
+        'Connect Google Drive, Dropbox, Meta, LinkedIn, and more  sync your data and content without leaving ZarklyX.',
       link: '',
       imageBg: '/assets/images/trusted-integrations-bg.png',
       imageLgBg: '/assets/images/trusted-integrations-lg-bg.png',
     },
     {
       title: 'Seamless connection to your marketing toolstack',
-      description: 'Connect with social media platforms, analytics, and CRM systems. Grow your audience organically with zero friction.',
+      description:
+        'Connect with social media platforms, analytics, and CRM systems. Grow your audience organically with zero friction.',
       link: '',
       imageBg: '/assets/images/trusted-integrations-bg.png',
       imageLgBg: '/assets/images/trusted-integrations-lg-bg.png',
     },
     {
       title: 'Automate workflows and scale operations',
-      description: 'Reduce manual tasks by scheduling updates, syncing data, and analyzing performance all in a single dashboard.',
+      description:
+        'Reduce manual tasks by scheduling updates, syncing data, and analyzing performance all in a single dashboard.',
       link: '',
       imageBg: '/assets/images/trusted-integrations-bg.png',
       imageLgBg: '/assets/images/trusted-integrations-lg-bg.png',

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { LegalPage } from '../legal-page/legal-page';
 import { REFUND_POLICY_SECTIONS } from './refund-policy.data';
 
@@ -6,6 +6,7 @@ import { REFUND_POLICY_SECTIONS } from './refund-policy.data';
   selector: 'app-refund-policy',
   imports: [LegalPage],
   templateUrl: './refund-policy.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './refund-policy.scss',
 })
 export class RefundPolicy {

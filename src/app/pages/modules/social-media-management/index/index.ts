@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Hero } from '../hero/hero';
 import { SectionComingSoon } from '../../../../layouts/section-coming-soon/section-coming-soon';
 
@@ -23,6 +23,7 @@ interface Faq {
   selector: 'app-index',
   imports: [SectionComingSoon],
   templateUrl: './index.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './index.scss',
 })
 export class Index {

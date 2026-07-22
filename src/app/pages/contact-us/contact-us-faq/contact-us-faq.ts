@@ -1,4 +1,10 @@
-import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  QueryList,
+  ViewChildren,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import gsap from 'gsap';
@@ -13,10 +19,10 @@ interface FaqItem {
   selector: 'app-contact-us-faq',
   imports: [CommonModule, RouterLink],
   templateUrl: './contact-us-faq.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './contact-us-faq.scss',
 })
 export class ContactUsFaq {
-  
   @ViewChildren('faqAnswer') faqAnswers!: QueryList<ElementRef>;
 
   faqs: FaqItem[] = [
@@ -109,5 +115,4 @@ export class ContactUsFaq {
       ease: 'power2.inOut',
     });
   }
-
 }

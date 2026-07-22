@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { LegalPage } from '../legal-page/legal-page';
 import { WEBSITE_TERMS_SECTIONS } from './website-terms.data';
 
@@ -6,6 +6,7 @@ import { WEBSITE_TERMS_SECTIONS } from './website-terms.data';
   selector: 'app-website-terms',
   imports: [LegalPage],
   templateUrl: './website-terms.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './website-terms.scss',
 })
 export class WebsiteTerms {

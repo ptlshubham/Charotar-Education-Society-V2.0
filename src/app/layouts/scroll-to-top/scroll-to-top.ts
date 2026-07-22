@@ -5,6 +5,7 @@ import {
   PLATFORM_ID,
   afterNextRender,
   DestroyRef,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { LenisService } from '../../core/services/lenis.service';
@@ -18,6 +19,7 @@ import { LenisService } from '../../core/services/lenis.service';
 @Component({
   selector: 'app-scroll-to-top',
   imports: [],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './scroll-to-top.html',
 })
 export class ScrollToTop {

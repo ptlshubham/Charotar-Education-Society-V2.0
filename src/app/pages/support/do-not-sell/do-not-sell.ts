@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { LegalPage } from '../legal-page/legal-page';
 import { DO_NOT_SELL_SECTIONS } from './do-not-sell.data';
 
@@ -6,6 +6,7 @@ import { DO_NOT_SELL_SECTIONS } from './do-not-sell.data';
   selector: 'app-do-not-sell',
   imports: [LegalPage],
   templateUrl: './do-not-sell.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './do-not-sell.scss',
 })
 export class DoNotSell {

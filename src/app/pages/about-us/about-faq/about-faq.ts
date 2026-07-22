@@ -1,4 +1,10 @@
-import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  QueryList,
+  ViewChildren,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import gsap from 'gsap';
 
@@ -12,6 +18,7 @@ interface FaqItem {
   selector: 'app-about-faq',
   imports: [CommonModule],
   templateUrl: './about-faq.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './about-faq.scss',
 })
 export class AboutFaq {

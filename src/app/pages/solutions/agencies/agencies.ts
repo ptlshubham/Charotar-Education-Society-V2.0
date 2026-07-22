@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-agencies',
   imports: [NgClass, RouterLink],
   templateUrl: './agencies.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './agencies.scss',
 })
 export class Agencies {
@@ -16,7 +17,17 @@ export class Agencies {
   ];
 
   /** Dashboard mockup data */
-  readonly dashboardNav = ['Overview', 'Clients', 'Projects', 'Tasks', 'Reports', 'Templates', 'Billing', 'Team', 'Settings'];
+  readonly dashboardNav = [
+    'Overview',
+    'Clients',
+    'Projects',
+    'Tasks',
+    'Reports',
+    'Templates',
+    'Billing',
+    'Team',
+    'Settings',
+  ];
   readonly dashboardStats: ReadonlyArray<{ label: string; value: string; change: string }> = [
     { label: 'Total Clients', value: '128', change: '+18%' },
     { label: 'Active Projects', value: '342', change: '+24%' },
@@ -31,16 +42,47 @@ export class Agencies {
     { name: 'BrandCraft', value: '₹95,000' },
   ];
 
-  readonly trustedLogos = ['DIGITAL NEST', 'creative room', 'growth hackers', 'pixel perfect', 'BRAND MAKERS', 'web creators'];
+  readonly trustedLogos = [
+    'DIGITAL NEST',
+    'creative room',
+    'growth hackers',
+    'pixel perfect',
+    'BRAND MAKERS',
+    'web creators',
+  ];
 
   /** Feature cards */
   readonly features: ReadonlyArray<{ icon: string; title: string; desc: string }> = [
-    { icon: 'users', title: 'Client Management', desc: 'Centralize all client information, communications, and files in one place.' },
-    { icon: 'folder', title: 'Project Management', desc: 'Plan, track, and deliver projects on time with powerful tools.' },
-    { icon: 'chart', title: 'Custom Reports', desc: 'Create white-label reports and dashboards that showcase your results.' },
-    { icon: 'doc', title: 'Templates & Workflows', desc: 'Save time with reusable templates and automated workflows.' },
-    { icon: 'invoice', title: 'Billing & Invoicing', desc: 'Generate invoices, track payments, and manage retainers effortlessly.' },
-    { icon: 'team', title: 'Team Collaboration', desc: 'Collaborate with your team and clients seamlessly on every project.' },
+    {
+      icon: 'users',
+      title: 'Client Management',
+      desc: 'Centralize all client information, communications, and files in one place.',
+    },
+    {
+      icon: 'folder',
+      title: 'Project Management',
+      desc: 'Plan, track, and deliver projects on time with powerful tools.',
+    },
+    {
+      icon: 'chart',
+      title: 'Custom Reports',
+      desc: 'Create white-label reports and dashboards that showcase your results.',
+    },
+    {
+      icon: 'doc',
+      title: 'Templates & Workflows',
+      desc: 'Save time with reusable templates and automated workflows.',
+    },
+    {
+      icon: 'invoice',
+      title: 'Billing & Invoicing',
+      desc: 'Generate invoices, track payments, and manage retainers effortlessly.',
+    },
+    {
+      icon: 'team',
+      title: 'Team Collaboration',
+      desc: 'Collaborate with your team and clients seamlessly on every project.',
+    },
   ];
 
   /** "Deliver more. Grow faster." stats */

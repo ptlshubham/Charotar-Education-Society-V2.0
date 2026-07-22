@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-enterprise',
   imports: [NgClass, RouterLink],
   templateUrl: './enterprise.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './enterprise.scss',
 })
 export class Enterprise {
@@ -30,16 +31,47 @@ export class Enterprise {
     { name: 'Priya Singh', action: 'Report generated', time: '2h ago' },
   ];
 
-  readonly trustedLogos = ['Deloitte.', 'WPP', 'OmnicomGroup', 'PUBLICIS', 'accenture', 'Cognizant'];
+  readonly trustedLogos = [
+    'Deloitte.',
+    'WPP',
+    'OmnicomGroup',
+    'PUBLICIS',
+    'accenture',
+    'Cognizant',
+  ];
 
   /** Feature cards */
   readonly features: ReadonlyArray<{ icon: string; title: string; desc: string }> = [
-    { icon: 'shield', title: 'Advanced Security', desc: 'Enterprise-grade security with SSO, 2FA, role-based access, and data encryption at every layer.' },
-    { icon: 'users', title: 'Scalability Without Limits', desc: 'Manage unlimited users, clients, and projects across multiple teams and locations with ease.' },
-    { icon: 'sliders', title: 'Custom Solutions', desc: 'Flexible workflows, custom reports, and white-label options tailored to your business needs.' },
-    { icon: 'headset', title: 'Dedicated Support', desc: 'Get priority support with a dedicated account manager and 24/7 enterprise support.' },
-    { icon: 'badge', title: 'Compliance & Reliability', desc: 'SOC 2 Type II, GDPR-ready and aligned with global standards to keep your data safe and compliant.' },
-    { icon: 'pie', title: 'Data & Insights', desc: 'Advanced analytics and custom dashboards to make smarter decisions and drive growth.' },
+    {
+      icon: 'shield',
+      title: 'Advanced Security',
+      desc: 'Enterprise-grade security with SSO, 2FA, role-based access, and data encryption at every layer.',
+    },
+    {
+      icon: 'users',
+      title: 'Scalability Without Limits',
+      desc: 'Manage unlimited users, clients, and projects across multiple teams and locations with ease.',
+    },
+    {
+      icon: 'sliders',
+      title: 'Custom Solutions',
+      desc: 'Flexible workflows, custom reports, and white-label options tailored to your business needs.',
+    },
+    {
+      icon: 'headset',
+      title: 'Dedicated Support',
+      desc: 'Get priority support with a dedicated account manager and 24/7 enterprise support.',
+    },
+    {
+      icon: 'badge',
+      title: 'Compliance & Reliability',
+      desc: 'SOC 2 Type II, GDPR-ready and aligned with global standards to keep your data safe and compliant.',
+    },
+    {
+      icon: 'pie',
+      title: 'Data & Insights',
+      desc: 'Advanced analytics and custom dashboards to make smarter decisions and drive growth.',
+    },
   ];
 
   /** Enterprise-grade benefits strip */

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { LegalPage } from '../legal-page/legal-page';
 import { TERMS_OF_SERVICE_SECTIONS } from './terms-of-service.data';
 
@@ -6,6 +6,7 @@ import { TERMS_OF_SERVICE_SECTIONS } from './terms-of-service.data';
   selector: 'app-terms-of-service',
   imports: [LegalPage],
   templateUrl: './terms-of-service.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './terms-of-service.scss',
 })
 export class TermsOfService {

@@ -1,4 +1,11 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ResourcesService } from '../../core/services/resources.service';
@@ -43,6 +50,7 @@ interface CompareRow {
   selector: 'app-pricing',
   imports: [NgClass, RouterLink],
   templateUrl: './pricing.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './pricing.scss',
 })
 export class Pricing implements OnInit {
@@ -61,7 +69,7 @@ export class Pricing implements OnInit {
    * its own once plans of both cycles exist.
    */
   readonly showBillingToggle = computed(
-    () => new Set(this.allPlans().map((p) => p.cycle)).size > 1
+    () => new Set(this.allPlans().map((p) => p.cycle)).size > 1,
   );
 
   readonly plans = computed(() => {
@@ -73,7 +81,11 @@ export class Pricing implements OnInit {
   /** Real saving of a yearly plan over the monthly plan of the same name, if any pair exists. */
   readonly yearlySaving = computed(() => {
     const byCycle = (cycle: string) =>
-      new Map(this.allPlans().filter((p) => p.cycle === cycle).map((p) => [p.name, p]));
+      new Map(
+        this.allPlans()
+          .filter((p) => p.cycle === cycle)
+          .map((p) => [p.name, p]),
+      );
     const monthly = byCycle('monthly');
     const savings = [...byCycle('yearly')].map(([name, yearlyPlan]) => {
       const monthlyPlan = monthly.get(name);
@@ -90,11 +102,27 @@ export class Pricing implements OnInit {
     if (!plans.length) return [];
 
     const rows: CompareRow[] = [
-      { icon: 'accounts', label: 'Clients', values: plans.map((p) => (p.maxClients ? String(p.maxClients) : 'Unlimited')) },
-      { icon: 'users', label: 'Employees', values: plans.map((p) => (p.maxEmployees ? String(p.maxEmployees) : 'Unlimited')) },
+      {
+        icon: 'accounts',
+        label: 'Clients',
+        values: plans.map((p) => (p.maxClients ? String(p.maxClients) : 'Unlimited')),
+      },
+      {
+        icon: 'users',
+        label: 'Employees',
+        values: plans.map((p) => (p.maxEmployees ? String(p.maxEmployees) : 'Unlimited')),
+      },
       { icon: 'database', label: 'Storage', values: plans.map((p) => p.storage || 'dash') },
-      { icon: 'calendar', label: 'Free trial', values: plans.map((p) => (p.trialDays ? `${p.trialDays} days` : 'dash')) },
-      { icon: 'chart', label: 'Modules included', values: plans.map((p) => (p.moduleCount ? String(p.moduleCount) : 'dash')) },
+      {
+        icon: 'calendar',
+        label: 'Free trial',
+        values: plans.map((p) => (p.trialDays ? `${p.trialDays} days` : 'dash')),
+      },
+      {
+        icon: 'chart',
+        label: 'Modules included',
+        values: plans.map((p) => (p.moduleCount ? String(p.moduleCount) : 'dash')),
+      },
     ];
 
     // There is no feature matrix in the database — only each plan's own free-text
@@ -142,7 +170,7 @@ export class Pricing implements OnInit {
         this.allPlans.set(
           rows
             .map((p) => this.toPlan(p))
-            .sort((a, b) => a.displayOrder - b.displayOrder || a.amount - b.amount)
+            .sort((a, b) => a.displayOrder - b.displayOrder || a.amount - b.amount),
         );
         this.loading.set(false);
       },
@@ -164,7 +192,9 @@ export class Pricing implements OnInit {
       : [];
 
     const features = [
-      p.max_clients ? `${p.max_clients} Client${p.max_clients === 1 ? '' : 's'}` : 'Unlimited Clients',
+      p.max_clients
+        ? `${p.max_clients} Client${p.max_clients === 1 ? '' : 's'}`
+        : 'Unlimited Clients',
       p.max_employees ? `Up to ${p.max_employees} Employees` : 'Unlimited Employees',
     ];
     if (storage) features.push(`${storage} Storage`);
@@ -184,7 +214,12 @@ export class Pricing implements OnInit {
       billedLabel: p.billing_cycle === 'yearly' ? 'Billed yearly' : 'Billed monthly',
       free: !!p.is_default_free || amount === 0,
       popular: !!p.is_popular,
-      cta: p.is_default_free || amount === 0 ? 'Get Started Free' : trialDays ? 'Start Free Trial' : 'Get Started',
+      cta:
+        p.is_default_free || amount === 0
+          ? 'Get Started Free'
+          : trialDays
+            ? 'Start Free Trial'
+            : 'Get Started',
       features: [...features, ...descriptions],
       maxClients: p.max_clients ?? null,
       maxEmployees: p.max_employees ?? null,

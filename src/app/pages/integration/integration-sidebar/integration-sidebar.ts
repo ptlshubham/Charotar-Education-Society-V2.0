@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -10,6 +10,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-integration-sidebar',
   imports: [NgClass, RouterLink],
   templateUrl: './integration-sidebar.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'w-full lg:w-[230px] lg:shrink-0 flex flex-col gap-6', ngSkipHydration: 'true' },
 })
 export class IntegrationSidebar {

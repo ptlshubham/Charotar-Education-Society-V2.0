@@ -1,4 +1,10 @@
-import { Component, DestroyRef, afterNextRender, inject } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  afterNextRender,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
 import { Header } from '../header/header';
@@ -13,8 +19,19 @@ import { LenisService } from '../../core/services/lenis.service';
 
 @Component({
   selector: 'app-main-layout',
-  imports: [RouterOutlet, Header, Footer, OfferBanner, CookieConsent, ScrollToTop, AiAssistant, SubscribeSuccessModal, SuccessDialog],
+  imports: [
+    RouterOutlet,
+    Header,
+    Footer,
+    OfferBanner,
+    CookieConsent,
+    ScrollToTop,
+    AiAssistant,
+    SubscribeSuccessModal,
+    SuccessDialog,
+  ],
   templateUrl: './main-layout.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './main-layout.scss',
 })
 export class MainLayout {

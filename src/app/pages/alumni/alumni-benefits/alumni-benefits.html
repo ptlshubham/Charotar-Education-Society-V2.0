@@ -1,0 +1,36 @@
+<section class="mx-auto max-w-[1600px] px-4 pt-10 sm:px-6 lg:px-10">
+
+  <div class="flex items-start gap-4">
+    <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary text-white" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+      </svg>
+    </span>
+
+    <div>
+      <h1 class="text-[24px] font-bold text-primary sm:text-[28px]">Alumni Registration</h1>
+      <span class="mt-2 block h-1 w-14 rounded-full bg-logo" aria-hidden="true"></span>
+      <p class="mt-2.5 text-[13.5px] text-muted">
+        Stay connected with your alma mater and be a part of the
+        <span class="font-semibold text-primary">ever-growing CES alumni family.</span>
+      </p>
+    </div>
+  </div>
+
+  <ul class="mt-7 grid list-none gap-px overflow-hidden rounded-xl bg-gray-200 sm:grid-cols-2 lg:grid-cols-4">
+    @for (benefit of benefits; track benefit.title) {
+      <li class="flex items-start gap-3.5 bg-white p-5">
+        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/8 text-primary" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            @for (d of benefit.path; track d) { <path [attr.d]="d" /> }
+          </svg>
+        </span>
+        <div class="min-w-0">
+          <h2 class="text-[14px] font-bold text-primary">{{ benefit.title }}</h2>
+          <p class="mt-1 text-[12px] leading-relaxed text-muted">{{ benefit.desc }}</p>
+        </div>
+      </li>
+    }
+  </ul>
+
+</section>

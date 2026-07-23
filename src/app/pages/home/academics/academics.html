@@ -1,0 +1,31 @@
+<section class="bg-[#F7F8FA] py-12">
+  <div class="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10">
+
+    <h2 class="mb-8 text-center text-[24px] font-bold text-primary sm:text-[28px]">Academic Excellence</h2>
+
+    <ul class="grid list-none grid-cols-3 gap-4 sm:grid-cols-5 lg:grid-cols-9">
+      @for (discipline of disciplines; track discipline.label) {
+        <li>
+          <a href="#"
+            class="flex h-full flex-col items-center justify-start gap-2.5 rounded-lg px-2 py-4 text-center no-underline transition-colors hover:bg-white">
+            <svg class="text-primary" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              @for (d of discipline.path; track d) { <path [attr.d]="d" /> }
+            </svg>
+            <span class="text-[13px] font-medium text-muted">{{ discipline.label }}</span>
+          </a>
+        </li>
+      }
+
+      <li>
+        <a href="#"
+          class="flex h-full flex-col items-center justify-start gap-2.5 rounded-lg border border-gray-200 bg-white px-2 py-4 text-center no-underline transition-colors hover:border-primary">
+          <svg class="text-primary" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z" />
+          </svg>
+          <span class="text-[13px] font-semibold text-primary">View All Programs →</span>
+        </a>
+      </li>
+    </ul>
+
+  </div>
+</section>

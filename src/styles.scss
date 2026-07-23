@@ -51,14 +51,13 @@
   justify-content: center;
 }
 
-.zx-gradient {
-  background: linear-gradient(90deg, #F17C9F 0%, #C587CE 28.52%, #7FA6FF 69.83%, #3772FF 100%);
-}
-
 app-header {
   position: sticky;
   top: 0;
-  z-index: 70;
+  /* Sticky + z-index makes this a stacking context, so the mobile menu nested
+     inside cannot escape it. Must therefore outrank the floating widgets
+     (ai-assistant launcher 85, scroll-to-top 86/90) or they punch through it. */
+  z-index: 95;
   background: #fff;
 }
 

@@ -6,6 +6,11 @@
       "path": "/about",
       "links": [
         { "label": "About Us", "path": "/about" },
+        { "label": "Management", "path": "/management" },
+        { "label": "Centenary Celebration", "path": "/celebration" },
+        { "label": "Social Activity", "path": "/social-activity" },
+        { "label": "Projects", "path": "/project" },
+        { "label": "Alumni", "path": "/alumni" },
         { "label": "Our Team", "path": "/team" },
         { "label": "Careers", "path": "/company/careers" }
       ]
@@ -13,18 +18,63 @@
     {
       "icon": "resources",
       "title": "Resources",
-      "path": "/blogs",
-      "links": [{ "label": "Blog", "path": "/blogs" }]
+      "path": "/home/blog",
+      "links": [{ "label": "Blog", "path": "/home/blog" }]
+    },
+    {
+      "icon": "resources",
+      "title": "Media",
+      "path": "/glory/gallery",
+      "links": [
+        { "label": "Gallery", "path": "/glory/gallery" },
+        { "label": "Navratri", "path": "/navratri" },
+        { "label": "Next UP Podcast", "path": "/podcast" },
+        { "label": "Blog", "path": "/home/blog" }
+      ]
+    },
+    {
+      "icon": "other",
+      "title": "Student Corner",
+      "path": "/more/answer-key",
+      "links": [
+        { "label": "Answer Key", "path": "/more/answer-key" },
+        { "label": "Magazine", "path": "/more/magazine" },
+        { "label": "IP Cell", "path": "/ipcell" }
+      ]
+    },
+    {
+      "icon": "company",
+      "title": "Academic",
+      "path": "/academic/school",
+      "links": [
+        { "label": "Schools", "path": "/academic/school" },
+        { "label": "Colleges", "path": "/academic/colleges" },
+        { "label": "Hostels", "path": "/academic/hostels" },
+        { "label": "Others", "path": "/academic/others" }
+      ]
+    },
+    {
+      "icon": "other",
+      "title": "Rahatokarsh Fund",
+      "path": "/fund",
+      "links": [
+        { "label": "Objective", "path": "/fund" },
+        { "label": "Donate Now", "path": "/donation" },
+        { "label": "Beneficiary Students", "path": "/beneficiary-students" },
+        { "label": "Donor List", "path": "/donner-list" },
+        { "label": "Micro Donor List", "path": "/micro-donner" }
+      ]
     },
     {
       "icon": "legal",
-      "title": "Legal",
-      "path": "/support",
+      "title": "Policies",
+      "path": "/more/policy",
       "links": [
-        { "label": "Privacy Policy", "path": "/support/privacy-policy" },
-        { "label": "Terms of Service", "path": "/support/terms-of-service" },
-        { "label": "Cookie Policy", "path": "/support/cookie-policy" },
-        { "label": "Website Terms", "path": "/support/website-terms" }
+        { "label": "Privacy Policy", "path": "/more/policy" },
+        { "label": "Terms & Conditions", "path": "/more/terms" },
+        { "label": "Refund Policy", "path": "/more/refund-cancellation-policy" },
+        { "label": "Website Terms", "path": "/more/website-terms" },
+        { "label": "Disclosure Policy", "path": "/more/disclosure-policy" }
       ]
     }
   ],

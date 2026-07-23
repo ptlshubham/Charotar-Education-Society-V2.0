@@ -1,259 +1,99 @@
 <!-- ─── Hero ─── -->
-<section class="bg-white px-5 md:px-10 lg:px-17.5 pt-[50px] pb-[20px]">
-    <div class="mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-        <div>
-            <h1 class="text-primary text-[46px] md:text-[60px] font-semibold leading-[1.05] tracking-tight">Sitemap</h1>
-            <p class="mt-4 max-w-[420px] text-[16px] leading-[26px] text-secondary">
-                Explore the complete structure of the ZarklyX website and find exactly what you're looking for.
-            </p>
-            <span class="mt-6 block w-10 h-[3px] rounded-full bg-main"></span>
-        </div>
+<section class="relative overflow-hidden bg-primary">
+  <div class="absolute inset-0" aria-hidden="true">
+    <img [src]="banner" alt="" class="h-full w-full object-cover opacity-45" />
+    <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/85 to-primary/40"></div>
+  </div>
 
-        <!-- Decorative — width/height carry the intrinsic ratio so the hero doesn't reflow on load. -->
-        <img src="/assets/images/sitemap.webp" alt="ZarklyX sitemap" aria-hidden="true" width="5940" height="4236"
-            class="hidden lg:block w-full max-w-[560px] h-auto ml-auto" />
-    </div>
+  <div class="relative mx-auto max-w-[1600px] px-5 py-10 sm:px-8 lg:px-10 lg:py-12">
+    <nav aria-label="Breadcrumb">
+      <ol class="flex list-none items-center gap-2 text-[13px] text-white/70">
+        <li><a routerLink="/home" class="no-underline hover:text-white">Home</a></li>
+        <li aria-hidden="true">&rsaquo;</li>
+        <li aria-current="page" class="text-white">Sitemap</li>
+      </ol>
+    </nav>
+
+    <h1 class="mt-4 text-[32px] leading-none font-bold text-white sm:text-[40px]">Site Map</h1>
+    <span class="mt-3 block h-1 w-14 rounded-full bg-secondary" aria-hidden="true"></span>
+
+    <p class="mt-4 max-w-[400px] text-[13.5px] leading-relaxed text-white/75">
+      Find your way around our website. Explore all pages and important links in one place.
+    </p>
+  </div>
 </section>
 
-<!-- ─── Tree ─── -->
-<section class="bg-white px-5 md:px-10 lg:px-17.5 pb-[30px]">
-    <div class="mx-auto">
+<section class="mx-auto max-w-[1600px] px-4 py-10 sm:px-6 lg:px-10">
 
-        <!-- Root -->
-        <div class="flex justify-center">
-            <a routerLink="/"
-                class="group inline-flex items-center gap-3 rounded-[12px] border border-primary/10 bg-white px-5 py-3.5 shadow-[0_10px_30px_-18px_rgba(11,40,39,0.35)] hover:border-main/40 transition-colors">
-                <span class="flex items-center justify-center w-10 h-10 rounded-full bg-main/10 text-main shrink-0">
-                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" />
-                        <path d="M9 22V12h6v10" />
-                    </svg>
-                </span>
-                <span>
-                    <span
-                        class="block text-primary text-[16px] font-semibold leading-tight group-hover:text-main transition-colors">Home</span>
-                    <span class="block text-[12px] text-secondary">zarklyx.com</span>
-                </span>
-            </a>
+  <div class="text-center">
+    <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#EEF3FB] text-primary" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="9" y="2" width="6" height="6" rx="1" /><rect x="2" y="16" width="6" height="6" rx="1" /><rect x="16" y="16" width="6" height="6" rx="1" />
+        <path d="M12 8v4M5 16v-2h14v2" />
+      </svg>
+    </span>
+
+    <h2 class="mt-4 text-[24px] font-bold text-primary sm:text-[28px]">Website Sitemap</h2>
+    <span class="mx-auto mt-3 block h-1 w-14 rounded-full bg-logo" aria-hidden="true"></span>
+    <p class="mx-auto mt-4 max-w-[620px] text-[13.5px] leading-relaxed text-muted">
+      Use the sitemap below to quickly navigate to any section of the Charotar Education Society website.
+    </p>
+  </div>
+
+  <!-- Group cards -->
+  <ul class="mt-8 grid list-none gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    @for (group of groups; track group.title) {
+      <li class="rounded-xl border border-gray-200 bg-white p-5">
+        <div class="flex items-center gap-3">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#EEF3FB] text-primary" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              @for (d of iconFor(group.icon); track d) { <path [attr.d]="d" /> }
+            </svg>
+          </span>
+          <h3 class="text-[15px] font-bold text-primary">
+            <a [routerLink]="group.path" class="text-primary no-underline hover:text-accent">{{ group.title }}</a>
+          </h3>
         </div>
 
-        <!-- Stem from Home down to the bus -->
-        <div class="relative hidden xl:block h-8">
-            <span class="absolute left-1/2 top-0 w-px h-full bg-main/25"></span>
-        </div>
-
-        <!-- Bus + drops into the six primary cards -->
-        <div class="hidden xl:grid grid-cols-6 gap-6 h-6">
-            @for (group of primaryGroups; track group.title; let first = $first; let last = $last) {
-            <div class="relative">
-                <span
-                    class="absolute top-0 h-px bg-main/25 {{ first ? 'left-1/2' : '-left-3' }} {{ last ? 'right-1/2' : '-right-3' }}"></span>
-                <span class="absolute top-0 left-1/2 w-px h-full bg-main/25"></span>
-            </div>
-            }
-        </div>
-
-        <!-- Primary cards -->
-        <div class="mt-8 xl:mt-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 items-start">
-            @for (group of primaryGroups; track group.title) {
-            <div
-                class="flex flex-col rounded-[14px] border border-primary/[0.09] bg-white p-5 transition-colors hover:border-main/30">
-                <ng-container [ngTemplateOutlet]="groupHeader"
-                    [ngTemplateOutletContext]="{ $implicit: group }"></ng-container>
-                <ul class="mt-4 pt-4 border-t border-primary/[0.07] flex flex-col gap-3.5">
-                    @for (link of group.links; track link.path) {
-                    <ng-container [ngTemplateOutlet]="groupLink"
-                        [ngTemplateOutletContext]="{ $implicit: link }"></ng-container>
-                    }
-                </ul>
-            </div>
-            }
-        </div>
-
-        <!-- Stem + bus into the second row -->
-        <div class="relative hidden xl:block h-8">
-            <span class="absolute left-1/2 top-0 w-px h-full bg-main/25"></span>
-        </div>
-        <div class="hidden xl:grid grid-cols-4 gap-6 h-6">
-            @for (col of [0, 1, 2]; track col; let first = $first; let last = $last) {
-            <div class="relative" [class.col-span-2]="first">
-                <span
-                    class="absolute top-0 h-px bg-main/25 {{ first ? 'left-1/2' : '-left-3' }} {{ last ? 'right-1/2' : '-right-3' }}"></span>
-                <span class="absolute top-0 left-1/2 w-px h-full bg-main/25"></span>
-            </div>
-            }
-        </div>
-
-        <!-- Secondary cards — Support spans two columns and lists in two columns -->
-        <div class="mt-8 xl:mt-0 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 items-start">
-            <div
-                class="sm:col-span-2 flex flex-col rounded-[14px] border border-primary/[0.09] bg-white p-5 transition-colors hover:border-main/30">
-                <ng-container [ngTemplateOutlet]="groupHeader"
-                    [ngTemplateOutletContext]="{ $implicit: supportGroup }"></ng-container>
-                <ul class="mt-4 pt-4 border-t border-primary/[0.07] grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3.5">
-                    @for (link of supportGroup.links; track link.path) {
-                    <ng-container [ngTemplateOutlet]="groupLink"
-                        [ngTemplateOutletContext]="{ $implicit: link }"></ng-container>
-                    }
-                </ul>
-            </div>
-
-            @for (group of secondaryGroups; track group.title) {
-            <div
-                class="flex flex-col rounded-[14px] border border-primary/[0.09] bg-white p-5 transition-colors hover:border-main/30">
-                <ng-container [ngTemplateOutlet]="groupHeader"
-                    [ngTemplateOutletContext]="{ $implicit: group }"></ng-container>
-                <ul class="mt-4 pt-4 border-t border-primary/[0.07] flex flex-col gap-3.5">
-                    @for (link of group.links; track link.path) {
-                    <ng-container [ngTemplateOutlet]="groupLink"
-                        [ngTemplateOutletContext]="{ $implicit: link }"></ng-container>
-                    }
-                </ul>
-            </div>
-            }
-        </div>
-    </div>
-</section>
-
-<!-- ─── Help + newsletter ─── -->
-<section class="bg-white px-5 md:px-10 lg:px-17.5 py-[30px]">
-    <div
-        class="mx-auto rounded-[16px] bg-main/[0.05] px-6 md:px-10 py-8 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center">
-        <div class="flex items-start gap-4">
-            <span class="flex items-center justify-center w-12 h-12 rounded-full bg-white text-main shrink-0">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="4" width="20" height="16" rx="2" />
-                    <path d="m2 7 10 6 10-6" />
+        <ul class="mt-4 list-none space-y-2 border-t border-gray-100 pt-4">
+          @for (link of group.links; track link.path) {
+            <li>
+              <a [routerLink]="link.path"
+                class="inline-flex items-start gap-2 text-[12.5px] text-muted no-underline transition-colors hover:text-accent">
+                <svg class="mt-1 shrink-0 text-primary/50" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="m9 6 6 6-6 6" />
                 </svg>
-            </span>
-            <div>
-                <h2 class="text-primary text-[17px] font-semibold">Can't find what you're looking for?</h2>
-                <p class="mt-1 text-[14px] text-secondary">Our support team is here to help you.</p>
-                <a routerLink="/support"
-                    class="mt-4 inline-flex items-center gap-2 h-11 px-5 rounded-[8px] bg-main text-white text-[14px] font-medium hover:bg-primary transition-colors">
-                    Contact Support
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M5 12h14M13 6l6 6-6 6" />
-                    </svg>
-                </a>
-            </div>
-        </div>
-
-        <div>
-            <h2 class="text-primary text-[17px] font-semibold">Stay in the loop with ZarklyX</h2>
-            <p class="mt-1 text-[14px] text-secondary">Subscribe to our newsletter and get the latest updates, resources
-                &amp; more.</p>
-
-            @if (subscribed()) {
-            <p class="mt-4 inline-flex items-center gap-2 text-[14px] font-medium text-main">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 6 9 17l-5-5" />
-                </svg>
-                You're subscribed — thanks!
-            </p>
-            } @else {
-            <form (ngSubmit)="subscribe()" class="mt-4 flex flex-col sm:flex-row gap-2.5">
-                <input type="email" name="email" [(ngModel)]="email" placeholder="Enter your email address"
-                    class="flex-1 min-w-0 h-11 px-4 rounded-[8px] bg-white border border-primary/10 text-[14px] text-primary placeholder:text-secondary/60 outline-none focus:border-main transition-colors" />
-                <button type="submit" [disabled]="submitting()"
-                    class="shrink-0 inline-flex items-center justify-center gap-2 h-11 px-5 rounded-[8px] bg-main text-white text-[14px] font-medium hover:bg-primary transition-colors disabled:opacity-60">
-                    {{ submitting() ? 'Subscribing…' : 'Subscribe' }}
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M5 12h14M13 6l6 6-6 6" />
-                    </svg>
-                </button>
-            </form>
-            @if (error()) {
-            <p class="mt-2 text-[13px] text-[#d14343]">{{ error() }}</p>
-            }
-            }
-        </div>
-    </div>
-</section>
-
-<!-- ═══ Shared bits ═══ -->
-<ng-template #groupHeader let-group>
-    <div class="flex items-center gap-3">
-        <span class="flex items-center justify-center w-10 h-10 rounded-full bg-main/10 text-main shrink-0">
-            <ng-container [ngTemplateOutlet]="groupIcon"
-                [ngTemplateOutletContext]="{ $implicit: group.icon }"></ng-container>
-        </span>
-        <div class="min-w-0">
-            <h2 class="text-primary text-[15px] font-semibold leading-tight">{{ group.title }}</h2>
-            <p class="text-[12px] text-main truncate">{{ group.path }}</p>
-        </div>
-    </div>
-</ng-template>
-
-<ng-template #groupLink let-link>
-    <li>
-        <a [routerLink]="link.path" class="group flex gap-2.5">
-            <span
-                class="mt-[6px] w-1.5 h-1.5 rounded-full bg-main/50 shrink-0 group-hover:bg-main transition-colors"></span>
-            <span class="min-w-0">
-                <span
-                    class="block text-[13px] font-medium text-primary leading-[18px] group-hover:text-main transition-colors">{{
-                    link.label }}</span>
-                <span class="block text-[11px] text-secondary/70 truncate">{{ link.path }}</span>
-            </span>
-        </a>
-    </li>
-</ng-template>
-
-<ng-template #groupIcon let-icon>
-    @switch (icon) {
-    @case ('solutions') { <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="9" />
-        <circle cx="12" cy="12" r="4" />
-        <path d="M12 3v4M12 17v4M3 12h4M17 12h4" />
-    </svg> }
-    @case ('modules') { <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 2 3 7v10l9 5 9-5V7Z" />
-        <path d="m3 7 9 5 9-5M12 12v10" />
-    </svg> }
-    @case ('integrations') { <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M9 2v6M15 2v6" />
-        <path d="M6 8h12v4a6 6 0 0 1-12 0Z" />
-        <path d="M12 18v4" />
-    </svg> }
-    @case ('company') { <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-    </svg> }
-    @case ('resources') { <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z" />
-    </svg> }
-    @case ('legal') { <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
-        <path d="m9 12 2 2 4-4" />
-    </svg> }
-    @case ('support') { <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 14v-2a9 9 0 0 1 18 0v2" />
-        <path d="M21 16a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2v2ZM3 16a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 2v2Z" />
-    </svg> }
-    @case ('pricing') { <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20.6 13.4 12 22l-9-9V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z" />
-        <circle cx="7.5" cy="7.5" r="1.3" />
-    </svg> }
-    @case ('other') { <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" />
-        <path d="M14 2v6h6M9 13h6M9 17h4" />
-    </svg> }
+                {{ link.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </li>
     }
-</ng-template>
+  </ul>
+
+  <!-- Important links -->
+  <div class="mt-6 flex flex-wrap items-center gap-x-8 gap-y-4 rounded-xl border border-gray-200 bg-white p-6">
+    <div class="flex items-center gap-3">
+      <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-logo/10 text-logo" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7" /><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7" />
+        </svg>
+      </span>
+      <p class="text-[15px] font-bold text-primary">Important Links</p>
+    </div>
+
+    <ul class="flex list-none flex-wrap items-center gap-x-7 gap-y-3">
+      @for (link of importantLinks; track link.path) {
+        <li>
+          <a [routerLink]="link.path"
+            class="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-primary no-underline transition-colors hover:text-accent">
+            {{ link.label }}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>
+          </a>
+        </li>
+      }
+    </ul>
+  </div>
+
+</section>

@@ -1,0 +1,157 @@
+<!-- ─── Hero ─── -->
+<section class="relative overflow-hidden bg-primary">
+  <div class="pointer-events-none absolute inset-y-0 right-0 hidden w-[52%] lg:block" aria-hidden="true">
+    <img [src]="banner" alt="" class="h-full w-full object-cover opacity-70" />
+    <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/60 to-primary/20"></div>
+    <!-- Diagonal slash, as in the design -->
+    <span class="absolute top-6 left-10 h-[78%] w-1.5 -rotate-[18deg] rounded-full bg-white/80"></span>
+  </div>
+
+  <div class="relative mx-auto max-w-[1600px] px-5 py-10 sm:px-8 lg:px-10 lg:py-12">
+    <nav aria-label="Breadcrumb">
+      <ol class="flex list-none flex-wrap items-center gap-2 text-[13px] text-white/70">
+        <li><a routerLink="/home" class="no-underline hover:text-white">Home</a></li>
+        @if (policy().crumbParent) {
+          <li aria-hidden="true">&rsaquo;</li>
+          <li>{{ policy().crumbParent }}</li>
+        }
+        <li aria-hidden="true">&rsaquo;</li>
+        <li aria-current="page" class="text-secondary">{{ policy().titleLead }}{{ policy().titleAccent }}</li>
+      </ol>
+    </nav>
+
+    <h1 class="mt-5 text-[32px] leading-none font-bold text-white sm:text-[40px]">
+      {{ policy().titleLead }}<span class="text-secondary">{{ policy().titleAccent }}</span>
+    </h1>
+    <span class="mt-3 block h-1 w-14 rounded-full bg-secondary" aria-hidden="true"></span>
+
+    <p class="mt-4 max-w-[420px] text-[13.5px] leading-relaxed text-white/80">{{ policy().blurb }}</p>
+  </div>
+</section>
+
+<section class="mx-auto max-w-[1600px] px-4 py-8 sm:px-6 lg:px-10">
+  <div class="grid gap-5 lg:grid-cols-[280px_1fr]">
+
+    <!-- Left rail -->
+    <aside class="space-y-5">
+      <nav class="rounded-xl border border-gray-200 bg-white p-5" aria-label="On this page">
+        <h2 class="text-[15px] font-bold text-primary">On This Page</h2>
+        <span class="mt-2 block h-1 w-12 rounded-full bg-secondary" aria-hidden="true"></span>
+
+        <ul class="mt-4 list-none space-y-1">
+          @for (section of policy().sections; track section.heading; let i = $index) {
+            <li>
+              <button type="button" (click)="select(i)"
+                class="flex w-full items-center justify-between gap-3 rounded-md px-3 py-2.5 text-left text-[12.5px] transition-colors"
+                [class]="activeSection() === i ? 'bg-[#EEF3FB] font-semibold text-primary' : 'text-muted hover:bg-[#F7F9FC]'">
+                <span class="inline-flex items-center gap-2">
+                  <svg class="shrink-0 text-primary" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    @for (d of section.path; track d) { <path [attr.d]="d" /> }
+                  </svg>
+                  {{ i + 1 }}. {{ section.heading }}
+                </span>
+                <svg class="shrink-0 text-gray-300" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>
+              </button>
+            </li>
+          }
+        </ul>
+      </nav>
+
+      @if (policy().aside.title) {
+        <div class="rounded-xl bg-[#EEF3FB] p-6 text-center">
+          <span class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z" />
+            </svg>
+          </span>
+          <h2 class="mt-3 text-[15px] font-bold text-primary">{{ policy().aside.title }}</h2>
+          <p class="mt-2 text-[12.5px] leading-relaxed text-muted">{{ policy().aside.body }}</p>
+
+          @if (policy().aside.title === 'Need Help?') {
+            <a routerLink="/contact"
+              class="mt-4 inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-[12.5px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
+              Contact Us
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            </a>
+          }
+        </div>
+      }
+    </aside>
+
+    <!-- Sections -->
+    <div class="rounded-xl border border-gray-200 bg-white p-6 lg:p-8">
+      @for (section of policy().sections; track section.heading; let i = $index; let last = $last) {
+        <article [id]="'policy-section-' + i" class="flex gap-4 py-6 first:pt-0" [class.border-b]="!last" [class.border-gray-100]="!last">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#EEF3FB] text-primary" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              @for (d of section.path; track d) { <path [attr.d]="d" /> }
+            </svg>
+          </span>
+
+          <div class="min-w-0 flex-1">
+            <h2 class="text-[16px] font-bold text-primary">{{ i + 1 }}. {{ section.heading }}</h2>
+
+            @for (para of section.paras ?? []; track para) {
+              <p class="mt-2 text-[13px] leading-[1.85] text-muted">{{ para }}</p>
+            }
+
+            @if (section.bullets?.length) {
+              <ul class="mt-2 list-none space-y-1.5">
+                @for (bullet of section.bullets ?? []; track bullet.text) {
+                  <li class="flex items-start gap-2.5 text-[13px] leading-[1.7] text-muted">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary/50" aria-hidden="true"></span>
+                    <span>
+                      @if (bullet.lead) { <span class="font-semibold text-primary">{{ bullet.lead }}</span> }{{ bullet.text }}
+                    </span>
+                  </li>
+                }
+              </ul>
+            }
+
+            <!-- Contact details only on the final section of policies that carry them -->
+            @if (policy().showContactCard && last) {
+              <ul class="mt-4 grid list-none gap-4 rounded-lg bg-[#EEF3FB] p-5 sm:grid-cols-3">
+                <li class="flex items-start gap-2.5">
+                  <svg class="mt-0.5 shrink-0 text-primary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z" /><circle cx="12" cy="10" r="3" />
+                  </svg>
+                  <span class="text-[12.5px] leading-relaxed text-primary">{{ contact.address }}</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <svg class="mt-0.5 shrink-0 text-primary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z" />
+                  </svg>
+                  <a [href]="contact.phoneHref" class="text-[12.5px] text-primary no-underline hover:text-accent">{{ contact.phone }}</a>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <svg class="mt-0.5 shrink-0 text-primary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-10 6L2 7" />
+                  </svg>
+                  <a [href]="'mailto:' + contact.email" class="text-[12.5px] break-all text-primary no-underline hover:text-accent">{{ contact.email }}</a>
+                </li>
+              </ul>
+            }
+          </div>
+        </article>
+      }
+
+      @if (policy().footNote) {
+        <div class="mt-2 flex flex-wrap items-center justify-between gap-4 rounded-lg bg-[#EEF3FB] p-5">
+          <div class="flex items-start gap-3">
+            <svg class="mt-0.5 shrink-0 text-primary" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            <p class="max-w-[560px] text-[12.5px] leading-relaxed text-primary">{{ policy().footNote }}</p>
+          </div>
+
+          <a routerLink="/contact"
+            class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-[12.5px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
+            Contact Us
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </a>
+        </div>
+      }
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,29 @@
+<section class="mx-auto max-w-[1600px] px-4 pb-12 sm:px-6 lg:px-10">
+
+  <h2 class="text-center text-[22px] font-bold text-primary sm:text-[26px]">How We Work</h2>
+  <span class="mx-auto mt-3 block h-1 w-14 rounded-full bg-secondary" aria-hidden="true"></span>
+
+  <ol class="mt-8 grid list-none gap-6 sm:grid-cols-3 lg:grid-cols-5 lg:gap-2">
+    @for (step of steps; track step.title; let last = $last) {
+      <li class="relative flex flex-col items-center px-2 text-center">
+        <span class="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-secondary" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            @for (d of step.path; track d) { <path [attr.d]="d" /> }
+          </svg>
+        </span>
+
+        <h3 class="mt-4 text-[14px] font-bold text-primary">{{ step.title }}</h3>
+        <p class="mt-1.5 text-[12px] leading-relaxed text-muted">{{ step.body }}</p>
+
+        <!-- Connector arrow between steps, desktop only -->
+        @if (!last) {
+          <svg class="absolute top-7 -right-3 hidden -translate-y-1/2 text-gray-300 lg:block" width="18" height="18"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        }
+      </li>
+    }
+  </ol>
+
+</section>

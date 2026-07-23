@@ -1,9 +1,9 @@
-/* The Ceadx AI brand gradient, as used on the launcher.
+/* The CES badge fill, as used on the launcher.
    Lives here because the icon (ai-icon.svg) is filled white, so it only reads
    against this gradient — on the plain white/tinted circles it used to sit on, it
    was white-on-white and effectively invisible. */
 .ai-badge {
-  background: linear-gradient(0deg, #f17c9f 0%, #c587ce 25.21%, #7fa6ff 75%, #3fd5ff 100%);
+  background: #203154;
 }
 
 /* Panel pops up from the launcher */

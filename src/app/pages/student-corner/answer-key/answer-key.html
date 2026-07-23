@@ -1,0 +1,194 @@
+<!-- ─── Hero ─── -->
+<section class="relative overflow-hidden bg-primary">
+  <svg class="pointer-events-none absolute inset-y-0 right-0 hidden w-[45%] lg:block" viewBox="0 0 400 260" fill="none" aria-hidden="true">
+    @for (row of [0,1,2,3]; track row) {
+      @for (col of [0,1,2,3,4,5]; track col) {
+        <circle [attr.cx]="40 + col * 62" [attr.cy]="40 + row * 60" r="17" stroke="currentColor" stroke-width="2" fill="none" class="text-white/20" />
+        <text [attr.x]="40 + col * 62" [attr.y]="46 + row * 60" text-anchor="middle" class="fill-white/25" font-size="15">{{ ['A','B','C','D'][col % 4] }}</text>
+      }
+    }
+  </svg>
+  <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary to-primary/60" aria-hidden="true"></div>
+
+  <div class="relative mx-auto max-w-[1600px] px-5 py-10 sm:px-8 lg:px-10 lg:py-12">
+    <nav aria-label="Breadcrumb">
+      <ol class="flex list-none flex-wrap items-center gap-2 text-[13px] text-white/70">
+        <li><a routerLink="/home" class="no-underline hover:text-white">Home</a></li>
+        <li aria-hidden="true">&rsaquo;</li>
+        <li>Student Corner</li>
+        <li aria-hidden="true">&rsaquo;</li>
+        <li>General Exam</li>
+        <li aria-hidden="true">&rsaquo;</li>
+        <li aria-current="page" class="text-white">Answer Key</li>
+      </ol>
+    </nav>
+
+    <h1 class="mt-4 text-[34px] leading-none font-bold text-white sm:text-[42px]">Answer Key</h1>
+    <span class="mt-3 block h-1 w-14 rounded-full bg-logo" aria-hidden="true"></span>
+
+    <p class="mt-4 max-w-[420px] text-[13.5px] leading-relaxed text-white/75">
+      Access the official answer keys for various standard and subject examinations.
+    </p>
+
+    <div class="mt-7 inline-flex items-center gap-3 rounded-lg bg-white px-5 py-3">
+      <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-logo/10 text-logo" aria-hidden="true">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" />
+        </svg>
+      </span>
+      <div>
+        <p class="text-[11.5px] text-muted">Latest Updated</p>
+        <p class="text-[13.5px] font-bold text-logo">{{ lastUpdated }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-[1600px] px-4 py-8 sm:px-6 lg:px-10">
+
+  <!-- Exam type tabs -->
+  <div role="tablist" aria-label="Exam type" class="grid gap-4 sm:grid-cols-2">
+    <button type="button" role="tab" [attr.aria-selected]="tab() === 'general'" (click)="selectTab('general')"
+      class="flex items-center justify-center gap-2.5 rounded-lg border px-5 py-3.5 text-[14px] font-semibold transition-colors"
+      [class]="tab() === 'general' ? 'border-primary bg-primary text-white' : 'border-gray-200 bg-white text-primary hover:border-primary'">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6M9 13h6M9 17h4" />
+      </svg>
+      General Exam Answer Key
+    </button>
+
+    <button type="button" role="tab" [attr.aria-selected]="tab() === 'competitive'" (click)="selectTab('competitive')"
+      class="flex items-center justify-center gap-2.5 rounded-lg border px-5 py-3.5 text-[14px] font-semibold transition-colors"
+      [class]="tab() === 'competitive' ? 'border-primary bg-primary text-white' : 'border-gray-200 bg-white text-primary hover:border-primary'">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" /><path d="m8.2 13.9-1.4 7.1 5.2-2.6 5.2 2.6-1.4-7.1" />
+      </svg>
+      Competitive Exam Answer Key
+    </button>
+  </div>
+
+  @if (tab() === 'general') {
+    <!-- Filters -->
+    <div class="animate-dropdown mt-5 grid gap-4 lg:grid-cols-[1fr_1fr_1fr_auto] lg:items-end">
+      <div>
+        <label for="ak-year" class="sr-only">Select Year</label>
+        <div class="flex h-12 items-center gap-2.5 rounded-lg border border-gray-300 bg-white px-4">
+          <svg class="shrink-0 text-primary" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" />
+          </svg>
+          <select id="ak-year" [(ngModel)]="year" class="w-full bg-transparent text-[13px] text-primary outline-none">
+            @for (y of years(); track y) { <option [value]="y">{{ y }}</option> }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label for="ak-std" class="sr-only">Select Standard</label>
+        <div class="flex h-12 items-center gap-2.5 rounded-lg border border-gray-300 bg-white px-4">
+          <svg class="shrink-0 text-primary" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m12 3 9 5-9 5-9-5 9-5z" /><path d="M21 8v6M7 10.5V16c0 1.7 2.2 3 5 3s5-1.3 5-3v-5.5" />
+          </svg>
+          <select id="ak-std" [(ngModel)]="standard" class="w-full bg-transparent text-[13px] text-primary outline-none">
+            @for (s of standards(); track s) { <option [value]="s">{{ s }}</option> }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label for="ak-sub" class="sr-only">Select Subject</label>
+        <div class="flex h-12 items-center gap-2.5 rounded-lg border border-gray-300 bg-white px-4">
+          <svg class="shrink-0 text-primary" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+          </svg>
+          <select id="ak-sub" [(ngModel)]="subject" class="w-full bg-transparent text-[13px] text-primary outline-none">
+            @for (s of subjects(); track s) { <option [value]="s">{{ s }}</option> }
+          </select>
+        </div>
+      </div>
+
+      <button type="button" (click)="apply()"
+        class="flex h-12 items-center justify-center gap-2 rounded-lg bg-primary px-7 text-[13px] font-semibold text-white transition-colors hover:bg-primary-dark">
+        Apply Filter
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22 3H2l8 9.5V19l4 2v-8.5z" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Table -->
+    <div class="mt-5 overflow-hidden rounded-xl border border-gray-200 bg-white">
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse text-left">
+          <thead class="bg-primary text-white">
+            <tr>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">Exam Date</th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Exam / Paper Name</th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">Standard</th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Subject</th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Download</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (paper of paged(); track paper.name) {
+              <tr class="border-b border-gray-100 last:border-b-0 hover:bg-[#F7F9FC]">
+                <td class="px-5 py-3">
+                  <span class="flex w-14 flex-col items-center rounded-md border border-gray-200 py-1.5 text-center">
+                    <span class="text-[10px] font-semibold text-logo uppercase">{{ paper.month }}</span>
+                    <span class="text-[16px] leading-none font-bold text-primary">{{ paper.day }}</span>
+                    <span class="text-[10px] text-muted">{{ paper.year }}</span>
+                  </span>
+                </td>
+                <td class="px-5 py-3">
+                  <p class="text-[13px] font-semibold text-primary">{{ paper.name }}</p>
+                  <p class="mt-0.5 inline-flex items-center gap-1.5 text-[11px] text-muted">
+                    <svg class="text-logo" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM13 3.5 18.5 9H13z" />
+                    </svg>
+                    PDF ({{ paper.size }})
+                  </p>
+                </td>
+                <td class="px-5 py-3 text-[13px] text-muted">{{ paper.standard }}</td>
+                <td class="px-5 py-3 text-[13px] text-muted">{{ paper.subject }}</td>
+                <td class="px-5 py-3">
+                  <a href="#" download
+                    class="inline-flex items-center gap-1.5 rounded-md border border-logo/40 px-3.5 py-2 text-[12px] font-semibold text-logo no-underline transition-colors hover:bg-logo hover:text-white">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                    </svg>
+                    Download
+                  </a>
+                </td>
+              </tr>
+            } @empty {
+              <tr><td colspan="5" class="px-5 py-10 text-center text-[13px] text-muted">No answer keys match your filters.</td></tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    @if (totalPages() > 1) {
+      <div class="mt-6 flex items-center justify-center gap-1.5">
+        <button type="button" (click)="go(-1)" [disabled]="page() === 1" aria-label="Previous page"
+          class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 text-primary transition-colors hover:bg-primary hover:text-white disabled:opacity-40">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
+        </button>
+        @for (n of pageNumbers(); track n) {
+          <button type="button" (click)="toPage(n)"
+            class="h-9 min-w-9 rounded-md border px-3 text-[13px] font-semibold transition-colors"
+            [class]="page() === n ? 'border-primary bg-primary text-white' : 'border-gray-200 text-primary hover:border-primary'">{{ n }}</button>
+        }
+        <button type="button" (click)="go(1)" [disabled]="page() === totalPages()" aria-label="Next page"
+          class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 text-primary transition-colors hover:bg-primary hover:text-white disabled:opacity-40">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </button>
+      </div>
+    }
+  } @else {
+    <div class="animate-dropdown mt-5 rounded-xl border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-14 text-center">
+      <p class="text-[14px] font-semibold text-primary">Competitive exam answer keys coming soon.</p>
+      <p class="mt-1 text-[12.5px] text-muted">They will be published here by the CES exam cell.</p>
+    </div>
+  }
+
+</section>

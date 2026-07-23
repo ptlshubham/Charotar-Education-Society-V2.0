@@ -1,0 +1,193 @@
+<!-- ─── Hero ─── -->
+<section class="relative overflow-hidden rounded-b-3xl bg-[#3B0A10]">
+  <div class="absolute inset-0" aria-hidden="true">
+    <img [src]="banner" alt="" class="h-full w-full object-cover opacity-35" />
+    <div class="absolute inset-0 bg-gradient-to-r from-[#3B0A10] via-[#3B0A10]/85 to-[#6B1119]/60"></div>
+  </div>
+
+  <div class="relative mx-auto grid max-w-[1600px] items-center gap-8 px-5 py-12 sm:px-8 lg:grid-cols-[1.4fr_1fr] lg:px-10">
+    <div>
+      <p class="flex items-center gap-2 text-[12px] font-semibold tracking-wide text-white/80 uppercase">
+        <svg class="text-logo" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" /><path d="M19 10a7 7 0 0 1-14 0" /><path d="M12 17v5" />
+        </svg>
+        CES Podcast
+      </p>
+
+      <h1 class="mt-4 text-[38px] leading-[1.05] font-bold text-white sm:text-[52px]">
+        Motivation<br />
+        <span class="text-logo">Inspire</span> Grow
+      </h1>
+
+      <p class="mt-4 text-[14px] leading-relaxed text-white/75">
+        Real conversations. Real stories.<br />
+        Real inspiration from the CES family.
+      </p>
+
+      <button type="button"
+        class="mt-7 inline-flex items-center gap-2 rounded-md bg-logo px-6 py-3 text-[13.5px] font-semibold text-white transition-opacity hover:opacity-90">
+        Explore Episodes
+        <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white/25" aria-hidden="true">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+        </span>
+      </button>
+    </div>
+
+    <div class="text-center">
+      <span class="mx-auto flex h-24 w-24 items-center justify-center rounded-full border-2 border-white/70" aria-hidden="true">
+        <svg class="text-white" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" /><path d="M19 10a7 7 0 0 1-14 0" /><path d="M12 17v5M8 22h8" />
+        </svg>
+      </span>
+      <p class="mt-4 text-[30px] leading-none font-bold text-white">
+        Next <span class="text-logo">Up</span>
+      </p>
+      <p class="mt-2 text-[12px] text-white/65">A podcast by<br />Charotar Education Society</p>
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-[1600px] px-4 py-8 sm:px-6 lg:px-10">
+
+  <!-- Pillars -->
+  <ul class="grid list-none gap-px overflow-hidden rounded-xl border border-gray-200 bg-gray-200 sm:grid-cols-2 lg:grid-cols-4">
+    @for (pillar of pillars; track pillar.title) {
+      <li class="flex items-start gap-3.5 bg-white p-5">
+        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-logo/10 text-logo" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            @for (d of pillar.path; track d) { <path [attr.d]="d" /> }
+          </svg>
+        </span>
+        <div class="min-w-0">
+          <h2 class="text-[13.5px] font-bold text-logo">{{ pillar.title }}</h2>
+          <p class="mt-1 text-[11.5px] leading-relaxed text-muted">{{ pillar.body }}</p>
+        </div>
+      </li>
+    }
+  </ul>
+
+  <!-- Featured episodes -->
+  <div class="mt-9 flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <h2 class="text-[20px] font-bold text-primary sm:text-[22px]">Featured Episodes</h2>
+      <span class="mt-2 block h-1 w-12 rounded-full bg-logo" aria-hidden="true"></span>
+    </div>
+    <a href="#" class="inline-flex items-center gap-1.5 text-[13px] font-semibold text-primary no-underline hover:text-accent">
+      View All Episodes
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+    </a>
+  </div>
+
+  <ul class="mt-5 list-none space-y-5">
+    @for (ep of featured; track ep.number) {
+      <li class="grid gap-5 overflow-hidden rounded-xl border border-gray-200 bg-white lg:grid-cols-[1.1fr_1fr]">
+        <div class="relative">
+          <img [src]="ep.image" [alt]="ep.title" loading="lazy"
+            class="aspect-video w-full bg-primary-light object-cover" />
+
+          <span class="absolute top-4 left-4 rounded-md bg-logo px-3 py-1 text-[10.5px] font-bold tracking-wide text-white uppercase">{{ ep.number }}</span>
+
+          <button type="button" [attr.aria-label]="'Play ' + ep.title"
+            class="absolute inset-0 m-auto flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-logo transition-transform hover:scale-105">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+          </button>
+
+          <span class="absolute bottom-4 left-4 inline-flex items-center gap-1.5 rounded-md bg-black/60 px-2.5 py-1 text-[11px] font-medium text-white">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" />
+            </svg>
+            {{ ep.duration }}
+          </span>
+        </div>
+
+        <div class="flex flex-col p-5 lg:py-6 lg:pr-6 lg:pl-0">
+          <span class="w-fit rounded bg-logo/10 px-2.5 py-1 text-[10.5px] font-bold tracking-wide text-logo uppercase">{{ ep.tag }}</span>
+
+          <h3 class="mt-3 text-[17px] leading-snug font-bold text-primary">{{ ep.title }}</h3>
+          <p class="mt-2.5 flex-1 text-[12.5px] leading-relaxed text-muted">{{ ep.desc }}</p>
+
+          <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-[12px] text-muted">
+            <span class="inline-flex items-center gap-1.5">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" />
+              </svg>
+              {{ ep.date }}
+            </span>
+            <span class="inline-flex items-center gap-1.5">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" /><circle cx="12" cy="12" r="3" />
+              </svg>
+              {{ ep.views }}
+            </span>
+          </div>
+
+          <div class="mt-5 flex flex-wrap items-center gap-4">
+            <button type="button"
+              class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-[12.5px] font-semibold text-white transition-colors hover:bg-primary-dark">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+              Play Episode
+            </button>
+            <a href="#" class="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-primary no-underline hover:text-accent">
+              Show Notes
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+    }
+  </ul>
+
+  <!-- Categories -->
+  <div class="mt-9 flex flex-wrap items-center justify-between gap-3">
+    <h2 class="text-[20px] font-bold text-primary sm:text-[22px]">Browse by Category</h2>
+    <a href="#" class="text-[13px] font-semibold text-primary no-underline hover:text-accent">View All</a>
+  </div>
+
+  <ul class="mt-4 grid list-none gap-4 sm:grid-cols-3 lg:grid-cols-5">
+    @for (cat of categories; track cat.label) {
+      <li>
+        <button type="button"
+          class="flex h-full w-full flex-col items-center gap-2 rounded-xl border px-3 py-5 text-center transition-colors"
+          [class]="cat.active ? 'border-logo bg-logo/[0.04]' : 'border-gray-200 bg-white hover:border-primary'">
+          <svg class="text-logo" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            @for (d of cat.path; track d) { <path [attr.d]="d" /> }
+          </svg>
+          <span class="text-[13px] font-bold text-primary">{{ cat.label }}</span>
+          <span class="text-[11px] text-muted">{{ cat.count }}</span>
+        </button>
+      </li>
+    }
+  </ul>
+
+  <!-- Subscribe -->
+  <div class="mt-8 flex flex-wrap items-center justify-between gap-5 rounded-xl bg-gradient-to-r from-[#6B1119] to-[#3B0A10] p-6">
+    <div class="flex items-center gap-4">
+      <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/15 text-white" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.7 21a2 2 0 0 1-3.4 0" />
+        </svg>
+      </span>
+      <div>
+        <p class="text-[16px] font-bold text-white">Never Miss an Episode!</p>
+        <p class="mt-1 text-[12.5px] text-white/70">Subscribe to our podcast and get notified about new episodes.</p>
+      </div>
+    </div>
+
+    <ul class="flex list-none flex-wrap gap-3">
+      @for (p of platforms; track p.label) {
+        <li>
+          <a href="#" class="flex items-center gap-2 rounded-md bg-white px-4 py-2.5 text-[12px] font-semibold no-underline transition-transform hover:scale-[1.02]">
+            <svg [class]="p.tone" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" />
+            </svg>
+            <span class="text-left">
+              <span class="block text-[10px] text-muted">Listen on</span>
+              <span class="block text-primary">{{ p.sub }}</span>
+            </span>
+          </a>
+        </li>
+      }
+    </ul>
+  </div>
+
+</section>

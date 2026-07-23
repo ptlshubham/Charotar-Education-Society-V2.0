@@ -1,0 +1,110 @@
+<app-page-hero
+  crumb="Hostel"
+  title="Hostel"
+  tagline="A Safe Stay. A Strong Foundation. A Supportive Community."
+  [image]="banner" />
+
+<section class="mx-auto max-w-[1600px] px-4 py-8 sm:px-6 lg:px-10">
+
+  <!-- Intro + assurances -->
+  <div class="grid gap-6 rounded-xl border border-gray-200 bg-white p-6 lg:grid-cols-[1.5fr_1fr] lg:items-center">
+    <div class="flex items-start gap-4">
+      <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary text-white" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 21h18" /><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16" /><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2" />
+        </svg>
+      </span>
+      <div>
+        <h2 class="text-[17px] font-bold text-primary">Comfortable Living. Focused Learning.</h2>
+        <p class="mt-2 text-[13px] leading-relaxed text-muted">
+          Charotar Education Society provides well-maintained hostel facilities for students from outside the
+          city, ensuring a safe, disciplined, and homely environment that supports academic excellence and
+          personal growth.
+        </p>
+      </div>
+    </div>
+
+    <ul class="grid list-none grid-cols-2 gap-y-5 border-gray-100 sm:grid-cols-4 lg:border-l lg:pl-6">
+      @for (item of assurances; track item.label) {
+        <li class="flex flex-col items-center px-1 text-center">
+          <svg class="text-primary" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            @for (d of item.path; track d) { <path [attr.d]="d" /> }
+          </svg>
+          <p class="mt-2 text-[11px] leading-snug font-semibold text-primary">{{ item.label }}</p>
+        </li>
+      }
+    </ul>
+  </div>
+
+  <!-- Hostels -->
+  <h2 class="mt-10 text-center text-[22px] font-bold text-primary sm:text-[26px]">Our Hostels</h2>
+  <span class="mx-auto mt-3 block h-1 w-14 rounded-full bg-logo" aria-hidden="true"></span>
+
+  <ul class="mt-7 grid list-none gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    @for (hostel of hostels; track hostel.name) {
+      <li class="flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white">
+        <div class="relative">
+          <img [src]="hostel.image" [alt]="hostel.name" loading="lazy"
+            class="aspect-[16/9] w-full bg-primary-light object-cover" />
+          <span class="absolute -bottom-5 left-4 flex h-11 w-11 items-center justify-center rounded-full bg-primary text-white shadow-md" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 21h18" /><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16" /><path d="M9 7h2M13 7h2M9 11h2M13 11h2" />
+            </svg>
+          </span>
+        </div>
+
+        <div class="flex flex-1 flex-col p-5 pt-8">
+          <h3 class="text-[15.5px] font-bold text-primary">{{ hostel.name }}</h3>
+
+          <p class="mt-1.5 flex items-center gap-1.5 text-[12px] text-secondary-dark">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z" /><circle cx="12" cy="10" r="3" />
+            </svg>
+            {{ hostel.campus }}
+          </p>
+
+          <p class="mt-2.5 flex-1 text-[12.5px] leading-relaxed text-muted">{{ hostel.desc }}</p>
+
+          <ul class="mt-4 flex list-none flex-wrap gap-2">
+            @for (tag of hostel.tags; track tag.label) {
+              <li class="inline-flex items-center gap-1.5 rounded-full bg-[#F7F9FC] px-2.5 py-1 text-[11px] font-medium text-muted">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  @for (d of tag.path; track d) { <path [attr.d]="d" /> }
+                </svg>
+                {{ tag.label }}
+              </li>
+            }
+          </ul>
+
+          <button type="button"
+            class="mt-4 inline-flex w-fit items-center gap-2 rounded-md bg-primary px-4 py-2.5 text-[12.5px] font-semibold text-white transition-colors hover:bg-primary-dark">
+            View Details
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </button>
+        </div>
+      </li>
+    }
+  </ul>
+
+  <!-- Contact CTA -->
+  <div class="mt-7 flex flex-wrap items-center justify-between gap-5 rounded-xl bg-[#EEF4FC] p-5">
+    <div class="flex items-center gap-4">
+      <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-white" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z" />
+        </svg>
+      </span>
+      <div>
+        <p class="text-[14.5px] font-bold text-primary">Need More Information?</p>
+        <p class="text-[12.5px] text-muted">Contact our hostel office for admissions, fees, rules and more details.</p>
+      </div>
+    </div>
+
+    <a routerLink="/contact"
+      class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-[13px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
+      Contact Hostel Office
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+    </a>
+  </div>
+
+</section>

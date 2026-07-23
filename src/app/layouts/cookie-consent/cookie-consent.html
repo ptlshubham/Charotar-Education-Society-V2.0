@@ -12,30 +12,30 @@
 
     <!-- Mobile / MD layout: stacked -->
     <div class="lg:hidden">
-      <h2 class="text-[#0B2827] font-semibold text-[17px] md:text-[18px] leading-tight mb-1">
+      <h2 class="text-[#203154] font-semibold text-[17px] md:text-[18px] leading-tight mb-1">
         We value your privacy
       </h2>
-      <p class="text-[#0B2827]/70 text-[13px] md:text-[14px] leading-relaxed mb-5">
+      <p class="text-[#203154]/70 text-[13px] md:text-[14px] leading-relaxed mb-5">
         We use cookies to keep ZarklyX secure, remember your preferences, and understand how our
         platform is used so we can improve it. Choose “Accept All” to allow all cookies, “Reject All”
         to keep only the essential ones, or “Customize” to set your preferences. Learn more in our
-        <a routerLink="/support/cookie-policy" class="underline font-medium text-[#0B2827] hover:text-[#3BAEA9]">Cookie Policy</a>.
+        <a routerLink="/support/cookie-policy" class="underline font-medium text-[#203154] hover:text-[#203154]">Cookie Policy</a>.
       </p>
       <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
         <button type="button" id="cookie-customize-sm" (click)="customize()"
-          class="flex-1 sm:flex-none px-4 py-2 rounded-lg border border-[#0B2827]/20
-                 text-[#0B2827] text-[13px] font-medium hover:bg-[#0B2827]/5
+          class="flex-1 sm:flex-none px-4 py-2 rounded-lg border border-[#203154]/20
+                 text-[#203154] text-[13px] font-medium hover:bg-[#203154]/5
                  transition-colors duration-200 cursor-pointer">
           Customize
         </button>
         <button type="button" id="cookie-reject-sm" (click)="reject()"
-          class="flex-1 sm:flex-none px-4 py-2 rounded-lg border border-[#0B2827]/20
-                 text-[#0B2827] text-[13px] font-medium hover:bg-[#0B2827]/5
+          class="flex-1 sm:flex-none px-4 py-2 rounded-lg border border-[#203154]/20
+                 text-[#203154] text-[13px] font-medium hover:bg-[#203154]/5
                  transition-colors duration-200 cursor-pointer">
           Reject All
         </button>
         <button type="button" id="cookie-accept-sm" (click)="accept()"
-          class="flex-1 sm:flex-none px-5 py-2 rounded-lg bg-[#0B2827] text-white
+          class="flex-1 sm:flex-none px-5 py-2 rounded-lg bg-[#203154] text-white
                  text-[13px] font-semibold hover:bg-[#1a3d3c] transition-colors duration-200 cursor-pointer">
           Accept All
         </button>
@@ -50,11 +50,11 @@
           <h2 class="text-primary font-medium text-[18px] leading-tight mb-1">
             We value your privacy
           </h2>
-          <p class="text-secondary text-[14px] font-medium leading-relaxed">
+          <p class="text-muted text-[14px] font-medium leading-relaxed">
             We use cookies to keep ZarklyX secure, remember your preferences, and understand how our
             platform is used so we can improve it. Choose “Accept All” to allow all cookies, “Reject All”
             to keep only the essential ones, or “Customize” to set your preferences. Learn more in our
-            <a routerLink="/support/cookie-policy" class="underline font-medium text-primary hover:text-[#3BAEA9]">Cookie Policy</a>.
+            <a routerLink="/support/cookie-policy" class="underline font-medium text-primary hover:text-[#203154]">Cookie Policy</a>.
           </p>
         </div>
       </div>
@@ -62,19 +62,19 @@
       <!-- Right: buttons -->
       <div class="flex items-center gap-3 shrink-0">
         <button type="button" id="cookie-customize" (click)="customize()"
-          class="px-5 py-2.5 rounded-lg border border-[#0B2827]/20 text-[#0B2827]
-                 text-[14px] font-medium hover:bg-[#0B2827]/5
+          class="px-5 py-2.5 rounded-lg border border-[#203154]/20 text-[#203154]
+                 text-[14px] font-medium hover:bg-[#203154]/5
                  transition-colors duration-200 cursor-pointer whitespace-nowrap">
           Customize
         </button>
         <button type="button" id="cookie-reject" (click)="reject()"
-          class="px-5 py-2.5 rounded-lg border border-[#0B2827]/20 text-[#0B2827]
-                 text-[14px] font-medium hover:bg-[#0B2827]/5
+          class="px-5 py-2.5 rounded-lg border border-[#203154]/20 text-[#203154]
+                 text-[14px] font-medium hover:bg-[#203154]/5
                  transition-colors duration-200 cursor-pointer whitespace-nowrap">
           Reject All
         </button>
         <button type="button" id="cookie-accept" (click)="accept()"
-          class="px-6 py-2.5 rounded-lg bg-[#0B2827] text-white text-[14px] font-semibold
+          class="px-6 py-2.5 rounded-lg bg-[#203154] text-white text-[14px] font-semibold
                  hover:bg-[#1a3d3c] transition-colors duration-200 cursor-pointer whitespace-nowrap">
           Accept All
         </button>
@@ -90,91 +90,91 @@
         class="bg-white w-full max-w-[560px] max-h-[88vh] overflow-y-auto rounded-2xl shadow-2xl p-5 md:p-7">
 
         <h2 class="text-primary font-semibold text-[19px] md:text-[20px] mb-1">Cookie Preferences</h2>
-        <p class="text-secondary text-[13px] md:text-[14px] leading-relaxed mb-5">
+        <p class="text-muted text-[13px] md:text-[14px] leading-relaxed mb-5">
           We use cookies to improve your experience. You can choose which cookies to allow.
         </p>
 
         <!-- 1. Necessary -->
-        <div class="border border-[#0B2827]/10 rounded-xl p-4 mb-3">
+        <div class="border border-[#203154]/10 rounded-xl p-4 mb-3">
           <div class="flex items-center justify-between gap-3 mb-1.5">
             <h3 class="text-primary font-medium text-[15px] flex items-center gap-1.5">
               Necessary Cookies <span aria-hidden="true">🔒</span>
             </h3>
             <label class="relative inline-flex items-center shrink-0 cursor-not-allowed">
               <input type="checkbox" class="sr-only peer" checked disabled aria-label="Necessary cookies always on">
-              <div class="w-11 h-6 rounded-full bg-[#3BAEA9]/50"></div>
+              <div class="w-11 h-6 rounded-full bg-[#203154]/50"></div>
               <span class="absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white translate-x-5"></span>
             </label>
           </div>
-          <p class="text-secondary text-[13px] leading-relaxed">
+          <p class="text-muted text-[13px] leading-relaxed">
             These cookies are required for the website to function properly. They cannot be disabled.
           </p>
         </div>
 
         <!-- 2. Analytics -->
-        <div class="border border-[#0B2827]/10 rounded-xl p-4 mb-3">
+        <div class="border border-[#203154]/10 rounded-xl p-4 mb-3">
           <div class="flex items-center justify-between gap-3 mb-1.5">
             <h3 class="text-primary font-medium text-[15px]">Analytics Cookies</h3>
             <label class="relative inline-flex items-center shrink-0 cursor-pointer">
               <input type="checkbox" class="sr-only peer" [checked]="analyticsEnabled()"
                 (change)="analyticsEnabled.set(!analyticsEnabled())" aria-label="Toggle analytics cookies">
-              <div class="w-11 h-6 rounded-full bg-[#0B2827]/20 peer-checked:bg-[#3BAEA9] transition-colors duration-200"></div>
+              <div class="w-11 h-6 rounded-full bg-[#203154]/20 peer-checked:bg-[#203154] transition-colors duration-200"></div>
               <span class="absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform duration-200 peer-checked:translate-x-5"></span>
             </label>
           </div>
-          <p class="text-secondary text-[13px] leading-relaxed">
+          <p class="text-muted text-[13px] leading-relaxed">
             Help us understand how visitors use our website so we can improve performance.
           </p>
-          <p class="text-[#0B2827]/50 text-[12px] mt-1.5">Examples: Google Analytics, Microsoft Clarity</p>
+          <p class="text-[#203154]/50 text-[12px] mt-1.5">Examples: Google Analytics, Microsoft Clarity</p>
         </div>
 
         <!-- 3. Functional -->
-        <div class="border border-[#0B2827]/10 rounded-xl p-4 mb-3">
+        <div class="border border-[#203154]/10 rounded-xl p-4 mb-3">
           <div class="flex items-center justify-between gap-3 mb-1.5">
             <h3 class="text-primary font-medium text-[15px]">Functional Cookies</h3>
             <label class="relative inline-flex items-center shrink-0 cursor-pointer">
               <input type="checkbox" class="sr-only peer" [checked]="functionalEnabled()"
                 (change)="functionalEnabled.set(!functionalEnabled())" aria-label="Toggle functional cookies">
-              <div class="w-11 h-6 rounded-full bg-[#0B2827]/20 peer-checked:bg-[#3BAEA9] transition-colors duration-200"></div>
+              <div class="w-11 h-6 rounded-full bg-[#203154]/20 peer-checked:bg-[#203154] transition-colors duration-200"></div>
               <span class="absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform duration-200 peer-checked:translate-x-5"></span>
             </label>
           </div>
-          <p class="text-secondary text-[13px] leading-relaxed">
+          <p class="text-muted text-[13px] leading-relaxed">
             Remember your preferences such as language, theme, and login information.
           </p>
         </div>
 
         <!-- 4. Marketing / Advertising -->
-        <div class="border border-[#0B2827]/10 rounded-xl p-4 mb-5">
+        <div class="border border-[#203154]/10 rounded-xl p-4 mb-5">
           <div class="flex items-center justify-between gap-3 mb-1.5">
             <h3 class="text-primary font-medium text-[15px]">Marketing / Advertising Cookies</h3>
             <label class="relative inline-flex items-center shrink-0 cursor-pointer">
               <input type="checkbox" class="sr-only peer" [checked]="marketingEnabled()"
                 (change)="marketingEnabled.set(!marketingEnabled())" aria-label="Toggle marketing cookies">
-              <div class="w-11 h-6 rounded-full bg-[#0B2827]/20 peer-checked:bg-[#3BAEA9] transition-colors duration-200"></div>
+              <div class="w-11 h-6 rounded-full bg-[#203154]/20 peer-checked:bg-[#203154] transition-colors duration-200"></div>
               <span class="absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform duration-200 peer-checked:translate-x-5"></span>
             </label>
           </div>
-          <p class="text-secondary text-[13px] leading-relaxed">
+          <p class="text-muted text-[13px] leading-relaxed">
             Used to deliver personalized advertisements and measure advertising effectiveness.
           </p>
-          <p class="text-[#0B2827]/50 text-[12px] mt-1.5">Examples: Facebook Pixel, Google Ads, LinkedIn Insight Tag</p>
+          <p class="text-[#203154]/50 text-[12px] mt-1.5">Examples: Facebook Pixel, Google Ads, LinkedIn Insight Tag</p>
         </div>
 
         <!-- Actions -->
         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
           <button type="button" (click)="reject()"
-            class="flex-1 px-4 py-2.5 rounded-lg border border-[#0B2827]/20 text-[#0B2827]
-                   text-[13px] font-medium hover:bg-[#0B2827]/5 transition-colors duration-200 cursor-pointer">
+            class="flex-1 px-4 py-2.5 rounded-lg border border-[#203154]/20 text-[#203154]
+                   text-[13px] font-medium hover:bg-[#203154]/5 transition-colors duration-200 cursor-pointer">
             Reject All
           </button>
           <button type="button" (click)="savePreferences()"
-            class="flex-1 px-4 py-2.5 rounded-lg border border-[#0B2827]/20 text-[#0B2827]
-                   text-[13px] font-medium hover:bg-[#0B2827]/5 transition-colors duration-200 cursor-pointer">
+            class="flex-1 px-4 py-2.5 rounded-lg border border-[#203154]/20 text-[#203154]
+                   text-[13px] font-medium hover:bg-[#203154]/5 transition-colors duration-200 cursor-pointer">
             Save Preferences
           </button>
           <button type="button" (click)="accept()"
-            class="flex-1 px-5 py-2.5 rounded-lg bg-[#0B2827] text-white text-[13px] font-semibold
+            class="flex-1 px-5 py-2.5 rounded-lg bg-[#203154] text-white text-[13px] font-semibold
                    hover:bg-[#1a3d3c] transition-colors duration-200 cursor-pointer">
             Accept All
           </button>

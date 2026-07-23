@@ -1,0 +1,237 @@
+<section class="mx-auto max-w-[1600px] px-4 py-10 sm:px-6 lg:px-10">
+  <div class="overflow-hidden rounded-xl border border-gray-200 bg-white">
+
+    <!-- Tab-style header -->
+    <div class="flex">
+      <h2 class="relative rounded-tr-2xl bg-primary py-3.5 pr-10 pl-6 text-[15px] font-semibold text-white">
+        Alumni Details
+        <span class="absolute top-0 -right-1 h-full w-2 -skew-x-12 bg-logo" aria-hidden="true"></span>
+      </h2>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="p-6 lg:p-8">
+      <div class="grid gap-x-8 gap-y-5 lg:grid-cols-2">
+
+        <!-- Institute (full width) -->
+        <div class="lg:col-span-2">
+          <label for="instituteName" class="mb-1.5 block text-[13px] font-semibold text-primary">
+            Select Institute <span class="text-logo">*</span>
+          </label>
+          <select id="instituteName" formControlName="instituteName"
+            class="h-12 w-full rounded-md border border-gray-300 bg-white px-4 text-[14px] text-primary outline-none transition-colors focus:border-primary"
+            [class.border-red-400]="f['instituteName'].touched && f['instituteName'].invalid">
+            <option value="" disabled>Choose your institute</option>
+            @for (institute of institutes; track institute) {
+              <option [value]="institute">{{ institute }}</option>
+            }
+          </select>
+          @if (f['instituteName'].touched && f['instituteName'].invalid) {
+            <p class="mt-1 text-[12px] text-red-500">Please select your institute.</p>
+          }
+        </div>
+
+        <!-- Name (full width) -->
+        <div class="lg:col-span-2">
+          <label for="alumniName" class="mb-1.5 block text-[13px] font-semibold text-primary">
+            Alumni Name <span class="text-logo">*</span>
+          </label>
+          <input id="alumniName" type="text" formControlName="alumniName" placeholder="Enter your full name"
+            class="h-12 w-full rounded-md border border-gray-300 px-4 text-[14px] text-primary outline-none transition-colors placeholder:text-gray-400 focus:border-primary"
+            [class.border-red-400]="f['alumniName'].touched && f['alumniName'].invalid" />
+          @if (f['alumniName'].touched && f['alumniName'].invalid) {
+            <p class="mt-1 text-[12px] text-red-500">Alumni name is required.</p>
+          }
+        </div>
+
+        <!-- Course -->
+        <div>
+          <label for="alumniCourse" class="mb-1.5 block text-[13px] font-semibold text-primary">
+            Course Title <span class="text-logo">*</span>
+          </label>
+          <input id="alumniCourse" type="text" formControlName="alumniCourse" placeholder="Enter course name"
+            class="h-12 w-full rounded-md border border-gray-300 px-4 text-[14px] text-primary outline-none transition-colors placeholder:text-gray-400 focus:border-primary"
+            [class.border-red-400]="f['alumniCourse'].touched && f['alumniCourse'].invalid" />
+          @if (f['alumniCourse'].touched && f['alumniCourse'].invalid) {
+            <p class="mt-1 text-[12px] text-red-500">Course title is required.</p>
+          }
+        </div>
+
+        <!-- Year -->
+        <div>
+          <label for="alumniYear" class="mb-1.5 block text-[13px] font-semibold text-primary">
+            Select Year of Passing <span class="text-logo">*</span>
+          </label>
+          <select id="alumniYear" formControlName="alumniYear"
+            class="h-12 w-full rounded-md border border-gray-300 bg-white px-4 text-[14px] text-primary outline-none transition-colors focus:border-primary"
+            [class.border-red-400]="f['alumniYear'].touched && f['alumniYear'].invalid">
+            <option value="" disabled>Select passing year</option>
+            @for (year of years; track year) {
+              <option [value]="year">{{ year }}</option>
+            }
+          </select>
+          @if (f['alumniYear'].touched && f['alumniYear'].invalid) {
+            <p class="mt-1 text-[12px] text-red-500">Please select your passing year.</p>
+          }
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <label for="contactNumber" class="mb-1.5 block text-[13px] font-semibold text-primary">
+            Contact Number <span class="text-logo">*</span>
+          </label>
+          <input id="contactNumber" type="tel" formControlName="contactNumber" placeholder="Enter mobile number"
+            class="h-12 w-full rounded-md border border-gray-300 px-4 text-[14px] text-primary outline-none transition-colors placeholder:text-gray-400 focus:border-primary"
+            [class.border-red-400]="f['contactNumber'].touched && f['contactNumber'].invalid" />
+          @if (f['contactNumber'].touched && f['contactNumber'].invalid) {
+            <p class="mt-1 text-[12px] text-red-500">Enter a valid number (10-15 digits).</p>
+          }
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label for="email" class="mb-1.5 block text-[13px] font-semibold text-primary">
+            Email Address <span class="text-logo">*</span>
+          </label>
+          <input id="email" type="email" formControlName="email" placeholder="Enter email address"
+            class="h-12 w-full rounded-md border border-gray-300 px-4 text-[14px] text-primary outline-none transition-colors placeholder:text-gray-400 focus:border-primary"
+            [class.border-red-400]="f['email'].touched && f['email'].invalid" />
+          @if (f['email'].touched && f['email'].invalid) {
+            <p class="mt-1 text-[12px] text-red-500">Enter a valid email address.</p>
+          }
+        </div>
+
+        <!-- Country -->
+        <div>
+          <label for="country" class="mb-1.5 block text-[13px] font-semibold text-primary">
+            Country <span class="text-logo">*</span>
+          </label>
+          <select id="country" formControlName="country" (change)="onCountryChange(f['country'].value)"
+            class="h-12 w-full rounded-md border border-gray-300 bg-white px-4 text-[14px] text-primary outline-none transition-colors focus:border-primary"
+            [class.border-red-400]="f['country'].touched && f['country'].invalid">
+            <option value="" disabled>Select country</option>
+            @for (country of countries; track country.iso) {
+              <option [value]="country.name">{{ country.name }}</option>
+            }
+          </select>
+          @if (f['country'].touched && f['country'].invalid) {
+            <p class="mt-1 text-[12px] text-red-500">Please select your country.</p>
+          }
+        </div>
+
+        <!-- State -->
+        <div>
+          <label for="state" class="mb-1.5 block text-[13px] font-semibold text-primary">
+            State <span class="text-logo">*</span>
+          </label>
+          <select id="state" formControlName="state" (change)="onStateChange(f['state'].value)"
+            [attr.disabled]="states().length ? null : ''"
+            class="h-12 w-full rounded-md border border-gray-300 bg-white px-4 text-[14px] text-primary outline-none transition-colors focus:border-primary disabled:bg-gray-50 disabled:text-gray-400"
+            [class.border-red-400]="f['state'].touched && f['state'].invalid">
+            <option value="" disabled>Select state</option>
+            @for (state of states(); track state.iso) {
+              <option [value]="state.name">{{ state.name }}</option>
+            }
+          </select>
+          @if (f['state'].touched && f['state'].invalid) {
+            <p class="mt-1 text-[12px] text-red-500">Please select your state.</p>
+          }
+        </div>
+
+        <!-- City -->
+        <div>
+          <label for="city" class="mb-1.5 block text-[13px] font-semibold text-primary">
+            City <span class="text-logo">*</span>
+          </label>
+          <select id="city" formControlName="city" [attr.disabled]="cities().length ? null : ''"
+            class="h-12 w-full rounded-md border border-gray-300 bg-white px-4 text-[14px] text-primary outline-none transition-colors focus:border-primary disabled:bg-gray-50 disabled:text-gray-400"
+            [class.border-red-400]="f['city'].touched && f['city'].invalid">
+            <option value="" disabled>Select city</option>
+            @for (city of cities(); track city) {
+              <option [value]="city">{{ city }}</option>
+            }
+          </select>
+          @if (f['city'].touched && f['city'].invalid) {
+            <p class="mt-1 text-[12px] text-red-500">Please select your city.</p>
+          }
+        </div>
+
+        <!-- Current status -->
+        <fieldset>
+          <legend class="mb-2 text-[13px] font-semibold text-primary">
+            What is your current status? <span class="text-logo">*</span>
+          </legend>
+          <div class="space-y-1.5">
+            @for (status of statuses; track status) {
+              <label class="flex cursor-pointer items-center gap-2.5 text-[13px] text-muted">
+                <input type="radio" formControlName="type" [value]="status" class="accent-primary" />
+                {{ status }}
+              </label>
+            }
+          </div>
+          @if (f['type'].touched && f['type'].invalid) {
+            <p class="mt-1 text-[12px] text-red-500">Please select your current status.</p>
+          }
+        </fieldset>
+
+        <!-- Description -->
+        <div>
+          <label for="description" class="mb-1.5 block text-[13px] font-semibold text-primary">
+            Describe your current status in details. <span class="text-logo">*</span>
+          </label>
+          <textarea id="description" formControlName="description" rows="4"
+            placeholder="Designation, Work place/ Business, any other important information regarding you"
+            class="w-full resize-none rounded-md border border-gray-300 px-4 py-3 text-[14px] text-primary outline-none transition-colors placeholder:text-gray-400 focus:border-primary"
+            [class.border-red-400]="f['description'].touched && f['description'].invalid"></textarea>
+          @if (f['description'].touched && f['description'].invalid) {
+            <p class="mt-1 text-[12px] text-red-500">Please describe your current status.</p>
+          }
+        </div>
+
+        <!-- Reunion -->
+        <fieldset>
+          <legend class="mb-2 text-[13px] leading-snug font-semibold text-primary">
+            Will you attend the alumni reunion on 13th January 2026? <span class="text-logo">*</span>
+          </legend>
+          <div class="space-y-1.5">
+            <label class="flex cursor-pointer items-center gap-2.5 text-[13px] text-muted">
+              <input type="radio" formControlName="status" value="yes" class="accent-primary" /> Yes
+            </label>
+            <label class="flex cursor-pointer items-center gap-2.5 text-[13px] text-muted">
+              <input type="radio" formControlName="status" value="no" class="accent-primary" /> No
+            </label>
+          </div>
+          @if (f['status'].touched && f['status'].invalid) {
+            <p class="mt-1 text-[12px] text-red-500">Please let us know.</p>
+          }
+        </fieldset>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="mt-8 flex flex-wrap items-center justify-between gap-5 rounded-lg bg-[#F7F9FC] p-5">
+        <div class="flex items-start gap-3.5">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary text-white" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-10 6L2 7" />
+            </svg>
+          </span>
+          <p class="text-[12.5px] leading-relaxed text-muted">
+            Your information helps us build a stronger alumni network.<br />
+            We respect your privacy and will never share your details.
+          </p>
+        </div>
+
+        <button type="submit" [disabled]="submitting"
+          class="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3.5 text-[13px] font-semibold tracking-wide text-white uppercase transition-colors hover:bg-primary-dark disabled:opacity-70">
+          {{ submitting ? 'Submitting...' : 'Submit Registration' }}
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </button>
+      </div>
+
+      @if (errorMsg) {
+        <p class="mt-3 text-[13px] font-medium text-red-500">{{ errorMsg }}</p>
+      }
+    </form>
+
+  </div>
+</section>

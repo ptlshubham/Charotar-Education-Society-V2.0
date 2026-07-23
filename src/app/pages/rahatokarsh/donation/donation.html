@@ -1,0 +1,328 @@
+<!-- ─── Hero ─── -->
+<section class="relative overflow-hidden bg-gradient-to-r from-[#EEF3FA] to-[#DCE6F5]">
+  <div class="relative mx-auto grid max-w-[1600px] items-center gap-8 px-5 py-10 sm:px-8 lg:grid-cols-[1fr_1.15fr] lg:px-10">
+    <div>
+      <h1 class="text-[28px] leading-[1.2] font-bold text-primary sm:text-[34px]">
+        Be the reason someone's tomorrow is brighter.
+      </h1>
+      <p class="mt-3 text-[16px] font-semibold text-primary">
+        Support the <span class="text-logo">Rahatokarsh Fund</span>
+      </p>
+      <p class="mt-3 max-w-[380px] text-[13.5px] leading-relaxed text-muted">
+        Your contribution helps deserving students continue their education and build a better future.
+      </p>
+
+      <div class="mt-6 flex flex-wrap items-center gap-4">
+        <a href="#donate-form"
+          class="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-[14px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z" />
+          </svg>
+          DONATE NOW
+        </a>
+        <a routerLink="/fund" class="inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-primary no-underline hover:text-accent">
+          Learn More
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </a>
+      </div>
+    </div>
+
+    <img [src]="heroImage" alt="Students supported by the Rahatokarsh Fund" loading="lazy"
+      class="h-[240px] w-full rounded-lg bg-primary-light object-cover" />
+  </div>
+</section>
+
+<!-- ─── Stat strip ─── -->
+<section class="mx-auto max-w-[1600px] px-4 pt-6 sm:px-6 lg:px-10">
+  <div class="rounded-xl border border-gray-200 bg-white p-6">
+    <h2 class="text-center text-[17px] font-bold text-primary">Your Support. Their Future. Our Legacy.</h2>
+
+    <ul class="mt-6 grid list-none grid-cols-2 gap-y-6 sm:grid-cols-3 lg:grid-cols-5">
+      @for (stat of stats; track stat.label; let last = $last) {
+        <li class="flex flex-col items-center px-2 text-center" [class.lg:border-r]="!last" [class.border-gray-100]="!last">
+          <svg class="text-primary" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            @for (d of stat.path; track d) { <path [attr.d]="d" /> }
+          </svg>
+          <p class="mt-2.5 text-[19px] leading-tight font-bold text-primary">{{ stat.value }}</p>
+          <p class="mt-1 text-[11px] text-muted">{{ stat.label }}</p>
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+
+<!-- ─── About ─── -->
+<section class="mx-auto max-w-[1600px] px-4 pt-5 sm:px-6 lg:px-10">
+  <div class="grid items-center gap-8 rounded-xl bg-[#EEF4FC] p-6 lg:grid-cols-2 lg:p-8">
+    <div>
+      <p class="text-[11.5px] font-bold tracking-wide text-primary/60 uppercase">About Rahatokarsh Fund</p>
+      <h2 class="mt-2 text-[22px] leading-snug font-bold text-primary sm:text-[26px]">
+        Invest in Education,<br />Transform Lives
+      </h2>
+
+      <p class="mt-4 text-[13.5px] leading-relaxed text-muted">
+        The Rahatokarsh Fund is a noble initiative by Charotar Education Society to provide financial assistance
+        to meritorious and needy students who dream of a better future.
+      </p>
+
+      <ul class="mt-5 list-none space-y-3">
+        @for (point of points; track point) {
+          <li class="flex items-start gap-2.5">
+            <svg class="mt-0.5 shrink-0 text-primary" width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zm-1-6-4-4 1.4-1.4L11 13.2l4.6-4.6L17 10z" />
+            </svg>
+            <span class="text-[13px] text-muted">{{ point }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <img [src]="aboutImage" alt="Investing in education" loading="lazy"
+      class="h-[280px] w-full rounded-lg bg-primary-light object-cover" />
+  </div>
+</section>
+
+<!-- ─── Donate ─── -->
+<section id="donate-form" class="mx-auto max-w-[1600px] px-4 pt-8 sm:px-6 lg:px-10">
+  <h2 class="text-center text-[22px] font-bold text-primary sm:text-[26px]">Make a Difference Today</h2>
+  <span class="mx-auto mt-3 block h-1 w-14 rounded-full bg-primary" aria-hidden="true"></span>
+
+  <div class="mt-7 grid gap-5 rounded-xl border border-gray-200 bg-white p-6 lg:grid-cols-2 lg:p-8">
+
+    <!-- Form -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="rounded-xl border border-gray-200 p-5">
+      <div class="flex items-center gap-3">
+        <span class="flex h-11 w-11 items-center justify-center rounded-full bg-primary/8 text-primary" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z" />
+          </svg>
+        </span>
+        <h3 class="text-[16px] font-bold text-primary">Donate to Rahatokarsh Fund</h3>
+      </div>
+
+      <div class="mt-5 space-y-4">
+        <div>
+          <label for="dn-name" class="mb-1.5 block text-[12.5px] font-semibold text-primary">Full Name <span class="text-logo">*</span></label>
+          <input id="dn-name" type="text" formControlName="fullName" placeholder="Enter your full name"
+            class="h-11 w-full rounded-md border border-gray-300 px-3.5 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary"
+            [class.border-red-400]="f['fullName'].touched && f['fullName'].invalid" />
+          @if (f['fullName'].touched && f['fullName'].invalid) {
+            <p class="mt-1 text-[12px] text-red-500">Full name is required.</p>
+          }
+        </div>
+
+        <div>
+          <label for="dn-email" class="mb-1.5 block text-[12.5px] font-semibold text-primary">Email Address <span class="text-logo">*</span></label>
+          <input id="dn-email" type="email" formControlName="email" placeholder="Enter your email address"
+            class="h-11 w-full rounded-md border border-gray-300 px-3.5 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary"
+            [class.border-red-400]="f['email'].touched && f['email'].invalid" />
+          @if (f['email'].touched && f['email'].invalid) {
+            <p class="mt-1 text-[12px] text-red-500">Enter a valid email address.</p>
+          }
+        </div>
+
+        <div>
+          <label for="dn-phone" class="mb-1.5 block text-[12.5px] font-semibold text-primary">Contact Number <span class="text-logo">*</span></label>
+          <input id="dn-phone" type="tel" formControlName="contactNumber" placeholder="Enter your contact number"
+            class="h-11 w-full rounded-md border border-gray-300 px-3.5 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary"
+            [class.border-red-400]="f['contactNumber'].touched && f['contactNumber'].invalid" />
+          @if (f['contactNumber'].touched && f['contactNumber'].invalid) {
+            <p class="mt-1 text-[12px] text-red-500">Enter a valid number (10-15 digits).</p>
+          }
+        </div>
+
+        <div>
+          <label for="dn-city" class="mb-1.5 block text-[12.5px] font-semibold text-primary">City <span class="text-logo">*</span></label>
+          <input id="dn-city" type="text" formControlName="city" placeholder="Enter your city"
+            class="h-11 w-full rounded-md border border-gray-300 px-3.5 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary"
+            [class.border-red-400]="f['city'].touched && f['city'].invalid" />
+          @if (f['city'].touched && f['city'].invalid) {
+            <p class="mt-1 text-[12px] text-red-500">City is required.</p>
+          }
+        </div>
+
+        <!-- Amount -->
+        <div>
+          <p class="mb-1.5 text-[12.5px] font-semibold text-primary">
+            Donation Amount <span class="text-logo">(Minimum ₹10)</span> <span class="text-logo">*</span>
+          </p>
+          <div class="grid grid-cols-5 gap-2">
+            @for (preset of presets; track preset) {
+              <button type="button" (click)="choose(preset)"
+                class="h-10 rounded-md border text-[12.5px] font-semibold transition-colors"
+                [class]="!customAmount() && f['amount'].value === preset
+                  ? 'border-primary bg-primary text-white'
+                  : 'border-gray-300 text-primary hover:border-primary'">
+                ₹{{ preset | number }}
+              </button>
+            }
+            <button type="button" (click)="chooseOther()"
+              class="h-10 rounded-md border text-[12.5px] font-semibold transition-colors"
+              [class]="customAmount() ? 'border-primary bg-primary text-white' : 'border-gray-300 text-primary hover:border-primary'">
+              Other
+            </button>
+          </div>
+
+          <div class="mt-2 flex items-center gap-2 rounded-md border border-gray-300 px-3.5 focus-within:border-primary">
+            <span class="text-[13px] text-muted" aria-hidden="true">₹</span>
+            <label for="dn-amount" class="sr-only">Donation amount</label>
+            <input id="dn-amount" type="number" formControlName="amount" min="10" placeholder="Enter custom amount"
+              class="h-11 w-full bg-transparent text-[13px] text-primary outline-none placeholder:text-gray-400" />
+          </div>
+          @if (f['amount'].touched && f['amount'].invalid) {
+            <p class="mt-1 text-[12px] text-red-500">Enter an amount of ₹10 or more.</p>
+          }
+        </div>
+
+        <label class="flex cursor-pointer items-start gap-2.5 text-[12.5px] text-muted">
+          <input type="checkbox" formControlName="taxBenefit" class="mt-0.5 accent-primary" />
+          <span>I want to benefit under Section <span class="font-semibold text-primary">80G</span> of the
+            <span class="font-semibold text-primary">Indian Income Tax Act.</span></span>
+        </label>
+
+        <button type="submit"
+          class="flex h-12 w-full items-center justify-center gap-2 rounded-md bg-logo text-[14px] font-semibold text-white transition-opacity hover:opacity-90">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z" />
+          </svg>
+          DONATE NOW
+        </button>
+
+        <p class="flex items-center justify-center gap-1.5 text-[11.5px] text-muted">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          Your donation is secure and encrypted.
+        </p>
+      </div>
+    </form>
+
+    <!-- Other ways -->
+    <div>
+      <h3 class="text-[16px] font-bold text-primary">Other Ways to Donate</h3>
+
+      <ul class="mt-4 list-none space-y-3">
+        <li class="flex items-start gap-3.5 rounded-lg border border-gray-200 p-4">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-primary/8 text-primary" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="2" width="14" height="20" rx="2" /><path d="M12 18h.01" />
+            </svg>
+          </span>
+          <div class="min-w-0 flex-1">
+            <p class="text-[13.5px] font-bold text-primary">UPI / QR Code</p>
+            <p class="text-[12px] text-muted">Scan &amp; pay using any UPI app</p>
+            <p class="mt-1.5 text-[11px] font-semibold text-muted">GPay &middot; Paytm &middot; PhonePe &middot; BHIM</p>
+          </div>
+          <!-- Placeholder QR: swap for the real payee QR -->
+          <svg class="h-16 w-16 shrink-0 text-primary" viewBox="0 0 32 32" fill="currentColor" aria-label="UPI QR code placeholder" role="img">
+            <path d="M2 2h10v10H2zm2 2v6h6V4zM20 2h10v10H20zm2 2v6h6V4zM2 20h10v10H2zm2 2v6h6v-6z" />
+            <path d="M14 2h2v4h-2zM14 8h2v6h-2zM18 14h4v2h-4zM14 16h2v4h-2zM20 18h2v4h-2zM24 14h2v2h-2zM28 16h2v4h-2zM16 24h4v2h-4zM22 22h2v2h-2zM26 24h4v2h-4zM18 28h4v2h-4zM24 28h2v2h-2zM28 28h2v2h-2z" />
+          </svg>
+        </li>
+
+        <li class="flex items-center gap-3.5 rounded-lg border border-gray-200 p-4">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-primary/8 text-primary" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m3 10 9-6 9 6" /><path d="M5 10v9M19 10v9M9 10v9M15 10v9M3 21h18" />
+            </svg>
+          </span>
+          <div class="min-w-0 flex-1">
+            <p class="text-[13.5px] font-bold text-primary">Net Banking</p>
+            <p class="text-[12px] text-muted">Transfer directly to our bank account</p>
+          </div>
+          <svg class="shrink-0 text-primary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </li>
+
+        <li class="flex items-center gap-3.5 rounded-lg border border-gray-200 p-4">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-primary/8 text-primary" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="5" width="20" height="14" rx="2" /><path d="M2 10h20" />
+            </svg>
+          </span>
+          <div class="min-w-0 flex-1">
+            <p class="text-[13.5px] font-bold text-primary">Cards &amp; Wallets</p>
+            <p class="text-[12px] text-muted">Pay securely using Cards or Wallets</p>
+            <p class="mt-1.5 text-[11px] font-semibold text-muted">VISA &middot; Mastercard &middot; RuPay &middot; Amex</p>
+          </div>
+          <svg class="shrink-0 text-primary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </li>
+      </ul>
+
+      <!-- Bank details -->
+      <div class="mt-4 rounded-lg border border-gray-200 bg-[#F7F9FC] p-5">
+        <p class="text-[13.5px] font-bold text-primary">Rahatokarsh Fund – Bank Details</p>
+        <dl class="mt-3 space-y-1.5">
+          @for (row of bank; track row.label) {
+            <div class="flex gap-2 text-[12.5px]">
+              <dt class="w-[104px] shrink-0 text-muted">{{ row.label }}</dt>
+              <dd class="font-medium text-primary">: {{ row.value }}</dd>
+            </div>
+          }
+        </dl>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── Progress ─── -->
+<section class="mx-auto max-w-[1600px] px-4 pt-6 sm:px-6 lg:px-10">
+  <div class="grid items-center gap-6 rounded-xl bg-primary p-6 lg:grid-cols-[1.1fr_1.6fr]">
+    <div class="flex items-center gap-4">
+      <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white text-logo" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z" />
+        </svg>
+      </span>
+      <div>
+        <p class="text-[16px] font-bold text-white">Help us reach more dreams</p>
+        <p class="mt-1 text-[12.5px] leading-relaxed text-white/70">
+          Your small contribution can make a big difference in a student's life.
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <div class="flex items-center justify-between text-[13px] font-semibold text-white">
+        <span>₹{{ raised | number }} Raised</span>
+        <span>₹{{ goal | number }} Goal</span>
+      </div>
+
+      <div class="mt-2 h-3 w-full overflow-hidden rounded-full bg-white/20"
+        role="progressbar" [attr.aria-valuenow]="progress()" aria-valuemin="0" aria-valuemax="100"
+        [attr.aria-label]="'Fundraising progress: ' + progress() + '%'">
+        <div class="h-full rounded-full bg-secondary transition-all duration-500" [style.width.%]="progress()"></div>
+      </div>
+
+      <p class="mt-1.5 text-right text-[12px] font-semibold text-white/80">{{ progress() }}%</p>
+      <p class="mt-1 text-center text-[12.5px] text-white/70">Together, let's build a better tomorrow.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Voices ─── -->
+<section class="mx-auto max-w-[1600px] px-4 py-10 sm:px-6 lg:px-10">
+  <h2 class="text-center text-[22px] font-bold text-primary sm:text-[26px]">Voices of Impact</h2>
+  <span class="mx-auto mt-3 block h-1 w-14 rounded-full bg-primary" aria-hidden="true"></span>
+
+  <ul class="mt-7 grid list-none gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    @for (voice of voices; track voice.name) {
+      <li class="flex flex-col rounded-xl border border-gray-200 bg-white p-5">
+        <svg class="shrink-0 text-primary/25" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M7 7h4v4c0 3-1.8 5.3-4.5 6L6 15.6c1.3-.4 2-1.3 2-2.6H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2zm10 0h4v4c0 3-1.8 5.3-4.5 6L16 15.6c1.3-.4 2-1.3 2-2.6h-1a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z" />
+        </svg>
+
+        <p class="mt-3 flex-1 text-[12.5px] leading-relaxed text-muted">{{ voice.quote }}</p>
+
+        <div class="mt-5 flex items-center gap-3 border-t border-gray-100 pt-4">
+          <img [src]="voice.photo" [alt]="voice.name" loading="lazy"
+            class="h-10 w-10 shrink-0 rounded-full bg-primary-light object-cover" />
+          <div class="min-w-0">
+            <p class="text-[13px] font-semibold text-primary">{{ voice.name }}</p>
+            <p class="text-[11.5px] text-muted">{{ voice.role }}</p>
+          </div>
+        </div>
+      </li>
+    }
+  </ul>
+</section>

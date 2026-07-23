@@ -17,21 +17,6 @@ export class ResourcesService {
 
 
 
-    // Public Website Blogs
-    getPublicBlogs(params?: { page?: number; limit?: number; category?: string; tag?: string; search?: string }) {
-        let httpParams = new HttpParams();
-        if (params?.page) httpParams = httpParams.set('page', params.page.toString());
-        if (params?.limit) httpParams = httpParams.set('limit', params.limit.toString());
-        if (params?.category) httpParams = httpParams.set('category', params.category);
-        if (params?.tag) httpParams = httpParams.set('tag', params.tag);
-        if (params?.search) httpParams = httpParams.set('search', params.search);
-        return this.http.get(ApiService.GetPublicBlogsURL, { params: httpParams });
-    }
-
-    getPublicBlogBySlug(slug: string) {
-        return this.http.get(ApiService.GetPublicBlogBySlugURL + slug);
-    }
-
     // Public Website Video Guides (Tutorials)
     getPublicVideos(params?: { page?: number; limit?: number; category?: string; module?: string; search?: string }) {
         let httpParams = new HttpParams();

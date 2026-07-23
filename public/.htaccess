@@ -1,6 +1,11 @@
 # ---------------------------------------------------------------------------
-# ZarklyX Website — prerendered Angular deployed as static files (Hostinger)
-# Deployed to apex + dev/test/stage/app subdomains, so no host is hardcoded.
+# Charotar Education Society — prerendered Angular deployed as static files
+# Deployed to apex + any dev/test/stage subdomain, so no host is hardcoded.
+#
+# NOTE: the previous site used hash routing (https://cesociety.in/#/about).
+# Those URLs are NOT redirected here and cannot be: a browser never sends the
+# "#..." fragment to the server, so mod_rewrite only ever sees "/". That
+# redirect lives in src/index.html and runs before the app boots.
 # ---------------------------------------------------------------------------
 
 Options -Indexes +FollowSymLinks

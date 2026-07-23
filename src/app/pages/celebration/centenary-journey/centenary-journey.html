@@ -1,0 +1,30 @@
+<section class="mx-auto max-w-[1600px] px-4 pb-10 sm:px-6 lg:px-10">
+
+  <h2 class="text-[22px] font-bold text-primary sm:text-[26px]">Our Centenary Journey</h2>
+  <span class="mt-3 block h-1 w-16 rounded-full bg-secondary" aria-hidden="true"></span>
+
+  <ol class="relative mt-8 grid list-none gap-6 sm:grid-cols-2 lg:grid-cols-6 lg:gap-3">
+    <!-- Connector, desktop only: sits behind the nodes at their centre line. -->
+    <span class="pointer-events-none absolute top-6 right-[8%] left-[8%] hidden h-px bg-gray-200 lg:block" aria-hidden="true"></span>
+
+    @for (step of steps; track step.title) {
+      <li class="relative flex flex-col text-center">
+        <span class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary text-secondary" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            @for (d of step.path; track d) { <path [attr.d]="d" /> }
+          </svg>
+        </span>
+
+        <p class="mt-4 text-[14px] font-bold text-primary">{{ step.title }}</p>
+        @if (step.date) {
+          <p class="text-[12px] font-semibold text-secondary">{{ step.date }}</p>
+        }
+
+        <p class="mt-2 flex-1 rounded-lg bg-[#F7F9FC] px-3 py-3 text-[12px] leading-relaxed text-muted">
+          {{ step.body }}
+        </p>
+      </li>
+    }
+  </ol>
+
+</section>

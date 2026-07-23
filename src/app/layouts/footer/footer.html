@@ -1,223 +1,111 @@
-<footer class="w-full bg-[#F8F9FA] px-5 md:px-10 lg:px-17.5 pt-14 pb-6">
-  <div class="mx-auto">
+<footer class="relative overflow-hidden bg-[#F4F7FB]">
 
-    <!-- ── Top: brand + newsletter ── -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 pb-10 ">
-      <!-- Brand -->
-      <div class="lg:pr-12 ">
-        <a routerLink="/" class="inline-flex items-center gap-2">
-          <img loading="lazy" decoding="async" src="/android-chrome-512x512.png" alt="ZarklyX"
-            class="block w-[10%] md:w-[10%] lg:w-[10%] xl:w-[6%]" width="90" height="24" />
-        </a>
-        <p class="mt-5 max-w-[420px] text-[15px] leading-[24px] text-secondary">
-          ZarklyX is an all-in-one business management platform that streamlines operations and boosts productivity.
-        </p>
-        <div class="hidden mt-5 lg:block lg:w-[90%] xl:w-[70%]">
-          <form (ngSubmit)="subscribe()" class="flex flex-col sm:flex-row gap-3">
-            <input type="email" name="email" required [ngModel]="email()" (ngModelChange)="email.set($event)"
-              [disabled]="submitting()" placeholder="Enter your email address"
-              class="flex-1 w-full  lg:h-[44px] xl:h-[44px] appearance-none [-webkit-appearance:none] rounded-[8px] border border-[#D0D5DD] bg-white px-[14px] py-4 text-[14px] text-[#0E0E0E] outline-none focus:border-main transition-colors duration-200 disabled:opacity-60" />
-            <button type="submit" [disabled]="submitting()"
-              class="inline-flex items-center justify-center gap-2 lg:h-[44px] xl:h-[44px] px-6 rounded-[8px] bg-main text-white text-[15px] font-medium hover:bg-primary transition-colors disabled:opacity-70">
-              {{ submitting() ? 'Subscribing...' : 'Subscribe' }}
-            </button>
-          </form>
-          @if (errorMsg()) { <p class="mt-2 text-[13px] text-red-500">{{ errorMsg() }}</p> }
-        </div>
-        <div class="mt-6 flex items-center gap-3">
-          @for (social of socials; track social.name) {
-          <a target="_blank" [href]="social.link" [attr.aria-label]="social.name"
-            class="flex items-center justify-center w-8 h-8 rounded-[10px]  text-primary ">
-            @switch (social.icon) {
-            @case ('instagram') {<img loading="lazy" decoding="async" src="/assets/images/footer/instagram.svg"
-              [alt]="social.name" /> }
-            @case ('linkedin') { <img loading="lazy" decoding="async" src="/assets/images/footer/linkedin.svg"
-              [alt]="social.name" /> }
-            @case ('facebook') { <img loading="lazy" decoding="async" src="/assets/images/footer/facebook.svg"
-              [alt]="social.name" /> }
-            @case ('youtube') { <img loading="lazy" decoding="async" src="/assets/images/footer/youtube.svg"
-              [alt]="social.name" /> }
-            @case ('x') { <img loading="lazy" decoding="async" src="/assets/images/footer/x.svg" [alt]="social.name" />
-            }
-            @case ('reddit') { <img loading="lazy" decoding="async" src="/assets/images/footer/reddit.svg"
-              [alt]="social.name" /> }
-            @case ('threads') { <img loading="lazy" decoding="async" src="/assets/images/footer/threads.svg"
-              [alt]="social.name" /> }
-            }
+  <!-- Campus line-art backdrop, anchored to the bottom edge. -->
+  <!-- <img src="/assets/images/bg/footer-bg.png" alt="" aria-hidden="true"
+    class="pointer-events-none absolute inset-x-0 bottom-0 w-full object-cover object-bottom select-none" /> -->
+
+  <div
+    class="relative mx-auto grid max-w-[1600px] gap-10 px-5 py-14 sm:grid-cols-2 sm:px-8 lg:grid-cols-3 lg:px-10 xl:grid-cols-[1.4fr_1fr_1fr_1fr_1fr_1fr]">
+
+    <!-- Brand + contact details -->
+    <div>
+      <img src="/assets/logo/footer-logo.svg" alt="Charotar Education Society" width="260" height="66"
+        class="h-14 w-auto" />
+
+      <p class="mt-5 max-w-[280px] text-[14px] leading-relaxed text-muted">
+        Empowering generations through quality education, strong values, and holistic development.
+      </p>
+
+      <ul class="mt-6 flex list-none items-center gap-3">
+        @for (social of socials; track social.label) {
+        <li>
+          <a [href]="social.href" target="_blank" rel="noopener noreferrer" [attr.aria-label]="social.label"
+            class="flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 text-primary no-underline transition-colors hover:border-primary hover:bg-primary hover:text-white">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path [attr.d]="social.path" />
+            </svg>
+          </a>
+        </li>
+        }
+      </ul>
+
+      <ul class="mt-7 list-none space-y-4 border-t border-primary/10 pt-6">
+        <li class="flex items-start gap-3">
+          <svg class="mt-0.5 shrink-0 text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          <span class="text-[14px] leading-relaxed text-primary">{{ address }}</span>
+        </li>
+
+        <li class="flex items-start gap-3">
+          <svg class="mt-0.5 shrink-0 text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path
+              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" />
+          </svg>
+          <a [href]="phoneHref" class="text-[14px] text-primary no-underline transition-colors hover:text-accent">{{
+            phone }}</a>
+        </li>
+
+        <li class="flex items-start gap-3">
+          <svg class="mt-0.5 shrink-0 text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="m22 7-10 6L2 7" />
+          </svg>
+          <a [href]="'mailto:' + email"
+            class="text-[14px] break-all text-primary no-underline transition-colors hover:text-accent">{{ email }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Link columns -->
+    @for (column of columns; track column.title) {
+    <nav [attr.aria-label]="column.title">
+      <h2 class="text-[15px] font-bold tracking-wide text-primary uppercase">{{ column.title }}</h2>
+      <span class="mt-2.5 block h-[3px] w-9 rounded-full bg-accent" aria-hidden="true"></span>
+
+      <ul class="mt-5 list-none space-y-3">
+        @for (link of column.links; track link.label) {
+        <li>
+          @if (link.route) {
+          <a [routerLink]="link.route"
+            class="inline-flex items-start gap-2 text-[14px] text-primary no-underline transition-colors hover:text-accent">
+            <svg class="mt-1 shrink-0 text-accent" width="13" height="13" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m9 6 6 6-6 6" />
+            </svg>
+            {{ link.label }}
+          </a>
+          } @else {
+          <a [href]="link.href" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-start gap-2 text-[14px] text-primary no-underline transition-colors hover:text-accent">
+            <svg class="mt-1 shrink-0 text-accent" width="13" height="13" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m9 6 6 6-6 6" />
+            </svg>
+            {{ link.label }}
           </a>
           }
-        </div>
-      </div>
-
-      <!-- Newsletter -->
-      <div
-        class="lg:hidden lg:pl-12 rounded-[16px] border border-primary/10 bg-white p-6 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0">
-        <div class="flex flex-col lg:flex-row lg:items-start gap-4">
-          <span
-            class="flex items-center justify-center w-12 h-12 rounded-[14px] lg:rounded-full bg-main/10 text-main shrink-0">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-              stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="5" width="18" height="14" rx="2" />
-              <path d="m3 7 9 6 9-6" />
-            </svg>
-          </span>
-          <div>
-            <h3 class="text-primary text-[20px] font-bold leading-tight">Stay updated with ZarklyX</h3>
-            <p class="mt-1 text-[14px] text-secondary">Get the latest updates, tips &amp; insights straight to your
-              inbox.</p>
-          </div>
-        </div>
-        <form (ngSubmit)="subscribe()" class="mt-5 flex flex-col sm:flex-row gap-3">
-          <input type="email" name="email" required [ngModel]="email()" (ngModelChange)="email.set($event)"
-            [disabled]="submitting()" placeholder="Enter your email address"
-            class="flex-1 w-full h-[48px] appearance-none [-webkit-appearance:none] rounded-[8px] border border-[#D0D5DD] bg-white px-[14px] py-4 text-[14px] text-[#0E0E0E] outline-none focus:border-main transition-colors duration-200 disabled:opacity-60" />
-          <button type="submit" [disabled]="submitting()"
-            class="inline-flex items-center justify-center gap-2 h-[48px] px-6 rounded-[8px] bg-main text-white text-[15px] font-medium hover:bg-primary transition-colors disabled:opacity-70">
-            {{ submitting() ? 'Subscribing...' : 'Subscribe' }}
-            @if (!submitting()) { <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="m22 2-7 20-4-9-9-4Z" />
-              <path d="M22 2 11 13" />
-            </svg> }
-          </button>
-        </form>
-        @if (errorMsg()) { <p class="mt-2 text-[13px] text-red-500">{{ errorMsg() }}</p> }
-        <p class="mt-3 flex items-center gap-2 text-[13px] text-secondary">
-          <svg class="text-main shrink-0" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
-            <path d="m9 12 2 2 4-4" />
-          </svg>
-          We respect your privacy. Unsubscribe anytime.
-        </p>
-      </div>
-      <div class="hidden w-full lg:flex justify-end items-center gap-x-6 gap-y-4">
-        <img loading="lazy" decoding="async" src="/assets/images/certificate/cloudfare.png" alt="Cloudflare"
-          class="lg:w-[18%] xl:w-[16%] object-contain" />
-        <img loading="lazy" decoding="async" src="/assets/images/certificate/iaf.png" alt="IAF Certified"
-          class="lg:w-[18%] xl:w-[16%] object-contain" />
-        <img loading="lazy" decoding="async" src="/assets/images/certificate/iso.png" alt="ISO Certified"
-          class="lg:w-[18%] xl:w-[16%] object-contain" />
-        <img loading="lazy" decoding="async" src="/assets/images/certificate/ssl.png" alt="SSL Secured"
-          class="lg:w-[18%] xl:w-[16%] object-contain" />
-      </div>
-    </div>
-
-    <!-- ── Desktop nav grid ── -->
-    <nav class="hidden lg:grid lg:grid-cols-6 lg:gap-x-8 py-12">
-      @for (section of sections(); track section.title) {
-      <div class="flex flex-col">
-        <p class="text-[16px] font-bold text-primary mb-4">{{ section.title }}</p>
-        <ul class="flex flex-col gap-3">
-          @for (item of section.items; track item) {
-          <li>
-            @if (getRoute(section.title, item)) {
-            <a [routerLink]="getRoute(section.title, item)"
-              class="text-[14px] text-secondary no-underline hover:text-main transition-colors">{{ item }}</a>
-            } @else {
-            <a href="#" class="text-[14px] text-secondary no-underline hover:text-main transition-colors">{{ item }}</a>
-            }
-          </li>
-          }
-        </ul>
-      </div>
-      }
-    </nav>
-
-    <!-- ── Mobile accordion nav ── -->
-    <nav class="lg:hidden py-8">
-      @for (section of sections(); track section.title; let i = $index; let last = $last) {
-      <div [class.border-b]="!last" class="border-primary/10">
-        <button type="button" class="w-full flex items-center gap-3.5 py-3.5 text-left" (click)="toggle(i)">
-
-          <span class="flex-1 text-[16px] font-bold text-primary">{{ section.title }}</span>
-          <svg class="text-secondary transition-transform duration-200" [class.rotate-180]="section.open" width="18"
-            height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-            <path d="m6 9 6 6 6-6" />
-          </svg>
-        </button>
-        @if (section.open) {
-        <ul class="flex flex-col gap-2.5 pb-4 ">
-          @for (item of section.items; track item) {
-          <li>
-            @if (getRoute(section.title, item)) {
-            <a [routerLink]="getRoute(section.title, item)"
-              class="text-[14px] text-secondary no-underline hover:text-main transition-colors">{{ item }}</a>
-            } @else {
-            <a href="#" class="text-[14px] text-secondary no-underline hover:text-main transition-colors">{{ item }}</a>
-            }
-          </li>
-          }
-        </ul>
+        </li>
         }
-      </div>
-      }
+      </ul>
     </nav>
+    }
 
-    <!-- ── Certified & Trusted (mobile) ── -->
-    <div class="lg:hidden rounded-[16px] bg-main/[0.06] px-6 py-6">
-      <div class="flex items-center gap-4">
-        <span class="flex items-center justify-center w-12 h-12 rounded-[12px] bg-main/10 text-main shrink-0">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
-            <path d="m9 12 2 2 4-4" />
-          </svg>
-        </span>
-        <div>
-          <h3 class="text-primary text-[16px] font-semibold leading-tight">Certified &amp; Trusted</h3>
-          <p class="mt-1 text-[13px] text-secondary">Built with security, reliability, and compliance.</p>
-        </div>
-      </div>
-      <div class="mt-5 flex items-center gap-5">
-        <img loading="lazy" decoding="async" src="/assets/images/certificate/iaf.png" alt="IAF Certified"
-          class="h-14 w-auto object-contain" />
-        <img loading="lazy" decoding="async" src="/assets/images/certificate/iso.png" alt="ISO Certified"
-          class="h-14 w-auto object-contain" />
-        <img loading="lazy" decoding="async" src="/assets/images/certificate/cloudfare.png" alt="Cloudflare"
-          class="h-14 w-auto object-contain" />
-        <img loading="lazy" decoding="async" src="/assets/images/certificate/ssl.png" alt="SSL Secured"
-          class="h-14 w-auto object-contain" />
-      </div>
-    </div>
+  </div>
 
-    <!-- ── Security & compliance (desktop) ── -->
-    <!-- <div class="hidden lg:flex rounded-[16px] bg-main/[0.06] px-6 md:px-8 py-6 flex-col lg:flex-row lg:items-center gap-6">
-      <div class="flex items-center gap-4 flex-1">
-        <span class="flex items-center justify-center w-12 h-12 rounded-[12px] bg-main/10 text-main shrink-0">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
-        </span>
-        <div>
-          <h3 class="text-primary text-[16px] md:text-[18px] font-semibold leading-tight">Enterprise-grade security &amp; compliance</h3>
-          <p class="mt-1 text-[13px] text-secondary">Your data is protected with the highest standards.</p>
-        </div>
-      </div>
-      <div class="flex flex-wrap items-center gap-x-8 gap-y-4">
-        <img loading="lazy" decoding="async" src="/assets/images/certificate/cloudfare.png" alt="Cloudflare" class="h-12 w-auto object-contain" />
-        <img loading="lazy" decoding="async" src="/assets/images/certificate/iaf.png" alt="IAF Certified" class="h-12 w-auto object-contain" />
-        <img loading="lazy" decoding="async" src="/assets/images/certificate/iso.png" alt="ISO Certified" class="h-12 w-auto object-contain" />
-        <img loading="lazy" decoding="async" src="/assets/images/certificate/ssl.png" alt="SSL Secured" class="h-12 w-auto object-contain" />
-      </div>
-    </div> -->
-
-    <!-- ── Bottom bar ── -->
-    <div
-      class="mt-6 pt-6 border-t border-primary/10 flex flex-col-reverse lg:flex-row lg:items-center lg:justify-between gap-4">
-      <p class="text-[13px] text-secondary shrink-0">© {{ currentYear }} ZarklyX Private Limited. All rights reserved.
+  <!-- Bottom bar -->
+  <div class="relative bg-primary">
+    <div class="mx-auto max-w-[1600px] px-5 py-5 text-center sm:px-8 lg:px-10">
+      <p class="text-[14px] text-white/85">
+        &copy; {{ currentYear }} All Rights Reserved by Charotar Education Society. Developed by
+        <a href="https://keryar.com/" target="_blank" rel="noopener noreferrer"
+          class="font-semibold text-accent no-underline hover:underline">Keryar</a>.
       </p>
-      <div class="flex items-center gap-4">
-        <ul class="flex flex-wrap items-center gap-x-4 gap-y-2 text-[13px] lg:text-[10px] xl:text-[13px]">
-          @for (link of legalLinks; track link.route; let last = $last) {
-          <li class="flex items-center gap-4">
-            <a [routerLink]="link.route"
-              class="text-secondary no-underline hover:text-main transition-colors whitespace-nowrap">{{ link.label
-              }}</a>
-            @if (!last) { <span class="text-primary/20">|</span> }
-          </li>
-          }
-        </ul>
-      </div>
     </div>
   </div>
+
 </footer>

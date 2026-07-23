@@ -1,0 +1,189 @@
+<!-- ─── Hero ─── -->
+<section class="relative overflow-hidden bg-[#2A1035]">
+  <!-- The pandal photograph carries this page, so it stays near full strength on
+       the right; the gradient only darkens the left enough to hold the type. -->
+  <div class="absolute inset-0" aria-hidden="true">
+    <img [src]="banner" alt="" class="h-full w-full object-cover object-center" />
+    <div class="absolute inset-0 bg-gradient-to-r from-[#2A1035] via-[#2A1035]/85 via-35% to-[#2A1035]/10"></div>
+    <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#2A1035]/80 to-transparent"></div>
+  </div>
+
+  <div class="relative mx-auto flex min-h-[420px] max-w-[1600px] items-center px-5 pt-12 pb-24 sm:px-8 lg:min-h-[520px] lg:px-10 lg:pb-28">
+    <div class="max-w-[520px]">
+      <h1 class="text-[44px] leading-[0.95] font-bold text-white sm:text-[60px] lg:text-[68px]">
+        Navratri<br />
+        <span class="font-serif text-[46px] font-normal text-secondary italic sm:text-[60px] lg:text-[68px]">Celebration</span>
+      </h1>
+
+      <p class="mt-5 max-w-[380px] text-[15px] leading-relaxed text-white/85 sm:text-[16px]">
+        A Celebration of Faith, Culture, Unity and Divine Energy
+      </p>
+
+      <!-- Gold diamond rule -->
+      <div class="mt-7 flex max-w-[300px] items-center gap-2 text-secondary" aria-hidden="true">
+        <span class="h-px flex-1 bg-gradient-to-r from-transparent to-secondary/70"></span>
+        <span class="h-1.5 w-1.5 rotate-45 bg-secondary/80"></span>
+        <span class="h-2 w-2 rotate-45 bg-secondary"></span>
+        <span class="h-1.5 w-1.5 rotate-45 bg-secondary/80"></span>
+        <span class="h-px flex-1 bg-gradient-to-l from-transparent to-secondary/70"></span>
+      </div>
+
+      <div class="mt-7 flex items-center gap-3.5">
+        <svg class="shrink-0 text-secondary" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" />
+        </svg>
+        <div>
+          <p class="text-[17px] font-semibold text-white sm:text-[19px]">22nd Sep – 2nd Oct, 2026</p>
+          <p class="mt-0.5 text-[13px] text-white/70">CES Campus, Anand</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seal -->
+    <span class="absolute top-1/2 right-10 hidden h-40 w-40 -translate-y-1/2 items-center justify-center rounded-full border border-secondary/40 p-2 text-center lg:flex xl:right-16" aria-hidden="true">
+      <span class="flex h-full w-full items-center justify-center rounded-full border-2 border-dashed border-secondary/60 bg-[#2A1035]/35 backdrop-blur-[2px]">
+        <span class="px-4 text-[15px] leading-snug font-semibold text-secondary">શિક્ષણથી<br />સંસ્કાર સુધી...</span>
+      </span>
+    </span>
+  </div>
+</section>
+
+<section class="mx-auto max-w-[1600px] px-4 pb-8 sm:px-6 lg:px-10">
+
+  <!-- Quick links — lifted over the hero's bottom edge, as in the reference. -->
+  <ul class="relative -mx-4 -mt-14 grid list-none gap-3 rounded-t-[32px] bg-white px-4 pt-8 sm:-mx-6 sm:grid-cols-3 sm:px-6 lg:-mx-10 lg:-mt-16 lg:grid-cols-6 lg:px-10 lg:pt-9">
+    @for (link of quickLinks; track link.label) {
+      <li>
+        <a href="#" class="flex h-full flex-col items-center gap-2.5 rounded-xl border border-gray-200 bg-white px-3 py-4 text-center no-underline transition-colors hover:border-primary">
+          <svg class="text-primary" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            @for (d of link.path; track d) { <path [attr.d]="d" /> }
+          </svg>
+          <span class="text-[11.5px] leading-snug font-semibold text-primary">{{ link.label }}</span>
+        </a>
+      </li>
+    }
+  </ul>
+
+  <!-- Intro + video -->
+  <div class="mt-6 grid gap-6 rounded-xl border border-gray-200 bg-white p-6 lg:grid-cols-2 lg:items-center lg:p-8">
+    <div>
+      <p class="text-[11px] font-bold tracking-wide text-secondary-dark uppercase">Navratri at CES</p>
+      <h2 class="mt-2 text-[22px] leading-snug font-bold text-primary sm:text-[26px]">
+        Tradition. Devotion.<br />Togetherness.
+      </h2>
+
+      <p class="mt-4 text-[13px] leading-relaxed text-muted">
+        <span class="font-semibold text-primary">Navratri</span> at Charotar Education Society is not just a
+        festival; it is a beautiful blend of devotion, discipline and cultural heritage that brings our entire
+        CES family together.
+      </p>
+      <p class="mt-3 text-[13px] leading-relaxed text-muted">
+        Every year, thousands of devotees, students, alumni and well-wishers participate in this nine-day
+        celebration with great enthusiasm, grace and unity.
+      </p>
+
+      <a routerLink="/navratri/2023"
+        class="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-[13px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
+        Know More About Navratri
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+      </a>
+    </div>
+
+    <div class="relative overflow-hidden rounded-xl">
+      <img [src]="banner" alt="Navratri pandal at CES campus" loading="lazy"
+        class="aspect-video w-full bg-primary-light object-cover" />
+      <button type="button" aria-label="Play the Navratri video"
+        class="absolute inset-0 m-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/90 text-primary transition-transform hover:scale-105">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <p class="mt-10 text-center text-[11.5px] font-bold tracking-[0.15em] text-muted uppercase">Navratri at a Glance</p>
+  <ul class="mt-4 grid list-none grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+    @for (stat of stats; track stat.label) {
+      <li class="rounded-xl border border-gray-200 bg-white px-3 py-5 text-center">
+        <svg class="mx-auto text-secondary-dark" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          @for (d of stat.path; track d) { <path [attr.d]="d" /> }
+        </svg>
+        <p class="mt-2.5 text-[17px] leading-tight font-bold text-primary">{{ stat.value }}</p>
+        <p class="mt-1 text-[11px] leading-snug text-muted">{{ stat.label }}</p>
+      </li>
+    }
+  </ul>
+
+  <!-- Glimpses -->
+  <div class="mt-10 rounded-xl border border-gray-200 bg-[#FDFAF5] p-6">
+    <p class="text-center text-[11.5px] font-bold tracking-[0.15em] text-muted uppercase">Glimpses of Navratri</p>
+
+    <ul class="mt-4 flex list-none flex-wrap justify-center gap-2">
+      @for (f of filters; track f) {
+        <li>
+          <button type="button" (click)="select(f)"
+            class="rounded-md px-4 py-2 text-[12px] font-semibold transition-colors"
+            [class]="filter() === f ? 'bg-primary text-white' : 'bg-white text-primary hover:bg-gray-100'">
+            {{ f }}
+          </button>
+        </li>
+      }
+    </ul>
+
+    <ul class="animate-dropdown mt-5 grid list-none grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      @for (g of visible(); track g.src) {
+        <li class="overflow-hidden rounded-lg">
+          <img [src]="g.src" [alt]="'Navratri ' + g.tag" loading="lazy"
+            class="aspect-[4/3] w-full bg-primary-light object-cover transition-transform duration-300 hover:scale-105" />
+        </li>
+      } @empty {
+        <li class="col-span-full py-8 text-center text-[13px] text-muted">No photos in this category yet.</li>
+      }
+    </ul>
+
+    <div class="mt-6 text-center">
+      <a routerLink="/glory/gallery"
+        class="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-[13px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
+        View Full Gallery
+      </a>
+    </div>
+  </div>
+
+  <!-- Highlights -->
+  <p class="mt-10 text-center text-[11.5px] font-bold tracking-[0.15em] text-muted uppercase">Navratri Highlights</p>
+  <ul class="mt-4 grid list-none gap-4 sm:grid-cols-2 lg:grid-cols-6">
+    @for (h of highlights; track h.title) {
+      <li class="rounded-xl border border-gray-200 bg-white px-4 py-5 text-center">
+        <svg class="mx-auto text-secondary-dark" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          @for (d of h.path; track d) { <path [attr.d]="d" /> }
+        </svg>
+        <h3 class="mt-3 text-[13px] font-bold text-primary">{{ h.title }}</h3>
+        <p class="mt-1.5 text-[11px] leading-relaxed text-muted">{{ h.body }}</p>
+      </li>
+    }
+  </ul>
+
+  <!-- CTA -->
+  <div class="mt-8 flex flex-wrap items-center justify-between gap-5 rounded-xl bg-[#2A1035] p-6">
+    <div class="flex items-center gap-4">
+      <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-secondary/20 text-secondary" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2s4 5 4 8a4 4 0 0 1-8 0c0-3 4-8 4-8z" /><path d="M8 21h8" />
+        </svg>
+      </span>
+      <div>
+        <p class="text-[16px] font-bold text-white">Be a Part of the Divine Celebration</p>
+        <p class="mt-1 text-[12.5px] text-white/70">
+          Join us with your family and friends. Let's seek the blessings of Maa Amba and celebrate unity,
+          culture and devotion together.
+        </p>
+      </div>
+    </div>
+
+    <button type="button"
+      class="inline-flex items-center gap-2 rounded-md bg-secondary px-6 py-3 text-[13px] font-semibold text-primary transition-colors hover:bg-secondary-dark">
+      View Schedule 2026
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+    </button>
+  </div>
+
+</section>

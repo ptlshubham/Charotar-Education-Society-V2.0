@@ -1,0 +1,178 @@
+<!-- ─── Hero ─── -->
+<section class="relative overflow-hidden bg-primary">
+  <div class="pointer-events-none absolute inset-y-0 right-0 hidden w-[52%] lg:block" aria-hidden="true">
+    <div class="h-full w-full bg-primary-light/40"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/70 to-primary/30"></div>
+    <span class="absolute top-6 left-10 h-[76%] w-1.5 -rotate-[18deg] rounded-full bg-white/80"></span>
+
+    <!-- Speech bubbles -->
+    <span class="absolute top-16 right-40 flex h-24 w-40 items-center justify-center rounded-2xl bg-primary-light text-[26px] font-bold text-white shadow-xl">FAQ's</span>
+    <span class="absolute top-40 right-24 h-12 w-20 rounded-2xl bg-secondary shadow-lg"></span>
+    <span class="absolute top-44 right-52 flex h-12 w-20 items-center justify-center rounded-2xl bg-white shadow-lg">
+      <span class="flex gap-1.5" aria-hidden="true">
+        <span class="h-1.5 w-1.5 rounded-full bg-primary/50"></span>
+        <span class="h-1.5 w-1.5 rounded-full bg-primary/50"></span>
+        <span class="h-1.5 w-1.5 rounded-full bg-primary/50"></span>
+      </span>
+    </span>
+  </div>
+
+  <div class="relative mx-auto max-w-[1600px] px-5 py-11 sm:px-8 lg:px-10 lg:py-14">
+    <h1 class="text-[30px] leading-tight font-bold text-white sm:text-[38px]">
+      Frequently Asked<br /><span class="text-secondary">Questions</span>
+    </h1>
+    <span class="mt-3 block h-1 w-14 rounded-full bg-secondary" aria-hidden="true"></span>
+
+    <p class="mt-4 max-w-[380px] text-[13.5px] leading-relaxed text-white/80">
+      Find quick answers to the most common questions about Charotar Education Society.
+    </p>
+  </div>
+</section>
+
+<section class="mx-auto max-w-[1600px] px-4 py-8 sm:px-6 lg:px-10">
+
+  <!-- Search bar -->
+  <div class="flex flex-wrap items-center justify-between gap-5 rounded-xl bg-[#EEF3FB] p-6">
+    <div class="flex items-center gap-4">
+      <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary text-white" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" /><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3" /><path d="M12 17h.01" />
+        </svg>
+      </span>
+      <div>
+        <h2 class="text-[16px] font-bold text-primary">Have a Question?</h2>
+        <p class="mt-1 text-[12.5px] text-muted">Search our FAQs or browse by category to find the information you need.</p>
+      </div>
+    </div>
+
+    <div class="flex h-11 min-w-[300px] flex-1 items-stretch sm:max-w-[420px]">
+      <label for="faq-search" class="sr-only">Search FAQs</label>
+      <input id="faq-search" type="search" [(ngModel)]="search" (keyup.enter)="applySearch()" placeholder="Search for answers..."
+        class="min-w-0 flex-1 rounded-l-md border border-r-0 border-gray-300 bg-white px-3.5 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary" />
+      <button type="button" (click)="applySearch()"
+        class="shrink-0 rounded-r-md bg-primary px-6 text-[13px] font-semibold text-white transition-colors hover:bg-primary-dark">
+        Search
+      </button>
+    </div>
+  </div>
+
+  <div class="mt-6 grid gap-5 lg:grid-cols-[300px_1fr]">
+
+    <!-- Category rail -->
+    <aside class="space-y-5">
+      <nav class="rounded-xl border border-gray-200 bg-white p-5" aria-label="FAQ categories">
+        <h2 class="text-[15px] font-bold text-primary">Categories</h2>
+        <span class="mt-2 block h-1 w-12 rounded-full bg-secondary" aria-hidden="true"></span>
+
+        <ul class="mt-4 list-none space-y-1">
+          @for (cat of visible(); track cat.label; let i = $index) {
+            <li>
+              <button type="button" (click)="toggleCategory(i)"
+                class="flex w-full items-center justify-between gap-3 rounded-md px-3 py-2.5 text-left text-[12.5px] transition-colors"
+                [class]="openCategory() === i ? 'bg-[#EEF3FB] font-semibold text-primary' : 'text-muted hover:bg-[#F7F9FC]'">
+                <span class="inline-flex items-center gap-2.5">
+                  <svg class="shrink-0 text-primary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    @for (d of cat.path; track d) { <path [attr.d]="d" /> }
+                  </svg>
+                  {{ cat.label }}
+                </span>
+                <span class="rounded-full bg-white px-2 py-0.5 text-[11px] font-semibold text-muted">{{ cat.questions.length }}</span>
+              </button>
+            </li>
+          }
+        </ul>
+      </nav>
+
+      <div class="rounded-xl bg-[#EEF3FB] p-6 text-center">
+        <span class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 14v-2a9 9 0 0 1 18 0v2" /><path d="M21 16a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2zM3 16a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 2z" />
+          </svg>
+        </span>
+        <h2 class="mt-3 text-[15px] font-bold text-primary">Still need help?</h2>
+        <p class="mt-2 text-[12.5px] leading-relaxed text-muted">
+          Can't find what you're looking for? Our team is here to assist you.
+        </p>
+        <a routerLink="/contact"
+          class="mt-4 inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-[12.5px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
+          Contact Us
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Accordion -->
+    <div class="rounded-xl border border-gray-200 bg-white p-5 lg:p-6">
+      @for (cat of visible(); track cat.label; let i = $index) {
+        <div class="border-b border-gray-100 last:border-b-0">
+          <button type="button" (click)="toggleCategory(i)" [attr.aria-expanded]="openCategory() === i"
+            class="flex w-full items-center justify-between gap-3 py-4 text-left">
+            <span class="inline-flex items-center gap-3">
+              <svg class="shrink-0 text-primary" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                @for (d of cat.path; track d) { <path [attr.d]="d" /> }
+              </svg>
+              <span class="text-[15px] font-bold text-primary">{{ cat.label }}</span>
+            </span>
+
+            <span class="inline-flex items-center gap-3">
+              @if (openCategory() !== i) {
+                <span class="rounded-full bg-[#F1F5FB] px-2.5 py-0.5 text-[11px] font-semibold text-muted">{{ cat.questions.length }}</span>
+              }
+              <svg class="shrink-0 text-muted transition-transform duration-200" [class.rotate-180]="openCategory() === i"
+                width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </span>
+          </button>
+
+          @if (openCategory() === i) {
+            <ul class="animate-dropdown list-none space-y-2 pb-4">
+              @for (q of cat.questions; track q; let qi = $index) {
+                <li class="rounded-lg border border-gray-200">
+                  <button type="button" (click)="toggleQuestion(qi)" [attr.aria-expanded]="openQuestion() === qi"
+                    class="flex w-full items-center justify-between gap-3 px-4 py-3 text-left">
+                    <span class="text-[13px] text-primary">{{ q }}</span>
+                    <svg class="shrink-0 text-muted transition-transform duration-200" [class.rotate-45]="openQuestion() === qi"
+                      width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
+                  </button>
+
+                  @if (openQuestion() === qi) {
+                    <p class="animate-dropdown border-t border-gray-100 px-4 py-3 text-[12.5px] leading-relaxed text-muted">
+                      The answer to this question is being prepared by the CES team and will appear here shortly.
+                    </p>
+                  }
+                </li>
+              }
+            </ul>
+          }
+        </div>
+      } @empty {
+        <p class="py-10 text-center text-[13px] text-muted">No questions match your search.</p>
+      }
+    </div>
+  </div>
+
+  <!-- Foot CTA -->
+  <div class="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-xl bg-[#EEF3FB] p-6">
+    <div class="flex items-center gap-4">
+      <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-white" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z" />
+        </svg>
+      </span>
+      <div>
+        <p class="text-[15px] font-bold text-primary">Still have questions?</p>
+        <p class="mt-0.5 text-[12.5px] text-muted">We're here to help! Reach out to us for any further assistance.</p>
+      </div>
+    </div>
+
+    <a routerLink="/contact"
+      class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-[13px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
+      Contact Us
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+    </a>
+  </div>
+
+</section>

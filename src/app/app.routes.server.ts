@@ -19,16 +19,16 @@ import { RenderMode, ServerRoute } from '@angular/ssr';
  */
 export const serverRoutes: ServerRoute[] = [
   {
-    // Blog list + detail are fetched client-side at runtime (by slug). Prerender
-    // can't cover them: it only bakes slugs that exist at build time, so a post
-    // published afterwards would have no HTML file and 404 on static hosting.
-    // Trade-off: articles get no crawler-visible meta  switch to
-    // RenderMode.Server once the site runs under Node to fix social previews.
-    path: 'blogs',
+    // Year-based detail pages. Prerender can only bake years that exist at build
+    // time, so a newly published year would 404 on static hosting.
+    path: 'navratri/:year',
     renderMode: RenderMode.Client,
   },
   {
-    path: 'blogs/:id',
+    // Same reasoning: posts published after a deploy would have no prerendered
+    // HTML file. Trade-off: articles get no crawler-visible meta — switch to
+    // RenderMode.Server once the site runs under Node to fix social previews.
+    path: 'home/blog/:slug',
     renderMode: RenderMode.Client,
   },
   {

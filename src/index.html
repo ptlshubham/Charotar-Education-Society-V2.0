@@ -9,6 +9,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <base href="/">
 
+  <!-- ─── Legacy hash-URL redirect ───
+       The old site ran Angular with `useHash: true`, so every inbound link,
+       bookmark and search result looks like https://cesociety.in/#/about.
+       This CANNOT be done in .htaccess: the browser never sends the fragment to
+       the server, so Apache sees a bare request for "/" and has nothing to match
+       on. It has to run here, client-side, before the app boots.
+
+       Runs first and uses location.replace() so the visitor lands on the real
+       prerendered page (correct HTML + meta) and the old URL leaves no history
+       entry to bounce back to. -->
+  <script>
+    (function () {
+      var hash = window.location.hash;
+      if (hash.indexOf('#/') !== 0) return;
+
+      var target = hash.slice(1);
+      var query = '';
+      var q = target.indexOf('?');
+      if (q !== -1) { query = target.slice(q); target = target.slice(0, q); }
+      target = target.replace(/\/+$/, '') || '/';
+
+      // Old paths whose page moved, merged, or was renamed. Anything not listed
+      // keeps the same path on the new site.
+      var ALIASES = {
+        '/home': '/',
+        '/bearers': '/management',        // now a "Former Office Bearers" section there
+        '/photo': '/glory/gallery',
+        '/glory/old': '/glory/gallery',
+        '/home/more-details': '/about',
+        '/home/history-vj': '/about'
+      };
+      var PREFIXES = [
+        ['/navratri-details/', '/navratri/'],
+        ['/home/blog-details/', '/home/blog/']
+      ];
+
+      if (ALIASES[target]) {
+        target = ALIASES[target];
+      } else if (target.indexOf('/more/search/') === 0) {
+        target = '/';                     // no site-wide search page on the new site
+      } else {
+        for (var i = 0; i < PREFIXES.length; i++) {
+          if (target.indexOf(PREFIXES[i][0]) === 0) {
+            target = PREFIXES[i][1] + target.slice(PREFIXES[i][0].length);
+            break;
+          }
+        }
+      }
+
+      window.location.replace(target + query);
+    })();
+  </script>
+
   <!-- ─── Connection hints ───
        Kept above the font/analytics requests so DNS + TLS start while the rest
        of the head is still parsing. -->
@@ -22,55 +75,64 @@
        These apply only until that data loads, or if the SEO API is unreachable.
        To change a page's meta, edit it in super admin — not here. -->
   <title>
-    ZarklyX - All-in-One Agency Operations Platform | CRM, Social Media, HR & Client Management
+    Charotar Education Society | CES | Cesociety
   </title>
   <meta name="description"
-    content="ZarklyX is the all-in-one operations platform for marketing and social media agencies. Manage clients, schedule content across every platform, and run your CRM, HR, payroll, and invoicing from one login  with modular, per-client pricing built for agencies done juggling five tools." />
+    content="Charotar Education Society is a charitable education institute in Anand, Gujarat, India, providing quality education to children from diverse backgrounds since 1916. Our mission is to offer affordable, high-quality education focusing on academic, social, emotional, and spiritual development." />
   <meta name="keywords"
-    content="ZarklyX, agency management software, agency operations platform, agency CRM, client management software, multi-client dashboard, agency back office software, agency HR software, agency payroll software, agency invoicing software, white label client portal, marketing agency software, social media management platform, social media scheduler, social media analytics, content publishing, influencer marketing, social media automation, Facebook management, Instagram management, LinkedIn management, Twitter management, YouTube management, team collaboration, brand monitoring, digital workflow, marketing productivity, multi-channel marketing, audience analysis, social media reporting, content strategy" />
-  <meta name="author" content="ZarklyX">
+    content="Charotar Education Society, CES, Cesociety, education, Anand, Gujarat, India, charitable school, quality education, affordable education, holistic development, academic growth, social development, emotional development, spiritual growth, children education, community service, Bachelor of Arts, Bachelor of Commerce, Bachelor of Science, Bachelor of Social Work, Bachelor of Computer Application, Bachelor of Physical Education, Master of Commerce, Master of Social Work, Master of Education, Master of Philosophy, Medical Laboratory Technology, Pre School, Standard 1 to 5, Standard 6 to 8, Standard 9 to 10, Standard 11 to 12" />
+  <meta name="author" content="Charotar Education Society">
   <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#ffffff">
-  <link rel="canonical" href="https://zarklyx.com/">
+  <meta name="theme-color" content="#203154">
+  <link rel="canonical" href="https://cesociety.in/">
 
   <!-- ─── Open Graph / Facebook ─── -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://zarklyx.com/">
-  <meta property="og:site_name" content="ZarklyX">
-  <meta property="og:title"
-    content="ZarklyX - All-in-One Agency Operations Platform | CRM, Social Media, HR & Client Management">
+  <meta property="og:url" content="https://cesociety.in/">
+  <meta property="og:site_name" content="Charotar Education Society">
+  <meta property="og:title" content="Charotar Education Society | CES | Cesociety">
   <meta property="og:description"
-    content="ZarklyX replaces scheduling, storage, CRM, and back-office tools with one platform built for marketing and social media agencies. Manage every client, campaign, and team member from a single login." />
-  <meta property="og:image" content="https://zarklyx.com/og-image.png">
-  <meta property="og:locale" content="en_US">
+    content="A charitable education institute in Anand, Gujarat serving generations since 1916 — schools, colleges and hostels offering affordable, high-quality education and holistic development." />
+  <meta property="og:image" content="https://cesociety.in/android-chrome-512x512.png">
+  <meta property="og:locale" content="en_IN">
 
   <!-- ─── Twitter Card ─── -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@zarklyX">
-  <meta name="twitter:creator" content="@zarklyX">
-  <meta name="twitter:title"
-    content="ZarklyX - All-in-One Agency Operations Platform | CRM, Social Media, HR & Client Management">
+  <meta name="twitter:site" content="@ces100anand">
+  <meta name="twitter:creator" content="@ces100anand">
+  <meta name="twitter:title" content="Charotar Education Society | CES | Cesociety">
   <meta name="twitter:description"
-    content="ZarklyX replaces scheduling, storage, CRM, and back-office tools with one platform built for marketing and social media agencies. Manage every client, campaign, and team member from a single login." />
-  <meta name="twitter:image" content="https://zarklyx.com/og-image.png">
+    content="A charitable education institute in Anand, Gujarat serving generations since 1916 — schools, colleges and hostels offering affordable, high-quality education and holistic development." />
+  <meta name="twitter:image" content="https://cesociety.in/android-chrome-512x512.png">
 
   <!-- ─── Structured data ─── -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "ZarklyX",
-    "applicationCategory": "BusinessApplication",
-    "applicationSubCategory": "Agency Management Software",
-    "operatingSystem": "Web",
-    "url": "https://zarklyx.com/",
-    "image": "https://zarklyx.com/og-image.png",
-    "description": "All-in-one operations platform for marketing and social media agencies: CRM, client management, HR, payroll, invoicing, and multi-platform social media scheduling in one login.",
-    "publisher": {
-      "@type": "Organization",
-      "name": "ZarklyX",
-      "url": "https://zarklyx.com/"
-    }
+    "@type": "EducationalOrganization",
+    "name": "Charotar Education Society",
+    "alternateName": ["CES", "Cesociety"],
+    "foundingDate": "1916",
+    "url": "https://cesociety.in/",
+    "logo": "https://cesociety.in/android-chrome-512x512.png",
+    "image": "https://cesociety.in/android-chrome-512x512.png",
+    "description": "A charitable education institute in Anand, Gujarat, India, providing affordable, high-quality education across schools, colleges and hostels, focusing on academic, social, emotional and spiritual development.",
+    "email": "cesociety@cesociety.in",
+    "telephone": "+91-2692-243083",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "D. N. High School Campus, Station Road",
+      "addressLocality": "Anand",
+      "addressRegion": "Gujarat",
+      "postalCode": "388001",
+      "addressCountry": "IN"
+    },
+    "sameAs": [
+      "https://www.facebook.com/cesociety",
+      "https://twitter.com/ces100anand",
+      "https://www.instagram.com/cesociety_1916/",
+      "https://www.linkedin.com/company/82105326/"
+    ]
   }
   </script>
 
@@ -130,25 +192,25 @@
       }); var f = d.getElementsByTagName(s)[0],
         j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
           'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-PTMRTRGS');
+    })(window, document, 'script', 'dataLayer', 'GTM-K6H9VP2K');
   </script>
   <!-- End Google Tag Manager -->
 
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YZ9SJDH8ML"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XJKC23CCRE"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
 
-    gtag('config', 'G-YZ9SJDH8ML');
+    gtag('config', 'G-XJKC23CCRE');
   </script>
 </head>
 
 <body>
   <!-- Google Tag Manager (noscript) -->
   <noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PTMRTRGS" height="0" width="0"
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K6H9VP2K" height="0" width="0"
       style="display:none;visibility:hidden"></iframe>
   </noscript>
   <!-- End Google Tag Manager (noscript) -->

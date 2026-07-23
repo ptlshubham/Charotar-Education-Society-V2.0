@@ -5,6 +5,7 @@ import {
   ViewChild,
   afterNextRender,
   computed,
+  effect,
   inject,
   PLATFORM_ID,
   signal,
@@ -14,6 +15,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ResourcesService } from '../../core/services/resources.service';
+import { AssistantBridge } from '../../core/services/assistant-bridge.service';
 
 interface ChatMessage {
   role: 'user' | 'assistant';
@@ -26,10 +28,8 @@ interface AssistantReply {
   sources: { url: string; title: string }[];
 }
 
-interface QuickAction {
-  icon: string;
-  title: string;
-  desc: string;
+interface Topic {
+  label: string;
   prompt: string;
 }
 
@@ -59,6 +59,7 @@ export class AiAssistant implements OnDestroy {
   private platformId = inject(PLATFORM_ID);
   private router = inject(Router);
   private resources = inject(ResourcesService);
+  private bridge = inject(AssistantBridge);
 
   @ViewChild('scrollBody') scrollBody?: ElementRef<HTMLElement>;
 
@@ -75,7 +76,7 @@ export class AiAssistant implements OnDestroy {
   readonly greetingVisible = signal(false);
 
   /** Session-scoped so the bubble greets once, not on every page load. */
-  private static readonly GREETED_KEY = 'zarklyx_ai_greeted';
+  private static readonly GREETED_KEY = 'ces_ai_greeted';
   /** Written by the cookie banner once the visitor has answered it. */
   private static readonly CONSENT_KEY = 'cookie_consent';
   /** Beat after the cookie banner clears, so the two don't animate over each other. */
@@ -89,6 +90,16 @@ export class AiAssistant implements OnDestroy {
   private consentPoll?: number;
 
   constructor() {
+    // The inline Sarthi card on the home page hands its question over here.
+    effect(() => {
+      const req = this.bridge.request();
+      if (!req || !isPlatformBrowser(this.platformId)) return;
+      this.dismissGreeting();
+      this.open.set(true);
+      this.minimized.set(false);
+      if (req.prompt) this.ask(req.prompt);
+    });
+
     // afterNextRender keeps this out of SSR entirely — no timers or storage there,
     // and the bubble is a client-side affordance anyway.
     afterNextRender(() => {
@@ -180,39 +191,17 @@ export class AiAssistant implements OnDestroy {
   /** Greeting + shortcuts show until the first message is sent. */
   readonly hasConversation = computed(() => this.messages().length > 0);
 
-  readonly quickActions: QuickAction[] = [
-    {
-      icon: 'info',
-      title: 'About Us',
-      desc: 'Learn about our institution',
-      prompt: 'Tell me about Charotar Education Society.',
-    },
-    {
-      icon: 'calendar',
-      title: 'Admissions',
-      desc: 'Admission process and dates',
-      prompt: 'How does the admission process work?',
-    },
-    {
-      icon: 'plug',
-      title: 'Courses',
-      desc: 'Programmes we offer',
-      prompt: 'Which courses and programmes do you offer?',
-    },
-    {
-      icon: 'tag',
-      title: 'Contact',
-      desc: 'Reach the right team',
-      prompt: 'How do I get in touch with the institution?',
-    },
-  ];
-
-  readonly suggested: readonly string[] = [
-    'What is Charotar Education Society?',
-    'Which courses do you offer?',
-    'How does the admission process work?',
-    'Where is the campus located?',
-    'How can I contact the institution?',
+  /** Shown as tappable chips until the visitor sends their first message. */
+  readonly topics: readonly Topic[] = [
+    { label: 'Admissions', prompt: 'How does the admission process work?' },
+    { label: 'Institutes', prompt: 'Which institutes are part of Charotar Education Society?' },
+    { label: 'Examinations', prompt: 'Tell me about the examination schedule and notifications.' },
+    { label: 'Results', prompt: 'Where can I check my results?' },
+    { label: 'Placements', prompt: 'What placement support do you offer?' },
+    { label: 'Scholarships', prompt: 'Which scholarships are available to students?' },
+    { label: 'Events', prompt: 'What events are coming up at CES?' },
+    { label: 'Fees & Scholarships', prompt: 'What are the fees and scholarship options?' },
+    { label: 'Other Queries', prompt: 'How do I get in touch with the institution?' },
   ];
 
   toggle(): void {
@@ -275,14 +264,14 @@ export class AiAssistant implements OnDestroy {
     this.scrollToBottom();
   }
 
-  /** Quick action cards double as navigation when there's a page for it. */
-  runAction(action: QuickAction): void {
-    if (action.title === 'Contact') {
+  /** Topic chips double as navigation when there's a page for it. */
+  runTopic(topic: Topic): void {
+    if (topic.label === 'Other Queries') {
       this.close();
       this.router.navigate(['/contact']);
       return;
     }
-    this.ask(action.prompt);
+    this.ask(topic.prompt);
   }
 
   private scrollToBottom(): void {

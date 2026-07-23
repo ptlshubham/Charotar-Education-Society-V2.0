@@ -1,0 +1,62 @@
+<section class="mx-auto max-w-[1600px] px-4 py-8 sm:px-6 lg:px-10">
+
+  <!-- Focus-area filters -->
+  <div role="tablist" aria-label="Project focus area"
+    class="-mx-4 flex gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:flex-wrap sm:px-0">
+    @for (filter of filters; track filter.id) {
+      <button type="button" role="tab" [attr.aria-selected]="active() === filter.id" (click)="select(filter.id)"
+        class="flex shrink-0 items-center gap-2 rounded-lg border px-4 py-3 text-[13px] font-semibold whitespace-nowrap transition-colors"
+        [class]="active() === filter.id
+          ? 'border-primary bg-primary text-white'
+          : 'border-gray-200 bg-white text-primary hover:border-primary'">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          @for (d of filter.path; track d) { <path [attr.d]="d" /> }
+        </svg>
+        {{ filter.label }}
+      </button>
+    }
+  </div>
+
+  <!-- Cards -->
+  <ul class="animate-dropdown mt-6 grid list-none gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    @for (project of visible(); track project.title) {
+      <li class="flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white">
+
+        <div class="relative">
+          <img [src]="project.image" [alt]="project.title" loading="lazy"
+            class="aspect-[3/2] w-full bg-primary-light object-cover" />
+          <!-- Badge straddles the image edge, as in the design -->
+          <span class="absolute -bottom-5 left-4 flex h-11 w-11 items-center justify-center rounded-full bg-white text-primary shadow-md ring-1 ring-gray-100" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              @for (d of project.path; track d) { <path [attr.d]="d" /> }
+            </svg>
+          </span>
+        </div>
+
+        <div class="flex flex-1 flex-col p-4 pt-8">
+          <h3 class="text-[15px] font-bold text-primary">{{ project.title }}</h3>
+          <p class="mt-2 flex-1 text-[12.5px] leading-relaxed text-muted">{{ project.desc }}</p>
+
+          <a href="#" class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-primary no-underline hover:text-accent">
+            Read More
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </a>
+        </div>
+
+      </li>
+    } @empty {
+      <li class="col-span-full rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
+        No projects in this focus area yet.
+      </li>
+    }
+  </ul>
+
+  <div class="mt-8 text-center">
+    <button type="button"
+      class="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-[14px] font-semibold text-white transition-colors hover:bg-primary-dark">
+      View All Projects
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+    </button>
+  </div>
+
+</section>

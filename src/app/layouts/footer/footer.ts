@@ -1,141 +1,99 @@
-import {
-  Component,
-  ViewEncapsulation,
-  signal,
-  inject,
-  Inject,
-  PLATFORM_ID,
-  ChangeDetectionStrategy,
-} from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { NewsletterService } from '../../core/services/newsletter.service';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { SOCIAL_LINKS } from '../../shared/social-links';
 
-interface NavSection {
-  title: string;
-  icon: string;
-  items: string[];
-  open: boolean;
+interface FooterLink {
+  label: string;
+  /** Internal route, or an absolute URL for the staff dashboard. */
+  route?: string;
+  href?: string;
 }
 
 @Component({
   selector: 'app-footer',
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [RouterLink],
   templateUrl: './footer.html',
   styleUrl: './footer.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
-  encapsulation: ViewEncapsulation.None,
 })
 export class Footer {
-  currentYear = new Date().getFullYear();
+  readonly currentYear = new Date().getFullYear();
+  readonly socials = SOCIAL_LINKS;
 
-  private readonly newsletter = inject(NewsletterService);
+  readonly email = 'cesociety@cesociety.in';
+  readonly phone = '(02692) - 243083';
+  readonly phoneHref = 'tel:02692243083';
+  readonly address = 'D. N. High School Campus, Station Road, Anand - 388001, Gujarat, India';
 
-  // Newsletter subscribe (shared by the desktop + mobile footer forms)
-  readonly email = signal('');
-  readonly submitting = signal(false);
-  readonly errorMsg = signal('');
+  /** Same host in every environment on the legacy site, so it lives here rather than environment.ts. */
+  private static readonly DASHBOARD_URL = 'https://dashboard.cesociety.in';
 
-  subscribe(): void {
-    const email = this.email().trim();
-    if (!email) {
-      this.errorMsg.set('Please enter your email address.');
-      return;
-    }
-    this.submitting.set(true);
-    this.errorMsg.set('');
-    this.newsletter.subscribe(email, 'footer').subscribe({
-      next: () => {
-        this.submitting.set(false);
-        this.email.set('');
-      },
-      error: (err: any) => {
-        this.submitting.set(false);
-        this.errorMsg.set(err?.error?.message || 'Something went wrong. Please try again.');
-      },
-    });
-  }
-
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
-
-  readonly socials: ReadonlyArray<{ name: string; icon: string; link: string }> = [
-    { name: 'Instagram', icon: 'instagram', link: 'https://www.instagram.com/zarklyx_/' },
-    { name: 'LinkedIn', icon: 'linkedin', link: 'https://www.linkedin.com/company/zarklyx' },
+  /**
+   * Every `route` here must resolve — a footer link to a dead route sends the
+   * visitor to the 404 page on every single page of the site. The legacy site's
+   * Delivery Shipping, Pricing Structure, Self Assessment and Non-Teaching
+   * Assessment links were dropped for exactly that reason: those pages do not
+   * exist in this build yet. Re-add them here when they are built.
+   */
+  readonly columns: ReadonlyArray<{ title: string; links: FooterLink[] }> = [
     {
-      name: 'Facebook',
-      icon: 'facebook',
-      link: 'https://www.facebook.com/people/ZarklyX/61585022711713/',
+      title: 'Explore',
+      links: [
+        { label: 'Privacy Policy', route: '/more/policy' },
+        { label: 'Terms & Conditions', route: '/more/terms' },
+        { label: 'Refund Cancellation', route: '/more/refund-cancellation-policy' },
+        { label: 'Website Terms', route: '/more/website-terms' },
+        { label: 'Disclosure Policy', route: '/more/disclosure-policy' },
+        { label: 'Sitemap', route: '/sitemap' },
+      ],
     },
-    { name: 'YouTube', icon: 'youtube', link: 'https://www.youtube.com/@Zarkly-X' },
-    { name: 'X', icon: 'x', link: 'https://x.com/ZarklyX' },
     {
-      name: 'Reddit',
-      icon: 'reddit',
-      link: 'https://www.reddit.com/user/zarklyx_/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button',
+      title: 'Academics',
+      links: [
+        { label: 'Schools', route: '/academic/school' },
+        { label: 'Colleges', route: '/academic/colleges' },
+        { label: 'Hostels', route: '/academic/hostels' },
+        { label: 'Other Institutes', route: '/academic/others' },
+        { label: 'Our Campuses', route: '/more/campus' },
+        { label: 'IP Cell', route: '/ipcell' },
+      ],
     },
-    { name: 'Threads', icon: 'threads', link: 'https://www.threads.com/@zarklyx_?invite=0' },
+    {
+      title: 'Media',
+      links: [
+        { label: 'Gallery', route: '/glory/gallery' },
+        { label: 'Navratri', route: '/navratri' },
+        { label: 'Next UP Podcast', route: '/podcast' },
+        { label: 'Blog', route: '/home/blog' },
+        { label: 'Magazine', route: '/more/magazine' },
+        { label: 'Answer Key', route: '/more/answer-key' },
+      ],
+    },
+    {
+      title: 'Quick Links',
+      links: [
+        { label: 'News & Updates', route: '/more/news' },
+        { label: "FAQ's", route: '/more/faqs' },
+        { label: 'Careers', route: '/more/career' },
+        { label: 'Tenders', route: '/more/tenders' },
+        { label: 'e-Gate Pass', route: '/more/gate-pass' },
+        { label: 'Counselling', route: '/counselling' },
+        { label: 'Rahatokarsh Fund', route: '/fund' },
+      ],
+    },
+    {
+      title: 'Useful Links',
+      links: [
+        { label: 'About Us', route: '/about' },
+        { label: 'Management', route: '/management' },
+        { label: 'Our Team', route: '/team' },
+        { label: 'Alumni', route: '/alumni' },
+        { label: 'Centenary Celebration', route: '/celebration' },
+        { label: 'Social Activity', route: '/social-activity' },
+        { label: 'Projects', route: '/project' },
+        { label: 'Contact Us', route: '/contact' },
+        { label: 'Staff Login', href: `${Footer.DASHBOARD_URL}/account/employee` },
+      ],
+    },
   ];
-
-  readonly securityBadges: ReadonlyArray<{ abbr: string; name: string; status: string }> = [
-    { abbr: 'ISO', name: 'ISO 27001', status: 'Certified' },
-    { abbr: 'SOC 2', name: 'SOC 2', status: 'Compliant' },
-    { abbr: 'GDPR', name: 'GDPR', status: 'Compliant' },
-    { abbr: 'SSL', name: 'SSL', status: 'Secured' },
-  ];
-
-  sections = signal<NavSection[]>([
-    {
-      title: 'Institution',
-      icon: 'building',
-      items: ['About Us', 'Our Team', 'Careers'],
-      open: false,
-    },
-    {
-      title: 'Resources',
-      icon: 'book',
-      items: ['Blogs', 'Help Center', 'FAQs'],
-      open: false,
-    },
-    {
-      title: 'Support',
-      icon: 'headset',
-      items: ['Contact Support', 'Sitemap'],
-      open: false,
-    },
-  ]);
-
-  // Legal / policy links  shown in the bottom bar.
-  legalLinks: { label: string; route: string }[] = [
-    { label: 'Privacy Policy', route: '/support/privacy-policy' },
-    { label: 'Terms of Service', route: '/support/terms-of-service' },
-    { label: 'Website Terms', route: '/support/website-terms' },
-    { label: 'Cookies', route: '/support/cookie-policy' },
-  ];
-
-  toggle(index: number) {
-    this.sections.update((sections) =>
-      sections.map((s, i) => (i === index ? { ...s, open: !s.open } : s)),
-    );
-  }
-
-  // Map of footer column item labels to their routes (legal links live in legalLinks)
-  private routeMap: Record<string, string> = {
-    'About Us': '/about',
-    'Our Team': '/team',
-    Careers: '/company/careers',
-    Blogs: '/blogs',
-    'Help Center': '/support',
-    FAQs: '/support/faq',
-    'Contact Support': '/contact',
-    Sitemap: '/sitemap',
-  };
-
-  // Section-scoped overrides for labels that appear in more than one column.
-  // Empty now that the duplicated module/solution columns are gone.
-  private sectionRouteMap: Record<string, Record<string, string>> = {};
-
-  getRoute(section: string, item: string): string | null {
-    return this.sectionRouteMap[section]?.[item] ?? this.routeMap[item] ?? null;
-  }
 }

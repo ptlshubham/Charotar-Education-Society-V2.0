@@ -1,0 +1,64 @@
+<section class="mx-auto max-w-[1600px] px-4 py-10 sm:px-6 lg:px-10">
+  <div class="rounded-xl border border-gray-200 bg-white p-6 lg:p-8">
+
+    <!-- Language / topic tabs -->
+    <div role="tablist" aria-label="Centenary overview" class="flex flex-wrap gap-2">
+      @for (tab of tabs; track tab.id) {
+        <button type="button" role="tab" [attr.aria-selected]="active() === tab.id" (click)="select(tab.id)"
+          class="rounded-md border px-5 py-2.5 text-[13px] font-semibold transition-colors"
+          [class]="active() === tab.id
+            ? 'border-primary bg-primary text-white'
+            : 'border-gray-200 bg-white text-primary hover:border-primary'">
+          {{ tab.label }}
+        </button>
+      }
+    </div>
+
+    <div class="mt-6 grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:gap-12">
+
+      <!-- Panel -->
+      <div role="tabpanel" class="animate-dropdown">
+        @switch (active()) {
+          @case ('english') {
+            @for (para of english; track para) {
+              <p class="mb-3 text-[13px] leading-relaxed text-muted last:mb-0">{{ para }}</p>
+            }
+          }
+          @case ('gujarati') {
+            @if (gujarati.length) {
+              @for (para of gujarati; track para) {
+                <p class="mb-3 text-[13px] leading-relaxed text-muted last:mb-0">{{ para }}</p>
+              }
+            } @else {
+              <p class="rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-5 text-[13px] leading-relaxed text-muted">
+                ગુજરાતી લખાણ ટૂંક સમયમાં ઉપલબ્ધ થશે.
+                <span class="mt-1 block text-[12px]">The official Gujarati text is pending from CES.</span>
+              </p>
+            }
+          }
+          @case ('guinness') {
+            @for (para of guinness; track para) {
+              <p class="mb-3 text-[13px] leading-relaxed text-muted last:mb-0">{{ para }}</p>
+            }
+          }
+        }
+      </div>
+
+      <!-- Highlights -->
+      <ul class="grid list-none grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3 lg:grid-cols-2">
+        @for (item of highlights; track item.value) {
+          <li class="text-center">
+            <span class="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-secondary/15 text-secondary" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                @for (d of item.path; track d) { <path [attr.d]="d" /> }
+              </svg>
+            </span>
+            <p class="mt-2.5 text-[14px] font-bold text-primary">{{ item.value }}</p>
+            <p class="text-[11px] text-muted">{{ item.label }}</p>
+          </li>
+        }
+      </ul>
+
+    </div>
+  </div>
+</section>

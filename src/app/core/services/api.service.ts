@@ -20,10 +20,6 @@ export class ApiService {
   // Public Website SEO URL (per-page meta tags + sitewide defaults)
   public static GetPublicSeoURL: string = ApiService.HOST_URL + '/superAdmin/website-control/seo/public/all';
 
-  // Public Website Blog URLs
-  public static GetPublicBlogsURL: string = ApiService.HOST_URL + '/superAdmin/website-control/blog-management/public/blogs';
-  public static GetPublicBlogBySlugURL: string = ApiService.HOST_URL + '/superAdmin/website-control/blog-management/public/blogs/';
-
   // Public Website Video Guide (Tutorials) URLs
   public static GetPublicVideosURL: string = ApiService.HOST_URL + '/superAdmin/help-center/video-guide/public/videos';
   public static GetPublicVideoByIdURL: string = ApiService.HOST_URL + '/superAdmin/help-center/video-guide/public/videos/';

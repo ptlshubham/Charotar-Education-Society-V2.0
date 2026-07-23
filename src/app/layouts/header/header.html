@@ -1,106 +1,331 @@
-<header
-  class="relative z-60 flex items-center justify-between px-5 py-5.75 md:px-10 lg:px-17.5 lg:py-3.5 lg:border-gray-200 bg-white shadow md:shadow-xs">
+<header class="relative z-60 bg-white shadow">
 
-  <!-- Left: Logo + Desktop Nav -->
-  <div class="flex items-center gap-10 lg:gap-6 ">
-    <a class="shrink-0" routerLink="/">
-      <img src="/assets/logo/default-logo.svg" alt="Charotar Education Society" width="135" height="34" class="block" />
+  <!-- ─── Utility bar — collapses away once the page is scrolled ─── -->
+  <div class="overflow-hidden bg-primary text-white transition-all duration-300 ease-out" [class.max-h-0]="scrolled()"
+    [class.opacity-0]="scrolled()" [class.max-h-16]="!scrolled()">
+    <div
+      class="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-5 py-3 text-[12px] sm:text-[13px] xl:px-10">
+
+      <div class="flex items-center gap-3 sm:gap-5">
+        <a [href]="'mailto:' + email" class="flex items-center gap-2 no-underline transition-opacity hover:opacity-80">
+          <svg class="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="m22 7-10 6L2 7" />
+          </svg>
+          <span class="hidden truncate min-[400px]:inline">{{ email }}</span>
+        </a>
+
+        <span class="h-4 w-px bg-white/25" aria-hidden="true"></span>
+
+        <a [href]="phoneHref" class="flex items-center gap-2 no-underline transition-opacity hover:opacity-80">
+          <svg class="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path
+              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" />
+          </svg>
+          <span class="whitespace-nowrap">{{ phone }}</span>
+        </a>
+      </div>
+
+      <!-- Status + socials need room; below lg the sidebar carries the socials instead. -->
+      <div class="hidden items-center gap-4 lg:flex lg:gap-5">
+        @if (lastUpdated()) {
+        <div class="flex items-center gap-2">
+          <span class="h-2 w-2 shrink-0 rounded-full bg-logo" aria-hidden="true"></span>
+          <span class="whitespace-nowrap">Last Updated: {{ lastUpdated() }}</span>
+        </div>
+
+        <span class="hidden h-4 w-px bg-white/25 sm:block" aria-hidden="true"></span>
+        }
+
+        <ul class="flex list-none items-center gap-4">
+          @for (social of socials; track social.label) {
+          <li>
+            <a [href]="social.href" target="_blank" rel="noopener noreferrer" [attr.aria-label]="social.label"
+              class="block transition-opacity hover:opacity-70">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path [attr.d]="social.path" />
+              </svg>
+            </a>
+          </li>
+          }
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── Brand bar ─── -->
+  <div class="mx-auto flex max-w-[1600px] items-center justify-between gap-6 px-5 py-4 xl:px-10">
+
+    <a class="shrink-0" routerLink="/home" aria-label="Charotar Education Society — home">
+      <img src="/assets/logo/default-logo.svg" alt="Charotar Education Society" width="270" height="68"
+        class="block h-12 w-auto lg:h-16" />
     </a>
 
-    <nav class="hidden lg:flex xl:ml-7.5 ">
-      <ul class="flex items-center gap-6.75 list-none m-0 p-0">
-        @for (item of navLinks; track item.link) {
-          <li>
-            <a [routerLink]="item.link"
-              class="inline-flex items-center text-[16px] font-medium no-underline whitespace-nowrap border-b-2 border-transparent pb-0.5 transition-colors hover:text-main"
-              [class.text-main]="linkActive(item.link)" [class.border-main]="linkActive(item.link)" [class.text-primary]="!linkActive(item.link)">{{ item.label }}</a>
-          </li>
+    <!-- Search -->
+    <div class="hidden h-12 w-full max-w-[430px] items-stretch lg:flex">
+      <label for="site-search" class="sr-only">Search the site</label>
+      <input id="site-search" type="search" placeholder="What are you looking for?"
+        class="min-w-0 flex-1 rounded-l-md border border-r-0 border-gray-300 px-4 text-[15px] text-primary outline-none placeholder:text-gray-400 focus:border-primary" />
+      <button type="button" aria-label="Search"
+        class="flex w-14 shrink-0 items-center justify-center rounded-r-md bg-primary text-white transition-colors hover:bg-primary-dark">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m20 20-3.5-3.5" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Quick links -->
+    <div class="hidden items-center gap-6 xl:flex">
+      <a routerLink="/more/news"
+        class="text-[15px] font-medium whitespace-nowrap text-primary no-underline transition-colors hover:text-primary">News</a>
+
+      <span class="h-5 w-px bg-gray-300" aria-hidden="true"></span>
+
+      <a routerLink="/counselling"
+        class="text-[15px] font-medium whitespace-nowrap text-primary no-underline transition-colors hover:text-primary">Free
+        Psychological Counselling</a>
+
+      <a routerLink="/about"
+        class="rounded-md bg-primary px-6 py-3.5 text-[15px] font-semibold whitespace-nowrap text-white no-underline transition-colors hover:bg-primary-dark">Educating
+        Generations</a>
+    </div>
+
+    <!-- Burger -->
+    <button type="button" class="relative h-[18px] w-7 shrink-0 xl:hidden"
+      [attr.aria-label]="mobileMenuOpen ? 'Close menu' : 'Open menu'" [attr.aria-expanded]="mobileMenuOpen"
+      (click)="mobileMenuOpen ? closeMobileMenu() : openMobileMenu()">
+      <span class="absolute left-0 top-0 h-[3px] w-full rounded-full bg-primary transition-all duration-300"
+        [class.top-1/2]="mobileMenuOpen" [class.-translate-y-1/2]="mobileMenuOpen"
+        [class.rotate-45]="mobileMenuOpen"></span>
+      <span
+        class="absolute left-0 top-1/2 h-[3px] w-full -translate-y-1/2 rounded-full bg-primary transition-all duration-300"
+        [class.opacity-0]="mobileMenuOpen"></span>
+      <span class="absolute left-0 bottom-0 h-[3px] w-full rounded-full bg-primary transition-all duration-300"
+        [class.bottom-1/2]="mobileMenuOpen" [class.translate-y-1/2]="mobileMenuOpen"
+        [class.-rotate-45]="mobileMenuOpen"></span>
+    </button>
+
+  </div>
+
+  <!-- ─── Main nav ─── -->
+  <nav class="hidden bg-primary xl:block" aria-label="Main">
+    <ul class="mx-auto flex max-w-[1600px] list-none items-center px-5 xl:px-10">
+      @for (item of navLinks; track item.label) {
+      <li class="group relative">
+
+        @if (item.link) {
+        <a [routerLink]="item.link"
+          class="flex items-center gap-1.5 px-4 py-4 text-[16px] whitespace-nowrap text-white no-underline transition-colors group-hover:bg-primary-light">{{
+          item.label }}</a>
+        } @else {
+        <button type="button"
+          class="flex items-center gap-1.5 px-4 py-4 text-[16px] whitespace-nowrap text-white transition-colors group-hover:bg-primary-light">
+          {{ item.label }}
+          <span class="text-[18px] leading-none font-light" aria-hidden="true">+</span>
+        </button>
         }
-      </ul>
-    </nav>
-  </div>
 
-  <!-- Right: Desktop Actions -->
-  <div class="hidden lg:flex items-center gap-2.5">
-    <a class="text-sm h-10 font-medium text-white flex justify-center items-center no-underline rounded-[8px] bg-main whitespace-nowrap px-[20px]"
-      routerLink="/contact">Contact Us</a>
-  </div>
+        <!-- Active / hover indicator -->
+        <span
+          class="pointer-events-none absolute right-3 bottom-0 left-3 h-[3px] scale-x-0 rounded-t-full bg-accent transition-transform duration-200 group-hover:scale-x-100"
+          [class.scale-x-100]="branchActive(item)" aria-hidden="true"></span>
 
-  <!-- Mobile: Animated Burger ↔ X toggle -->
-  <div class="burger lg:hidden"
-    [class.open]="mobileMenuOpen"
-    [attr.aria-label]="mobileMenuOpen ? 'Close menu' : 'Open menu'"
-    role="button"
-    tabindex="0"
-    (click)="mobileMenuOpen ? closeMobileMenu() : openMobileMenu()"
-    (keydown.enter)="mobileMenuOpen ? closeMobileMenu() : openMobileMenu()"
-    (keydown.space)="mobileMenuOpen ? closeMobileMenu() : openMobileMenu()">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+        @if (item.children) {
+        <ul
+          class="absolute top-full left-0 z-50 hidden min-w-[260px] list-none rounded-xl bg-white p-2 shadow-[0_12px_40px_rgba(32,49,84,0.18)] group-last:right-0 group-last:left-auto group-focus-within:block group-hover:block group-hover:animate-dropdown">
+          @for (child of item.children; track child.label) {
+          <li class="group/sub relative">
+
+            @if (child.link) {
+            <a [routerLink]="child.link"
+              class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-[15px] text-primary no-underline transition-colors hover:bg-accent hover:text-white"
+              [class.bg-accent]="linkActive(child.link)" [class.text-white]="linkActive(child.link)">
+              @if (child.icon) {
+              <svg class="shrink-0" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                @for (d of icons[child.icon]; track d) {
+                <path [attr.d]="d" /> }
+              </svg>
+              }
+              <span>{{ child.label }}</span>
+            </a>
+            } @else {
+            <span
+              class="flex cursor-default items-center gap-3 rounded-lg px-3 py-2.5 text-[15px] text-primary transition-colors group-hover/sub:bg-accent group-hover/sub:text-white">
+              @if (child.icon) {
+              <svg class="shrink-0" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                @for (d of icons[child.icon]; track d) {
+                <path [attr.d]="d" /> }
+              </svg>
+              }
+              <span class="flex-1">{{ child.label }}</span>
+              <span class="text-[13px]" aria-hidden="true">›</span>
+            </span>
+            }
+
+            <!-- Third level -->
+            @if (child.children) {
+            <ul
+              class="absolute top-0 left-full z-50 hidden min-w-[230px] list-none rounded-xl bg-white p-2 shadow-[0_12px_40px_rgba(32,49,84,0.18)] group-last:right-full group-last:left-auto group-focus-within/sub:block group-hover/sub:block">
+              @for (leaf of child.children; track leaf.label) {
+              <li>
+                <a [routerLink]="leaf.link"
+                  class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-[15px] text-primary no-underline transition-colors hover:bg-accent hover:text-white">
+                  @if (leaf.icon) {
+                  <svg class="shrink-0" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    @for (d of icons[leaf.icon]; track d) {
+                    <path [attr.d]="d" /> }
+                  </svg>
+                  }
+                  <span>{{ leaf.label }}</span>
+                </a>
+              </li>
+              }
+            </ul>
+            }
+
+          </li>
+          }
+        </ul>
+        }
+
+      </li>
+      }
+    </ul>
+  </nav>
 
 </header>
 
-<!-- ─── Overlay: full screen, covers entire viewport when open ─── -->
-<div #mobileOverlay class="fixed inset-0 z-[75] bg-black/40 cursor-pointer invisible opacity-0"
+<!-- ─── Overlay ─── -->
+<div #mobileOverlay class="invisible fixed inset-0 z-[75] cursor-pointer bg-black/40 opacity-0"
   (click)="closeMobileMenu()">
 </div>
 
-<!-- ─── Sidebar: mobile / tablet menu, slides from right ─── -->
+<!-- ─── Mobile sidebar ─── -->
 <aside #mobileSidebar
-  class="fixed top-0 right-0 h-dvh w-full  translate-x-full bg-white z-[80] flex flex-col shadow-2xl">
+  class="fixed top-0 right-0 z-[80] flex h-dvh w-full max-w-[420px] translate-x-full flex-col bg-white shadow-2xl">
 
-  <!-- Header row -->
-  <div class="shrink-0 flex items-center justify-between px-5 h-[68px] border-b border-primary/10">
-    <img src="/assets/logo/default-logo.svg" alt="Charotar Education Society" width="120" height="30" />
+  <div class="flex h-[68px] shrink-0 items-center justify-between border-b border-primary/10 px-5">
+    <img src="/assets/logo/default-logo.svg" alt="Charotar Education Society" width="190" height="48"
+      class="h-10 w-auto" />
     <button type="button" aria-label="Close menu" (click)="closeMobileMenu()"
-      class="flex items-center justify-center w-9 h-9 rounded-full bg-[#f8f9fa] text-secondary">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      class="flex h-9 w-9 items-center justify-center rounded-full bg-[#f8f9fa] text-muted">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 6 6 18M6 6l12 12" />
+      </svg>
     </button>
   </div>
 
-  <!-- Scrollable content -->
-  <div class="flex-1 overflow-y-auto flex flex-col">
+  <div class="flex flex-1 flex-col overflow-y-auto">
 
-    <!-- Nav -->
-    <nav class="px-4 py-2">
-      @for (item of navLinks; track item.link) {
+    <!-- Search -->
+    <div class="flex h-11 items-stretch px-4 pt-4">
+      <label for="site-search-mobile" class="sr-only">Search the site</label>
+      <input id="site-search-mobile" type="search" placeholder="What are you looking for?"
+        class="min-w-0 flex-1 rounded-l-md border border-r-0 border-gray-300 px-4 text-[15px] text-primary outline-none placeholder:text-gray-400 focus:border-primary" />
+      <button type="button" aria-label="Search"
+        class="flex w-14 shrink-0 items-center justify-center rounded-r-md bg-primary text-white">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m20 20-3.5-3.5" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Accordion nav -->
+    <nav class="px-4 py-4" aria-label="Mobile">
+      @for (item of navLinks; track item.label) {
+      <div class="border-b border-primary/10 last:border-b-0">
+
+        @if (item.link) {
         <a [routerLink]="item.link" (click)="closeMobileMenu()"
-          class="flex items-center gap-3 my-2 px-3 py-2.5 rounded-[12px] transition-colors border-b border-primary/10 rounded-b-none last:border-b-0">
-          <span class="flex-1 text-[17px] font-bold" [ngClass]="linkActive(item.link) ? 'text-main' : 'text-primary'">{{ item.label }}</span>
-        </a>
+          class="flex items-center py-3.5 text-[16px] font-semibold no-underline"
+          [class.text-accent]="branchActive(item)" [class.text-primary]="!branchActive(item)">{{ item.label }}</a>
+        } @else {
+        <button type="button" (click)="toggleExpanded(item.label)"
+          class="flex w-full items-center justify-between gap-3 py-3.5 text-left text-[16px] font-semibold"
+          [class.text-accent]="branchActive(item)" [class.text-primary]="!branchActive(item)"
+          [attr.aria-expanded]="isExpanded(item.label)">
+          {{ item.label }}
+          <span class="text-[20px] leading-none font-light transition-transform duration-300"
+            [class.rotate-45]="isExpanded(item.label)" aria-hidden="true">+</span>
+        </button>
+
+        @if (isExpanded(item.label)) {
+        <div class="animate-dropdown pb-2">
+          @for (child of item.children; track child.label) {
+
+          @if (child.link) {
+          <a [routerLink]="child.link" (click)="closeMobileMenu()"
+            class="flex items-center gap-3 rounded-lg px-2 py-2.5 text-[15px] no-underline"
+            [class.bg-accent]="linkActive(child.link)" [class.text-white]="linkActive(child.link)"
+            [class.text-muted]="!linkActive(child.link)">
+            @if (child.icon) {
+            <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              @for (d of icons[child.icon]; track d) {
+              <path [attr.d]="d" /> }
+            </svg>
+            }
+            <span>{{ child.label }}</span>
+          </a>
+          } @else {
+          <p class="px-2 pt-3 pb-1 text-[13px] font-semibold tracking-wide text-primary/50 uppercase">{{ child.label }}
+          </p>
+          @for (leaf of child.children; track leaf.label) {
+          <a [routerLink]="leaf.link" (click)="closeMobileMenu()"
+            class="flex items-center gap-3 rounded-lg px-2 py-2.5 pl-5 text-[15px] text-muted no-underline">
+            @if (leaf.icon) {
+            <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              @for (d of icons[leaf.icon]; track d) {
+              <path [attr.d]="d" /> }
+            </svg>
+            }
+            <span>{{ leaf.label }}</span>
+          </a>
+          }
+          }
+
+          }
+        </div>
+        }
+        }
+
+      </div>
       }
     </nav>
 
-    <!-- Action buttons -->
-    <div class="px-4 mt-5 flex flex-col gap-3">
-      <a routerLink="/contact" (click)="closeMobileMenu()" class="flex items-center justify-center gap-2 h-12 rounded-[10px] bg-main text-white text-[15px] font-semibold hover:bg-primary transition-colors">
-        Contact Us
-      </a>
+    <!-- Quick links -->
+    <div class="mt-2 flex flex-col gap-3 px-4 pb-6">
+      <a routerLink="/more/news" (click)="closeMobileMenu()"
+        class="flex h-12 items-center justify-center rounded-md border border-primary text-[15px] font-semibold text-primary no-underline">News</a>
+      <a routerLink="/counselling" (click)="closeMobileMenu()"
+        class="flex h-12 items-center justify-center rounded-md bg-primary text-center text-[15px] font-semibold text-white no-underline">Free
+        Psychological Counselling</a>
     </div>
 
     <!-- Socials -->
-    <div class="mt-6 bg-[#f6faf9] px-4 py-6 text-center">
-      <p class="text-[14px] font-semibold text-secondary mb-4">Follow us on</p>
-      <div class="flex items-center justify-center gap-3">
-        <a href="#" aria-label="Instagram" class="flex items-center justify-center w-12 h-12 rounded-[12px] border border-primary/10 bg-white text-primary hover:bg-primary hover:text-white transition-colors">
-        <img src="/assets/images/smm/icons/instagram.svg" alt="Instagram"/>
-        </a>
-        <a href="#" aria-label="LinkedIn" class="flex items-center justify-center w-12 h-12 rounded-[12px] border border-primary/10 bg-white text-primary hover:bg-primary hover:text-white transition-colors">
-            <img src="/assets/images/smm/icons/linkedin.svg" alt="LinkedIn"/>
-        </a>
-        <a href="#" aria-label="Facebook" class="flex items-center justify-center w-12 h-12 rounded-[12px] border border-primary/10 bg-white text-primary hover:bg-primary hover:text-white transition-colors">
-          <img src="/assets/images/smm/icons/facebook.svg" alt="Facebook"/>
-        </a>
-        <a href="#" aria-label="YouTube" class="flex items-center justify-center w-12 h-12 rounded-[12px] border border-primary/10 bg-white text-primary hover:bg-primary hover:text-white transition-colors">
-          <img src="/assets/images/smm/icons/youtube.svg" alt="YouTube"/>
-        </a>
-        <a href="#" aria-label="X" class="flex items-center justify-center w-12 h-12 rounded-[12px] border border-primary/10 bg-white text-primary hover:bg-primary hover:text-white transition-colors">
-           <img src="/assets/images/smm/icons/x.svg" alt="X" class="w-8 h-8"/>
-        </a>
-      </div>
+    <div class="mt-auto flex items-center justify-center gap-4 bg-primary px-4 py-5">
+      @for (social of socials; track social.label) {
+      <a [href]="social.href" target="_blank" rel="noopener noreferrer" [attr.aria-label]="social.label"
+        class="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path [attr.d]="social.path" />
+        </svg>
+      </a>
+      }
     </div>
+
   </div>
 
 </aside>

@@ -1,0 +1,51 @@
+<section class="relative">
+
+  <!-- Banner -->
+  <div class="relative overflow-hidden bg-primary">
+    <div class="absolute inset-0" aria-hidden="true">
+      <img [src]="heroImage" alt="" class="h-full w-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary/40 lg:to-transparent"></div>
+    </div>
+
+    <div class="relative mx-auto max-w-[1600px] px-5 pt-10 pb-24 sm:px-8 lg:px-10 lg:pt-12 lg:pb-32">
+      <nav aria-label="Breadcrumb">
+        <ol class="flex list-none items-center gap-2 text-[13px] text-white/70">
+          <li><a routerLink="/home" class="no-underline hover:text-white">Home</a></li>
+          <li aria-hidden="true">&rsaquo;</li>
+          <li aria-current="page" class="text-white">About Us</li>
+        </ol>
+      </nav>
+
+      <h1 class="mt-6 text-[34px] leading-[1.15] font-bold text-white sm:text-[44px]">
+        About<br />
+        <span class="text-secondary">Charotar Education Society</span>
+      </h1>
+
+      <p class="mt-5 text-[15px] font-semibold text-white sm:text-[16px]">
+        110+ Years of Excellence in Education
+      </p>
+      <p class="mt-1 text-[15px] text-white/80 sm:text-[16px]">
+        31+ Institutes &bull; One Vision &bull; Limitless Opportunities
+      </p>
+    </div>
+  </div>
+
+  <!-- Stat bar, overlapping the banner — relative+z-10 so it paints above the
+       positioned banner instead of behind it. -->
+  <div class="relative z-10 mx-auto -mt-14 max-w-[1600px] px-4 sm:px-6 lg:px-10">
+    <ul class="grid list-none grid-cols-2 gap-y-6 rounded-xl bg-primary px-6 py-6 sm:grid-cols-3 lg:grid-cols-6">
+      @for (stat of stats; track stat.label) {
+        <li class="flex items-center justify-center gap-3">
+          <svg class="shrink-0 text-secondary" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            @for (d of stat.path; track d) { <path [attr.d]="d" /> }
+          </svg>
+          <div>
+            <p class="text-[19px] leading-tight font-bold text-white">{{ stat.value }}</p>
+            <p class="text-[12px] text-white/70">{{ stat.label }}</p>
+          </div>
+        </li>
+      }
+    </ul>
+  </div>
+
+</section>

@@ -1,0 +1,55 @@
+<section class="mx-auto max-w-[1600px] px-4 pt-12 sm:px-6 lg:px-10">
+
+  <div class="grid items-center gap-8 rounded-xl bg-[#F7F9FC] p-6 lg:grid-cols-2 lg:p-8">
+    <img [src]="image" alt="Charotar Education Society gathering" loading="lazy"
+      class="h-full max-h-[320px] w-full rounded-lg bg-primary-light object-cover" />
+
+    <div>
+      <p class="text-[13px] font-semibold text-secondary">Our Legacy, Our Purpose</p>
+      <h2 class="mt-2 text-[26px] font-bold text-primary sm:text-[30px]">Who We Are</h2>
+
+      <p class="mt-4 text-[14px] leading-relaxed text-muted">
+        Charotar Education Society is a philanthropic trust initiated by visionary leaders with the mission of
+        empowering generations through quality education.
+      </p>
+      <p class="mt-3 text-[14px] leading-relaxed text-muted">
+        For over 110 years, we have been committed to building academic excellence, character-driven education
+        and holistic development.
+      </p>
+
+      <div class="mt-6 flex flex-wrap items-center gap-3">
+        <a routerLink="/academic/school"
+          class="inline-flex items-center gap-2 rounded-md bg-secondary px-5 py-3 text-[14px] font-semibold text-primary no-underline transition-colors hover:bg-secondary-dark">
+          Explore Our Institutes
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </a>
+
+        <button type="button"
+          class="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-5 py-3 text-[14px] font-semibold text-primary transition-colors hover:border-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+          </svg>
+          Download Society Profile
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vision / Mission / Values -->
+  <ul class="mt-5 grid list-none gap-5 lg:grid-cols-3">
+    @for (pillar of pillars; track pillar.title) {
+      <li class="flex gap-4 rounded-xl border border-gray-200 bg-white p-6">
+        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-secondary/12 text-secondary" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            @for (d of pillar.path; track d) { <path [attr.d]="d" /> }
+          </svg>
+        </span>
+        <div>
+          <h3 class="text-[16px] font-bold text-primary">{{ pillar.title }}</h3>
+          <p class="mt-2 text-[13px] leading-relaxed text-muted">{{ pillar.body }}</p>
+        </div>
+      </li>
+    }
+  </ul>
+
+</section>

@@ -1,0 +1,44 @@
+<section class="mx-auto max-w-[1600px] px-4 pb-10 sm:px-6 lg:px-10">
+  <div class="grid gap-8 rounded-2xl bg-primary p-6 lg:grid-cols-[0.75fr_1.6fr] lg:items-center lg:gap-10 lg:p-8">
+
+    <!-- Certificate + seal -->
+    <div class="relative mx-auto w-full max-w-[280px]">
+      <img [src]="certificate" alt="Guinness World Record certificate" loading="lazy"
+        class="w-full rounded-lg border-4 border-secondary/70 bg-primary-light object-cover" />
+
+      <span class="absolute -right-3 bottom-4 flex h-24 w-24 flex-col items-center justify-center rounded-full bg-[#0f1830] text-center shadow-lg ring-2 ring-secondary/40" aria-hidden="true">
+        <span class="text-[10px] leading-tight font-bold tracking-wide text-white uppercase">Guinness</span>
+        <span class="text-[10px] leading-tight font-bold tracking-wide text-secondary uppercase">World</span>
+        <span class="text-[10px] leading-tight font-bold tracking-wide text-white uppercase">Records</span>
+      </span>
+    </div>
+
+    <!-- Copy -->
+    <div>
+      <h2 class="text-[22px] font-bold text-white sm:text-[26px]">Guinness World Record</h2>
+
+      <p class="mt-3 max-w-[640px] text-[13px] leading-relaxed text-white/75">
+        CES set 6 Guinness World Records during the centenary year, creating history and bringing pride to the
+        institution and the nation.
+      </p>
+
+      <ul class="mt-5 grid list-none gap-x-8 gap-y-3 lg:grid-cols-2">
+        @for (record of records; track record) {
+          <li class="flex items-start gap-2.5">
+            <svg class="mt-0.5 shrink-0 text-secondary" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m5 13 4 4L19 7" />
+            </svg>
+            <span class="text-[12.5px] leading-snug text-white/85">{{ record }}</span>
+          </li>
+        }
+      </ul>
+
+      <button type="button"
+        class="mt-6 inline-flex items-center gap-2 rounded-md bg-secondary px-6 py-3 text-[14px] font-semibold text-primary transition-colors hover:bg-secondary-dark">
+        View All Records
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+      </button>
+    </div>
+
+  </div>
+</section>

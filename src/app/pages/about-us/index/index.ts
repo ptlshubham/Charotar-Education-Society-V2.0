@@ -1,22 +1,26 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { AboutHeroSection } from '../about-hero-section/about-hero-section';
-import { WhyWeExist } from '../why-we-exist/why-we-exist';
-import { FeatureOverview } from '../feature-overview/feature-overview';
-import { WeJustFit } from '../we-just-fit/we-just-fit';
-import { Feedbacks } from '../feedbacks/feedbacks';
-import { AboutFaq } from '../about-faq/about-faq';
-import { RightSolution } from '../right-solution/right-solution';
+import { AboutHero } from '../about-hero/about-hero';
+import { WhoWeAre } from '../who-we-are/who-we-are';
+import { Journey } from '../journey/journey';
+import { Presence } from '../presence/presence';
+import { Messages } from '../messages/messages';
+import { CoreValues } from '../core-values/core-values';
+import { Gallery } from '../gallery/gallery';
+import { FreedomFight } from '../freedom-fight/freedom-fight';
+import { AdmissionsCta } from '../../../shared/admissions-cta/admissions-cta';
 
 @Component({
   selector: 'app-index',
   imports: [
-    AboutHeroSection,
-    WhyWeExist,
-    FeatureOverview,
-    WeJustFit,
-    Feedbacks,
-    AboutFaq,
-    RightSolution,
+    AboutHero,
+    WhoWeAre,
+    Journey,
+    Presence,
+    Messages,
+    CoreValues,
+    Gallery,
+    FreedomFight,
+    AdmissionsCta,
   ],
   templateUrl: './index.html',
   changeDetection: ChangeDetectionStrategy.Eager,

@@ -1,0 +1,42 @@
+<section class="bg-[#F7F8FA] py-12">
+  <div class="mx-auto grid max-w-[1600px] gap-5 px-4 sm:px-6 lg:grid-cols-2 lg:px-10">
+
+    <!-- Impact & Research -->
+    <article class="rounded-xl bg-white p-6">
+      <h3 class="text-[15px] font-bold text-primary">Impact & Research</h3>
+
+      <ul class="mt-5 grid list-none grid-cols-2 gap-5 sm:grid-cols-4">
+        @for (item of research; track item.label) {
+          <li>
+            <p class="text-[22px] leading-tight font-bold text-primary">{{ item.value }}</p>
+            <p class="mt-1 text-[12px] text-muted">{{ item.label }}</p>
+          </li>
+        }
+      </ul>
+    </article>
+
+    <!-- Alumni -->
+    <article class="rounded-xl bg-white p-6">
+      <h3 class="text-[15px] font-bold text-primary">Our Alumni, Our Pride.</h3>
+
+      <ul class="mt-5 grid list-none grid-cols-2 gap-5 sm:grid-cols-4">
+        @for (person of alumni; track person.name) {
+          <li class="text-center">
+            <div class="mx-auto h-14 w-14 overflow-hidden rounded-full bg-primary-light">
+              @if (person.photo) {
+                <img [src]="person.photo" [alt]="person.name" class="h-full w-full object-cover" />
+              } @else {
+                <svg class="h-full w-full p-3.5 text-white/35" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-5 0-9 2.5-9 5.5V22h18v-2.5c0-3-4-5.5-9-5.5z" />
+                </svg>
+              }
+            </div>
+            <p class="mt-2.5 text-[12px] font-semibold text-primary">{{ person.name }}</p>
+            <p class="text-[11px] text-muted">{{ person.role }}</p>
+          </li>
+        }
+      </ul>
+    </article>
+
+  </div>
+</section>

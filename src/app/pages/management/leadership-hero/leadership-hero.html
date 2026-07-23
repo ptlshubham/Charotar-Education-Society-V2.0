@@ -1,0 +1,31 @@
+<section class="relative overflow-hidden bg-primary">
+
+  <div class="absolute inset-0" aria-hidden="true">
+    <img [src]="heroImage" alt="" class="h-full w-full object-cover" />
+    <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary/40 lg:to-transparent"></div>
+  </div>
+
+  <div class="relative mx-auto max-w-[1600px] px-5 py-12 sm:px-8 lg:px-10 lg:py-16">
+    <p class="text-[13px] font-semibold text-secondary underline decoration-secondary/60 underline-offset-4">Our Leadership</p>
+
+    <h1 class="mt-4 text-[32px] leading-[1.15] font-bold text-white sm:text-[42px]">
+      Guiding Vision.<br />
+      <span class="text-secondary">Empowering Generations.</span>
+    </h1>
+
+    <p class="mt-5 max-w-[440px] text-[15px] leading-relaxed text-white/80">
+      Strong leadership, clear vision and collective commitment drive the legacy of Charotar Education Society.
+    </p>
+
+    <!-- Breadcrumb card -->
+    <nav aria-label="Breadcrumb"
+      class="mt-8 inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-[13px] shadow-sm">
+      <a routerLink="/home" class="text-primary no-underline hover:text-accent">Home</a>
+      <span class="text-gray-300" aria-hidden="true">&rsaquo;</span>
+      <a routerLink="/about" class="text-primary no-underline hover:text-accent">About Us</a>
+      <span class="text-gray-300" aria-hidden="true">&rsaquo;</span>
+      <span aria-current="page" class="font-semibold text-accent">Management</span>
+    </nav>
+  </div>
+
+</section>

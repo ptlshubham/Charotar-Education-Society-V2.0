@@ -4,7 +4,7 @@
 
     <!-- Copy -->
     <div>
-      <span class="inline-flex items-center gap-2 rounded-full bg-main/10 px-4 py-1.5 text-[13px] font-medium text-main">
+      <span class="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-[13px] font-medium text-primary">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
           stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="13" r="8" />
@@ -15,19 +15,19 @@
 
       <h1 class="mt-6 text-primary text-[40px] md:text-[48px] font-semibold leading-[1.1]">
         {{ title }}<br />
-        <span class="text-main">{{ highlight }}</span>
+        <span class="text-primary">{{ highlight }}</span>
       </h1>
 
-      <p class="mt-5 max-w-[430px] text-[16px] leading-[26px] text-secondary">{{ description }}</p>
+      <p class="mt-5 max-w-[430px] text-[16px] leading-[26px] text-muted">{{ description }}</p>
 
-      <span class="mt-7 block h-1 w-14 rounded-full bg-main/30"></span>
+      <span class="mt-7 block h-1 w-14 rounded-full bg-primary/30"></span>
 
       <!-- Highlights -->
       @if (showHighlights) {
       <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-5">
         @for (h of highlights; track h.title) {
         <div class="text-center sm:text-left">
-          <span class="mx-auto sm:mx-0 flex items-center justify-center w-12 h-12 rounded-full bg-main/10 text-main">
+          <span class="mx-auto sm:mx-0 flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary">
             @switch (h.icon) {
             @case ('rocket') { <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2.1-.1-2.9a2.1 2.1 0 0 0-2.9 0Z"/><path d="M12 15 9 12a11 11 0 0 1 2-3.5C13.7 5 17.5 3 20.5 3c0 3-2 6.8-5.5 9.5A11 11 0 0 1 12 15Z"/></svg> }
             @case ('sparkle') { <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9L12 3Z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2Z"/></svg> }
@@ -36,7 +36,7 @@
             }
           </span>
           <h3 class="mt-3 text-primary text-[14px] font-semibold">{{ h.title }}</h3>
-          <p class="mt-1 text-[12px] leading-[17px] text-secondary">{{ h.desc }}</p>
+          <p class="mt-1 text-[12px] leading-[17px] text-muted">{{ h.desc }}</p>
         </div>
         }
       </div>
@@ -47,18 +47,18 @@
       <div class="mt-8 rounded-[14px] border border-primary/10 bg-white p-5 md:p-6 max-w-[460px]">
         @if (subscribed()) {
         <div class="flex items-start gap-3">
-          <span class="shrink-0 flex items-center justify-center w-11 h-11 rounded-full bg-main/10 text-main">
+          <span class="shrink-0 flex items-center justify-center w-11 h-11 rounded-full bg-primary/10 text-primary">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
               stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
           </span>
           <div>
             <h3 class="text-primary text-[15px] font-semibold">You're on the list!</h3>
-            <p class="mt-0.5 text-[13px] text-secondary">We'll email you the moment this goes live.</p>
+            <p class="mt-0.5 text-[13px] text-muted">We'll email you the moment this goes live.</p>
           </div>
         </div>
         } @else {
         <div class="flex items-start gap-3">
-          <span class="shrink-0 flex items-center justify-center w-11 h-11 rounded-full bg-main/10 text-main">
+          <span class="shrink-0 flex items-center justify-center w-11 h-11 rounded-full bg-primary/10 text-primary">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
               stroke-linecap="round" stroke-linejoin="round">
               <rect x="2" y="4" width="20" height="16" rx="2" />
@@ -67,15 +67,15 @@
           </span>
           <div>
             <h3 class="text-primary text-[15px] font-semibold">Get notified when it's ready!</h3>
-            <p class="mt-0.5 text-[13px] text-secondary">Be the first to know when we launch.</p>
+            <p class="mt-0.5 text-[13px] text-muted">Be the first to know when we launch.</p>
           </div>
         </div>
 
         <form (ngSubmit)="notifyMe()" class="mt-4 flex flex-col sm:flex-row gap-2">
           <input type="email" name="email" [(ngModel)]="email" placeholder="Enter your email address"
-            class="flex-1 h-11 rounded-[8px] border border-primary/12 px-3.5 py-4 text-[14px] text-primary placeholder:text-secondary/60 outline-none focus:border-main transition-colors" />
+            class="flex-1 h-11 rounded-[8px] border border-primary/12 px-3.5 py-4 text-[14px] text-primary placeholder:text-muted/60 outline-none focus:border-primary transition-colors" />
           <button type="submit" [disabled]="submitting()"
-            class="h-11 px-6 rounded-[8px] bg-main text-white text-[14px] font-medium hover:bg-primary transition-colors disabled:opacity-60 disabled:cursor-not-allowed whitespace-nowrap">
+            class="h-11 px-6 rounded-[8px] bg-primary text-white text-[14px] font-medium hover:bg-primary transition-colors disabled:opacity-60 disabled:cursor-not-allowed whitespace-nowrap">
             {{ submitting() ? 'Sending…' : 'Notify Me' }}
           </button>
         </form>
@@ -84,7 +84,7 @@
         <p class="mt-2 text-[12px] text-red-600">{{ error() }}</p>
         }
 
-        <p class="mt-3 inline-flex items-center gap-1.5 text-[12px] text-secondary">
+        <p class="mt-3 inline-flex items-center gap-1.5 text-[12px] text-muted">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
             stroke-linecap="round" stroke-linejoin="round">
             <rect x="4" y="11" width="16" height="10" rx="2" />
@@ -110,8 +110,8 @@
 <section class="bg-white px-5 md:px-10 lg:px-17.5 py-[50px]">
   <div class="mx-auto">
     <h2 class="text-center text-primary text-[26px] md:text-[30px] font-semibold">Why the wait?</h2>
-    <span class="mx-auto mt-3 block h-1 w-14 rounded-full bg-main/30"></span>
-    <p class="mt-4 text-center text-[15px] text-secondary max-w-[600px] mx-auto">
+    <span class="mx-auto mt-3 block h-1 w-14 rounded-full bg-primary/30"></span>
+    <p class="mt-4 text-center text-[15px] text-muted max-w-[600px] mx-auto">
       We don't just build features  we build solutions that truly make a difference.
     </p>
 
@@ -130,7 +130,7 @@
           </span>
         </div>
         <h3 class="mt-4 text-primary text-[16px] font-semibold">{{ r.title }}</h3>
-        <p class="mt-2 text-[13px] leading-[19px] text-secondary">{{ r.desc }}</p>
+        <p class="mt-2 text-[13px] leading-[19px] text-muted">{{ r.desc }}</p>
       </div>
       }
     </div>
@@ -142,9 +142,9 @@
 @if (showSupport) {
 <section class="bg-white px-5 md:px-10 lg:px-17.5 pb-[50px]">
   <div
-    class="mx-auto rounded-[15px] bg-main/[0.06] px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-5">
+    class="mx-auto rounded-[15px] bg-primary/[0.06] px-6 md:px-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-5">
     <div class="flex items-center gap-4">
-      <span class="shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-white text-main">
+      <span class="shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-white text-primary">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
           stroke-linecap="round" stroke-linejoin="round">
           <path d="M4 14v-2a8 8 0 0 1 16 0v2" />
@@ -154,11 +154,11 @@
       </span>
       <div>
         <h3 class="text-primary text-[16px] font-semibold">Have questions?</h3>
-        <p class="mt-0.5 text-[13px] text-secondary">Our support team is here to help you anytime.</p>
+        <p class="mt-0.5 text-[13px] text-muted">Our support team is here to help you anytime.</p>
       </div>
     </div>
     <a routerLink="/contact"
-      class="shrink-0 inline-flex items-center justify-center gap-2 h-11 px-6 rounded-[8px] border border-main/40 text-main text-[14px] font-medium hover:bg-main hover:text-white transition-colors">
+      class="shrink-0 inline-flex items-center justify-center gap-2 h-11 px-6 rounded-[8px] border border-primary/40 text-primary text-[14px] font-medium hover:bg-primary hover:text-white transition-colors">
       Contact Support
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
         stroke-linecap="round" stroke-linejoin="round">

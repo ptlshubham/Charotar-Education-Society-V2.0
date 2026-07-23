@@ -1,0 +1,70 @@
+<section class="mx-auto max-w-[1600px] px-4 py-10 sm:px-6 lg:px-10">
+
+  <!-- Tabs -->
+  <div role="tablist" aria-label="Programme type" class="grid gap-3 sm:grid-cols-3">
+    @for (tab of tabs; track tab.id) {
+      <button type="button" role="tab" [attr.aria-selected]="active() === tab.id" (click)="select(tab.id)"
+        class="flex items-center justify-center gap-2.5 rounded-lg border px-5 py-3.5 text-[14px] font-semibold transition-colors"
+        [class]="active() === tab.id
+          ? 'border-primary bg-primary text-white'
+          : 'border-gray-200 bg-white text-primary hover:border-primary'">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          @for (d of tab.path; track d) { <path [attr.d]="d" /> }
+        </svg>
+        {{ tab.label }}
+      </button>
+    }
+  </div>
+
+  <!-- Heading -->
+  <div class="mt-10 text-center">
+    <h2 class="text-[22px] font-bold text-primary sm:text-[26px]">{{ heading() }}</h2>
+    <span class="mx-auto mt-3 block h-1 w-16 rounded-full bg-secondary" aria-hidden="true"></span>
+    <p class="mx-auto mt-4 max-w-[600px] text-[14px] leading-relaxed text-muted">
+      CES believes in holistic development and social responsibility. Our various social activities create a
+      positive impact on individuals and society.
+    </p>
+  </div>
+
+  <!-- Cards -->
+  <ul class="animate-dropdown mt-8 grid list-none gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    @for (item of visible(); track item.title) {
+      <li class="flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white">
+
+        <div class="relative">
+          <img [src]="item.image" [alt]="item.title" loading="lazy"
+            class="aspect-[3/2] w-full bg-primary-light object-cover" />
+          <span class="absolute top-3 left-3 flex h-10 w-10 items-center justify-center rounded-lg bg-white text-primary shadow-md" aria-hidden="true">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              @for (d of item.path; track d) { <path [attr.d]="d" /> }
+            </svg>
+          </span>
+        </div>
+
+        <div class="flex flex-1 flex-col p-4">
+          <h3 class="text-[15px] leading-snug font-bold text-primary">{{ item.title }}</h3>
+          <p class="mt-2 flex-1 text-[12.5px] leading-relaxed text-muted">{{ item.desc }}</p>
+
+          <a href="#" class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-primary no-underline hover:text-accent">
+            Explore
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </a>
+        </div>
+
+      </li>
+    } @empty {
+      <li class="col-span-full rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
+        Details for this category are coming soon.
+      </li>
+    }
+  </ul>
+
+  <div class="mt-8 text-center">
+    <button type="button"
+      class="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-[14px] font-semibold text-white transition-colors hover:bg-primary-dark">
+      View All Activities
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+    </button>
+  </div>
+
+</section>

@@ -9,7 +9,6 @@ import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
 import { Header } from '../header/header';
 import { Footer } from '../footer/footer';
-import { OfferBanner } from '../offer-banner/offer-banner';
 import { CookieConsent } from '../cookie-consent/cookie-consent';
 import { ScrollToTop } from '../scroll-to-top/scroll-to-top';
 import { AiAssistant } from '../ai-assistant/ai-assistant';
@@ -23,7 +22,6 @@ import { LenisService } from '../../core/services/lenis.service';
     RouterOutlet,
     Header,
     Footer,
-    OfferBanner,
     CookieConsent,
     ScrollToTop,
     AiAssistant,

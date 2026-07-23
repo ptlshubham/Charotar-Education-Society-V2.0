@@ -7,7 +7,7 @@
   <div
     class="relative z-10 w-full max-w-[480px] rounded-[20px] bg-white p-8 shadow-[0_30px_80px_-20px_rgba(11,40,39,0.35)]">
     <button type="button" aria-label="Close" (click)="dialog.close()"
-      class="absolute right-5 top-5 text-secondary hover:text-primary transition-colors">
+      class="absolute right-5 top-5 text-muted hover:text-primary transition-colors">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
         stroke-linecap="round" stroke-linejoin="round">
         <path d="M18 6 6 18M6 6l12 12" />
@@ -27,7 +27,7 @@
         <circle cx="110" cy="70" r="16" fill="#2C8F88" />
         <path d="M103 70 l5 5 9-10" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
         <circle cx="52" cy="52" r="3" fill="#F5B841" />
-        <circle cx="60" cy="98" r="3" fill="#3DAFA9" />
+        <circle cx="60" cy="98" r="3" fill="#203154" />
         <circle cx="168" cy="60" r="3" fill="#5FA85F" />
         <circle cx="160" cy="104" r="3.5" fill="#8AA0FF" />
         <circle cx="48" cy="82" r="2.5" fill="#F17C9F" />
@@ -37,16 +37,16 @@
     </div>
 
     <h2 class="mt-2 text-center text-primary text-[34px] font-bold leading-tight">
-      {{ cfg.titleLead }}@if (cfg.titleAccent) { <span class="text-main"> {{ cfg.titleAccent }}</span> }
+      {{ cfg.titleLead }}@if (cfg.titleAccent) { <span class="text-primary"> {{ cfg.titleAccent }}</span> }
     </h2>
     @if (cfg.subtitle) {
-    <p class="mt-2 text-center text-[15px] leading-[22px] text-secondary">{{ cfg.subtitle }}</p>
+    <p class="mt-2 text-center text-[15px] leading-[22px] text-muted">{{ cfg.subtitle }}</p>
     }
 
     <!-- Info box -->
     @if (cfg.infoTitle || cfg.infoText) {
-    <div class="mt-6 flex items-start gap-4 rounded-[14px] bg-main/[0.06] p-4">
-      <span class="flex items-center justify-center w-12 h-12 rounded-full bg-main/10 text-main shrink-0">
+    <div class="mt-6 flex items-start gap-4 rounded-[14px] bg-primary/[0.06] p-4">
+      <span class="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary shrink-0">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
           stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="5" width="18" height="14" rx="2" />
@@ -55,7 +55,7 @@
       </span>
       <div>
         @if (cfg.infoTitle) { <p class="text-primary text-[15px] font-semibold">{{ cfg.infoTitle }}</p> }
-        @if (cfg.infoText) { <p class="mt-1 text-[13px] leading-[19px] text-secondary">{{ cfg.infoText }}</p> }
+        @if (cfg.infoText) { <p class="mt-1 text-[13px] leading-[19px] text-muted">{{ cfg.infoText }}</p> }
       </div>
     </div>
     }

@@ -1,0 +1,23 @@
+<section class="mx-auto max-w-[1600px] px-4 pb-12 sm:px-6 lg:px-10">
+
+  <h2 class="text-center text-[22px] font-bold text-primary sm:text-[26px]">Moments of Change</h2>
+  <span class="mx-auto mt-3 block h-1 w-16 rounded-full bg-secondary" aria-hidden="true"></span>
+
+  <ul class="mt-7 grid list-none grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+    @for (moment of moments; track moment) {
+      <li class="overflow-hidden rounded-lg">
+        <img [src]="moment" alt="Social activity moment" loading="lazy"
+          class="aspect-[4/3] w-full bg-primary-light object-cover transition-transform duration-300 hover:scale-105" />
+      </li>
+    }
+  </ul>
+
+  <div class="mt-8 text-center">
+    <a routerLink="/glory/gallery"
+      class="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-[14px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
+      View Full Gallery
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+    </a>
+  </div>
+
+</section>

@@ -1,0 +1,63 @@
+<section class="mx-auto max-w-[1600px] px-4 py-14 sm:px-6 lg:px-10">
+
+  <div class="relative mb-8 text-center">
+    <h2 class="text-[24px] font-bold text-primary sm:text-[28px]">A Network of 31+ Institutes</h2>
+    <span class="mx-auto mt-3 block h-1 w-16 rounded-full bg-secondary" aria-hidden="true"></span>
+
+    <a routerLink="/academic/school"
+      class="mt-4 inline-flex items-center gap-1.5 text-[14px] font-semibold text-primary no-underline hover:text-accent lg:absolute lg:top-1 lg:right-0 lg:mt-0">
+      View All Institutes
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 12h14M13 6l6 6-6 6" />
+      </svg>
+    </a>
+  </div>
+
+  <div class="relative">
+
+    <!-- Arrows sit outside the track on wide screens, matching the reference. -->
+    <button type="button" (click)="scrollBy(-1)" aria-label="Previous institutes"
+      class="absolute top-1/2 -left-4 z-10 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-primary shadow-md transition-colors hover:bg-primary hover:text-white lg:flex">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6" /></svg>
+    </button>
+
+    <button type="button" (click)="scrollBy(1)" aria-label="Next institutes"
+      class="absolute top-1/2 -right-4 z-10 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-primary shadow-md transition-colors hover:bg-primary hover:text-white lg:flex">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>
+    </button>
+
+  <!-- Horizontal scroller: native snap keeps this working without a carousel library. -->
+  <ul #track class="-mx-4 flex snap-x snap-mandatory list-none gap-5 overflow-x-auto px-4 pb-3 sm:mx-0 sm:px-0">
+    @for (institute of institutes; track institute.title) {
+      <li class="w-[240px] shrink-0 snap-start overflow-hidden rounded-xl border border-gray-200 bg-white sm:w-[260px]">
+
+        <div class="relative h-[120px] bg-primary-light">
+          @if (institute.image) {
+            <img [src]="institute.image" [alt]="institute.title" class="h-full w-full object-cover" />
+          } @else {
+            <svg class="absolute inset-0 m-auto h-12 w-12 text-white/25" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M3 21h18v-2H3v2zM5 19V9l7-5 7 5v10h-4v-6h-6v6H5z" />
+            </svg>
+          }
+        </div>
+
+        <div class="p-4">
+          <h3 class="text-[15px] font-semibold text-primary">{{ institute.title }}</h3>
+          <p class="mt-1.5 text-[13px] leading-relaxed text-muted">{{ institute.desc }}</p>
+
+          <a [routerLink]="institute.link"
+            class="mt-4 inline-flex items-center gap-1.5 rounded-md border border-gray-200 px-3 py-1.5 text-[13px] font-semibold text-primary no-underline transition-colors hover:border-primary hover:bg-primary hover:text-white">
+            Explore
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </a>
+        </div>
+
+      </li>
+    }
+    </ul>
+
+  </div>
+
+</section>

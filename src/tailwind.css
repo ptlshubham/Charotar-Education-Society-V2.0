@@ -1,7 +1,32 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #0B2827;
-  --color-secondary: #546968;
-  --color-main: #3DAFA9;
+  /* ─── CES brand palette ─── */
+  --color-primary: #203154;        /* navy — brand primary */
+  --color-primary-dark: #182742;
+  --color-primary-light: #2c4370;
+
+  --color-secondary: #f5a623;      /* gold — brand secondary */
+  --color-secondary-dark: #d98e0b;
+
+  --color-logo: #ed1c24;           /* CES logo red — use sparingly, for logo/brand marks */
+
+  /* CES logo red, used for active indicators, nav underlines and link hovers. */
+  --color-accent: #ed1c24;
+
+  /* Neutral muted body copy (was the ZarklyX --color-secondary grey). */
+  --color-muted: #546968;
+
+  --animate-dropdown: dropdown 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+
+  @keyframes dropdown {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }

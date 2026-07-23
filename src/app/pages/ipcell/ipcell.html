@@ -1,0 +1,205 @@
+<!-- ─── Hero ─── -->
+<section class="relative overflow-hidden rounded-b-3xl bg-primary">
+  <!-- Hexagon lattice -->
+  <svg class="pointer-events-none absolute inset-y-0 right-0 hidden h-full w-[55%] lg:block" viewBox="0 0 600 320" fill="none" aria-hidden="true">
+    @for (hex of [[120,70],[210,40],[300,70],[390,40],[480,70],[165,140],[255,110],[345,140],[435,110],[210,210],[300,180],[390,210],[255,270],[345,270]]; track hex) {
+      <path
+        [attr.transform]="'translate(' + hex[0] + ',' + hex[1] + ')'"
+        d="M0-26 22.5-13v26L0 26-22.5 13v-26z"
+        fill="none" stroke="currentColor" stroke-width="1.5" class="text-white/15" />
+    }
+    <circle cx="300" cy="150" r="46" class="fill-secondary/15" />
+    <circle cx="470" cy="120" r="30" class="fill-secondary/25" />
+  </svg>
+
+  <div class="relative mx-auto max-w-[1600px] px-5 py-12 sm:px-8 lg:px-10 lg:py-14">
+    <p class="text-[13px] font-bold tracking-wide text-logo uppercase">IP Cell</p>
+
+    <h1 class="mt-3 text-[34px] leading-[1.08] font-bold text-white sm:text-[44px]">
+      Intellectual<br />Property Cell
+    </h1>
+    <span class="mt-3 block h-1 w-14 rounded-full bg-logo" aria-hidden="true"></span>
+
+    <p class="mt-4 max-w-[430px] text-[13.5px] leading-relaxed text-white/75">
+      Fostering Innovation. Protecting Ideas. Empowering Creators for a Better Tomorrow.
+    </p>
+  </div>
+</section>
+
+<section class="mx-auto max-w-[1600px] px-4 py-8 sm:px-6 lg:px-10">
+
+  <!-- Tabs -->
+  <div role="tablist" aria-label="IP Cell sections"
+    class="grid gap-px overflow-hidden rounded-xl border border-gray-200 bg-gray-200 sm:grid-cols-3 lg:grid-cols-5">
+    @for (tab of tabs; track tab.id) {
+      <button type="button" role="tab" [attr.aria-selected]="active() === tab.id" (click)="select(tab.id)"
+        class="relative flex items-center gap-2.5 bg-white px-4 py-4 text-[13px] font-semibold transition-colors"
+        [class]="active() === tab.id ? 'text-logo' : 'text-primary hover:bg-gray-50'">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          @for (d of tab.path; track d) { <path [attr.d]="d" /> }
+        </svg>
+        {{ tab.label }}
+        @if (active() === tab.id) {
+          <span class="absolute right-0 bottom-0 left-0 h-0.5 bg-logo" aria-hidden="true"></span>
+        }
+      </button>
+    }
+  </div>
+
+  @if (active() === 'about') {
+    <!-- About -->
+    <div class="animate-dropdown mt-5 grid gap-8 rounded-xl border border-gray-200 bg-white p-6 lg:grid-cols-[1.3fr_1fr] lg:items-center lg:p-8">
+      <div>
+        <p class="text-[11.5px] font-bold tracking-wide text-logo uppercase">About IP Cell</p>
+        <h2 class="mt-2 text-[22px] leading-snug font-bold text-primary sm:text-[26px]">
+          Encouraging Innovation.<br />Safeguarding Ideas.
+        </h2>
+
+        <p class="mt-4 max-w-[520px] text-[13.5px] leading-relaxed text-muted">
+          The Intellectual Property (IP) Cell of Charotar Education Society promotes a culture of innovation and
+          creativity. We support students, faculty, researchers and institutions in protecting their
+          intellectual creations and converting ideas into valuable assets.
+        </p>
+
+        <button type="button"
+          class="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-[13px] font-semibold text-white transition-colors hover:bg-primary-dark">
+          Know More About IP Cell
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </button>
+      </div>
+
+      <!-- Illustration -->
+      <svg class="mx-auto h-[200px] w-auto" viewBox="0 0 260 200" fill="none" aria-hidden="true">
+        <ellipse cx="130" cy="180" rx="90" ry="10" class="fill-primary/8" />
+        <rect x="140" y="60" width="76" height="96" rx="6" fill="#fff" stroke="currentColor" stroke-width="3" class="text-primary/30" />
+        <path d="M152 84h52M152 98h52M152 112h34" stroke="currentColor" stroke-width="3" stroke-linecap="round" class="text-primary/25" />
+        <text x="178" y="76" text-anchor="middle" class="fill-primary" font-size="11" font-weight="700">PATENT</text>
+        <circle cx="178" cy="134" r="11" class="fill-secondary" />
+        <path d="M60 44a34 34 0 0 1 34 34c0 13-7 20-11 26-3 4-4 8-4 12H41c0-4-1-8-4-12-4-6-11-13-11-26a34 34 0 0 1 34-34z" class="fill-secondary/85" />
+        <path d="M47 128h26M51 140h18" stroke="currentColor" stroke-width="4" stroke-linecap="round" class="text-primary/60" />
+        <path d="M96 108a26 26 0 1 1 26-26" stroke="currentColor" stroke-width="3" fill="none" class="text-primary/30" />
+        <rect x="96" y="96" width="34" height="30" rx="5" class="fill-primary" />
+        <path d="M106 96V88a7 7 0 0 1 14 0v8" stroke="currentColor" stroke-width="3" fill="none" class="text-primary" />
+      </svg>
+    </div>
+  } @else {
+    <div class="animate-dropdown mt-5 rounded-xl border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-14 text-center">
+      <p class="text-[14px] font-semibold text-primary">This section is coming soon.</p>
+      <p class="mt-1 text-[12.5px] text-muted">Policy, patent, copyright, trademark and form details will be published by the IP Cell.</p>
+    </div>
+  }
+
+  <!-- Focus areas -->
+  <p class="mt-9 text-center text-[11.5px] font-bold tracking-[0.15em] text-muted uppercase">Our Focus Areas</p>
+  <ul class="mt-4 grid list-none gap-px overflow-hidden rounded-xl border border-gray-200 bg-gray-200 sm:grid-cols-3 lg:grid-cols-6">
+    @for (area of focusAreas; track area.title) {
+      <li class="bg-white px-4 py-6 text-center">
+        <svg class="mx-auto text-primary" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          @for (d of area.path; track d) { <path [attr.d]="d" /> }
+        </svg>
+        <h3 class="mt-3 text-[13px] font-bold text-primary">{{ area.title }}</h3>
+        <p class="mt-1.5 text-[11px] leading-relaxed text-muted">{{ area.body }}</p>
+      </li>
+    }
+  </ul>
+
+  <!-- Counts + notice -->
+  <div class="mt-6 grid gap-5 lg:grid-cols-[1.5fr_1fr]">
+    <div class="rounded-xl border border-gray-200 bg-white p-6">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <h2 class="text-[12px] font-bold tracking-[0.12em] text-muted uppercase">Patents at a Glance</h2>
+        <a href="#" class="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-primary no-underline hover:text-accent">
+          View All Patents
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </a>
+      </div>
+
+      <ul class="mt-4 grid list-none grid-cols-2 gap-4 sm:grid-cols-4">
+        @for (c of counts; track c.label) {
+          <li class="rounded-lg border border-gray-200 px-3 py-5 text-center">
+            <svg class="mx-auto text-logo" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              @for (d of c.path; track d) { <path [attr.d]="d" /> }
+            </svg>
+            <p class="mt-2.5 text-[20px] leading-tight font-bold text-primary">{{ c.value }}</p>
+            <p class="mt-1 text-[11px] text-muted">{{ c.label }}</p>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <div class="rounded-xl bg-primary p-6">
+      <h2 class="flex items-center gap-2 text-[12px] font-bold tracking-[0.12em] text-white uppercase">
+        <svg class="text-secondary" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.7 21a2 2 0 0 1-3.4 0" />
+        </svg>
+        Important Notice
+      </h2>
+
+      <ul class="mt-4 list-none space-y-2.5">
+        @for (notice of notices; track notice) {
+          <li class="flex items-start gap-2.5 text-[12.5px] leading-relaxed text-white/80">
+            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-logo" aria-hidden="true"></span>
+            {{ notice }}
+          </li>
+        }
+      </ul>
+
+      <button type="button"
+        class="mt-5 flex w-full items-center justify-center gap-2 rounded-md bg-white py-3 text-[12.5px] font-semibold text-primary transition-colors hover:bg-secondary">
+        Download IP Disclosure Form
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Filings -->
+  <div class="mt-6 overflow-hidden rounded-xl border border-gray-200 bg-white">
+    <div class="flex flex-wrap items-center justify-between gap-3 px-6 py-4">
+      <h2 class="text-[12px] font-bold tracking-[0.12em] text-muted uppercase">Recent Patent Filings</h2>
+      <a href="#" class="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-primary no-underline hover:text-accent">
+        View All Filings
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+      </a>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse text-left">
+        <thead class="border-y border-gray-200 bg-[#F7F9FC]">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-[12px] font-semibold whitespace-nowrap text-primary">Sr. No.</th>
+            <th scope="col" class="px-6 py-3 text-[12px] font-semibold text-primary">Title of Invention</th>
+            <th scope="col" class="px-6 py-3 text-[12px] font-semibold text-primary">Category</th>
+            <th scope="col" class="px-6 py-3 text-[12px] font-semibold whitespace-nowrap text-primary">Application No.</th>
+            <th scope="col" class="px-6 py-3 text-[12px] font-semibold whitespace-nowrap text-primary">Filing Date</th>
+            <th scope="col" class="px-6 py-3 text-[12px] font-semibold text-primary">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (filing of filings; track filing.application; let i = $index) {
+            <tr class="border-b border-gray-100 last:border-b-0 odd:bg-white even:bg-[#FAFBFD]">
+              <td class="px-6 py-3.5 text-[12.5px] text-muted">{{ i + 1 }}</td>
+              <td class="px-6 py-3.5 text-[12.5px] font-medium text-primary">{{ filing.title }}</td>
+              <td class="px-6 py-3.5 text-[12.5px] text-muted">{{ filing.category }}</td>
+              <td class="px-6 py-3.5 text-[12.5px] whitespace-nowrap text-muted">{{ filing.application }}</td>
+              <td class="px-6 py-3.5 text-[12.5px] whitespace-nowrap text-muted">{{ filing.date }}</td>
+              <td class="px-6 py-3.5">
+                <span class="rounded-full px-3 py-1 text-[11px] font-semibold" [class]="statusClass(filing.status)">{{ filing.status }}</span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="px-6 py-4 text-center">
+      <button type="button"
+        class="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-2.5 text-[12.5px] font-semibold text-white transition-colors hover:bg-primary-dark">
+        View All Filings
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+      </button>
+    </div>
+  </div>
+
+</section>

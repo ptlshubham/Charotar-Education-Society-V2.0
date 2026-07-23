@@ -5,12 +5,53 @@
 ## Institution
 
 - [About Us](https://cesociety.in/about)
+- [Management](https://cesociety.in/management)
+- [Centenary Celebration](https://cesociety.in/celebration)
+- [Social Activity](https://cesociety.in/social-activity)
+- [Projects](https://cesociety.in/project)
+- [Alumni](https://cesociety.in/alumni)
 - [Our Team](https://cesociety.in/team)
 - [Careers](https://cesociety.in/company/careers)
 
 ## Resources
 
-- [Blog](https://cesociety.in/blogs)
+- [Blog](https://cesociety.in/home/blog)
+
+## Media
+
+- [Gallery](https://cesociety.in/glory/gallery)
+- [Navratri](https://cesociety.in/navratri)
+- [Next UP Podcast](https://cesociety.in/podcast)
+- [Blog](https://cesociety.in/home/blog)
+
+## Student Corner
+
+- [Answer Key](https://cesociety.in/more/answer-key)
+- [Magazine](https://cesociety.in/more/magazine)
+- [IP Cell](https://cesociety.in/ipcell)
+
+## Academic
+
+- [Schools](https://cesociety.in/academic/school)
+- [Colleges](https://cesociety.in/academic/colleges)
+- [Hostels](https://cesociety.in/academic/hostels)
+- [Others](https://cesociety.in/academic/others)
+
+## Rahatokarsh Fund
+
+- [Objective](https://cesociety.in/fund)
+- [Donate Now](https://cesociety.in/donation)
+- [Beneficiary Students](https://cesociety.in/beneficiary-students)
+- [Donor List](https://cesociety.in/donner-list)
+- [Micro Donor List](https://cesociety.in/micro-donner)
+
+## Policies
+
+- [Privacy Policy](https://cesociety.in/more/policy)
+- [Terms & Conditions](https://cesociety.in/more/terms)
+- [Refund Policy](https://cesociety.in/more/refund-cancellation-policy)
+- [Website Terms](https://cesociety.in/more/website-terms)
+- [Disclosure Policy](https://cesociety.in/more/disclosure-policy)
 
 ## Support & Help
 
@@ -22,10 +63,3 @@
 - [Home](https://cesociety.in/)
 - [Contact Us](https://cesociety.in/contact)
 - [Sitemap](https://cesociety.in/sitemap)
-
-## Optional
-
-- [Privacy Policy](https://cesociety.in/support/privacy-policy)
-- [Terms of Service](https://cesociety.in/support/terms-of-service)
-- [Cookie Policy](https://cesociety.in/support/cookie-policy)
-- [Website Terms](https://cesociety.in/support/website-terms)

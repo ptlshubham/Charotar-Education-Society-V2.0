@@ -1,0 +1,61 @@
+<section class="relative overflow-hidden bg-primary">
+
+  <!-- Angled photo, right side -->
+  <div class="pointer-events-none absolute inset-y-0 right-0 hidden w-[55%] lg:block" aria-hidden="true">
+    <img [src]="image" alt="" class="h-full w-full object-cover" />
+    <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/45 to-transparent"></div>
+    <!-- Diagonal cut so the navy sweeps into the photo -->
+    <div class="absolute inset-y-0 -left-1 w-40 bg-primary [clip-path:polygon(0_0,100%_0,0_100%)]"></div>
+    <span class="absolute top-8 left-24 h-28 w-3 -rotate-[22deg] rounded-full bg-[#2E6BE6]" aria-hidden="true"></span>
+    <span class="absolute top-20 left-32 h-16 w-2.5 -rotate-[22deg] rounded-full bg-[#2E6BE6]/70" aria-hidden="true"></span>
+  </div>
+
+  <!-- Mobile photo -->
+  <img [src]="image" alt="" aria-hidden="true"
+    class="absolute inset-0 h-full w-full object-cover opacity-25 lg:hidden" />
+  <div class="absolute inset-0 bg-gradient-to-r from-primary to-primary/70 lg:hidden" aria-hidden="true"></div>
+
+  <div class="relative mx-auto max-w-[1600px] px-5 py-10 sm:px-8 lg:px-10 lg:py-12">
+    <nav aria-label="Breadcrumb">
+      <ol class="flex list-none items-center gap-2 text-[13px] text-white/70">
+        <li><a routerLink="/home" class="no-underline hover:text-white">Home</a></li>
+        <li aria-hidden="true">&rsaquo;</li>
+        <li aria-current="page" class="text-white">{{ crumb }}</li>
+      </ol>
+    </nav>
+
+    <h1 class="mt-4 text-[34px] leading-none font-bold text-white sm:text-[42px]">{{ title }}</h1>
+    <span class="mt-3 block h-1 w-14 rounded-full bg-logo" aria-hidden="true"></span>
+
+    @if (tagline) {
+      <p class="mt-4 text-[16px] font-medium text-white sm:text-[18px]">
+        {{ tagline }}@if (accent) { <span class="text-secondary">{{ accent }}</span> }
+      </p>
+    }
+
+    @if (blurb) {
+      <p class="mt-3 max-w-[440px] text-[13.5px] leading-relaxed text-white/75">{{ blurb }}</p>
+    }
+
+    @if (stats.length) {
+      <ul class="mt-7 flex list-none flex-wrap items-center gap-x-7 gap-y-4">
+        @for (stat of stats; track stat.label; let last = $last) {
+          <li class="flex items-center gap-6">
+            <span class="flex items-center gap-2.5">
+              <svg class="shrink-0 text-secondary" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                @for (d of stat.path; track d) { <path [attr.d]="d" /> }
+              </svg>
+              <span>
+                <span class="block text-[16px] leading-tight font-bold text-white">{{ stat.value }}</span>
+                <span class="block text-[11px] text-white/65">{{ stat.label }}</span>
+              </span>
+            </span>
+            @if (!last) {
+              <span class="hidden h-8 w-px bg-white/20 sm:block" aria-hidden="true"></span>
+            }
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</section>

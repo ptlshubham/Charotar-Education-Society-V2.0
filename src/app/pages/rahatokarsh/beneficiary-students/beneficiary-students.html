@@ -1,0 +1,171 @@
+<!-- ─── Hero ─── -->
+<section class="relative overflow-hidden bg-primary">
+  <div class="absolute inset-0" aria-hidden="true">
+    <img [src]="banner" alt="" class="h-full w-full object-cover" />
+    <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary/40"></div>
+  </div>
+
+  <div class="relative mx-auto max-w-[1600px] px-5 py-10 sm:px-8 lg:px-10 lg:py-12">
+    <nav aria-label="Breadcrumb">
+      <ol class="flex list-none flex-wrap items-center gap-2 text-[13px] text-white/70">
+        <li><a routerLink="/home" class="no-underline hover:text-white">Home</a></li>
+        <li aria-hidden="true">&rsaquo;</li>
+        <li><a routerLink="/fund" class="no-underline hover:text-white">Rahatokarsh Fund</a></li>
+        <li aria-hidden="true">&rsaquo;</li>
+        <li aria-current="page" class="text-white">Beneficiary Students</li>
+      </ol>
+    </nav>
+
+    <div class="mt-6 flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <h1 class="text-[34px] leading-[1.12] font-bold text-white sm:text-[44px]">
+          Beneficiary<br />Students List
+        </h1>
+        <p class="mt-4 max-w-[400px] text-[14px] leading-relaxed text-white/75">
+          Empowering deserving students through financial support for a brighter tomorrow.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3 rounded-lg bg-white/10 px-5 py-4 backdrop-blur">
+        <svg class="shrink-0 text-white" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+        </svg>
+        <p class="text-[13px] leading-snug font-semibold text-white">Together, we build<br />better futures.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-[1600px] px-4 py-8 sm:px-6 lg:px-10">
+
+  <!-- Stat cards -->
+  <ul class="grid list-none gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    @for (stat of stats; track stat.label) {
+      <li class="flex items-center gap-3.5 rounded-xl border border-gray-200 bg-white p-5">
+        <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/8 text-primary" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            @for (d of stat.path; track d) { <path [attr.d]="d" /> }
+          </svg>
+        </span>
+        <div>
+          <p class="text-[11.5px] text-muted">{{ stat.label }}</p>
+          <p class="text-[19px] leading-tight font-bold text-primary">{{ stat.value }}</p>
+        </div>
+      </li>
+    }
+  </ul>
+
+  <!-- Filters -->
+  <div class="mt-5 grid gap-4 rounded-xl border border-gray-200 bg-white p-5 lg:grid-cols-[1.2fr_1fr_1fr_1.2fr_auto] lg:items-end">
+    <div>
+      <label for="bs-inst" class="mb-1.5 block text-[12.5px] font-semibold text-primary">Select Institute</label>
+      <select id="bs-inst" [(ngModel)]="institute"
+        class="h-11 w-full rounded-md border border-gray-300 bg-white px-3 text-[13px] text-primary outline-none focus:border-primary">
+        @for (i of institutes(); track i) { <option [value]="i">{{ i }}</option> }
+      </select>
+    </div>
+    <div>
+      <label for="bs-course" class="mb-1.5 block text-[12.5px] font-semibold text-primary">Select Course</label>
+      <select id="bs-course" [(ngModel)]="course"
+        class="h-11 w-full rounded-md border border-gray-300 bg-white px-3 text-[13px] text-primary outline-none focus:border-primary">
+        @for (c of courses(); track c) { <option [value]="c">{{ c }}</option> }
+      </select>
+    </div>
+    <div>
+      <label for="bs-year" class="mb-1.5 block text-[12.5px] font-semibold text-primary">Select Year</label>
+      <select id="bs-year" [(ngModel)]="year"
+        class="h-11 w-full rounded-md border border-gray-300 bg-white px-3 text-[13px] text-primary outline-none focus:border-primary">
+        @for (y of years(); track y) { <option [value]="y">{{ y }}</option> }
+      </select>
+    </div>
+    <div>
+      <label for="bs-search" class="mb-1.5 block text-[12.5px] font-semibold text-primary">Search by Name or ID</label>
+      <input id="bs-search" type="search" [(ngModel)]="search" (keyup.enter)="applyFilters()" placeholder="Enter name or ID..."
+        class="h-11 w-full rounded-md border border-gray-300 px-3 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary" />
+    </div>
+    <button type="button" (click)="applyFilters()"
+      class="flex h-11 items-center justify-center rounded-md bg-primary px-7 text-[13px] font-semibold text-white transition-colors hover:bg-primary-dark">
+      Search
+    </button>
+  </div>
+
+  <!-- Table -->
+  <div class="mt-5 overflow-hidden rounded-xl border border-gray-200 bg-white">
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse text-left">
+        <thead class="bg-primary text-white">
+          <tr>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">Sr. No.</th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">Student Name</th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Institute</th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Course</th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Year</th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">Financial Year</th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">Amount (₹)</th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (student of paged(); track $index; let i = $index) {
+            <tr class="border-b border-gray-100 last:border-b-0 hover:bg-[#F7F9FC]">
+              <td class="px-5 py-3.5 text-[13px] text-muted">{{ rangeStart() + i }}</td>
+              <td class="px-5 py-3.5 text-[13px] font-medium whitespace-nowrap text-primary">{{ student.name }}</td>
+              <td class="px-5 py-3.5 text-[13px] text-muted">{{ student.institute }}</td>
+              <td class="px-5 py-3.5 text-[13px] text-muted">{{ student.course }}</td>
+              <td class="px-5 py-3.5 text-[13px] text-muted">{{ student.year }}</td>
+              <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ student.financialYear }}</td>
+              <td class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap text-primary">{{ student.amount | number }}</td>
+              <td class="px-5 py-3.5">
+                <span class="rounded-full px-3 py-1 text-[11px] font-semibold"
+                  [class]="student.status === 'Disbursed' ? 'bg-accent/10 text-accent' : 'bg-secondary/15 text-secondary-dark'">
+                  {{ student.status }}
+                </span>
+              </td>
+            </tr>
+          } @empty {
+            <tr><td colspan="8" class="px-5 py-10 text-center text-[13px] text-muted">No students match your filters.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex flex-wrap items-center justify-between gap-4 border-t border-gray-100 px-5 py-4">
+      <p class="text-[12.5px] text-muted">
+        Showing {{ rangeStart() }} to {{ rangeEnd() }} of {{ rows().length }} results
+      </p>
+
+      <div class="flex items-center gap-1.5">
+        <button type="button" (click)="go(-1)" [disabled]="page() === 1" aria-label="Previous page"
+          class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 text-primary transition-colors hover:bg-primary hover:text-white disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6" /></svg>
+        </button>
+
+        @for (n of pageNumbers(); track n) {
+          <button type="button" (click)="toPage(n)"
+            class="h-9 min-w-9 rounded-md border px-3 text-[13px] font-semibold transition-colors"
+            [class]="page() === n ? 'border-primary bg-primary text-white' : 'border-gray-200 text-primary hover:border-primary'">
+            {{ n }}
+          </button>
+        }
+
+        <button type="button" (click)="go(1)" [disabled]="page() === totalPages()" aria-label="Next page"
+          class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 text-primary transition-colors hover:bg-primary hover:text-white disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6" /></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Note -->
+  <div class="mt-5 flex items-start gap-3 rounded-lg bg-[#EEF4FC] px-5 py-4">
+    <svg class="mt-0.5 shrink-0 text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10" /><path d="M12 16v-4M12 8h.01" />
+    </svg>
+    <p class="text-[13px] leading-relaxed text-muted">
+      <span class="font-semibold text-primary">Note:</span> The amount shown is the total financial assistance sanctioned for the academic year.<br />
+      For any queries, please contact the Rahatokarsh Fund Office.
+    </p>
+  </div>
+
+</section>

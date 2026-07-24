@@ -19,6 +19,13 @@ const portrait = (id: number) => `https://i.pravatar.cc/300?img=${id}`;
 export const PLACEHOLDER = {
   heroCampus: scene('ces-campus', 1600, 900),
 
+  /** One per home-hero slide; replace each with a real campus photograph. */
+  heroSlides: [
+    scene('ces-campus', 1600, 900),
+    scene('ces-campus-life', 1600, 900),
+    scene('ces-campus-sports', 1600, 900),
+  ],
+
   institutes: {
     schools: scene('ces-schools', 600, 400),
     colleges: scene('ces-colleges', 600, 400),

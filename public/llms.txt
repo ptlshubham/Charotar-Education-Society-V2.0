@@ -45,18 +45,14 @@
 - [Donor List](https://cesociety.in/donner-list)
 - [Micro Donor List](https://cesociety.in/micro-donner)
 
-## Policies
-
-- [Privacy Policy](https://cesociety.in/more/policy)
-- [Terms & Conditions](https://cesociety.in/more/terms)
-- [Refund Policy](https://cesociety.in/more/refund-cancellation-policy)
-- [Website Terms](https://cesociety.in/more/website-terms)
-- [Disclosure Policy](https://cesociety.in/more/disclosure-policy)
-
 ## Support & Help
 
-- [Support Center](https://cesociety.in/support)
-- [FAQ](https://cesociety.in/support/faq)
+- [Privacy Policy](https://cesociety.in/support/privacy-policy)
+- [Terms & Conditions](https://cesociety.in/support/terms)
+- [Refund Policy](https://cesociety.in/support/refund-cancellation-policy)
+- [Website Terms](https://cesociety.in/support/website-terms)
+- [Disclosure Policy](https://cesociety.in/support/disclosure-policy)
+- [FAQ](https://cesociety.in/support/faqs)
 
 ## Other Pages
 

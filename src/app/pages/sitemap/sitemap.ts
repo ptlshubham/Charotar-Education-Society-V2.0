@@ -52,11 +52,11 @@ export class Sitemap {
 
   /** Pulled out of the group grid and shown as the strip at the bottom. */
   readonly importantLinks: readonly SitemapLink[] = [
-    { label: 'Privacy Policy', path: '/more/policy' },
-    { label: 'Terms & Conditions', path: '/more/terms' },
-    { label: 'Refund Policy', path: '/more/refund-cancellation-policy' },
-    { label: 'Website Terms', path: '/more/website-terms' },
-    { label: "FAQ's", path: '/more/faqs' },
+    { label: 'Privacy Policy', path: '/support/privacy-policy' },
+    { label: 'Terms & Conditions', path: '/support/terms' },
+    { label: 'Refund Policy', path: '/support/refund-cancellation-policy' },
+    { label: 'Website Terms', path: '/support/website-terms' },
+    { label: "FAQ's", path: '/support/faqs' },
     { label: 'News', path: '/more/news' },
   ];
 }

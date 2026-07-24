@@ -64,18 +64,6 @@
         { "label": "Donor List", "path": "/donner-list" },
         { "label": "Micro Donor List", "path": "/micro-donner" }
       ]
-    },
-    {
-      "icon": "legal",
-      "title": "Policies",
-      "path": "/more/policy",
-      "links": [
-        { "label": "Privacy Policy", "path": "/more/policy" },
-        { "label": "Terms & Conditions", "path": "/more/terms" },
-        { "label": "Refund Policy", "path": "/more/refund-cancellation-policy" },
-        { "label": "Website Terms", "path": "/more/website-terms" },
-        { "label": "Disclosure Policy", "path": "/more/disclosure-policy" }
-      ]
     }
   ],
   "support": {
@@ -83,8 +71,12 @@
     "title": "Support & Help",
     "path": "/support",
     "links": [
-      { "label": "Support Center", "path": "/support" },
-      { "label": "FAQ", "path": "/support/faq" }
+      { "label": "Privacy Policy", "path": "/support/privacy-policy" },
+      { "label": "Terms & Conditions", "path": "/support/terms" },
+      { "label": "Refund Policy", "path": "/support/refund-cancellation-policy" },
+      { "label": "Website Terms", "path": "/support/website-terms" },
+      { "label": "Disclosure Policy", "path": "/support/disclosure-policy" },
+      { "label": "FAQ", "path": "/support/faqs" }
     ]
   },
   "secondary": [

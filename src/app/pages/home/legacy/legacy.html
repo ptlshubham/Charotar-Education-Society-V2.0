@@ -32,25 +32,51 @@
     <p class="mt-1 text-[13px] text-muted">31+ Institutes, One Vision.</p>
 
     <div class="relative my-5 flex-1" style="min-height: 200px">
-      <!-- Halftone region map with campus pins. Swap in a true Gujarat outline when available. -->
-      <svg class="absolute inset-0 h-full w-full" viewBox="0 0 320 200" fill="none" aria-hidden="true">
+      <!-- Halftone map of the Anand district with the institute network pinned.
+           Each marker keeps its position on the outer <g> (transform attribute)
+           and animates on an inner <g>, because a CSS transform would otherwise
+           override the attribute and knock the pin back to the origin. -->
+      <svg class="absolute inset-0 h-full w-full" viewBox="0 0 320 200" fill="none"
+        role="img" aria-label="Map of the Anand district showing the CES institute network">
         <defs>
           <pattern id="ces-map-dots" width="7" height="7" patternUnits="userSpaceOnUse">
             <circle cx="1.6" cy="1.6" r="1.5" fill="currentColor" class="text-primary/25" />
           </pattern>
           <clipPath id="ces-map-shape">
-            <path d="M74 26c34-12 78-16 116-4 30 9 52 6 74 18 16 9 18 32 4 47-11 12-9 26-22 38-16 15-44 24-78 26-38 2-70-6-90-24-14-13-12-30-22-44-12-17-6-46 18-57z" />
+            <path [attr.d]="anandOutline" />
           </clipPath>
         </defs>
 
         <rect width="320" height="200" fill="url(#ces-map-dots)" clip-path="url(#ces-map-shape)" />
 
-        @for (pin of pins; track pin) {
-          <g [attr.transform]="'translate(' + pin[0] + ',' + pin[1] + ') scale(0.95)'" class="text-secondary">
-            <path d="M0-18c-6 0-11 5-11 11 0 8 11 19 11 19s11-11 11-19c0-6-5-11-11-11z" fill="currentColor" />
-            <circle cx="0" cy="-7" r="3.6" fill="#fff" />
+        <!-- District edge, so the silhouette reads as a region rather than a blob. -->
+        <path [attr.d]="anandOutline" fill="none" stroke="currentColor" stroke-width="1.3"
+          stroke-linejoin="round" class="text-primary/30" />
+
+        <!-- Network markers -->
+        @for (pin of pins; track pin; let i = $index) {
+          <g [attr.transform]="'translate(' + pin[0] + ',' + pin[1] + ')'" class="text-secondary">
+            <circle r="7" fill="currentColor"
+              class="animate-pin-pulse [transform-box:fill-box] [transform-origin:center] motion-reduce:animate-none motion-reduce:opacity-0"
+              [style.animation-delay.ms]="i * 260" />
+            <g class="animate-pin-drop [transform-box:fill-box] [transform-origin:bottom] motion-reduce:animate-none"
+              [style.animation-delay.ms]="200 + i * 70">
+              <path d="M0-17c-5.6 0-10.3 4.7-10.3 10.3C-10.3 1 0 18 0 18s10.3-17 10.3-24.7C10.3-12.3 5.6-17 0-17z" fill="currentColor" />
+              <circle cx="0" cy="-6.6" r="3.4" fill="#fff" />
+            </g>
           </g>
         }
+
+        <!-- Anand hub: larger, lands first, and labelled. -->
+        <g [attr.transform]="'translate(' + hub.x + ',' + hub.y + ')'" class="text-accent">
+          <circle r="9" fill="currentColor"
+            class="animate-pin-pulse [transform-box:fill-box] [transform-origin:center] motion-reduce:animate-none motion-reduce:opacity-0" />
+          <g class="animate-pin-drop [transform-box:fill-box] [transform-origin:bottom] motion-reduce:animate-none">
+            <path d="M0-21c-6.9 0-12.5 5.6-12.5 12.5C-12.5 1 0 22 0 22s12.5-21 12.5-30.5C12.5-15.4 6.9-21 0-21z" fill="currentColor" />
+            <circle cx="0" cy="-8" r="4.2" fill="#fff" />
+          </g>
+          <text x="15" y="3" class="fill-primary text-[10px] font-bold">{{ hub.label }}</text>
+        </g>
       </svg>
     </div>
 

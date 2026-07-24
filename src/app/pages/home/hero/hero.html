@@ -18,7 +18,7 @@
     <div class="relative mx-auto flex max-w-[1600px] flex-col gap-8 px-4 py-12 sm:px-6 lg:min-h-[520px] lg:px-10 lg:py-20 lg:pb-28">
 
       <!-- Circular video affordance, top-right -->
-      <button type="button" aria-label="Play the campus video"
+      <button type="button" aria-label="Play the campus video" (click)="openVideo()"
         class="absolute top-10 right-4 hidden h-14 w-14 items-center justify-center rounded-full border-2 border-white/70 text-white transition-colors hover:bg-white hover:text-primary sm:right-6 lg:right-10 lg:flex">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M8 5v14l11-7z" />
@@ -79,7 +79,7 @@
       </div>
 
       <!-- Video affordance -->
-      <button type="button"
+      <button type="button" (click)="openVideo()"
         class="group inline-flex w-fit items-center gap-3 rounded-full bg-white/10 py-2 pr-5 pl-2 text-[14px] font-medium text-white backdrop-blur transition-colors hover:bg-white/20 lg:absolute lg:right-10 lg:bottom-14">
         <span class="flex h-11 w-11 items-center justify-center rounded-full bg-white text-primary">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -124,3 +124,32 @@
   </div>
 
 </section>
+
+<!-- ─── Video popup ───
+     Rendered only while open: the embed is never requested on page load, and
+     unmounting it on close is what stops playback. Sits above the sticky header
+     (z-95) and the assistant panel (z-90). -->
+@if (videoOpen()) {
+  <div class="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+    role="dialog" aria-modal="true" aria-label="Charotar Education Society campus video"
+    (click)="closeVideo()">
+
+    <!-- Stop clicks inside the player from reaching the backdrop handler. -->
+    <div class="relative w-full max-w-4xl" (click)="$event.stopPropagation()">
+
+      <button type="button" (click)="closeVideo()" aria-label="Close video" autofocus
+        class="absolute -top-12 right-0 flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white hover:text-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 6 6 18M6 6l12 12" />
+        </svg>
+      </button>
+
+      <div class="aspect-video w-full overflow-hidden rounded-xl bg-black shadow-2xl">
+        <iframe class="h-full w-full" [src]="videoUrl"
+          title="Charotar Education Society campus video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+}

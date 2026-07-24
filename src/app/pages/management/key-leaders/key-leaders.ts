@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Reveal } from '../../../shared/reveal.directive';
 
 @Component({
   selector: 'app-key-leaders',
+  imports: [Reveal],
   templateUrl: './key-leaders.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './key-leaders.scss',

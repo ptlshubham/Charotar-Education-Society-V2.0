@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Reveal } from '../../../shared/reveal.directive';
 
 @Component({
   selector: 'app-management-stats',
+  imports: [Reveal],
   templateUrl: './management-stats.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './management-stats.scss',

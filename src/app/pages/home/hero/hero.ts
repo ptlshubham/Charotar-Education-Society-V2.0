@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, PLATFORM_ID, computed, inject, signal } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
 
@@ -18,10 +19,13 @@ interface Slide {
   templateUrl: './hero.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './hero.scss',
+  host: { '(document:keydown.escape)': 'closeVideo()' },
 })
 export class Hero {
   private readonly destroyRef = inject(DestroyRef);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  private readonly document = inject(DOCUMENT);
+  private readonly sanitizer = inject(DomSanitizer);
 
   /** Replace each `image` with real CES photography — see PLACEHOLDER.heroSlides. */
   readonly slides: readonly Slide[] = [
@@ -60,11 +64,47 @@ export class Hero {
     'Courses',
   ];
 
+  // ─── Campus video ───
+  /** YouTube id of the CES film. Swap for a newer upload when there is one. */
+  private static readonly VIDEO_ID = '_-ntpkeG7O4';
+
+  readonly videoOpen = signal(false);
+
+  /**
+   * Built once. The iframe is only rendered while the modal is open, so this URL
+   * is never requested on page load — and closing unmounts it, which stops
+   * playback (there is no other way to stop an embed we don't control).
+   */
+  readonly videoUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+    `https://www.youtube-nocookie.com/embed/${Hero.VIDEO_ID}?autoplay=1&rel=0&modestbranding=1`,
+  );
+
+  openVideo(): void {
+    this.videoOpen.set(true);
+    this.stop();            // don't advance slides behind the modal
+    this.lockScroll(true);
+  }
+
+  closeVideo(): void {
+    if (!this.videoOpen()) return;   // the Escape handler fires page-wide
+    this.videoOpen.set(false);
+    this.lockScroll(false);
+    this.start();
+  }
+
+  private lockScroll(on: boolean): void {
+    if (!this.isBrowser) return;
+    this.document.body.style.overflow = on ? 'hidden' : '';
+  }
+
   constructor() {
     // Autoplay is browser-only: setInterval must never run during SSR/prerender.
     if (this.isBrowser) {
       this.start();
-      this.destroyRef.onDestroy(() => this.stop());
+      this.destroyRef.onDestroy(() => {
+        this.stop();
+        this.lockScroll(false);   // never leave the page unscrollable
+      });
     }
   }
 

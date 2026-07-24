@@ -39,11 +39,11 @@ export class Footer {
     {
       title: 'Explore',
       links: [
-        { label: 'Privacy Policy', route: '/more/policy' },
-        { label: 'Terms & Conditions', route: '/more/terms' },
-        { label: 'Refund Cancellation', route: '/more/refund-cancellation-policy' },
-        { label: 'Website Terms', route: '/more/website-terms' },
-        { label: 'Disclosure Policy', route: '/more/disclosure-policy' },
+        { label: 'Privacy Policy', route: '/support/privacy-policy' },
+        { label: 'Terms & Conditions', route: '/support/terms' },
+        { label: 'Refund Cancellation', route: '/support/refund-cancellation-policy' },
+        { label: 'Website Terms', route: '/support/website-terms' },
+        { label: 'Disclosure Policy', route: '/support/disclosure-policy' },
         { label: 'Sitemap', route: '/sitemap' },
       ],
     },
@@ -73,7 +73,7 @@ export class Footer {
       title: 'Quick Links',
       links: [
         { label: 'News & Updates', route: '/more/news' },
-        { label: "FAQ's", route: '/more/faqs' },
+        { label: "FAQ's", route: '/support/faqs' },
         { label: 'Careers', route: '/more/career' },
         { label: 'Tenders', route: '/more/tenders' },
         { label: 'e-Gate Pass', route: '/more/gate-pass' },

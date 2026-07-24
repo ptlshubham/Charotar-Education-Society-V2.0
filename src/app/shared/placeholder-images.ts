@@ -5,6 +5,15 @@
  * URL with a local path under `public/assets/images/…` and nothing else needs to
  * change — the components read from this file only.
  *
+ * To swap in a real photo, write the path as a plain string and DROP the
+ * `scene()` wrapper entirely:
+ *
+ *   scene('ces-campus', 1600, 900)      ->  '/assets/images/hero/home.jpeg'
+ *
+ * `scene()` only builds picsum.photos URLs; passing it a file path just makes a
+ * broken remote URL. Its width/height tell picsum what to generate — a real file
+ * already carries its own dimensions, so there is nothing to pass.
+ *
  * See PLACEHOLDER-IMAGES.md at the repo root for the full inventory and the
  * recommended dimensions for each slot.
  */
@@ -19,9 +28,9 @@ const portrait = (id: number) => `https://i.pravatar.cc/300?img=${id}`;
 export const PLACEHOLDER = {
   heroCampus: scene('ces-campus', 1600, 900),
 
-  /** One per home-hero slide; replace each with a real campus photograph. */
+  /** One per home-hero slide; slides 2–3 still await real campus photography. */
   heroSlides: [
-    scene('ces-campus', 1600, 900),
+    '/assets/images/hero/temp.jpg',
     scene('ces-campus-life', 1600, 900),
     scene('ces-campus-sports', 1600, 900),
   ],

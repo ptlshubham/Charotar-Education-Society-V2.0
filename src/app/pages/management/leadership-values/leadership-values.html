@@ -11,8 +11,9 @@
     </div>
 
     <ul class="grid list-none grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-      @for (value of values; track value.title) {
-        <li class="flex flex-col items-center rounded-xl border border-gray-200 bg-white px-3 py-5 text-center">
+      @for (value of values; track value.title; let i = $index) {
+        <li [appReveal]="i * 90"
+          class="flex flex-col items-center rounded-xl border border-gray-200 bg-white px-3 py-5 text-center">
           <svg class="text-secondary" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             @for (d of value.path; track d) { <path [attr.d]="d" /> }
           </svg>

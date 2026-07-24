@@ -37,11 +37,24 @@ export class Legacy {
     },
   ];
 
-  /** Campus pin positions in the map's 320×200 viewBox. */
+  /**
+   * Stylised Anand district silhouette for the 320×200 viewBox — the halftone
+   * treatment reads as a map motif, not a survey boundary. Swap for a path
+   * traced from real district GeoJSON if an accurate outline is ever needed.
+   */
+  readonly anandOutline =
+    'M150 16 L172 14 L190 24 L206 20 L220 32 L228 48 L244 58 L252 74 L244 88 ' +
+    'L256 98 L248 114 L232 120 L236 134 L216 142 L198 138 L184 150 L166 146 ' +
+    'L150 158 L134 150 L120 160 L104 150 L96 134 L80 128 L70 136 L56 128 ' +
+    'L52 112 L66 104 L74 88 L64 74 L74 60 L92 54 L100 38 L118 34 L130 22 Z';
+
+  /** Anand itself — the hub marker, drawn larger and labelled. */
+  readonly hub = { x: 150, y: 92, label: 'Anand' };
+
+  /** The wider institute network, in the same viewBox. */
   readonly pins: ReadonlyArray<readonly [number, number]> = [
-    [96, 78], [140, 62], [186, 80], [122, 108], [166, 120],
-    [212, 96], [84, 118], [150, 150], [200, 142], [110, 148],
-    [236, 70], [176, 172],
+    [186, 56], [210, 74], [124, 78], [222, 96], [104, 104],
+    [144, 126], [188, 122], [126, 140], [230, 116], [162, 140], [88, 86],
   ];
 
   readonly pillars: readonly string[] = [

@@ -71,11 +71,6 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/campuses/campuses').then(m => m.Campuses)
       },
       {
-        path: 'more/faqs',
-        ...seo('more/faqs'),
-        loadComponent: () => import('./pages/faqs/faqs').then(m => m.Faqs)
-      },
-      {
         path: 'counselling',
         ...seo('counselling'),
         loadComponent: () => import('./pages/counselling/counselling').then(m => m.Counselling)
@@ -95,37 +90,11 @@ export const routes: Routes = [
         ...seo('more/career'),
         loadComponent: () => import('./pages/careers/careers').then(m => m.Careers)
       },
-      // ─── Policies (one component, five content sets) ───
-      {
-        path: 'more/policy',
-        resolve: { seo: seoResolver },
-        data: { seoKey: 'more/policy', policy: 'privacy' },
-        loadComponent: () => import('./pages/policies/policy-page/policy-page').then(m => m.PolicyPage)
-      },
-      {
-        path: 'more/terms',
-        resolve: { seo: seoResolver },
-        data: { seoKey: 'more/terms', policy: 'terms' },
-        loadComponent: () => import('./pages/policies/policy-page/policy-page').then(m => m.PolicyPage)
-      },
-      {
-        path: 'more/refund-cancellation-policy',
-        resolve: { seo: seoResolver },
-        data: { seoKey: 'more/refund-cancellation-policy', policy: 'refund' },
-        loadComponent: () => import('./pages/policies/policy-page/policy-page').then(m => m.PolicyPage)
-      },
-      {
-        path: 'more/website-terms',
-        resolve: { seo: seoResolver },
-        data: { seoKey: 'more/website-terms', policy: 'website-terms' },
-        loadComponent: () => import('./pages/policies/policy-page/policy-page').then(m => m.PolicyPage)
-      },
-      {
-        path: 'more/disclosure-policy',
-        resolve: { seo: seoResolver },
-        data: { seoKey: 'more/disclosure-policy', policy: 'disclosure' },
-        loadComponent: () => import('./pages/policies/policy-page/policy-page').then(m => m.PolicyPage)
-      },
+      // Policy pages moved under /support (see the support route below). These
+      // redirects preserve the old CES site's /more/* URLs (hash links + bookmarks).
+      { path: 'more/policy', redirectTo: '/support/privacy-policy', pathMatch: 'full' },
+      { path: 'more/terms', redirectTo: '/support/terms', pathMatch: 'full' },
+      { path: 'more/refund-cancellation-policy', redirectTo: '/support/refund-cancellation-policy', pathMatch: 'full' },
       {
         path: 'ipcell',
         ...seo('ipcell'),
@@ -226,16 +195,44 @@ export const routes: Routes = [
         ...seo('sitemap'),
         loadComponent: () => import('./pages/sitemap/sitemap').then(m => m.Sitemap)
       },
+      // ─── Support & Help ─── legal/policy pages + FAQ, grouped under one prefix.
+      // The five policies share one component (PolicyPage), keyed by data.policy.
       {
         path: 'support',
         loadComponent: () => import('./pages/support/support.component').then(m => m.SupportComponent),
         children: [
-          { path: '', ...seo('support'), loadComponent: () => import('./pages/support/support-center/support-center').then(m => m.SupportCenter) },
-          { path: 'privacy-policy', ...seo('support/privacy-policy'), loadComponent: () => import('./pages/support/privacy-policy/privacy-policy').then(m => m.PrivacyPolicy) },
-          { path: 'terms-of-service', ...seo('support/terms-of-service'), loadComponent: () => import('./pages/support/terms-of-service/terms-of-service').then(m => m.TermsOfService) },
-          { path: 'cookie-policy', ...seo('support/cookie-policy'), loadComponent: () => import('./pages/support/cookie-policy/cookie-policy').then(m => m.CookiePolicy) },
-          { path: 'website-terms', ...seo('support/website-terms'), loadComponent: () => import('./pages/support/website-terms/website-terms').then(m => m.WebsiteTerms) },
-          { path: 'faq', ...seo('support/faq'), loadComponent: () => import('./pages/support/faq/faq').then(m => m.Faq) }
+          { path: '', redirectTo: 'privacy-policy', pathMatch: 'full' },
+          {
+            path: 'privacy-policy',
+            resolve: { seo: seoResolver },
+            data: { seoKey: 'support/privacy-policy', policy: 'privacy' },
+            loadComponent: () => import('./pages/policies/policy-page/policy-page').then(m => m.PolicyPage)
+          },
+          {
+            path: 'terms',
+            resolve: { seo: seoResolver },
+            data: { seoKey: 'support/terms', policy: 'terms' },
+            loadComponent: () => import('./pages/policies/policy-page/policy-page').then(m => m.PolicyPage)
+          },
+          {
+            path: 'refund-cancellation-policy',
+            resolve: { seo: seoResolver },
+            data: { seoKey: 'support/refund-cancellation-policy', policy: 'refund' },
+            loadComponent: () => import('./pages/policies/policy-page/policy-page').then(m => m.PolicyPage)
+          },
+          {
+            path: 'website-terms',
+            resolve: { seo: seoResolver },
+            data: { seoKey: 'support/website-terms', policy: 'website-terms' },
+            loadComponent: () => import('./pages/policies/policy-page/policy-page').then(m => m.PolicyPage)
+          },
+          {
+            path: 'disclosure-policy',
+            resolve: { seo: seoResolver },
+            data: { seoKey: 'support/disclosure-policy', policy: 'disclosure' },
+            loadComponent: () => import('./pages/policies/policy-page/policy-page').then(m => m.PolicyPage)
+          },
+          { path: 'faqs', ...seo('support/faqs'), loadComponent: () => import('./pages/faqs/faqs').then(m => m.Faqs) }
         ]
       },
       {

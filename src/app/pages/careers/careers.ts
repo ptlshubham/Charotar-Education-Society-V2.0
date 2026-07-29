@@ -1,6 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { Paginator } from '../../shared/pagination/paginator';
+import { Pagination } from '../../shared/pagination/pagination';
+import { Sorter } from '../../shared/sorting/sorter';
+import { SortHeader } from '../../shared/sorting/sort-header';
 import { PLACEHOLDER } from '../../shared/placeholder-images';
 
 interface Opening {
@@ -12,7 +16,7 @@ interface Opening {
 
 @Component({
   selector: 'app-careers',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, Pagination, SortHeader],
   templateUrl: './careers.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './careers.scss',
@@ -40,7 +44,7 @@ export class Careers {
 
   apply(): void {
     this.query.set(this.search.trim().toLowerCase());
-    this.page.set(1);
+    this.pager.reset();
   }
 
   readonly rows = computed(() => {
@@ -50,24 +54,6 @@ export class Careers {
       : this.all;
   });
 
-  // ─── Pagination ───
-  readonly pageSize = 5;
-  readonly page = signal(1);
-  readonly totalPages = computed(() => Math.max(1, Math.ceil(this.rows().length / this.pageSize)));
-  readonly paged = computed(() =>
-    this.rows().slice((this.page() - 1) * this.pageSize, this.page() * this.pageSize),
-  );
-  readonly rangeStart = computed(() => (this.rows().length ? (this.page() - 1) * this.pageSize + 1 : 0));
-  readonly rangeEnd = computed(() => Math.min(this.page() * this.pageSize, this.rows().length));
-  readonly pageNumbers = computed(() =>
-    Array.from({ length: this.totalPages() }, (_, i) => i + 1).slice(0, 5),
-  );
-
-  go(delta: number): void {
-    this.page.update((p) => Math.min(this.totalPages(), Math.max(1, p + delta)));
-  }
-
-  toPage(n: number): void {
-    this.page.set(n);
-  }
+  readonly sorter = new Sorter(this.rows);
+  readonly pager = new Paginator(this.sorter.sorted, 5);
 }

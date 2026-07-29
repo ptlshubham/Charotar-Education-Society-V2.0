@@ -1,18 +1,55 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
+import { catchError, of } from 'rxjs';
+import { ResourcesService } from '../../../core/services/resources.service';
+import { NavratriEntry } from '../../../shared/models/models';
+import { MediaUrlPipe } from '../../../shared/media-url.pipe';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
 
 type Glimpse = 'All' | 'Pandal' | 'Garba' | 'Cultural Programs' | 'Aarti' | 'Devotees';
 
 @Component({
   selector: 'app-navratri',
-  imports: [RouterLink],
+  imports: [RouterLink, MediaUrlPipe],
   templateUrl: './navratri.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './navratri.scss',
 })
 export class Navratri {
+  private readonly resources = inject(ResourcesService);
+
   readonly banner = PLACEHOLDER.media.navratriBanner;
+
+  // ─── Real Navratri celebrations from the DB ───
+  readonly loading = signal(true);
+  readonly failed = signal(false);
+  readonly celebrations = signal<readonly NavratriEntry[]>([]);
+
+  constructor() {
+    this.resources
+      .getNavratriList()
+      .pipe(
+        catchError(() => {
+          this.failed.set(true);
+          return of<NavratriEntry[]>([]);
+        }),
+        takeUntilDestroyed(),
+      )
+      .subscribe((list) => {
+        const rows = Array.isArray(list) ? [...list] : [];
+        // Newest year first, like the legacy site.
+        rows.sort((a, b) => Number(b.year) - Number(a.year));
+        this.celebrations.set(rows);
+        this.loading.set(false);
+      });
+  }
+
+  /** Strips HTML from themedetails for a short card teaser. */
+  teaser(html: string, max = 160): string {
+    const text = (html ?? '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+    return text.length > max ? text.slice(0, max).trimEnd() + '…' : text;
+  }
 
   readonly quickLinks: ReadonlyArray<{ label: string; path: string[] }> = [
     { label: 'Navratri 2026 Schedule', path: ['M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z', 'M16 2v4M8 2v4M3 10h18'] },

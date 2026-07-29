@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { PageHero } from '../../../shared/page-hero/page-hero';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
+import { AcademicTabs, AcademicTab } from '../academic-tabs';
 
 @Component({
   selector: 'app-others',
-  imports: [PageHero],
+  imports: [PageHero, AcademicTabs],
   templateUrl: './others.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './others.scss',
@@ -12,12 +13,18 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
 export class Others {
   readonly banner = PLACEHOLDER.academic.othersBanner;
 
+  readonly tabs: readonly AcademicTab[] = [
+    { id: 'others', label: 'Others', path: ['M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z'] },
+  ];
+  readonly active = signal('others');
+
   readonly featured = {
     name: 'CES Performing Arts And Fine Arts Academy',
     desc: 'Nurturing creativity and artistic excellence in music, dance, theatre, and visual arts for all age groups.',
     phone: '(02692) 266789',
+    website: 'https://www.performing.cesociety.in/',
     location: 'Anand, Gujarat',
-    image: PLACEHOLDER.academic.cards[0],
+    image: '/assets/images/institutes/ces-performing-arts.jpg',
   };
 
   readonly initiatives: ReadonlyArray<{

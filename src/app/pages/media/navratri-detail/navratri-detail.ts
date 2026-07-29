@@ -1,23 +1,34 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { catchError, map, of, switchMap, tap } from 'rxjs';
+import { ResourcesService } from '../../../core/services/resources.service';
+import { NavratriEntry, NavratriImage } from '../../../shared/models/models';
+import { MediaUrlPipe } from '../../../shared/media-url.pipe';
+import { SafeHtmlPipe } from '../../../shared/safe-html.pipe';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
 
 type Tab = 'overview' | 'gallery' | 'events' | 'news' | 'sponsors';
-type Shot = 'All' | 'Stage Decoration' | 'Garba Night' | 'Cultural Program' | 'Aarti' | 'Devotees';
 
 @Component({
   selector: 'app-navratri-detail',
-  imports: [RouterLink],
+  imports: [RouterLink, MediaUrlPipe, SafeHtmlPipe],
   templateUrl: './navratri-detail.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './navratri-detail.scss',
 })
 export class NavratriDetail {
   private readonly route = inject(ActivatedRoute);
+  private readonly resources = inject(ResourcesService);
 
   /** Year comes from the URL so /navratri/2024 works without a new component. */
-  readonly year = this.route.snapshot.paramMap.get('year') ?? '2023';
+  readonly year = this.route.snapshot.paramMap.get('year') ?? '';
   readonly banner = PLACEHOLDER.media.navratriBanner;
+
+  readonly loading = signal(true);
+  readonly failed = signal(false);
+  readonly entry = signal<NavratriEntry | null>(null);
+  readonly images = signal<readonly NavratriImage[]>([]);
 
   readonly tabs: ReadonlyArray<{ id: Tab; label: string; path: string[] }> = [
     { id: 'overview', label: 'Overview', path: ['M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z', 'M8 9h8M8 13h5'] },
@@ -33,18 +44,8 @@ export class NavratriDetail {
     this.active.set(id);
   }
 
-  readonly headline = 'બ્રહ્માંડેશ્વરી નવરાત્રી મહોત્સવ — બ્રહ્માંડ જનની માં તારા ગર્ભે અને ગુંજેલા બ્રહ્માંડ તારા સંગઠનનો અઠવાડો...';
-
-  readonly body: readonly string[] = [
-    'વિજ્ઞાન કલ્પનાને સમર્પિત છે નવરાત્રી નવ દિવસ માઁ જગદંબાની ઉપાસના અને આરાધનાનું પર્વ છે. અહીંનો ગોખનો સંસ્કાર અને પરંપરા સાથે નવરાત્રી મહોત્સવ ઉજવવામાં આવે છે.',
-    'આ નવરાત્રી માત્ર ઉત્સવ નથી, આ આપણાં સંસ્કાર, સંસ્કૃતિ અને એકતાનું પ્રતીક છે. હજારો ભક્તો, વિદ્યાર્થીઓ અને શુભેચ્છકો આ ઉત્સવમાં ભાગ લે છે.',
-  ];
-
-  readonly quote = 'આ નવરાત્રી માત્ર ઉત્સવ નથી, આ આપણાં સંસ્કાર, સંસ્કૃતિ અને એકતાનું પ્રતીક છે.';
-
+  /** Generic event facts (the DB has only the theme write-up). */
   readonly highlights: ReadonlyArray<{ label: string; value: string; path: string[] }> = [
-    { label: 'Theme', value: 'Brahmand – Anant Urja, Anant Shakti', path: ['M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z', 'M8 9h8M8 13h5'] },
-    { label: 'Duration', value: '15th Sep – 24th Oct, 2023', path: ['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z', 'M12 6v6l4 2'] },
     { label: 'Venue', value: 'CES Campus, Anand', path: ['M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z', 'M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'] },
     { label: 'Devotees', value: '100K+ Devotees', path: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', 'M22 21v-2a4 4 0 0 0-3-3.87'] },
     { label: 'Garba Nights', value: '9 Nights of Devotion & Dance', path: ['M9 18V5l12-2v13', 'M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0z'] },
@@ -53,21 +54,31 @@ export class NavratriDetail {
     { label: 'Security & Safety', value: '100% Safe & Secure', path: ['M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'] },
   ];
 
-  readonly shotFilters: readonly Shot[] = ['All', 'Stage Decoration', 'Garba Night', 'Cultural Program', 'Aarti', 'Devotees'];
-  readonly shotFilter = signal<Shot>('All');
-
-  selectShot(s: Shot): void {
-    this.shotFilter.set(s);
+  constructor() {
+    this.resources
+      .getNavratriList()
+      .pipe(
+        catchError(() => {
+          this.failed.set(true);
+          return of<NavratriEntry[]>([]);
+        }),
+        map((list) => (Array.isArray(list) ? list : []).find((e) => String(e.year) === String(this.year)) ?? null),
+        tap((found) => {
+          this.entry.set(found);
+          this.loading.set(false);
+        }),
+        switchMap((found) =>
+          found
+            ? this.resources.getNavratriImages(found.id).pipe(catchError(() => of<NavratriImage[]>([])))
+            : of<NavratriImage[]>([]),
+        ),
+        takeUntilDestroyed(),
+      )
+      .subscribe((imgs) => this.images.set(Array.isArray(imgs) ? imgs : []));
   }
 
-  readonly shots: ReadonlyArray<{ src: string; tag: Exclude<Shot, 'All'> }> =
-    PLACEHOLDER.media.navratri.map((src, i) => ({
-      src,
-      tag: (['Stage Decoration', 'Stage Decoration', 'Cultural Program', 'Aarti', 'Devotees', 'Garba Night', 'Garba Night', 'Aarti'] as const)[i],
-    }));
-
-  readonly visibleShots = computed(() => {
-    const f = this.shotFilter();
-    return f === 'All' ? this.shots : this.shots.filter((s) => s.tag === f);
-  });
+  /** Best available URL field on a gallery image. */
+  imgSrc(img: NavratriImage): string {
+    return img.thumb ?? img.image ?? img.original ?? img.path ?? '';
+  }
 }

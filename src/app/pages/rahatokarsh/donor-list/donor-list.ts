@@ -1,46 +1,69 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { DecimalPipe, formatDate } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-
-interface Donor {
-  date: string;
-  name: string;
-  city: string;
-  amount: number;
-  type: string;
-}
+import { catchError, of } from 'rxjs';
+import { ResourcesService } from '../../../core/services/resources.service';
+import { Donor } from '../../../shared/models/models';
+import { Paginator } from '../../../shared/pagination/paginator';
+import { Pagination } from '../../../shared/pagination/pagination';
+import { Sorter } from '../../../shared/sorting/sorter';
+import { SortHeader } from '../../../shared/sorting/sort-header';
 
 @Component({
   selector: 'app-donor-list',
-  imports: [DecimalPipe, FormsModule, RouterLink],
+  imports: [DecimalPipe, FormsModule, RouterLink, Pagination, SortHeader],
   templateUrl: './donor-list.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './donor-list.scss',
 })
 export class DonorList {
-  /** TODO: replace with the live donor feed; these rows come from the legacy site. */
-  private readonly all: readonly Donor[] = [
-    { date: 'May 22, 2024', name: 'PANCHAM KUMAR PATEL', city: 'ANAND', amount: 11001, type: 'Online' },
-    { date: 'May 21, 2024', name: 'URVASHIBEN PATEL', city: 'SURENDRANAGAR', amount: 5101, type: 'Online' },
-    { date: 'May 21, 2024', name: 'OM INSTITUTE OF RESEARCH & ANALYTICS PVT.LTD.', city: 'AHMEDABAD', amount: 41151, type: 'Online' },
-    { date: 'May 18, 2024', name: 'DR. VIPUL PATEL', city: 'VADODARA', amount: 6001, type: 'Online' },
-    { date: 'May 16, 2024', name: 'KAKADE MICRO-CHEMICALS GUJARAT PVT.LTD.', city: 'VADODARA', amount: 50001, type: 'Online' },
-    { date: 'May 15, 2024', name: 'CHOKSHI LAB PVT.LTD.', city: 'ANAND', amount: 100001, type: 'Online' },
-    { date: 'Apr 28, 2024', name: 'NILKANTH PAREKH', city: 'vadodara', amount: 151001, type: 'Online' },
-    { date: 'Apr 11, 2024', name: 'PATEL KRISHNA ANAND BHAI', city: 'ANAND', amount: 6001, type: 'Online' },
-    { date: 'Apr 11, 2024', name: 'YASH SOMANI', city: 'VADODARA', amount: 10001, type: 'Online' },
-    { date: 'Apr 11, 2024', name: 'GCM CORPORATION', city: 'GOA', amount: 5001, type: 'Online' },
-  ];
+  private readonly resources = inject(ResourcesService);
 
-  readonly totalDonors = '1,248';
-  readonly totalAmount = '₹1.85 Cr+';
+  readonly loading = signal(true);
+  readonly failed = signal(false);
+  private readonly all = signal<readonly Donor[]>([]);
 
-  readonly donorTypes: readonly string[] = ['All Donors', 'Individual', 'Organisation'];
-  readonly cities = computed(() => ['All Cities', ...new Set(this.all.map((d) => d.city.toUpperCase()))]);
+  constructor() {
+    this.resources
+      .getDonorList()
+      .pipe(
+        catchError(() => {
+          this.failed.set(true);
+          return of<Donor[]>([]);
+        }),
+        takeUntilDestroyed(),
+      )
+      .subscribe((rows) => {
+        // Normalise amount to a real number — some legacy rows send it as a
+        // string/null, which DecimalPipe (| number) rejects with NG02100.
+        this.all.set(
+          (Array.isArray(rows) ? rows : []).map((r) => ({ ...r, amount: Number(r.amount) || 0 })),
+        );
+        this.loading.set(false);
+      });
+  }
 
-  dateRange = '';
-  donorType = 'All Donors';
+  // Totals are derived from the fetched rows, not hard-coded.
+  /** Formats a DB date, tolerating null/empty/unparseable values (some legacy
+   *  rows carry blank or malformed dates — DatePipe would throw NG02100). */
+  displayDate(value: string): string {
+    if (!value) return '—';
+    const d = new Date(value);
+    return isNaN(d.getTime()) ? value : formatDate(d, 'mediumDate', 'en-US');
+  }
+
+  readonly totalDonors = computed(() => this.all().length.toLocaleString('en-IN'));
+  readonly totalAmount = computed(
+    () => '₹ ' + this.all().reduce((sum, d) => sum + (d.amount || 0), 0).toLocaleString('en-IN'),
+  );
+
+  readonly cities = computed(() => [
+    'All Cities',
+    ...[...new Set(this.all().map((d) => (d.donnerCity || '').trim().toUpperCase()).filter(Boolean))].sort(),
+  ]);
+
   city = 'All Cities';
   search = '';
 
@@ -48,37 +71,18 @@ export class DonorList {
 
   applyFilters(): void {
     this.query.set({ city: this.city, search: this.search.trim().toLowerCase() });
-    this.page.set(1);
+    this.pager.reset();
   }
 
   readonly rows = computed(() => {
     const { city, search } = this.query();
-    return this.all.filter(
+    return this.all().filter(
       (d) =>
-        (city === 'All Cities' || d.city.toUpperCase() === city) &&
-        (!search || d.name.toLowerCase().includes(search)),
+        (city === 'All Cities' || (d.donnerCity || '').trim().toUpperCase() === city) &&
+        (!search || (d.donnerName || '').toLowerCase().includes(search)),
     );
   });
 
-  // ─── Pagination ───
-  readonly pageSize = 10;
-  readonly page = signal(1);
-  readonly totalPages = computed(() => Math.max(1, Math.ceil(this.rows().length / this.pageSize)));
-  readonly paged = computed(() =>
-    this.rows().slice((this.page() - 1) * this.pageSize, this.page() * this.pageSize),
-  );
-  readonly rangeStart = computed(() => (this.rows().length ? (this.page() - 1) * this.pageSize + 1 : 0));
-  readonly rangeEnd = computed(() => Math.min(this.page() * this.pageSize, this.rows().length));
-
-  go(delta: number): void {
-    this.page.update((p) => Math.min(this.totalPages(), Math.max(1, p + delta)));
-  }
-
-  toPage(n: number): void {
-    this.page.set(n);
-  }
-
-  readonly pageNumbers = computed(() =>
-    Array.from({ length: this.totalPages() }, (_, i) => i + 1).slice(0, 5),
-  );
+  readonly sorter = new Sorter(this.rows);
+  readonly pager = new Paginator(this.sorter.sorted, 25);
 }

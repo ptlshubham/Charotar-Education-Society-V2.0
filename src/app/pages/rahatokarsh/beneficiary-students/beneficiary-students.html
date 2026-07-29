@@ -40,7 +40,7 @@
 
   <!-- Stat cards -->
   <ul class="grid list-none gap-4 sm:grid-cols-2 lg:grid-cols-4">
-    @for (stat of stats; track stat.label) {
+    @for (stat of stats(); track stat.label) {
       <li class="flex items-center gap-3.5 rounded-xl border border-gray-200 bg-white p-5">
         <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/8 text-primary" aria-hidden="true">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
@@ -96,65 +96,48 @@
         <thead class="bg-primary text-white">
           <tr>
             <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">Sr. No.</th>
-            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">Student Name</th>
-            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Institute</th>
-            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Course</th>
-            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Year</th>
-            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">Financial Year</th>
-            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">Amount (₹)</th>
-            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Status</th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">
+              <app-sort-header [sorter]="sorter" sortKey="studentName">Student Name</app-sort-header>
+            </th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">
+              <app-sort-header [sorter]="sorter" sortKey="instituteName">Institute</app-sort-header>
+            </th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">
+              <app-sort-header [sorter]="sorter" sortKey="course">Course</app-sort-header>
+            </th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">
+              <app-sort-header [sorter]="sorter" sortKey="year">Financial Year</app-sort-header>
+            </th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">
+              <app-sort-header [sorter]="sorter" sortKey="refundAmount">Refund</app-sort-header>
+            </th>
           </tr>
         </thead>
         <tbody>
-          @for (student of paged(); track $index; let i = $index) {
-            <tr class="border-b border-gray-100 last:border-b-0 hover:bg-[#F7F9FC]">
-              <td class="px-5 py-3.5 text-[13px] text-muted">{{ rangeStart() + i }}</td>
-              <td class="px-5 py-3.5 text-[13px] font-medium whitespace-nowrap text-primary">{{ student.name }}</td>
-              <td class="px-5 py-3.5 text-[13px] text-muted">{{ student.institute }}</td>
-              <td class="px-5 py-3.5 text-[13px] text-muted">{{ student.course }}</td>
-              <td class="px-5 py-3.5 text-[13px] text-muted">{{ student.year }}</td>
-              <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ student.financialYear }}</td>
-              <td class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap text-primary">{{ student.amount | number }}</td>
-              <td class="px-5 py-3.5">
-                <span class="rounded-full px-3 py-1 text-[11px] font-semibold"
-                  [class]="student.status === 'Disbursed' ? 'bg-accent/10 text-accent' : 'bg-secondary/15 text-secondary-dark'">
-                  {{ student.status }}
-                </span>
-              </td>
-            </tr>
-          } @empty {
-            <tr><td colspan="8" class="px-5 py-10 text-center text-[13px] text-muted">No students match your filters.</td></tr>
+          @if (loading()) {
+            <tr><td colspan="6" class="px-5 py-10 text-center text-[13px] text-muted">Loading beneficiary list…</td></tr>
+          } @else if (failed()) {
+            <tr><td colspan="6" class="px-5 py-10 text-center text-[13px] text-accent">Unable to load the beneficiary list right now. Please try again later.</td></tr>
+          } @else {
+            @for (student of pager.paged(); track $index; let i = $index) {
+              <tr class="border-b border-gray-100 last:border-b-0 hover:bg-[#F7F9FC]">
+                <td class="px-5 py-3.5 text-[13px] text-muted">{{ pager.rangeStart() + i }}</td>
+                <td class="px-5 py-3.5 text-[13px] font-medium whitespace-nowrap text-primary">{{ student.studentName }}</td>
+                <td class="px-5 py-3.5 text-[13px] text-muted">{{ student.instituteName }}</td>
+                <td class="px-5 py-3.5 text-[13px] text-muted">{{ student.course }}</td>
+                <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ student.year }}</td>
+                <td class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap text-primary">{{ student.refundAmount }}</td>
+              </tr>
+            } @empty {
+              <tr><td colspan="6" class="px-5 py-10 text-center text-[13px] text-muted">No students match your filters.</td></tr>
+            }
           }
         </tbody>
       </table>
     </div>
 
     <!-- Pagination -->
-    <div class="flex flex-wrap items-center justify-between gap-4 border-t border-gray-100 px-5 py-4">
-      <p class="text-[12.5px] text-muted">
-        Showing {{ rangeStart() }} to {{ rangeEnd() }} of {{ rows().length }} results
-      </p>
-
-      <div class="flex items-center gap-1.5">
-        <button type="button" (click)="go(-1)" [disabled]="page() === 1" aria-label="Previous page"
-          class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 text-primary transition-colors hover:bg-primary hover:text-white disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-primary">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6" /></svg>
-        </button>
-
-        @for (n of pageNumbers(); track n) {
-          <button type="button" (click)="toPage(n)"
-            class="h-9 min-w-9 rounded-md border px-3 text-[13px] font-semibold transition-colors"
-            [class]="page() === n ? 'border-primary bg-primary text-white' : 'border-gray-200 text-primary hover:border-primary'">
-            {{ n }}
-          </button>
-        }
-
-        <button type="button" (click)="go(1)" [disabled]="page() === totalPages()" aria-label="Next page"
-          class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 text-primary transition-colors hover:bg-primary hover:text-white disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-primary">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6" /></svg>
-        </button>
-      </div>
-    </div>
+    <app-pagination [pager]="pager" />
   </div>
 
   <!-- Note -->

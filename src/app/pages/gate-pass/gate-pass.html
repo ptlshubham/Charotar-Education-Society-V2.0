@@ -77,21 +77,18 @@
 
     <div class="grid gap-8 border-t border-gray-200 pt-6 lg:grid-cols-[1.4fr_1fr]">
       @if (tab() === 'visitor') {
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="animate-dropdown">
+        <form [formGroup]="visitorForm" (ngSubmit)="onSubmit('Visitor')" class="animate-dropdown">
           <h3 class="text-[17px] font-bold text-primary">Visitor Details</h3>
           <span class="mt-2 block h-1 w-12 rounded-full bg-secondary" aria-hidden="true"></span>
 
           <div class="mt-5 grid gap-5 sm:grid-cols-2">
             <div>
-              <label for="gp-meet" class="mb-1.5 block text-[12.5px] font-semibold text-primary">
+              <span class="mb-1.5 block text-[12.5px] font-semibold text-primary">
                 Whom to Meet <span class="text-logo">*</span>
-              </label>
-              <select id="gp-meet" formControlName="whomToMeet"
-                class="h-11 w-full rounded-md border border-gray-300 bg-white px-3.5 text-[13px] text-primary outline-none focus:border-primary"
-                [class.border-red-400]="f['whomToMeet'].touched && f['whomToMeet'].invalid">
-                <option value="" disabled>Select Person</option>
-                @for (person of people; track person) { <option [value]="person">{{ person }}</option> }
-              </select>
+              </span>
+              <app-custom-select formControlName="whomToMeet" [options]="visitorMeetOptions"
+                placeholder="Select Whom to Meet"
+                [invalid]="f['whomToMeet'].touched && f['whomToMeet'].invalid" />
               @if (f['whomToMeet'].touched && f['whomToMeet'].invalid) {
                 <p class="mt-1 text-[12px] text-red-500">Please select whom you wish to meet.</p>
               }
@@ -134,19 +131,89 @@
             </div>
           </div>
 
-          <button type="submit" [disabled]="submitting"
+          <button type="submit" [disabled]="submitting()"
             class="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3.5 text-[13px] font-semibold tracking-wide text-white uppercase transition-colors hover:bg-primary-dark disabled:opacity-70">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z" />
             </svg>
-            Submit Request
+            {{ submitting() ? 'Submitting…' : 'Submit Request' }}
           </button>
         </form>
       } @else {
-        <div class="animate-dropdown rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-14 text-center">
-          <p class="text-[14px] font-semibold text-primary">Staff gate pass form coming soon.</p>
-          <p class="mt-1 text-[12.5px] text-muted">Staff should contact the management office directly in the meantime.</p>
-        </div>
+        <form [formGroup]="staffForm" (ngSubmit)="onSubmit('Office')" class="animate-dropdown">
+          <h3 class="text-[17px] font-bold text-primary">Office Employee Details</h3>
+          <span class="mt-2 block h-1 w-12 rounded-full bg-secondary" aria-hidden="true"></span>
+
+          <div class="mt-5 grid gap-5 sm:grid-cols-2">
+            <div>
+              <span class="mb-1.5 block text-[12.5px] font-semibold text-primary">
+                Your Institute <span class="text-logo">*</span>
+              </span>
+              <app-custom-select formControlName="institute" [options]="institutes()"
+                placeholder="Select Institute"
+                [invalid]="sf['institute'].touched && sf['institute'].invalid" />
+              @if (sf['institute'].touched && sf['institute'].invalid) {
+                <p class="mt-1 text-[12px] text-red-500">Please select your institute.</p>
+              }
+            </div>
+
+            <div>
+              <span class="mb-1.5 block text-[12.5px] font-semibold text-primary">
+                Whom to Meet <span class="text-logo">*</span>
+              </span>
+              <app-custom-select formControlName="whomToMeet" [options]="staffMeetOptions"
+                placeholder="Select Whom to Meet"
+                [invalid]="sf['whomToMeet'].touched && sf['whomToMeet'].invalid" />
+              @if (sf['whomToMeet'].touched && sf['whomToMeet'].invalid) {
+                <p class="mt-1 text-[12px] text-red-500">Please select whom you wish to meet.</p>
+              }
+            </div>
+
+            <div>
+              <label for="gp-staff-name" class="mb-1.5 block text-[12.5px] font-semibold text-primary">
+                Staff Name <span class="text-logo">*</span>
+              </label>
+              <input id="gp-staff-name" type="text" formControlName="staffName" placeholder="Enter Staff Name"
+                class="h-11 w-full rounded-md border border-gray-300 px-3.5 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary"
+                [class.border-red-400]="sf['staffName'].touched && sf['staffName'].invalid" />
+              @if (sf['staffName'].touched && sf['staffName'].invalid) {
+                <p class="mt-1 text-[12px] text-red-500">Staff name is required.</p>
+              }
+            </div>
+
+            <div>
+              <label for="gp-staff-phone" class="mb-1.5 block text-[12.5px] font-semibold text-primary">
+                Staff Contact Number <span class="text-logo">*</span>
+              </label>
+              <input id="gp-staff-phone" type="tel" formControlName="contactNumber" placeholder="Enter Contact Number"
+                class="h-11 w-full rounded-md border border-gray-300 px-3.5 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary"
+                [class.border-red-400]="sf['contactNumber'].touched && sf['contactNumber'].invalid" />
+              @if (sf['contactNumber'].touched && sf['contactNumber'].invalid) {
+                <p class="mt-1 text-[12px] text-red-500">Enter a valid number (10-15 digits).</p>
+              }
+            </div>
+
+            <div class="sm:col-span-2">
+              <label for="gp-staff-purpose" class="mb-1.5 block text-[12.5px] font-semibold text-primary">
+                Visit For Purpose <span class="text-logo">*</span>
+              </label>
+              <textarea id="gp-staff-purpose" formControlName="purpose" rows="4" placeholder="Enter Visit For Purpose"
+                class="w-full resize-none rounded-md border border-gray-300 px-3.5 py-2.5 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary"
+                [class.border-red-400]="sf['purpose'].touched && sf['purpose'].invalid"></textarea>
+              @if (sf['purpose'].touched && sf['purpose'].invalid) {
+                <p class="mt-1 text-[12px] text-red-500">Please describe the purpose of your visit.</p>
+              }
+            </div>
+          </div>
+
+          <button type="submit" [disabled]="submitting()"
+            class="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3.5 text-[13px] font-semibold tracking-wide text-white uppercase transition-colors hover:bg-primary-dark disabled:opacity-70">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z" />
+            </svg>
+            {{ submitting() ? 'Submitting…' : 'Submit Request' }}
+          </button>
+        </form>
       }
 
       <!-- Aside -->

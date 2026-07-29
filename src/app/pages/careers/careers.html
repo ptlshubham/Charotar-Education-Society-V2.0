@@ -93,17 +93,23 @@
         <thead class="bg-primary text-white">
           <tr>
             <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">Sr. No.</th>
-            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Post / Position</th>
-            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Department / Institute</th>
-            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">Last Date to Apply</th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">
+              <app-sort-header [sorter]="sorter" sortKey="post">Post / Position</app-sort-header>
+            </th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">
+              <app-sort-header [sorter]="sorter" sortKey="department">Department / Institute</app-sort-header>
+            </th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">
+              <app-sort-header [sorter]="sorter" sortKey="lastDate">Last Date to Apply</app-sort-header>
+            </th>
             <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Documents</th>
             <th scope="col" class="px-5 py-3.5"><span class="sr-only">Open</span></th>
           </tr>
         </thead>
         <tbody>
-          @for (job of paged(); track job.code; let i = $index) {
+          @for (job of pager.paged(); track job.code; let i = $index) {
             <tr class="border-b border-gray-100 last:border-b-0 hover:bg-[#F7F9FC]">
-              <td class="px-5 py-3.5 text-[13px] text-muted">{{ (rangeStart() + i).toString().padStart(2, '0') }}</td>
+              <td class="px-5 py-3.5 text-[13px] text-muted">{{ (pager.rangeStart() + i).toString().padStart(2, '0') }}</td>
               <td class="px-5 py-3.5">
                 <p class="text-[13px] font-semibold text-primary">{{ job.post }}</p>
                 <p class="mt-0.5 text-[11.5px] text-secondary-dark">Post Code: {{ job.code }}</p>
@@ -145,25 +151,7 @@
     </div>
 
     <!-- Pagination -->
-    <div class="mt-4 flex flex-wrap items-center justify-between gap-4">
-      <p class="text-[12.5px] text-muted">Showing {{ rangeStart() }} to {{ rangeEnd() }} of {{ rows().length }} entries</p>
-
-      <div class="flex items-center gap-1.5">
-        <button type="button" (click)="go(-1)" [disabled]="page() === 1" aria-label="Previous page"
-          class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 text-primary transition-colors hover:bg-primary hover:text-white disabled:opacity-40">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6" /></svg>
-        </button>
-        @for (n of pageNumbers(); track n) {
-          <button type="button" (click)="toPage(n)"
-            class="h-9 min-w-9 rounded-md border px-3 text-[13px] font-semibold transition-colors"
-            [class]="page() === n ? 'border-primary bg-primary text-white' : 'border-gray-200 text-primary hover:border-primary'">{{ n }}</button>
-        }
-        <button type="button" (click)="go(1)" [disabled]="page() === totalPages()" aria-label="Next page"
-          class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 text-primary transition-colors hover:bg-primary hover:text-white disabled:opacity-40">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6" /></svg>
-        </button>
-      </div>
-    </div>
+    <app-pagination [pager]="pager" />
   </div>
 
   <!-- Resume CTA -->

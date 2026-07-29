@@ -103,23 +103,35 @@
         <thead class="bg-primary text-white">
           <tr>
             <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">Sr. No.</th>
-            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Tender Details</th>
-            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Department</th>
-            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">Start Date</th>
-            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">End Date</th>
-            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Status</th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">
+              <app-sort-header [sorter]="sorter" sortKey="title">Tender Details</app-sort-header>
+            </th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">
+              <app-sort-header [sorter]="sorter" sortKey="department">Department</app-sort-header>
+            </th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">
+              <app-sort-header [sorter]="sorter" sortKey="start">Start Date</app-sort-header>
+            </th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">
+              <app-sort-header [sorter]="sorter" sortKey="end">End Date</app-sort-header>
+            </th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">
+              <app-sort-header [sorter]="sorter" sortKey="status">Status</app-sort-header>
+            </th>
             <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Documents</th>
           </tr>
         </thead>
         <tbody>
-          @for (tender of paged(); track tender.number; let i = $index) {
+          @for (tender of pager.paged(); track tender.number; let i = $index) {
             <tr class="border-b border-gray-100 last:border-b-0 hover:bg-[#F7F9FC]">
-              <td class="px-5 py-3.5 text-[13px] text-muted">{{ (rangeStart() + i).toString().padStart(2, '0') }}</td>
+              <td class="px-5 py-3.5 text-[13px] text-muted">{{ (pager.rangeStart() + i).toString().padStart(2, '0') }}</td>
               <td class="px-5 py-3.5">
                 <p class="text-[13px] font-semibold text-primary">{{ tender.title }}</p>
-                <p class="mt-0.5 text-[11.5px] text-secondary-dark">Tender No. {{ tender.number }}</p>
+                @if (tender.number) {
+                  <p class="mt-0.5 text-[11.5px] text-secondary-dark">Tender No. {{ tender.number }}</p>
+                }
               </td>
-              <td class="px-5 py-3.5 text-[13px] text-muted">{{ tender.department }}</td>
+              <td class="px-5 py-3.5 text-[13px] text-muted">{{ tender.department || '—' }}</td>
               <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ tender.start }}</td>
               <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ tender.end }}</td>
               <td class="px-5 py-3.5">
@@ -127,14 +139,16 @@
               </td>
               <td class="px-5 py-3.5">
                 <div class="flex gap-2">
-                  @for (doc of ['NIT', 'PDF']; track doc) {
-                    <a href="#" download
+                  @for (doc of tender.documents; track doc.file) {
+                    <a [href]="doc.file | mediaUrl" target="_blank" rel="noopener noreferrer"
                       class="inline-flex flex-col items-center gap-0.5 rounded-md border border-primary/30 px-3 py-1.5 text-[10.5px] font-semibold text-primary no-underline transition-colors hover:bg-primary hover:text-white">
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
                       </svg>
-                      {{ doc }}
+                      {{ doc.label }}
                     </a>
+                  } @empty {
+                    <span class="text-[11.5px] text-muted">—</span>
                   }
                 </div>
               </td>
@@ -147,25 +161,7 @@
     </div>
 
     <!-- Pagination -->
-    <div class="mt-4 flex flex-wrap items-center justify-between gap-4">
-      <p class="text-[12.5px] text-muted">Showing {{ rangeStart() }} to {{ rangeEnd() }} of {{ rows().length }} entries</p>
-
-      <div class="flex items-center gap-1.5">
-        <button type="button" (click)="go(-1)" [disabled]="page() === 1" aria-label="Previous page"
-          class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 text-primary transition-colors hover:bg-primary hover:text-white disabled:opacity-40">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6" /></svg>
-        </button>
-        @for (n of pageNumbers(); track n) {
-          <button type="button" (click)="toPage(n)"
-            class="h-9 min-w-9 rounded-md border px-3 text-[13px] font-semibold transition-colors"
-            [class]="page() === n ? 'border-primary bg-primary text-white' : 'border-gray-200 text-primary hover:border-primary'">{{ n }}</button>
-        }
-        <button type="button" (click)="go(1)" [disabled]="page() === totalPages()" aria-label="Next page"
-          class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 text-primary transition-colors hover:bg-primary hover:text-white disabled:opacity-40">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6" /></svg>
-        </button>
-      </div>
-    </div>
+    <app-pagination [pager]="pager" />
 
   </div>
 </section>

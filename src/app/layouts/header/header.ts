@@ -147,8 +147,8 @@ export class Header implements AfterViewInit {
       children: [
         // 'Evaluation Form' (/more/student-evaluation) is not built yet; it is left
         // out rather than shipped as a nav item that 404s on every page.
-        { label: 'Answer Key', link: '/more/answer-key', icon: 'key' },
-        { label: 'Magazine', link: '/more/magazine', icon: 'book' },
+        { label: 'Answer Key', link: '/student-corner/answer-key', icon: 'key' },
+        { label: 'Magazine', link: '/student-corner/magazine', icon: 'book' },
         { label: 'Free Psychological Counselling', link: '/counselling', icon: 'heart' },
       ],
     },

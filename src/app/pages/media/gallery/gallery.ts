@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { Paginator } from '../../../shared/pagination/paginator';
+import { Pagination } from '../../../shared/pagination/pagination';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
 
 type Category =
@@ -14,7 +16,7 @@ interface Photo {
 
 @Component({
   selector: 'app-gallery',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, Pagination],
   templateUrl: './gallery.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './gallery.scss',
@@ -44,12 +46,12 @@ export class Gallery {
 
   selectCategory(c: Category): void {
     this.category.set(c);
-    this.page.set(1);
+    this.pager.reset();
   }
 
   applySearch(): void {
     this.query.set(this.search.trim().toLowerCase());
-    this.page.set(1);
+    this.pager.reset();
   }
 
   /** TODO: replace with the media library feed. */
@@ -69,22 +71,5 @@ export class Gallery {
     );
   });
 
-  // ─── Pagination ───
-  readonly pageSize = 12;
-  readonly page = signal(1);
-  readonly totalPages = computed(() => Math.max(1, Math.ceil(this.filtered().length / this.pageSize)));
-  readonly paged = computed(() =>
-    this.filtered().slice((this.page() - 1) * this.pageSize, this.page() * this.pageSize),
-  );
-  readonly pageNumbers = computed(() =>
-    Array.from({ length: this.totalPages() }, (_, i) => i + 1).slice(0, 5),
-  );
-
-  go(delta: number): void {
-    this.page.update((p) => Math.min(this.totalPages(), Math.max(1, p + delta)));
-  }
-
-  toPage(n: number): void {
-    this.page.set(n);
-  }
+  readonly pager = new Paginator(this.filtered, 12);
 }

@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Paginator } from '../../../shared/pagination/paginator';
+import { Pagination } from '../../../shared/pagination/pagination';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
 
 interface Issue {
@@ -10,7 +12,7 @@ interface Issue {
 
 @Component({
   selector: 'app-magazine',
-  imports: [FormsModule],
+  imports: [FormsModule, Pagination],
   templateUrl: './magazine.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './magazine.scss',
@@ -48,7 +50,7 @@ export class Magazine {
 
   apply(): void {
     this.query.set({ year: this.year, issue: this.issue, search: this.search.trim().toLowerCase() });
-    this.page.set(1);
+    this.pager.reset();
   }
 
   reset(): void {
@@ -68,22 +70,5 @@ export class Magazine {
     );
   });
 
-  // ─── Pagination ───
-  readonly pageSize = 12;
-  readonly page = signal(1);
-  readonly totalPages = computed(() => Math.max(1, Math.ceil(this.rows().length / this.pageSize)));
-  readonly paged = computed(() =>
-    this.rows().slice((this.page() - 1) * this.pageSize, this.page() * this.pageSize),
-  );
-  readonly pageNumbers = computed(() =>
-    Array.from({ length: this.totalPages() }, (_, i) => i + 1).slice(0, 5),
-  );
-
-  go(delta: number): void {
-    this.page.update((p) => Math.min(this.totalPages(), Math.max(1, p + delta)));
-  }
-
-  toPage(n: number): void {
-    this.page.set(n);
-  }
+  readonly pager = new Paginator(this.rows, 12);
 }

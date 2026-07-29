@@ -1,39 +1,57 @@
-import { DecimalPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { DecimalPipe, formatDate } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-
-interface MicroDonor {
-  date: string;
-  name: string;
-  city: string;
-  amount: number;
-  type: string;
-}
+import { catchError, of } from 'rxjs';
+import { ResourcesService } from '../../../core/services/resources.service';
+import { MicroDonor } from '../../../shared/models/models';
+import { Paginator } from '../../../shared/pagination/paginator';
+import { Pagination } from '../../../shared/pagination/pagination';
+import { Sorter } from '../../../shared/sorting/sorter';
+import { SortHeader } from '../../../shared/sorting/sort-header';
 
 @Component({
   selector: 'app-micro-donor-list',
-  imports: [DecimalPipe, FormsModule, RouterLink],
+  imports: [DecimalPipe, FormsModule, RouterLink, Pagination, SortHeader],
   templateUrl: './micro-donor-list.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './micro-donor-list.scss',
 })
 export class MicroDonorList {
-  /** TODO: replace with the live micro-donor feed; these rows come from the legacy site. */
-  private readonly all: readonly MicroDonor[] = [
-    { date: 'Jul 20, 2026', name: 'VRAJ KALPESHKUMAR JOSHI', city: 'ANAND', amount: 100, type: 'Online' },
-    { date: 'Jul 19, 2026', name: 'HETALBEN VIPULBHAI PATEL', city: 'ANAND', amount: 100, type: 'Online' },
-    { date: 'Jul 19, 2026', name: 'KIRITKUMAR GUNVANTLAL YAGNIK', city: 'ANAND', amount: 50, type: 'Online' },
-    { date: 'Jul 19, 2026', name: 'DARSHAN V RAJANI', city: 'ANAND', amount: 50, type: 'Online' },
-    { date: 'Jul 19, 2026', name: 'JAYESH HARESHBHAI SHAH & FAMILY', city: 'ANAND', amount: 50, type: 'Online' },
-    { date: 'Jul 19, 2026', name: 'RAMESHBHAI GIRISHBHAI PATEL & FAMILY', city: 'ANAND', amount: 100, type: 'Online' },
-    { date: 'Jul 18, 2026', name: 'Parth Aashish Chavda', city: 'ANAND', amount: 50, type: 'Online' },
-    { date: 'Jul 18, 2026', name: 'JAY KACHHADIYA', city: 'ANAND', amount: 50, type: 'Online' },
-    { date: 'Jul 18, 2026', name: 'DIPAK KIRITKUMAR PATEL', city: 'ANAND', amount: 50, type: 'Online' },
-    { date: 'Jul 18, 2026', name: 'BHAVIK NAYAK', city: 'ANAND', amount: 50, type: 'Online' },
-  ];
+  private readonly resources = inject(ResourcesService);
 
-  readonly totalMicroDonors = '5,842';
+  readonly loading = signal(true);
+  readonly failed = signal(false);
+  private readonly all = signal<readonly MicroDonor[]>([]);
+
+  constructor() {
+    this.resources
+      .getMicroDonorList()
+      .pipe(
+        catchError(() => {
+          this.failed.set(true);
+          return of<MicroDonor[]>([]);
+        }),
+        takeUntilDestroyed(),
+      )
+      .subscribe((rows) => {
+        // Normalise amount to a real number — DecimalPipe rejects string/null.
+        this.all.set(
+          (Array.isArray(rows) ? rows : []).map((r) => ({ ...r, amount: Number(r.amount) || 0 })),
+        );
+        this.loading.set(false);
+      });
+  }
+
+  /** Formats a DB date, tolerating null/empty/unparseable values. */
+  displayDate(value: string): string {
+    if (!value) return '—';
+    const d = new Date(value);
+    return isNaN(d.getTime()) ? value : formatDate(d, 'mediumDate', 'en-US');
+  }
+
+  readonly totalMicroDonors = computed(() => this.all().length.toLocaleString('en-IN'));
 
   readonly filtersOpen = signal(false);
   search = '';
@@ -45,32 +63,14 @@ export class MicroDonorList {
 
   applyFilters(): void {
     this.query.set(this.search.trim().toLowerCase());
-    this.page.set(1);
+    this.pager.reset();
   }
 
   readonly rows = computed(() => {
     const q = this.query();
-    return q ? this.all.filter((d) => d.name.toLowerCase().includes(q)) : this.all;
+    return q ? this.all().filter((d) => (d.name || '').toLowerCase().includes(q)) : this.all();
   });
 
-  // ─── Pagination ───
-  readonly pageSize = 10;
-  readonly page = signal(1);
-  readonly totalPages = computed(() => Math.max(1, Math.ceil(this.rows().length / this.pageSize)));
-  readonly paged = computed(() =>
-    this.rows().slice((this.page() - 1) * this.pageSize, this.page() * this.pageSize),
-  );
-  readonly rangeStart = computed(() => (this.rows().length ? (this.page() - 1) * this.pageSize + 1 : 0));
-  readonly rangeEnd = computed(() => Math.min(this.page() * this.pageSize, this.rows().length));
-  readonly pageNumbers = computed(() =>
-    Array.from({ length: this.totalPages() }, (_, i) => i + 1).slice(0, 5),
-  );
-
-  go(delta: number): void {
-    this.page.update((p) => Math.min(this.totalPages(), Math.max(1, p + delta)));
-  }
-
-  toPage(n: number): void {
-    this.page.set(n);
-  }
+  readonly sorter = new Sorter(this.rows);
+  readonly pager = new Paginator(this.sorter.sorted, 25);
 }

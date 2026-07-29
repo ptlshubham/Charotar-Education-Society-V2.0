@@ -35,10 +35,10 @@
     {
       "icon": "other",
       "title": "Student Corner",
-      "path": "/more/answer-key",
+      "path": "/student-corner",
       "links": [
-        { "label": "Answer Key", "path": "/more/answer-key" },
-        { "label": "Magazine", "path": "/more/magazine" },
+        { "label": "Answer Key", "path": "/student-corner/answer-key" },
+        { "label": "Magazine", "path": "/student-corner/magazine" },
         { "label": "IP Cell", "path": "/ipcell" }
       ]
     },

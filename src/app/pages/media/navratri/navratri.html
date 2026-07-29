@@ -113,8 +113,54 @@
     }
   </ul>
 
+  <!-- ─── Navratri celebrations by year (from the DB) ─── -->
+  <p class="mt-12 text-center text-[11.5px] font-bold tracking-[0.15em] text-muted uppercase">Navratri Through the Years</p>
+  <h2 class="mt-2 text-center text-[22px] leading-snug font-bold text-primary sm:text-[26px]">Our Celebrations</h2>
+  <span class="mx-auto mt-3 block h-1 w-14 rounded-full bg-secondary" aria-hidden="true"></span>
+
+  @if (loading()) {
+    <ul class="mt-6 grid list-none gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      @for (n of [1, 2, 3]; track n) {
+        <li class="animate-pulse overflow-hidden rounded-xl border border-gray-200 bg-white">
+          <div class="aspect-video w-full bg-gray-100"></div>
+          <div class="space-y-2 p-5"><div class="h-4 w-2/3 rounded bg-gray-100"></div><div class="h-3 w-full rounded bg-gray-100"></div></div>
+        </li>
+      }
+    </ul>
+  } @else if (failed()) {
+    <p class="mt-6 rounded-xl border border-dashed border-gray-300 bg-[#FDFAF5] px-4 py-10 text-center text-[13px] text-muted">
+      Unable to load the Navratri celebrations right now. Please try again later.
+    </p>
+  } @else {
+    <ul class="mt-6 grid list-none gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      @for (item of celebrations(); track item.id) {
+        <li class="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-md">
+          <a [routerLink]="['/navratri', item.year]" class="block overflow-hidden">
+            <img [src]="item.coverimage | mediaUrl" [alt]="item.title + ' Navratri ' + item.year" loading="lazy"
+              class="aspect-video w-full bg-primary-light object-cover transition-transform duration-300 group-hover:scale-105" />
+          </a>
+          <div class="flex flex-1 flex-col p-5">
+            <h3 class="text-[16px] leading-snug font-bold text-logo">
+              {{ item.title }} <span class="text-secondary-dark">Navratri {{ item.year }}</span>
+            </h3>
+            <p class="mt-2 flex-1 text-[12.5px] leading-relaxed text-muted">{{ teaser(item.themedetails) }}</p>
+            <a [routerLink]="['/navratri', item.year]"
+              class="mt-4 inline-flex w-fit items-center gap-2 rounded-md bg-primary px-4 py-2.5 text-[12.5px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
+              View More
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            </a>
+          </div>
+        </li>
+      } @empty {
+        <li class="col-span-full rounded-xl border border-dashed border-gray-300 bg-[#FDFAF5] px-4 py-10 text-center text-[13px] text-muted">
+          Navratri celebration details will be published here soon.
+        </li>
+      }
+    </ul>
+  }
+
   <!-- Glimpses -->
-  <div class="mt-10 rounded-xl border border-gray-200 bg-[#FDFAF5] p-6">
+  <div class="mt-12 rounded-xl border border-gray-200 bg-[#FDFAF5] p-6">
     <p class="text-center text-[11.5px] font-bold tracking-[0.15em] text-muted uppercase">Glimpses of Navratri</p>
 
     <ul class="mt-4 flex list-none flex-wrap justify-center gap-2">

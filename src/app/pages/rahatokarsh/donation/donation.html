@@ -175,17 +175,40 @@
         </div>
 
         <label class="flex cursor-pointer items-start gap-2.5 text-[12.5px] text-muted">
-          <input type="checkbox" formControlName="taxBenefit" class="mt-0.5 accent-primary" />
+          <input type="checkbox" formControlName="taxBenefit" (change)="onBenefitToggle()" class="mt-0.5 accent-primary" />
           <span>I want to benefit under Section <span class="font-semibold text-primary">80G</span> of the
             <span class="font-semibold text-primary">Indian Income Tax Act.</span></span>
         </label>
 
-        <button type="submit"
-          class="flex h-12 w-full items-center justify-center gap-2 rounded-md bg-logo text-[14px] font-semibold text-white transition-opacity hover:opacity-90">
+        <!-- 80G requires the donor's PAN card, uploaded before payment. -->
+        @if (f['taxBenefit'].value) {
+          <div class="animate-dropdown rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] p-4">
+            <label for="dn-pan" class="mb-1.5 block text-[12.5px] font-semibold text-primary">
+              Upload PAN Card <span class="font-normal text-muted">— required for the 80G certificate</span>
+            </label>
+            <input id="dn-pan" type="file" accept=".png,.jpg,.jpeg" (change)="onPanSelected($event)"
+              class="block w-full text-[12.5px] text-muted file:mr-3 file:cursor-pointer file:rounded-md file:border-0 file:bg-primary file:px-4 file:py-2 file:text-[12.5px] file:font-semibold file:text-white hover:file:bg-primary-dark" />
+
+            @if (panUploading()) {
+              <p class="mt-2 text-[12px] text-muted">Uploading {{ panName() }}…</p>
+            } @else if (panName() && !panError()) {
+              <p class="mt-2 flex items-center gap-1.5 text-[12px] font-medium text-green-600">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 13 4 4L19 7" /></svg>
+                {{ panName() }} uploaded
+              </p>
+            }
+            @if (panError()) {
+              <p class="mt-2 text-[12px] text-red-500">{{ panError() }}</p>
+            }
+          </div>
+        }
+
+        <button type="submit" [disabled]="submitting()"
+          class="flex h-12 w-full items-center justify-center gap-2 rounded-md bg-logo text-[14px] font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z" />
           </svg>
-          DONATE NOW
+          {{ submitting() ? 'Processing…' : 'DONATE NOW' }}
         </button>
 
         <p class="flex items-center justify-center gap-1.5 text-[11.5px] text-muted">

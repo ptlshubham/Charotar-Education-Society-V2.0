@@ -80,7 +80,7 @@
   <span class="mt-2 block h-1 w-12 rounded-full bg-logo" aria-hidden="true"></span>
 
   <ul class="animate-dropdown mt-6 grid list-none grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
-    @for (item of paged(); track $index) {
+    @for (item of pager.paged(); track $index) {
       <li class="flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white">
         <img [src]="item.cover" [alt]="item.name + ' cover'" loading="lazy"
           class="aspect-[3/4] w-full bg-primary-light object-cover" />
@@ -110,22 +110,8 @@
     }
   </ul>
 
-  @if (totalPages() > 1) {
-    <div class="mt-7 flex items-center justify-center gap-1.5">
-      <button type="button" (click)="go(-1)" [disabled]="page() === 1" aria-label="Previous page"
-        class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 text-primary transition-colors hover:bg-primary hover:text-white disabled:opacity-40">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6" /></svg>
-      </button>
-      @for (n of pageNumbers(); track n) {
-        <button type="button" (click)="toPage(n)"
-          class="h-9 min-w-9 rounded-md border px-3 text-[13px] font-semibold transition-colors"
-          [class]="page() === n ? 'border-primary bg-primary text-white' : 'border-gray-200 text-primary hover:border-primary'">{{ n }}</button>
-      }
-      <button type="button" (click)="go(1)" [disabled]="page() === totalPages()" aria-label="Next page"
-        class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 text-primary transition-colors hover:bg-primary hover:text-white disabled:opacity-40">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6" /></svg>
-      </button>
-    </div>
+  @if (pager.totalPages() > 1) {
+    <app-pagination [pager]="pager" variant="compact" />
   }
 
 </section>

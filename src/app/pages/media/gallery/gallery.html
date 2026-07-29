@@ -103,7 +103,7 @@
   @if (tab() === 'photos') {
     <!-- Masonry via CSS columns so varied heights tile naturally -->
     <div class="animate-dropdown mt-6 gap-4 [column-count:1] sm:[column-count:2] lg:[column-count:3]">
-      @for (photo of paged(); track photo.src) {
+      @for (photo of pager.paged(); track photo.src) {
         <figure class="mb-4 break-inside-avoid overflow-hidden rounded-lg">
           <img [src]="photo.src" [alt]="photo.caption" loading="lazy"
             class="w-full bg-primary-light object-cover transition-transform duration-300 hover:scale-105" />
@@ -116,22 +116,8 @@
     </div>
 
     <!-- Pagination -->
-    @if (totalPages() > 1) {
-      <div class="mt-6 flex items-center justify-center gap-1.5">
-        <button type="button" (click)="go(-1)" [disabled]="page() === 1" aria-label="Previous page"
-          class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 text-primary transition-colors hover:bg-primary hover:text-white disabled:opacity-40">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6" /></svg>
-        </button>
-        @for (n of pageNumbers(); track n) {
-          <button type="button" (click)="toPage(n)"
-            class="h-9 min-w-9 rounded-md border px-3 text-[13px] font-semibold transition-colors"
-            [class]="page() === n ? 'border-primary bg-primary text-white' : 'border-gray-200 text-primary hover:border-primary'">{{ n }}</button>
-        }
-        <button type="button" (click)="go(1)" [disabled]="page() === totalPages()" aria-label="Next page"
-          class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 text-primary transition-colors hover:bg-primary hover:text-white disabled:opacity-40">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6" /></svg>
-        </button>
-      </div>
+    @if (pager.totalPages() > 1) {
+      <app-pagination [pager]="pager" variant="compact" />
     }
   } @else {
     <div class="mt-6 rounded-xl border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-16 text-center">

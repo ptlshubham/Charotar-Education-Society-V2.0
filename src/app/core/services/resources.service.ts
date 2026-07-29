@@ -1,8 +1,10 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from './api.service';
+import { SKIP_ERROR_REDIRECT } from '../interceptors/error.interceptor';
+import { BeneficiaryStudent, Copyright, DonationPayload, Donor, GatePassPayload, Institute, MicroDonor, NavratriEntry, NavratriImage, Patent, PodcastEntry, Trademark } from '../../shared/models/models';
 
 
 @Injectable({
@@ -16,6 +18,97 @@ export class ResourcesService {
     ) { }
 
 
+
+    // Rahatokarsh Fund lists — the legacy endpoints return bare arrays.
+    // SKIP_ERROR_REDIRECT so a failure shows an inline message instead of
+    // bouncing the whole page to the error screen.
+    getDonorList() {
+        return this.http.get<Donor[]>(ApiService.GetDonorListURL, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    getMicroDonorList() {
+        return this.http.get<MicroDonor[]>(ApiService.GetMicroDonorListURL, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    getBeneficiaryList() {
+        return this.http.get<BeneficiaryStudent[]>(ApiService.GetBeneficiaryListURL, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    // Persist a donation once Razorpay confirms payment. SKIP_ERROR_REDIRECT so a
+    // save failure surfaces inline — the money is already taken, we must never
+    // silently bounce the donor to the error page and lose the payment id.
+    saveDonation(payload: DonationPayload) {
+        return this.http.post(ApiService.SaveRahatokarshDonationURL, payload, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    // Upload a PAN card image (multipart) for an 80G claim; returns the stored
+    // reference to send back in the donation payload's `taxImage`. Let HttpClient
+    // set the multipart Content-Type/boundary — do not set it manually.
+    uploadTaxImage(form: FormData) {
+        return this.http.post<string>(ApiService.Upload80GTaxImageURL, form, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    // e-Gate Pass — institute dropdown (staff tab) and request submission.
+    getInstitutes() {
+        return this.http.get<Institute[]>(ApiService.GetInstitutesURL, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    saveGatePass(payload: GatePassPayload) {
+        return this.http.post(ApiService.SaveGatePassURL, payload, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    // Navratri — the yearly celebration list and a year's gallery images.
+    getNavratriList() {
+        return this.http.get<NavratriEntry[]>(ApiService.GetNavratriListURL, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    getNavratriImages(id: number | string) {
+        return this.http.get<NavratriImage[]>(ApiService.GetNavratriImagesURL + id, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    // Podcast — CES "NextUp" episodes; the page keeps only the active ones.
+    getPodcastList() {
+        return this.http.get<PodcastEntry[]>(ApiService.GetPodcastListURL, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    // IP Cell registers. Patents come back mixed; the page splits them by `purpose`.
+    getPatentData() {
+        return this.http.get<Patent[]>(ApiService.GetPatentDataURL, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    getCopyrightData() {
+        return this.http.get<Copyright[]>(ApiService.GetCopyrightDataURL, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    getTrademarkData() {
+        return this.http.get<Trademark[]>(ApiService.GetTrademarkDataURL, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
 
     // Public Website Video Guides (Tutorials)
     getPublicVideos(params?: { page?: number; limit?: number; category?: string; module?: string; search?: string }) {

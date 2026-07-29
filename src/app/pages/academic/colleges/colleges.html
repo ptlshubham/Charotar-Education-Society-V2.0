@@ -10,19 +10,7 @@
 <section class="mx-auto max-w-[1600px] px-4 py-8 sm:px-6 lg:px-10">
 
   <!-- Stream filters -->
-  <div role="tablist" aria-label="Stream"
-    class="-mx-4 flex gap-2 overflow-x-auto rounded-xl bg-white px-4 py-2 shadow-sm sm:mx-0 sm:px-2">
-    @for (filter of filters; track filter.id) {
-      <button type="button" role="tab" [attr.aria-selected]="active() === filter.id" (click)="select(filter.id)"
-        class="flex shrink-0 items-center gap-2 rounded-lg px-5 py-3 text-[13.5px] font-semibold whitespace-nowrap transition-colors"
-        [class]="active() === filter.id ? 'bg-primary text-white' : 'text-primary hover:bg-gray-50'">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          @for (d of filter.path; track d) { <path [attr.d]="d" /> }
-        </svg>
-        {{ filter.label }}
-      </button>
-    }
-  </div>
+  <app-academic-tabs [tabs]="filters" [active]="active()" ariaLabel="Stream" (tabChange)="select($event)" />
 
   <!-- Cards -->
   <ul class="animate-dropdown mt-6 grid list-none gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -58,10 +46,12 @@
               {{ college.phone }}
             </a>
 
-            <a href="#" class="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-primary no-underline hover:text-accent">
-              View Details
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-            </a>
+            @if (college.website) {
+              <a [href]="college.website" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-primary no-underline hover:text-accent">
+                Visit Website
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg>
+              </a>
+            }
           </div>
         </div>
       </li>

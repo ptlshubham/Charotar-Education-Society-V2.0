@@ -1,8 +1,12 @@
 import { DecimalPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgZone, computed, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { SuccessDialogService } from '../../../core/services/success-dialog.service';
+import { ResourcesService } from '../../../core/services/resources.service';
+import { RazorpayService, RazorpayOptions, RazorpaySuccess } from '../../../core/services/razorpay.service';
+import { DonationPayload } from '../../../shared/models/models';
+import { environment } from '../../../environments/environment';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
 
 @Component({
@@ -14,6 +18,12 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
 })
 export class Donation {
   private readonly successDialog = inject(SuccessDialogService);
+  private readonly resources = inject(ResourcesService);
+  private readonly razorpay = inject(RazorpayService);
+  private readonly zone = inject(NgZone);
+
+  /** Razorpay LIVE key, carried over from the legacy site — charges real money. */
+  private static readonly RAZORPAY_KEY = 'rzp_live_leOKtvTfzPgxqJ';
 
   readonly heroImage = PLACEHOLDER.social.heroCollage[0];
   readonly aboutImage = PLACEHOLDER.about.whoWeAre;
@@ -70,8 +80,15 @@ export class Donation {
   ];
 
   form: FormGroup;
-  submitting = false;
+  readonly submitting = signal(false);
   readonly customAmount = signal(false);
+
+  // ─── 80G PAN-card upload ───
+  /** Backend reference for the uploaded PAN image; sent as the donation's taxImage. */
+  private taxImage: string | null = null;
+  readonly panUploading = signal(false);
+  readonly panName = signal('');
+  readonly panError = signal('');
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -98,19 +115,133 @@ export class Donation {
     this.form.patchValue({ amount: null });
   }
 
-  onSubmit(): void {
+  /** Upload the PAN card as soon as it is chosen (needed for the 80G certificate). */
+  onPanSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    this.panError.set('');
+    this.panName.set(file.name);
+    this.panUploading.set(true);
+    this.taxImage = null;
+
+    const form = new FormData();
+    form.append('file', file);
+
+    this.resources.uploadTaxImage(form).subscribe({
+      next: (ref) => {
+        this.taxImage = ref;
+        this.panUploading.set(false);
+      },
+      error: () => {
+        this.panUploading.set(false);
+        this.panName.set('');
+        this.panError.set('Could not upload the PAN card. Please try again.');
+      },
+    });
+  }
+
+  /** Dropping the 80G claim discards any uploaded PAN so it is never sent. */
+  onBenefitToggle(): void {
+    if (!this.form.get('taxBenefit')?.value) {
+      this.taxImage = null;
+      this.panName.set('');
+      this.panError.set('');
+    }
+  }
+
+  async onSubmit(): Promise<void> {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
+    if (this.submitting()) return;
+    this.submitting.set(true);
 
-    // TODO: hand off to the payment gateway (legacy site used Razorpay checkout).
+    const loaded = await this.razorpay.load();
+    if (!loaded) {
+      this.submitting.set(false);
+      this.showMessage(
+        'Payment unavailable',
+        'We could not reach the payment gateway. Please check your connection and try again.',
+      );
+      return;
+    }
+
+    const v = this.form.getRawValue();
+    const amount = Number(v.amount) || 0;
+
+    const options: RazorpayOptions = {
+      key: Donation.RAZORPAY_KEY,
+      amount: amount * 100, // Razorpay charges in paise
+      currency: 'INR',
+      name: 'Charotar Education Society',
+      description: 'Rahatokarsh Fund Donation',
+      image: `${environment.frontendUrl}/assets/images/apple-touch-icon.png`,
+      prefill: { name: v.fullName, email: v.email, contact: v.contactNumber },
+      notes: { address: v.city },
+      theme: { color: '#203154' },
+      // Razorpay fires these callbacks outside Angular's zone (zone.js app), so
+      // re-enter with zone.run or the success dialog signal would not render.
+      handler: (res) => this.zone.run(() => this.onPaymentSuccess(res, v, amount)),
+      modal: { ondismiss: () => this.zone.run(() => this.submitting.set(false)) },
+    };
+
+    this.razorpay.open(options);
+  }
+
+  private onPaymentSuccess(res: RazorpaySuccess, v: Record<string, unknown>, amount: number): void {
+    if (!res?.razorpay_payment_id) {
+      this.submitting.set(false);
+      this.showMessage('Payment failed', 'Your payment could not be completed. No amount has been charged.');
+      return;
+    }
+
+    const payload: DonationPayload = {
+      donnerName: String(v['fullName'] ?? ''),
+      contact: String(v['contactNumber'] ?? ''),
+      email: String(v['email'] ?? ''),
+      city: String(v['city'] ?? ''),
+      donationAmount: amount,
+      updatedAmount: amount * 100,
+      benefit: !!v['taxBenefit'],
+      paymentId: res.razorpay_payment_id,
+      taxImage: v['taxBenefit'] ? this.taxImage : null,
+    };
+
+    this.resources.saveDonation(payload).subscribe({
+      next: () => {
+        this.submitting.set(false);
+        this.form.reset({ amount: 500, taxBenefit: false });
+        this.customAmount.set(false);
+        this.taxImage = null;
+        this.panName.set('');
+        this.successDialog.open({
+          titleLead: 'Thank',
+          titleAccent: 'you!',
+          subtitle: 'Your donation to the Rahatokarsh Fund helps a deserving student continue their education.',
+          infoTitle: "What's next?",
+          infoText: 'You will receive a receipt and 80G certificate by email once the payment is confirmed.',
+          actions: [{ label: 'Close', primary: true }],
+        });
+      },
+      // Money is already taken — never lose the payment id; show it to the donor.
+      error: () => {
+        this.submitting.set(false);
+        this.showMessage(
+          'Payment received',
+          `Your payment was successful (Payment ID: ${res.razorpay_payment_id}), but we could not record it automatically. Please save this ID and contact the Rahatokarsh Fund Office so we can send your receipt.`,
+        );
+      },
+    });
+  }
+
+  private showMessage(titleAccent: string, subtitle: string): void {
     this.successDialog.open({
-      titleLead: 'Thank',
-      titleAccent: 'you!',
-      subtitle: 'Your donation to the Rahatokarsh Fund helps a deserving student continue their education.',
-      infoTitle: "What's next?",
-      infoText: 'You will receive a receipt by email once the payment is confirmed.',
+      titleLead: '',
+      titleAccent,
+      subtitle,
       actions: [{ label: 'Close', primary: true }],
     });
   }

@@ -65,8 +65,8 @@ export class Footer {
         { label: 'Navratri', route: '/navratri' },
         { label: 'Next UP Podcast', route: '/podcast' },
         { label: 'Blog', route: '/home/blog' },
-        { label: 'Magazine', route: '/more/magazine' },
-        { label: 'Answer Key', route: '/more/answer-key' },
+        { label: 'Magazine', route: '/student-corner/magazine' },
+        { label: 'Answer Key', route: '/student-corner/answer-key' },
       ],
     },
     {

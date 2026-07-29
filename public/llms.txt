@@ -26,8 +26,8 @@
 
 ## Student Corner
 
-- [Answer Key](https://cesociety.in/more/answer-key)
-- [Magazine](https://cesociety.in/more/magazine)
+- [Answer Key](https://cesociety.in/student-corner/answer-key)
+- [Magazine](https://cesociety.in/student-corner/magazine)
 - [IP Cell](https://cesociety.in/ipcell)
 
 ## Academic

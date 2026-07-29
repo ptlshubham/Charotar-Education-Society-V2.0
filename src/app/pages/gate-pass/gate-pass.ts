@@ -1,19 +1,33 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { catchError, of } from 'rxjs';
 import { SuccessDialogService } from '../../core/services/success-dialog.service';
+import { ResourcesService } from '../../core/services/resources.service';
+import { GatePassPayload } from '../../shared/models/models';
 import { HeroStat } from '../../shared/page-hero/page-hero';
+import { CustomSelect } from '../../shared/custom-select/custom-select';
 import { PLACEHOLDER } from '../../shared/placeholder-images';
+
+// Values kept EXACTLY as the legacy backend stores them (including original
+// spellings) so gate-pass records stay consistent with the old data.
+const VISITOR_MEET = ['P.A to Secretary', 'Campus Direactive', 'Account Department', 'Estate / Maintance', 'Others'];
+const STAFF_MEET = ['Secretary', ...VISITOR_MEET];
+
+const PHONE = /^[0-9]{10,15}$/;
 
 @Component({
   selector: 'app-gate-pass',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, CustomSelect],
   templateUrl: './gate-pass.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './gate-pass.scss',
 })
 export class GatePass {
   private readonly successDialog = inject(SuccessDialogService);
+  private readonly resources = inject(ResourcesService);
+  private readonly fb = inject(FormBuilder);
 
   readonly banner = PLACEHOLDER.about.hero;
 
@@ -27,45 +41,116 @@ export class GatePass {
   ];
 
   readonly tab = signal<'visitor' | 'staff'>('visitor');
+  readonly visitorMeetOptions = VISITOR_MEET;
+  readonly staffMeetOptions = STAFF_MEET;
+
+  /** Institute dropdown for the staff tab, fetched from the backend. */
+  readonly institutes = signal<readonly string[]>([]);
+
+  readonly visitorForm = this.fb.group({
+    whomToMeet: ['', Validators.required],
+    visitorName: ['', Validators.required],
+    purpose: ['', Validators.required],
+    contactNumber: ['', [Validators.required, Validators.pattern(PHONE)]],
+  });
+
+  readonly staffForm = this.fb.group({
+    institute: ['', Validators.required],
+    whomToMeet: ['', Validators.required],
+    staffName: ['', Validators.required],
+    purpose: ['', Validators.required],
+    contactNumber: ['', [Validators.required, Validators.pattern(PHONE)]],
+  });
+
+  readonly submitting = signal(false);
+
+  constructor() {
+    this.resources
+      .getInstitutes()
+      .pipe(
+        catchError(() => of([])),
+        takeUntilDestroyed(),
+      )
+      .subscribe((list) => {
+        // The backend list carries duplicate and test rows (e.g. two "E2E Sync
+        // Inst"). Trim, drop blanks, de-duplicate case-insensitively, and sort so
+        // the dropdown is clean and predictable. Genuine test entries still need
+        // removing at the source.
+        const seen = new Set<string>();
+        const names = (Array.isArray(list) ? list : [])
+          .map((i) => (i?.name ?? '').trim())
+          .filter((name) => {
+            const key = name.toLowerCase();
+            if (!name || seen.has(key)) return false;
+            seen.add(key);
+            return true;
+          })
+          .sort((a, b) => a.localeCompare(b));
+        this.institutes.set(names);
+      });
+  }
+
+  get f() {
+    return this.visitorForm.controls;
+  }
+
+  get sf() {
+    return this.staffForm.controls;
+  }
 
   selectTab(t: 'visitor' | 'staff'): void {
     this.tab.set(t);
   }
 
-  /** TODO: replace with the management-office directory. */
-  readonly people: readonly string[] = ['Chairman', 'Secretary', 'Administrative Officer', 'Accounts Department'];
-
-  form: FormGroup;
-  submitting = false;
-
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
-      whomToMeet: ['', Validators.required],
-      visitorName: ['', Validators.required],
-      purpose: ['', Validators.required],
-      contactNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)]],
-    });
-  }
-
-  get f() {
-    return this.form.controls;
-  }
-
-  onSubmit(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
+  onSubmit(role: 'Visitor' | 'Office'): void {
+    const form = role === 'Visitor' ? this.visitorForm : this.staffForm;
+    if (form.invalid) {
+      form.markAllAsTouched();
       return;
     }
+    if (this.submitting()) return;
+    this.submitting.set(true);
 
-    // TODO: POST to the e-Gate Pass endpoint once it exists on this API.
-    this.form.reset({ whomToMeet: '' });
-    this.successDialog.open({
-      titleLead: 'Request',
-      titleAccent: 'submitted!',
-      subtitle: 'Your e-Gate Pass request has been sent to the management office.',
-      infoTitle: "What's next?",
-      infoText: 'You will receive a confirmation via email/SMS once your e-Gate Pass is approved.',
-      actions: [{ label: 'Close', primary: true }],
+    const payload: GatePassPayload =
+      role === 'Visitor'
+        ? {
+            role,
+            name: this.visitorForm.value.visitorName!,
+            purpose: this.visitorForm.value.purpose!,
+            contact: this.visitorForm.value.contactNumber!,
+            meetingWith: this.visitorForm.value.whomToMeet!,
+          }
+        : {
+            role,
+            institute: this.staffForm.value.institute!,
+            name: this.staffForm.value.staffName!,
+            purpose: this.staffForm.value.purpose!,
+            contact: this.staffForm.value.contactNumber!,
+            meetingWith: this.staffForm.value.whomToMeet!,
+          };
+
+    this.resources.saveGatePass(payload).subscribe({
+      next: () => {
+        this.submitting.set(false);
+        form.reset({ whomToMeet: '', ...(role === 'Office' ? { institute: '' } : {}) });
+        this.successDialog.open({
+          titleLead: 'Request',
+          titleAccent: 'submitted!',
+          subtitle: 'Your e-Gate Pass request has been sent to the CES Management Office.',
+          infoTitle: "What's next?",
+          infoText: 'You will receive a confirmation via email/SMS once your e-Gate Pass is approved.',
+          actions: [{ label: 'Close', primary: true }],
+        });
+      },
+      error: () => {
+        this.submitting.set(false);
+        this.successDialog.open({
+          titleLead: '',
+          titleAccent: 'Something went wrong',
+          subtitle: 'We could not submit your e-Gate Pass request. Please check your details and try again.',
+          actions: [{ label: 'Close', primary: true }],
+        });
+      },
     });
   }
 }

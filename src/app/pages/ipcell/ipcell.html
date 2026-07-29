@@ -60,12 +60,6 @@
           creativity. We support students, faculty, researchers and institutions in protecting their
           intellectual creations and converting ideas into valuable assets.
         </p>
-
-        <button type="button"
-          class="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-[13px] font-semibold text-white transition-colors hover:bg-primary-dark">
-          Know More About IP Cell
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-        </button>
       </div>
 
       <!-- Illustration -->
@@ -82,10 +76,252 @@
         <path d="M106 96V88a7 7 0 0 1 14 0v8" stroke="currentColor" stroke-width="3" fill="none" class="text-primary" />
       </svg>
     </div>
+
+    <!-- Full IP Cell write-up (from the legacy site) -->
+    <div class="animate-dropdown mt-5 rounded-xl border border-gray-200 bg-white p-6 lg:p-8">
+      <h2 class="text-[20px] font-bold text-primary sm:text-[24px]">Intellectual Property (IP) Cell</h2>
+      <span class="mt-2 block h-1 w-12 rounded-full bg-logo" aria-hidden="true"></span>
+
+      <div class="mt-5 space-y-4 text-[13.5px] leading-[1.9] text-muted">
+        <p>
+          The <b class="text-primary">Intellectual Property (IP) Cell</b> of <b class="text-primary">Charotar
+          Education Society</b> is established with the objective of fostering awareness, protection, and responsible
+          management of intellectual assets among faculty, students, project staff, supporting staff, and visitors.
+          Recognizing the significance of intellectual property in driving innovation and societal impact, the IP Cell
+          provides guidance and support for safeguarding novel works <b class="text-primary">through patents, industrial
+          designs, copyrights, and trade/service marks</b>.
+        </p>
+        <p>
+          The IP Cell serves as a <b class="text-primary">resource center</b> to encourage and facilitate creative
+          activities across academic, consultancy, and research domains. It offers individuals the option to
+          <b class="text-primary">seek IP protection</b> for their innovative work or contribute to the public domain,
+          as per their discretion. The Cell also ensures a <b class="text-primary">transparent framework</b> for the
+          ownership, control, and equitable revenue-sharing of intellectual properties owned by
+          <b class="text-primary">Charotar Education Society</b>.
+        </p>
+      </div>
+
+      <h3 class="mt-8 text-[16px] font-bold text-primary">Objectives of the IP Policy</h3>
+      <ul class="mt-4 space-y-3">
+        @for (obj of objectives; track obj.title) {
+          <li class="flex items-start gap-3">
+            <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-logo/10 text-logo" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7" /></svg>
+            </span>
+            <p class="text-[13px] leading-relaxed text-muted"><b class="text-primary">{{ obj.title }}</b> — {{ obj.body }}</p>
+          </li>
+        }
+      </ul>
+
+      <h3 class="mt-8 text-[16px] font-bold text-primary">Applicability & Scope</h3>
+      <ul class="mt-4 space-y-3">
+        @for (item of scope; track item) {
+          <li class="flex items-start gap-3">
+            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-secondary" aria-hidden="true"></span>
+            <p class="text-[13px] leading-relaxed text-muted">{{ item }}</p>
+          </li>
+        }
+      </ul>
+
+      <p class="mt-6 text-[13.5px] leading-[1.9] text-muted">
+        <b class="text-primary">The IP Cell of CES</b> will oversee the implementation of this policy, ensuring
+        effective IP management, awareness, and support for innovators. Through this initiative, CES aims to contribute
+        meaningfully to the advancement of knowledge, technology, and societal progress, <b class="text-primary">
+        empowering innovators, driving technological advancements,</b> and <b class="text-primary">enhancing the
+        institution's contribution to knowledge-based growth</b>.
+      </p>
+
+      <h3 class="mt-8 text-[16px] font-bold text-primary">Steps for CES Invention Disclosure Process</h3>
+      <ol class="mt-4 space-y-3">
+        @for (step of disclosureSteps; track step.title; let n = $index) {
+          <li class="flex items-start gap-3">
+            <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-white" aria-hidden="true">{{ n + 1 }}</span>
+            <p class="text-[13px] leading-relaxed text-muted"><b class="text-primary">{{ step.title }}</b> — {{ step.body }}</p>
+          </li>
+        }
+      </ol>
+    </div>
+  } @else if (active() === 'policy') {
+    <!-- ─── Policy PDF ─── -->
+    <div class="animate-dropdown mt-5 rounded-xl border border-gray-200 bg-white p-6 lg:p-8">
+      <h2 class="text-[20px] font-bold text-primary">Intellectual Property (IP) Cell Policy</h2>
+      <span class="mt-2 block h-1 w-12 rounded-full bg-logo" aria-hidden="true"></span>
+      <p class="mt-4 max-w-[640px] text-[13.5px] leading-relaxed text-muted">
+        The complete policy document outlines the objectives, ownership, revenue sharing and invention-disclosure
+        process. View or download the official PDF below.
+      </p>
+      <div class="mt-5 flex flex-wrap gap-3">
+        <a [href]="policyPdf | mediaUrl" target="_blank" rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-[13px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" /><circle cx="12" cy="12" r="3" /></svg>
+          View Policy PDF
+        </a>
+        <a [href]="policyPdf | mediaUrl" download="CES-IP-Cell-Policy.pdf"
+          class="inline-flex items-center gap-2 rounded-md border border-gray-300 px-5 py-3 text-[13px] font-semibold text-primary no-underline transition-colors hover:border-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg>
+          Download
+        </a>
+      </div>
+      <object [data]="policyPdf | mediaUrl" type="application/pdf"
+        class="mt-6 h-[600px] w-full rounded-lg border border-gray-200 bg-[#F7F9FC]">
+        <p class="p-6 text-center text-[13px] text-muted">
+          Your browser can't preview PDFs.
+          <a [href]="policyPdf | mediaUrl" target="_blank" rel="noopener noreferrer" class="text-primary underline">Open the policy in a new tab</a>.
+        </p>
+      </object>
+    </div>
+  } @else if (active() === 'utility' || active() === 'design') {
+    <!-- ─── Patent register (Utility / Design) ─── -->
+    <div class="animate-dropdown mt-5 overflow-hidden rounded-xl border border-gray-200 bg-white">
+      <div class="px-6 py-4"><h2 class="text-[18px] font-bold text-primary">{{ patentView().title }}</h2></div>
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse text-left [&_td]:align-top">
+          <thead class="bg-primary text-white">
+            <tr>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">Sr. No.</th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"><app-sort-header [sorter]="patentView().sorter" sortKey="applicationname">Applicant Name</app-sort-header></th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold"><app-sort-header [sorter]="patentView().sorter" sortKey="title">Title</app-sort-header></th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"><app-sort-header [sorter]="patentView().sorter" sortKey="applicationnumber">Application No.</app-sort-header></th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"><app-sort-header [sorter]="patentView().sorter" sortKey="applicationdate">Application Date</app-sort-header></th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"><app-sort-header [sorter]="patentView().sorter" sortKey="patentnumber">Patent No.</app-sort-header></th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"><app-sort-header [sorter]="patentView().sorter" sortKey="grantdate">Grant Date</app-sort-header></th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"><app-sort-header [sorter]="patentView().sorter" sortKey="validdate">Valid Date</app-sort-header></th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (loading()) {
+              <tr><td colspan="8" class="px-5 py-10 text-center text-[13px] text-muted">Loading records…</td></tr>
+            } @else if (failed()) {
+              <tr><td colspan="8" class="px-5 py-10 text-center text-[13px] text-accent">Unable to load the register right now. Please try again later.</td></tr>
+            } @else {
+              @for (row of patentView().pager.paged(); track $index; let i = $index) {
+                <tr class="border-b border-gray-100 last:border-b-0 hover:bg-[#F7F9FC]">
+                  <td class="px-5 py-3.5 text-[13px] text-muted">{{ patentView().pager.rangeStart() + i }}</td>
+                  <td class="px-5 py-3.5 text-[13px] font-medium text-primary min-w-[240px] max-w-[420px]">{{ row.applicationname }}</td>
+                  <td class="px-5 py-3.5 text-[13px] text-muted min-w-[200px] max-w-[360px]">{{ row.title }}</td>
+                  <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ row.applicationnumber }}</td>
+                  <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ fmtDate(row.applicationdate) }}</td>
+                  <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ row.patentnumber }}</td>
+                  <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ fmtDate(row.grantdate) }}</td>
+                  <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ fmtDate(row.validdate) }}</td>
+                </tr>
+              } @empty {
+                <tr><td colspan="8" class="px-5 py-10 text-center text-[13px] text-muted">No {{ patentView().title }} on record yet.</td></tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+      <app-pagination [pager]="patentView().pager" />
+    </div>
+  } @else if (active() === 'copyrights') {
+    <!-- ─── Copyright register ─── -->
+    <div class="animate-dropdown mt-5 overflow-hidden rounded-xl border border-gray-200 bg-white">
+      <div class="px-6 py-4"><h2 class="text-[18px] font-bold text-primary">Copyrights</h2></div>
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse text-left [&_td]:align-top">
+          <thead class="bg-primary text-white">
+            <tr>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">Sr. No.</th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"><app-sort-header [sorter]="copyrightSorter" sortKey="applicationname">Applicant Name</app-sort-header></th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold"><app-sort-header [sorter]="copyrightSorter" sortKey="category">Category</app-sort-header></th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"><app-sort-header [sorter]="copyrightSorter" sortKey="applicationnumber">Application No.</app-sort-header></th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"><app-sort-header [sorter]="copyrightSorter" sortKey="applicationdate">Application Date</app-sort-header></th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"><app-sort-header [sorter]="copyrightSorter" sortKey="copyrightnumber">Copyright No.</app-sort-header></th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"><app-sort-header [sorter]="copyrightSorter" sortKey="copyrightdate">Copyright Date</app-sort-header></th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"><app-sort-header [sorter]="copyrightSorter" sortKey="validdate">Valid Date</app-sort-header></th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (loading()) {
+              <tr><td colspan="8" class="px-5 py-10 text-center text-[13px] text-muted">Loading records…</td></tr>
+            } @else {
+              @for (row of copyrightPager.paged(); track $index; let i = $index) {
+                <tr class="border-b border-gray-100 last:border-b-0 hover:bg-[#F7F9FC]">
+                  <td class="px-5 py-3.5 text-[13px] text-muted">{{ copyrightPager.rangeStart() + i }}</td>
+                  <td class="px-5 py-3.5 text-[13px] font-medium text-primary min-w-[240px] max-w-[420px]">{{ row.applicationname }}</td>
+                  <td class="px-5 py-3.5 text-[13px] text-muted">{{ row.category }}</td>
+                  <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ row.applicationnumber }}</td>
+                  <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ fmtDate(row.applicationdate) }}</td>
+                  <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ row.copyrightnumber }}</td>
+                  <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ fmtDate(row.copyrightdate) }}</td>
+                  <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ fmtDate(row.validdate) }}</td>
+                </tr>
+              } @empty {
+                <tr><td colspan="8" class="px-5 py-10 text-center text-[13px] text-muted">No copyrights on record yet.</td></tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+      <app-pagination [pager]="copyrightPager" />
+    </div>
+  } @else if (active() === 'trademarks') {
+    <!-- ─── Trademark register ─── -->
+    <div class="animate-dropdown mt-5 overflow-hidden rounded-xl border border-gray-200 bg-white">
+      <div class="px-6 py-4"><h2 class="text-[18px] font-bold text-primary">Trademarks</h2></div>
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse text-left [&_td]:align-top">
+          <thead class="bg-primary text-white">
+            <tr>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">Sr. No.</th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"><app-sort-header [sorter]="trademarkSorter" sortKey="applicationname">Applicant Name</app-sort-header></th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold"><app-sort-header [sorter]="trademarkSorter" sortKey="class">Class</app-sort-header></th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"><app-sort-header [sorter]="trademarkSorter" sortKey="applicationnumber">Application No.</app-sort-header></th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"><app-sort-header [sorter]="trademarkSorter" sortKey="applicationdate">Application Date</app-sort-header></th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"><app-sort-header [sorter]="trademarkSorter" sortKey="trademarkdate">Trademark Date</app-sort-header></th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"><app-sort-header [sorter]="trademarkSorter" sortKey="trademarknumber">Trademark No.</app-sort-header></th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"><app-sort-header [sorter]="trademarkSorter" sortKey="validdate">Valid Date</app-sort-header></th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (loading()) {
+              <tr><td colspan="8" class="px-5 py-10 text-center text-[13px] text-muted">Loading records…</td></tr>
+            } @else {
+              @for (row of trademarkPager.paged(); track $index; let i = $index) {
+                <tr class="border-b border-gray-100 last:border-b-0 hover:bg-[#F7F9FC]">
+                  <td class="px-5 py-3.5 text-[13px] text-muted">{{ trademarkPager.rangeStart() + i }}</td>
+                  <td class="px-5 py-3.5 text-[13px] font-medium text-primary min-w-[240px] max-w-[420px]">{{ row.applicationname }}</td>
+                  <td class="px-5 py-3.5 text-[13px] text-muted">{{ row.class }}</td>
+                  <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ row.applicationnumber }}</td>
+                  <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ fmtDate(row.applicationdate) }}</td>
+                  <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ fmtDate(row.trademarkdate) }}</td>
+                  <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ row.trademarknumber }}</td>
+                  <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ fmtDate(row.validdate) }}</td>
+                </tr>
+              } @empty {
+                <tr><td colspan="8" class="px-5 py-10 text-center text-[13px] text-muted">No trademarks on record yet.</td></tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+      <app-pagination [pager]="trademarkPager" />
+    </div>
   } @else {
-    <div class="animate-dropdown mt-5 rounded-xl border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-14 text-center">
-      <p class="text-[14px] font-semibold text-primary">This section is coming soon.</p>
-      <p class="mt-1 text-[12.5px] text-muted">Policy, patent, copyright, trademark and form details will be published by the IP Cell.</p>
+    <!-- ─── Forms ─── -->
+    <div class="animate-dropdown mt-5 grid gap-5 lg:grid-cols-3">
+      @for (form of forms; track form.file) {
+        <div class="flex flex-col rounded-xl border border-gray-200 bg-white p-5">
+          <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-logo/10 text-logo" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6M9 15h6M9 18h4" /></svg>
+          </span>
+          <h3 class="mt-3 text-[15px] font-bold text-primary">{{ form.title }}</h3>
+          <p class="mt-1.5 flex-1 text-[12.5px] leading-relaxed text-muted">{{ form.desc }}</p>
+          <div class="mt-4 flex gap-2">
+            <a [href]="form.file | mediaUrl" target="_blank" rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-[12.5px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" /><circle cx="12" cy="12" r="3" /></svg>
+              View
+            </a>
+            <a [href]="form.file | mediaUrl" [download]="form.download"
+              class="inline-flex items-center gap-1.5 rounded-md border border-gray-300 px-4 py-2 text-[12.5px] font-semibold text-primary no-underline transition-colors hover:border-primary">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg>
+              Download
+            </a>
+          </div>
+        </div>
+      }
     </div>
   }
 
@@ -115,7 +351,7 @@
       </div>
 
       <ul class="mt-4 grid list-none grid-cols-2 gap-4 sm:grid-cols-4">
-        @for (c of counts; track c.label) {
+        @for (c of counts(); track c.label) {
           <li class="rounded-lg border border-gray-200 px-3 py-5 text-center">
             <svg class="mx-auto text-logo" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               @for (d of c.path; track d) { <path [attr.d]="d" /> }
@@ -150,54 +386,6 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
         </svg>
-      </button>
-    </div>
-  </div>
-
-  <!-- Filings -->
-  <div class="mt-6 overflow-hidden rounded-xl border border-gray-200 bg-white">
-    <div class="flex flex-wrap items-center justify-between gap-3 px-6 py-4">
-      <h2 class="text-[12px] font-bold tracking-[0.12em] text-muted uppercase">Recent Patent Filings</h2>
-      <a href="#" class="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-primary no-underline hover:text-accent">
-        View All Filings
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-      </a>
-    </div>
-
-    <div class="overflow-x-auto">
-      <table class="w-full border-collapse text-left">
-        <thead class="border-y border-gray-200 bg-[#F7F9FC]">
-          <tr>
-            <th scope="col" class="px-6 py-3 text-[12px] font-semibold whitespace-nowrap text-primary">Sr. No.</th>
-            <th scope="col" class="px-6 py-3 text-[12px] font-semibold text-primary">Title of Invention</th>
-            <th scope="col" class="px-6 py-3 text-[12px] font-semibold text-primary">Category</th>
-            <th scope="col" class="px-6 py-3 text-[12px] font-semibold whitespace-nowrap text-primary">Application No.</th>
-            <th scope="col" class="px-6 py-3 text-[12px] font-semibold whitespace-nowrap text-primary">Filing Date</th>
-            <th scope="col" class="px-6 py-3 text-[12px] font-semibold text-primary">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (filing of filings; track filing.application; let i = $index) {
-            <tr class="border-b border-gray-100 last:border-b-0 odd:bg-white even:bg-[#FAFBFD]">
-              <td class="px-6 py-3.5 text-[12.5px] text-muted">{{ i + 1 }}</td>
-              <td class="px-6 py-3.5 text-[12.5px] font-medium text-primary">{{ filing.title }}</td>
-              <td class="px-6 py-3.5 text-[12.5px] text-muted">{{ filing.category }}</td>
-              <td class="px-6 py-3.5 text-[12.5px] whitespace-nowrap text-muted">{{ filing.application }}</td>
-              <td class="px-6 py-3.5 text-[12.5px] whitespace-nowrap text-muted">{{ filing.date }}</td>
-              <td class="px-6 py-3.5">
-                <span class="rounded-full px-3 py-1 text-[11px] font-semibold" [class]="statusClass(filing.status)">{{ filing.status }}</span>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-
-    <div class="px-6 py-4 text-center">
-      <button type="button"
-        class="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-2.5 text-[12.5px] font-semibold text-white transition-colors hover:bg-primary-dark">
-        View All Filings
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
       </button>
     </div>
   </div>

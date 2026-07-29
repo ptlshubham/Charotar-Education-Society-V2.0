@@ -1,9 +1,17 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpContextToken, HttpInterceptorFn } from '@angular/common/http';
 import { inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+
+/**
+ * Set on a request's HttpContext to opt out of the whole-page redirect to
+ * /error/error500 on a 0/500 failure. Use it for a data fetch that backs one
+ * section of a page, where a failure should degrade to an inline message rather
+ * than replace the entire page with the error screen.
+ */
+export const SKIP_ERROR_REDIRECT = new HttpContextToken<boolean>(() => false);
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const auth   = inject(AuthService);
@@ -14,12 +22,13 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   // place of all ~50 prerendered pages. Metadata is decorative — the page must
   // still render. In the browser the behaviour is unchanged.
   const isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  const redirectOnFailure = isBrowser && !req.context.get(SKIP_ERROR_REDIRECT);
 
   return next(req).pipe(
     catchError(err => {
       switch (err.status) {
         case 0:
-          if (isBrowser) router.navigate(['/error/error500']);
+          if (redirectOnFailure) router.navigate(['/error/error500']);
           break;
 
         case 401:
@@ -32,7 +41,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
           break;
 
         case 500:
-          if (isBrowser) router.navigate(['/error/error500']);
+          if (redirectOnFailure) router.navigate(['/error/error500']);
           break;
       }
 

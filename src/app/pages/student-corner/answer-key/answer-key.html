@@ -122,14 +122,20 @@
           <thead class="bg-primary text-white">
             <tr>
               <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">Exam Date</th>
-              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Exam / Paper Name</th>
-              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">Standard</th>
-              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Subject</th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">
+                <app-sort-header [sorter]="sorter" sortKey="name">Exam / Paper Name</app-sort-header>
+              </th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">
+                <app-sort-header [sorter]="sorter" sortKey="standard">Standard</app-sort-header>
+              </th>
+              <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">
+                <app-sort-header [sorter]="sorter" sortKey="subject">Subject</app-sort-header>
+              </th>
               <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">Download</th>
             </tr>
           </thead>
           <tbody>
-            @for (paper of paged(); track paper.name) {
+            @for (paper of pager.paged(); track paper.name) {
               <tr class="border-b border-gray-100 last:border-b-0 hover:bg-[#F7F9FC]">
                 <td class="px-5 py-3">
                   <span class="flex w-14 flex-col items-center rounded-md border border-gray-200 py-1.5 text-center">
@@ -167,22 +173,8 @@
       </div>
     </div>
 
-    @if (totalPages() > 1) {
-      <div class="mt-6 flex items-center justify-center gap-1.5">
-        <button type="button" (click)="go(-1)" [disabled]="page() === 1" aria-label="Previous page"
-          class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 text-primary transition-colors hover:bg-primary hover:text-white disabled:opacity-40">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
-        </button>
-        @for (n of pageNumbers(); track n) {
-          <button type="button" (click)="toPage(n)"
-            class="h-9 min-w-9 rounded-md border px-3 text-[13px] font-semibold transition-colors"
-            [class]="page() === n ? 'border-primary bg-primary text-white' : 'border-gray-200 text-primary hover:border-primary'">{{ n }}</button>
-        }
-        <button type="button" (click)="go(1)" [disabled]="page() === totalPages()" aria-label="Next page"
-          class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 text-primary transition-colors hover:bg-primary hover:text-white disabled:opacity-40">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-        </button>
-      </div>
+    @if (pager.totalPages() > 1) {
+      <app-pagination [pager]="pager" variant="compact" />
     }
   } @else {
     <div class="animate-dropdown mt-5 rounded-xl border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-14 text-center">

@@ -1,5 +1,17 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { catchError, of } from 'rxjs';
+import { ResourcesService } from '../../../core/services/resources.service';
+import { PodcastEntry } from '../../../shared/models/models';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
+
+interface Episode {
+  number: string;
+  title: string;
+  thumb: string;
+  videoId: string;
+}
 
 @Component({
   selector: 'app-podcast',
@@ -8,6 +20,9 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
   styleUrl: './podcast.scss',
 })
 export class Podcast {
+  private readonly resources = inject(ResourcesService);
+  private readonly sanitizer = inject(DomSanitizer);
+
   readonly banner = PLACEHOLDER.media.podcastBanner;
 
   readonly pillars: ReadonlyArray<{ title: string; body: string; path: string[] }> = [
@@ -15,38 +30,6 @@ export class Podcast {
     { title: 'Expert Talks', body: 'Conversations with visionaries & educators', path: ['M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z', 'M19 10a7 7 0 0 1-14 0', 'M12 17v5M8 22h8'] },
     { title: 'Student Voices', body: 'Ideas, innovation & campus experiences', path: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', 'M22 21v-2a4 4 0 0 0-3-3.87'] },
     { title: 'Knowledge & Growth', body: 'Tips, motivation & thoughtful insights', path: ['M9 18h6', 'M10 22h4', 'M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z'] },
-  ];
-
-  readonly featured: ReadonlyArray<{
-    number: string;
-    tag: string;
-    title: string;
-    desc: string;
-    date: string;
-    views: string;
-    duration: string;
-    image: string;
-  }> = [
-    {
-      number: 'EPISODE 02',
-      tag: 'Education',
-      title: 'Interview with Champions of CES, the toppers of JEE Main 2025!',
-      desc: 'Our talented students share their preparation strategies, challenges, and the support system that helped them achieve outstanding results.',
-      date: 'May 28, 2025',
-      views: '1.2K Views',
-      duration: '32:45',
-      image: PLACEHOLDER.media.episodes[0],
-    },
-    {
-      number: 'EPISODE 01',
-      tag: 'Achievement',
-      title: 'Interview with Vaidevi Panchal, qualifier for National Rifle Shooting Competition!',
-      desc: 'An inspiring conversation with Vaidevi Panchal on her journey, dedication, training and what it takes to aim for excellence.',
-      date: 'Apr 22, 2025',
-      views: '980 Views',
-      duration: '28:16',
-      image: PLACEHOLDER.media.episodes[1],
-    },
   ];
 
   readonly categories: ReadonlyArray<{ label: string; count: string; path: string[]; active?: boolean }> = [
@@ -62,4 +45,72 @@ export class Podcast {
     { label: 'Listen on YouTube', sub: 'YouTube', tone: 'text-[#FF0000]' },
     { label: 'Listen on Apple Podcasts', sub: 'Apple Podcasts', tone: 'text-[#9933CC]' },
   ];
+
+  // Episodes come from the DB; the page shows only active ones, keeping the
+  // original card design and filling in what the backend provides.
+  readonly loading = signal(true);
+  readonly failed = signal(false);
+  readonly episodes = signal<readonly Episode[]>([]);
+
+  /** The video currently playing in the popup, or null when closed. */
+  readonly activeVideo = signal<SafeResourceUrl | null>(null);
+
+  constructor() {
+    this.resources
+      .getPodcastList()
+      .pipe(
+        catchError(() => {
+          this.failed.set(true);
+          return of<PodcastEntry[]>([]);
+        }),
+        takeUntilDestroyed(),
+      )
+      .subscribe((list) => {
+        const rows = Array.isArray(list) ? list : [];
+        this.episodes.set(
+          rows
+            .filter((p) => this.isActive(p.isactive))
+            .map((p) => ({ title: p.title, id: this.videoId(p.link) }))
+            .filter((e) => !!e.id)
+            .map((e, i) => ({
+              number: `EPISODE ${String(i + 1).padStart(2, '0')}`,
+              title: e.title,
+              thumb: `https://img.youtube.com/vi/${e.id}/hqdefault.jpg`,
+              videoId: e.id,
+            })),
+        );
+        this.loading.set(false);
+      });
+  }
+
+  /** Open the popup with the selected episode (autoplays). */
+  play(ep: Episode): void {
+    this.activeVideo.set(
+      this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${ep.videoId}?autoplay=1`),
+    );
+  }
+
+  close(): void {
+    this.activeVideo.set(null);
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    this.close();
+  }
+
+  /** Backends vary between boolean / 1 / "true" for the active flag. */
+  private isActive(value: unknown): boolean {
+    return value === true || value === 1 || String(value).toLowerCase() === 'true';
+  }
+
+  /** Extract the YouTube video id from the various URL shapes the backend stores. */
+  private videoId(link: string): string {
+    if (!link) return '';
+    if (link.includes('youtube.com/watch?v=')) return link.split('v=')[1].split('&')[0];
+    if (link.includes('youtu.be/')) return link.split('.be/')[1].split('?')[0];
+    if (link.includes('youtube.com/live/')) return link.split('/live/')[1].split('?')[0];
+    if (link.includes('youtube.com/embed/')) return link.split('/embed/')[1].split(/[?&]/)[0];
+    return '';
+  }
 }

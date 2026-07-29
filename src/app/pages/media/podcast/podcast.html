@@ -78,64 +78,47 @@
     </a>
   </div>
 
-  <ul class="mt-5 list-none space-y-5">
-    @for (ep of featured; track ep.number) {
-      <li class="grid gap-5 overflow-hidden rounded-xl border border-gray-200 bg-white lg:grid-cols-[1.1fr_1fr]">
-        <div class="relative">
-          <img [src]="ep.image" [alt]="ep.title" loading="lazy"
-            class="aspect-video w-full bg-primary-light object-cover" />
+  @if (loading()) {
+    <p class="mt-5 text-[13px] text-muted">Loading episodes…</p>
+  } @else if (failed()) {
+    <p class="mt-5 rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
+      We couldn't load the episodes right now. Please try again later.
+    </p>
+  } @else {
+    <ul class="mt-5 list-none space-y-5">
+      @for (ep of episodes(); track ep.videoId) {
+        <li class="grid gap-5 overflow-hidden rounded-xl border border-gray-200 bg-white lg:grid-cols-[1.1fr_1fr]">
+          <div class="relative">
+            <img [src]="ep.thumb" [alt]="ep.title" loading="lazy"
+              class="aspect-video w-full bg-primary-light object-cover" />
 
-          <span class="absolute top-4 left-4 rounded-md bg-logo px-3 py-1 text-[10.5px] font-bold tracking-wide text-white uppercase">{{ ep.number }}</span>
+            <span class="absolute top-4 left-4 rounded-md bg-logo px-3 py-1 text-[10.5px] font-bold tracking-wide text-white uppercase">{{ ep.number }}</span>
 
-          <button type="button" [attr.aria-label]="'Play ' + ep.title"
-            class="absolute inset-0 m-auto flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-logo transition-transform hover:scale-105">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
-          </button>
-
-          <span class="absolute bottom-4 left-4 inline-flex items-center gap-1.5 rounded-md bg-black/60 px-2.5 py-1 text-[11px] font-medium text-white">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" />
-            </svg>
-            {{ ep.duration }}
-          </span>
-        </div>
-
-        <div class="flex flex-col p-5 lg:py-6 lg:pr-6 lg:pl-0">
-          <span class="w-fit rounded bg-logo/10 px-2.5 py-1 text-[10.5px] font-bold tracking-wide text-logo uppercase">{{ ep.tag }}</span>
-
-          <h3 class="mt-3 text-[17px] leading-snug font-bold text-primary">{{ ep.title }}</h3>
-          <p class="mt-2.5 flex-1 text-[12.5px] leading-relaxed text-muted">{{ ep.desc }}</p>
-
-          <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-[12px] text-muted">
-            <span class="inline-flex items-center gap-1.5">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" />
-              </svg>
-              {{ ep.date }}
-            </span>
-            <span class="inline-flex items-center gap-1.5">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" /><circle cx="12" cy="12" r="3" />
-              </svg>
-              {{ ep.views }}
-            </span>
-          </div>
-
-          <div class="mt-5 flex flex-wrap items-center gap-4">
-            <button type="button"
-              class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-[12.5px] font-semibold text-white transition-colors hover:bg-primary-dark">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
-              Play Episode
+            <button type="button" [attr.aria-label]="'Play ' + ep.title" (click)="play(ep)"
+              class="absolute inset-0 m-auto flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-logo transition-transform hover:scale-105">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
             </button>
-            <a href="#" class="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-primary no-underline hover:text-accent">
-              Show Notes
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-            </a>
           </div>
-        </div>
-      </li>
-    }
-  </ul>
+
+          <div class="flex flex-col justify-center p-5 lg:py-6 lg:pr-6 lg:pl-0">
+            <h3 class="text-[17px] leading-snug font-bold text-primary">{{ ep.title }}</h3>
+
+            <div class="mt-5">
+              <button type="button" (click)="play(ep)"
+                class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-[12.5px] font-semibold text-white transition-colors hover:bg-primary-dark">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+                Play Episode
+              </button>
+            </div>
+          </div>
+        </li>
+      } @empty {
+        <li class="rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
+          No episodes published yet. Check back soon!
+        </li>
+      }
+    </ul>
+  }
 
   <!-- Categories -->
   <div class="mt-9 flex flex-wrap items-center justify-between gap-3">
@@ -191,3 +174,19 @@
   </div>
 
 </section>
+
+<!-- ─── Video popup ─── -->
+@if (activeVideo(); as video) {
+  <div class="fixed inset-0 z-[999] flex items-center justify-center bg-black/80 p-4" (click)="close()">
+    <div class="relative w-full max-w-4xl" (click)="$event.stopPropagation()">
+      <button type="button" (click)="close()" aria-label="Close video"
+        class="absolute -top-11 right-0 flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
+      </button>
+      <div class="aspect-video w-full overflow-hidden rounded-xl bg-black">
+        <iframe class="h-full w-full" [src]="video" title="Podcast video" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+}

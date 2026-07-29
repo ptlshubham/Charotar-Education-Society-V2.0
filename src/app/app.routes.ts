@@ -100,17 +100,27 @@ export const routes: Routes = [
         ...seo('ipcell'),
         loadComponent: () => import('./pages/ipcell/ipcell').then(m => m.Ipcell)
       },
-      // ─── Student Corner ───
+      // ─── Student Corner ─── student-facing pages grouped under one prefix.
+      // Componentless parent: the children render in MainLayout's outlet.
       {
-        path: 'more/answer-key',
-        ...seo('more/answer-key'),
-        loadComponent: () => import('./pages/student-corner/answer-key/answer-key').then(m => m.AnswerKey)
+        path: 'student-corner',
+        children: [
+          { path: '', redirectTo: 'answer-key', pathMatch: 'full' },
+          {
+            path: 'answer-key',
+            ...seo('student-corner/answer-key'),
+            loadComponent: () => import('./pages/student-corner/answer-key/answer-key').then(m => m.AnswerKey)
+          },
+          {
+            path: 'magazine',
+            ...seo('student-corner/magazine'),
+            loadComponent: () => import('./pages/student-corner/magazine/magazine').then(m => m.Magazine)
+          },
+        ]
       },
-      {
-        path: 'more/magazine',
-        ...seo('more/magazine'),
-        loadComponent: () => import('./pages/student-corner/magazine/magazine').then(m => m.Magazine)
-      },
+      // Preserve the old CES site's /more/* URLs for these (hash links + bookmarks).
+      { path: 'more/answer-key', redirectTo: '/student-corner/answer-key', pathMatch: 'full' },
+      { path: 'more/magazine', redirectTo: '/student-corner/magazine', pathMatch: 'full' },
       // ─── Blog ───
       {
         path: 'home/blog',

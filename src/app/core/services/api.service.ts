@@ -29,11 +29,19 @@ export class ApiService {
   // e-Gate Pass — institute dropdown + request submission.
   public static GetInstitutesURL: string = ApiService.HOST_URL + '/admin/GetAllInstituteDetails';
   public static SaveGatePassURL: string = ApiService.HOST_URL + '/admin/SaveGatePassUserList';
+  // Counselling — book an appointment (institute dropdown reuses GetInstitutesURL).
+  public static SaveCounselingURL: string = ApiService.HOST_URL + '/admin/SaveCounselingDetails';
   // Navratri — yearly celebrations + per-year gallery images.
   public static GetNavratriListURL: string = ApiService.HOST_URL + '/admin/GetAllNavratriDetails';
   public static GetNavratriImagesURL: string = ApiService.HOST_URL + '/admin/GetNavratriImagesById/';
   // Podcast — CES "NextUp" episodes (YouTube links); page renders only active ones.
   public static GetPodcastListURL: string = ApiService.HOST_URL + '/admin/GetAllPodcastDetails';
+  // Blog — posts for an institute (the society itself, by convention). Append the id.
+  public static GetBlogsURL: string = ApiService.HOST_URL + '/admin/GetBlogsDetailsById/';
+  // Answer keys — exam-cell notices for an institute. Append the id.
+  public static GetAnswerkeyURL: string = ApiService.HOST_URL + '/admin/GetAllAnswerkey/';
+  // Magazine — the society-wide Balmitra magazine archive (no id).
+  public static GetMagazineURL: string = ApiService.HOST_URL + '/admin/GetMagazineList';
   // IP Cell — patent (Utility/Design), copyright and trademark registers.
   public static GetPatentDataURL: string = ApiService.HOST_URL + '/admin/GetPatentData';
   public static GetCopyrightDataURL: string = ApiService.HOST_URL + '/admin/GetCopyrightData';

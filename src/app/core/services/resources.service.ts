@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { SKIP_ERROR_REDIRECT } from '../interceptors/error.interceptor';
-import { BeneficiaryStudent, Copyright, DonationPayload, Donor, GatePassPayload, Institute, MicroDonor, NavratriEntry, NavratriImage, Patent, PodcastEntry, Trademark } from '../../shared/models/models';
+import { AnswerKeyEntry, BeneficiaryStudent, BlogPost, Copyright, CounsellingPayload, DonationPayload, Donor, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NavratriImage, Patent, PodcastEntry, Trademark } from '../../shared/models/models';
 
 
 @Injectable({
@@ -71,6 +71,13 @@ export class ResourcesService {
         });
     }
 
+    // Counselling — book an appointment. Institute list reuses getInstitutes().
+    saveCounseling(payload: CounsellingPayload) {
+        return this.http.post(ApiService.SaveCounselingURL, payload, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
     // Navratri — the yearly celebration list and a year's gallery images.
     getNavratriList() {
         return this.http.get<NavratriEntry[]>(ApiService.GetNavratriListURL, {
@@ -87,6 +94,27 @@ export class ResourcesService {
     // Podcast — CES "NextUp" episodes; the page keeps only the active ones.
     getPodcastList() {
         return this.http.get<PodcastEntry[]>(ApiService.GetPodcastListURL, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    // Blog — posts for an institute (defaults to the society itself).
+    getBlogs(instituteId: number | string) {
+        return this.http.get<BlogPost[]>(ApiService.GetBlogsURL + instituteId, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    // Answer keys — exam-cell notices for an institute (defaults to the society).
+    getAnswerKeys(instituteId: number | string) {
+        return this.http.get<AnswerKeyEntry[]>(ApiService.GetAnswerkeyURL + instituteId, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    // Magazine — the society-wide Balmitra magazine archive.
+    getMagazines() {
+        return this.http.get<MagazineIssue[]>(ApiService.GetMagazineURL, {
             context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
         });
     }

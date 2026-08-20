@@ -1,31 +1,43 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { formatDate } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { catchError, of } from 'rxjs';
+import { ResourcesService } from '../../../core/services/resources.service';
+import { BlogPost } from '../../../shared/models/models';
+import { MediaUrlPipe } from '../../../shared/media-url.pipe';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
 
+/** The society's own institute id (id 1 in the CES DB); blogs are stored per institute. */
+const BLOG_INSTITUTE_ID = 1;
+
 interface Post {
-  slug: string;
+  id: string;
   title: string;
   excerpt: string;
-  category: string;
   date: string;
   day: string;
   month: string;
   year: string;
-  readTime: string;
   image: string;
+  author: string;
 }
 
 @Component({
   selector: 'app-blog-list',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, MediaUrlPipe],
   templateUrl: './list.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './list.scss',
 })
 export class BlogList {
+  private readonly resources = inject(ResourcesService);
+
   readonly banner = PLACEHOLDER.blog.banner;
 
+  // Category tabs are kept for when the admin adds categorisation; the live feed
+  // has no category, so selecting a tab only highlights it (search still filters).
   readonly tabs: readonly string[] = [
     'All Posts', 'News', 'Events', 'Achievements', 'Student Corner', 'Research & Innovation',
   ];
@@ -41,37 +53,39 @@ export class BlogList {
     this.query.set(this.search.trim().toLowerCase());
   }
 
-  readonly featured: Post = {
-    slug: 'ces-honored-gujarat-education-leadership-award-2025',
-    title: 'CES Honored with Gujarat Education Leadership Award 2025',
-    excerpt:
-      'A proud moment for Charotar Education Society as we are recognized for our outstanding contribution to quality education and holistic development.',
-    category: 'News',
-    date: 'Jul 22, 2026',
-    day: '22', month: 'JUL', year: '2026',
-    readTime: '5 min read',
-    image: PLACEHOLDER.blog.featured,
-  };
+  readonly loading = signal(true);
+  readonly failed = signal(false);
+  private readonly allPosts = signal<readonly Post[]>([]);
 
-  /** TODO: replace with the live blog feed. */
-  readonly posts: readonly Post[] = [
-    { slug: 'hands-on-learning', title: 'Hands-on Learning: The CES Approach to Practical Education', excerpt: 'How our institutes foster experiential learning and prepare students for real-world challenges.', category: 'Academics', date: 'Jul 18, 2026', day: '18', month: 'JUL', year: '2026', readTime: '4 min read', image: PLACEHOLDER.blog.posts[0] },
-    { slug: 'tree-plantation-drive', title: 'Tree Plantation Drive Across CES Campuses', excerpt: 'Promoting sustainability and environmental responsibility through student-led initiatives.', category: 'Events', date: 'Jul 15, 2026', day: '15', month: 'JUL', year: '2026', readTime: '3 min read', image: PLACEHOLDER.blog.posts[1] },
-    { slug: 'national-robotics-championship', title: 'CES Students Excel at National Robotics Championship', excerpt: 'Our team secured top honors at the national level with their innovative robotic solution.', category: 'Achievements', date: 'Jul 10, 2026', day: '10', month: 'JUL', year: '2026', readTime: '4 min read', image: PLACEHOLDER.blog.posts[2] },
-    { slug: 'expert-talk-ai-future-of-work', title: 'Expert Talk on AI & The Future of Work', excerpt: 'Industry expert shares insights on emerging AI trends and career opportunities for students.', category: 'News', date: 'Jul 05, 2026', day: '05', month: 'JUL', year: '2026', readTime: '4 min read', image: PLACEHOLDER.blog.posts[3] },
-    { slug: 'industrial-visit-isro', title: 'Industrial Visit to ISRO Ahmedabad', excerpt: 'Students explore space technology and gain insights into real-world applications.', category: 'Student Corner', date: 'Jun 28, 2026', day: '28', month: 'JUN', year: '2026', readTime: '3 min read', image: PLACEHOLDER.blog.posts[4] },
-    { slug: 'academic-excellence-results-2025', title: 'Academic Excellence in Action: Results 2025', excerpt: 'Celebrating the hard work and dedication of our students across all institutes.', category: 'Academics', date: 'Jun 20, 2026', day: '20', month: 'JUN', year: '2026', readTime: '2 min read', image: PLACEHOLDER.blog.posts[5] },
-  ];
+  constructor() {
+    this.resources
+      .getBlogs(BLOG_INSTITUTE_ID)
+      .pipe(
+        catchError(() => {
+          this.failed.set(true);
+          return of<BlogPost[]>([]);
+        }),
+        takeUntilDestroyed(),
+      )
+      .subscribe((list) => {
+        const rows = Array.isArray(list) ? list : [];
+        this.allPosts.set(rows.map((b) => this.toPost(b)));
+        this.loading.set(false);
+      });
+  }
+
+  /** Most recent post drives the featured card; the rest fill the grid. */
+  readonly featured = computed(() => this.allPosts()[0] ?? null);
+  private readonly rest = computed(() => this.allPosts().slice(1));
 
   readonly visible = computed(() => {
-    const t = this.tab();
     const q = this.query();
-    return this.posts.filter(
-      (p) =>
-        (t === 'All Posts' || p.category === t) &&
-        (!q || p.title.toLowerCase().includes(q) || p.excerpt.toLowerCase().includes(q)),
-    );
+    return q
+      ? this.rest().filter((p) => p.title.toLowerCase().includes(q) || p.excerpt.toLowerCase().includes(q))
+      : this.rest();
   });
+
+  readonly recent = computed(() => this.allPosts().slice(0, 5));
 
   readonly categories: ReadonlyArray<{ label: string; count: number; path: string[] }> = [
     { label: 'News', count: 24, path: ['M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2z', 'M10 6h8M10 10h8M10 14h4'] },
@@ -83,11 +97,30 @@ export class BlogList {
     { label: 'Campus Life', count: 10, path: ['M3 21h18', 'M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16'] },
   ];
 
-  readonly recent = computed(() => [this.featured, ...this.posts].slice(0, 5));
-
   email = '';
 
   subscribe(): void {
     this.email = '';
+  }
+
+  private toPost(b: BlogPost): Post {
+    const d = new Date(b.blogDate);
+    const valid = !isNaN(d.getTime());
+    return {
+      id: String(b.id),
+      title: b.blogTitle ?? '',
+      excerpt: this.strip(b.blogDetails).slice(0, 160),
+      date: valid ? formatDate(d, 'mediumDate', 'en-US') : (b.blogDate ?? ''),
+      day: valid ? formatDate(d, 'dd', 'en-US') : '',
+      month: valid ? formatDate(d, 'MMM', 'en-US').toUpperCase() : '',
+      year: valid ? formatDate(d, 'yyyy', 'en-US') : '',
+      image: b.blogImage ?? '',
+      author: b.authorName || 'CES Admin',
+    };
+  }
+
+  /** Strip HTML tags for the card excerpt. */
+  private strip(html: string): string {
+    return (html ?? '').replace(/<[^>]*>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
   }
 }

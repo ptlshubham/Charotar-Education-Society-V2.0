@@ -70,6 +70,40 @@ export interface PodcastEntry {
   isactive: boolean;
 }
 
+/** A blog post from GET /admin/GetBlogsDetailsById/:instituteId. `blogDetails` is HTML. */
+export interface BlogPost {
+  id: number | string;
+  blogTitle: string;
+  blogImage: string;
+  blogDate: string;
+  authorName: string;
+  blogDetails: string;
+}
+
+/** An answer-key notice from GET /admin/GetAllAnswerkey/:instituteId. `message` is HTML;
+ *  `files` is a media path or the literal string "null" when there's no download. */
+export interface AnswerKeyEntry {
+  date: string;
+  message: string;
+  files: string;
+}
+
+/** A magazine issue from GET /admin/GetMagazineList. `files` is the media path to the PDF. */
+export interface MagazineIssue {
+  title: string;
+  files: string;
+}
+
+/** Counselling appointment request — POST /admin/SaveCounselingDetails. */
+export interface CounsellingPayload {
+  name: string;
+  division: string;
+  email: string;
+  phone: string;
+  instituteName: string;
+  message: string;
+}
+
 /** A patent record from GET /admin/GetPatentData (purpose splits Utility vs Design). */
 export interface Patent {
   applicationname: string;

@@ -1,7 +1,7 @@
 <!-- ─── Hero ─── -->
 <section class="relative overflow-hidden bg-primary">
   <div class="pointer-events-none absolute inset-y-0 right-0 hidden w-[48%] lg:block" aria-hidden="true">
-    <img [src]="post.image" alt="" class="h-full w-full object-cover" />
+    <img [src]="post()?.blogImage | mediaUrl" alt="" class="h-full w-full object-cover" />
     <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/40 to-transparent"></div>
     <div class="absolute inset-y-0 -left-1 w-28 bg-primary [clip-path:polygon(0_0,100%_0,0_100%)]"></div>
   </div>
@@ -13,31 +13,29 @@
         <li aria-hidden="true">&rsaquo;</li>
         <li><a routerLink="/home/blog" class="no-underline hover:text-white">Blog</a></li>
         <li aria-hidden="true">&rsaquo;</li>
-        <li aria-current="page" class="text-secondary">{{ post.title }}</li>
+        <li aria-current="page" class="text-secondary">{{ post()?.blogTitle || 'Blog Details' }}</li>
       </ol>
     </nav>
 
-    <h1 class="mt-5 max-w-[520px] text-[26px] leading-snug font-bold text-white sm:text-[32px]">{{ post.title }}</h1>
+    <h1 class="mt-5 max-w-[520px] text-[26px] leading-snug font-bold text-white sm:text-[32px]">{{ post()?.blogTitle || 'Blog Details' }}</h1>
 
     <ul class="mt-5 flex list-none flex-wrap items-center gap-x-6 gap-y-2 text-[12.5px] text-white/80">
-      <li class="inline-flex items-center gap-1.5">
-        <svg class="text-secondary" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" />
-        </svg>
-        {{ post.date }}
-      </li>
-      <li class="inline-flex items-center gap-1.5">
-        <svg class="text-secondary" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
-        </svg>
-        {{ post.author }}
-      </li>
-      <li class="inline-flex items-center gap-1.5">
-        <svg class="text-secondary" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M20.6 13.4 12 22l-9-9V3h10l7.6 7.6a2 2 0 0 1 0 2.8z" /><path d="M7.5 7.5h.01" />
-        </svg>
-        {{ post.category }}
-      </li>
+      @if (date()) {
+        <li class="inline-flex items-center gap-1.5">
+          <svg class="text-secondary" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" />
+          </svg>
+          {{ date() }}
+        </li>
+      }
+      @if (post()?.authorName) {
+        <li class="inline-flex items-center gap-1.5">
+          <svg class="text-secondary" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
+          </svg>
+          {{ post()?.authorName }}
+        </li>
+      }
     </ul>
   </div>
 </section>
@@ -47,70 +45,70 @@
 
     <!-- Article -->
     <article class="rounded-xl border border-gray-200 bg-white p-5 lg:p-6">
-      <img [src]="post.image" [alt]="post.title" loading="lazy"
-        class="aspect-[16/8] w-full rounded-lg bg-primary-light object-cover" />
-
-      @for (para of intro; track para) {
-        <p class="mt-5 text-[13.5px] leading-[1.9] text-muted">{{ para }}</p>
-      }
-
-      @for (section of sections; track section.heading) {
-        <h2 class="mt-7 text-[18px] font-bold text-primary">{{ section.heading }}</h2>
-        <span class="mt-2 block h-1 w-12 rounded-full bg-secondary" aria-hidden="true"></span>
-        @for (para of section.paras; track para) {
-          <p class="mt-4 text-[13.5px] leading-[1.9] text-muted">{{ para }}</p>
-        }
-      }
-
-      <blockquote class="mt-7 flex items-start gap-3 rounded-lg bg-[#F1F5FB] p-5">
-        <svg class="shrink-0 text-primary/40" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M7 7h4v4c0 3-1.8 5.3-4.5 6L6 15.6c1.3-.4 2-1.3 2-2.6H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2zm10 0h4v4c0 3-1.8 5.3-4.5 6L16 15.6c1.3-.4 2-1.3 2-2.6h-1a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z" />
-        </svg>
-        <div>
-          <p class="text-[13.5px] leading-relaxed text-primary italic">{{ quote.text }}</p>
-          <p class="mt-2 text-[13px] font-semibold text-primary">{{ quote.source }}</p>
+      @if (loading()) {
+        <p class="text-[13px] text-muted">Loading article…</p>
+      } @else if (failed()) {
+        <p class="rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
+          We couldn't load this post right now. Please try again later.
+        </p>
+      } @else if (notFound()) {
+        <div class="rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center">
+          <p class="text-[14px] font-semibold text-primary">Post not found</p>
+          <a routerLink="/home/blog" class="mt-3 inline-block text-[13px] font-semibold text-accent no-underline hover:underline">← Back to all posts</a>
         </div>
-      </blockquote>
+      } @else if (post(); as p) {
+        <img [src]="p.blogImage | mediaUrl" [alt]="p.blogTitle" loading="lazy"
+          class="aspect-[16/8] w-full rounded-lg bg-primary-light object-cover" />
 
-      <!-- Share -->
-      <p class="mt-7 text-[12.5px] font-semibold text-primary">Share this Post</p>
-      <ul class="mt-2.5 flex list-none flex-wrap gap-2.5">
-        @for (share of shares; track share.label) {
-          <li>
-            <button type="button" [attr.aria-label]="'Share on ' + share.label"
-              class="inline-flex items-center gap-2 rounded-md px-4 py-2 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
-              [class]="share.tone">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M18 8a3 3 0 1 0-2.8-4H15L8.9 9.6a3 3 0 1 0 0 4.8L15 20h.2A3 3 0 1 0 18 16a3 3 0 0 0-2.2 1l-5.6-5a3 3 0 0 0 0-1.2l5.6-5A3 3 0 0 0 18 8z" />
-              </svg>
-              {{ share.label }}
-            </button>
-          </li>
+        <div class="mt-5 text-[13.5px] leading-[1.9] text-muted [&_a]:text-accent [&_a]:underline [&_h1]:mt-6 [&_h1]:text-[20px] [&_h1]:font-bold [&_h1]:text-primary [&_h2]:mt-6 [&_h2]:text-[18px] [&_h2]:font-bold [&_h2]:text-primary [&_h3]:mt-5 [&_h3]:text-[16px] [&_h3]:font-bold [&_h3]:text-primary [&_img]:my-4 [&_img]:max-w-full [&_img]:rounded-lg [&_li]:mt-1 [&_ol]:mt-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mt-4 [&_strong]:text-primary [&_ul]:mt-4 [&_ul]:list-disc [&_ul]:pl-6"
+          [innerHTML]="p.blogDetails | safeHtml"></div>
+
+        <!-- Share -->
+        <p class="mt-7 text-[12.5px] font-semibold text-primary">Share this Post</p>
+        <ul class="mt-2.5 flex list-none flex-wrap gap-2.5">
+          @for (share of shares; track share.label) {
+            <li>
+              <button type="button" [attr.aria-label]="'Share on ' + share.label"
+                class="inline-flex items-center gap-2 rounded-md px-4 py-2 text-[12px] font-semibold text-white transition-opacity hover:opacity-90"
+                [class]="share.tone">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M18 8a3 3 0 1 0-2.8-4H15L8.9 9.6a3 3 0 1 0 0 4.8L15 20h.2A3 3 0 1 0 18 16a3 3 0 0 0-2.2 1l-5.6-5a3 3 0 0 0 0-1.2l5.6-5A3 3 0 0 0 18 8z" />
+                </svg>
+                {{ share.label }}
+              </button>
+            </li>
+          }
+        </ul>
+
+        <!-- Prev / next -->
+        @if (prev() || next()) {
+          <div class="mt-7 grid gap-4 border-t border-gray-100 pt-5 sm:grid-cols-2">
+            @if (prev(); as p2) {
+              <a [routerLink]="['/home/blog', p2.id]" class="flex items-center gap-3 no-underline">
+                <svg class="shrink-0 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6" /></svg>
+                <img [src]="p2.image | mediaUrl" alt="" loading="lazy" class="h-12 w-14 shrink-0 rounded-md bg-primary-light object-cover" />
+                <span class="min-w-0">
+                  <span class="block text-[10.5px] font-bold tracking-wide text-muted uppercase">Previous Post</span>
+                  <span class="block text-[12.5px] leading-snug font-semibold text-primary">{{ p2.title }}</span>
+                  <span class="block text-[11px] text-muted">{{ p2.date }}</span>
+                </span>
+              </a>
+            } @else { <span></span> }
+
+            @if (next(); as n) {
+              <a [routerLink]="['/home/blog', n.id]" class="flex items-center gap-3 no-underline sm:flex-row-reverse sm:text-right">
+                <svg class="shrink-0 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>
+                <img [src]="n.image | mediaUrl" alt="" loading="lazy" class="h-12 w-14 shrink-0 rounded-md bg-primary-light object-cover" />
+                <span class="min-w-0">
+                  <span class="block text-[10.5px] font-bold tracking-wide text-muted uppercase">Next Post</span>
+                  <span class="block text-[12.5px] leading-snug font-semibold text-primary">{{ n.title }}</span>
+                  <span class="block text-[11px] text-muted">{{ n.date }}</span>
+                </span>
+              </a>
+            }
+          </div>
         }
-      </ul>
-
-      <!-- Prev / next -->
-      <div class="mt-7 grid gap-4 border-t border-gray-100 pt-5 sm:grid-cols-2">
-        <a [routerLink]="['/home/blog', prev.slug]" class="flex items-center gap-3 no-underline">
-          <svg class="shrink-0 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6" /></svg>
-          <img [src]="prev.image" alt="" loading="lazy" class="h-12 w-14 shrink-0 rounded-md bg-primary-light object-cover" />
-          <span class="min-w-0">
-            <span class="block text-[10.5px] font-bold tracking-wide text-muted uppercase">Previous Post</span>
-            <span class="block text-[12.5px] leading-snug font-semibold text-primary">{{ prev.title }}</span>
-            <span class="block text-[11px] text-muted">{{ prev.date }}</span>
-          </span>
-        </a>
-
-        <a [routerLink]="['/home/blog', next.slug]" class="flex items-center gap-3 no-underline sm:flex-row-reverse sm:text-right">
-          <svg class="shrink-0 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>
-          <img [src]="next.image" alt="" loading="lazy" class="h-12 w-14 shrink-0 rounded-md bg-primary-light object-cover" />
-          <span class="min-w-0">
-            <span class="block text-[10.5px] font-bold tracking-wide text-muted uppercase">Next Post</span>
-            <span class="block text-[12.5px] leading-snug font-semibold text-primary">{{ next.title }}</span>
-            <span class="block text-[11px] text-muted">{{ next.date }}</span>
-          </span>
-        </a>
-      </div>
+      }
     </article>
 
     <!-- Sidebar -->
@@ -154,17 +152,19 @@
         <span class="mt-2 block h-1 w-12 rounded-full bg-secondary" aria-hidden="true"></span>
 
         <ul class="mt-4 list-none space-y-4">
-          @for (item of recent; track item.slug) {
+          @for (item of recent(); track item.id) {
             <li class="flex gap-3">
-              <img [src]="item.image" [alt]="item.title" loading="lazy"
+              <img [src]="item.image | mediaUrl" [alt]="item.title" loading="lazy"
                 class="h-14 w-16 shrink-0 rounded-md bg-primary-light object-cover" />
               <div class="min-w-0">
                 <h3 class="text-[12.5px] leading-snug font-semibold text-primary">
-                  <a [routerLink]="['/home/blog', item.slug]" class="text-primary no-underline hover:text-accent">{{ item.title }}</a>
+                  <a [routerLink]="['/home/blog', item.id]" class="text-primary no-underline hover:text-accent">{{ item.title }}</a>
                 </h3>
                 <p class="mt-1 text-[11px] text-muted">{{ item.date }}</p>
               </div>
             </li>
+          } @empty {
+            <li class="text-[12px] text-muted">No recent posts.</li>
           }
         </ul>
 

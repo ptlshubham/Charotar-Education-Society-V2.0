@@ -16,47 +16,51 @@
   <div class="relative">
 
     <!-- Arrows sit outside the track on wide screens, matching the reference. -->
-    <button type="button" (click)="scrollBy(-1)" aria-label="Previous institutes"
+    <button type="button" (click)="slide(-1)" aria-label="Previous institutes"
       class="absolute top-1/2 -left-4 z-10 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-primary shadow-md transition-colors hover:bg-primary hover:text-white lg:flex">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6" /></svg>
     </button>
 
-    <button type="button" (click)="scrollBy(1)" aria-label="Next institutes"
+    <button type="button" (click)="slide(1)" aria-label="Next institutes"
       class="absolute top-1/2 -right-4 z-10 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-primary shadow-md transition-colors hover:bg-primary hover:text-white lg:flex">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>
     </button>
 
-  <!-- Horizontal scroller: native snap keeps this working without a carousel library. -->
-  <ul #track class="-mx-4 flex snap-x snap-mandatory list-none gap-5 overflow-x-auto px-4 pb-3 sm:mx-0 sm:px-0">
+  <!-- Swiper carousel: drag / swipe, responsive auto-width slides.
+       init="false" so it initializes on the client (SSR-safe); slides collapse
+       to their card width before init and Swiper takes over afterwards. -->
+  <swiper-container init="false" #swiperEl class="block">
     @for (institute of institutes; track institute.title) {
-      <li class="w-[240px] shrink-0 snap-start overflow-hidden rounded-xl border border-gray-200 bg-white sm:w-[260px]">
+      <swiper-slide class="w-[240px] sm:w-[260px]">
+        <div class="flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white">
 
-        <div class="relative h-[120px] bg-primary-light">
-          @if (institute.image) {
-            <img [src]="institute.image" [alt]="institute.title" class="h-full w-full object-cover" />
-          } @else {
-            <svg class="absolute inset-0 m-auto h-12 w-12 text-white/25" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M3 21h18v-2H3v2zM5 19V9l7-5 7 5v10h-4v-6h-6v6H5z" />
-            </svg>
-          }
+          <div class="relative h-[120px] bg-primary-light">
+            @if (institute.image) {
+              <img [src]="institute.image" [alt]="institute.title" class="h-full w-full object-cover" />
+            } @else {
+              <svg class="absolute inset-0 m-auto h-12 w-12 text-white/25" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M3 21h18v-2H3v2zM5 19V9l7-5 7 5v10h-4v-6h-6v6H5z" />
+              </svg>
+            }
+          </div>
+
+          <div class="flex flex-1 flex-col p-4">
+            <h3 class="text-[15px] font-semibold text-primary">{{ institute.title }}</h3>
+            <p class="mt-1.5 flex-1 text-[13px] leading-relaxed text-muted">{{ institute.desc }}</p>
+
+            <a [routerLink]="institute.link"
+              class="mt-4 inline-flex w-fit items-center gap-1.5 rounded-md border border-gray-200 px-3 py-1.5 text-[13px] font-semibold text-primary no-underline transition-colors hover:border-primary hover:bg-primary hover:text-white">
+              Explore
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </a>
+          </div>
+
         </div>
-
-        <div class="p-4">
-          <h3 class="text-[15px] font-semibold text-primary">{{ institute.title }}</h3>
-          <p class="mt-1.5 text-[13px] leading-relaxed text-muted">{{ institute.desc }}</p>
-
-          <a [routerLink]="institute.link"
-            class="mt-4 inline-flex items-center gap-1.5 rounded-md border border-gray-200 px-3 py-1.5 text-[13px] font-semibold text-primary no-underline transition-colors hover:border-primary hover:bg-primary hover:text-white">
-            Explore
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M5 12h14M13 6l6 6-6 6" />
-            </svg>
-          </a>
-        </div>
-
-      </li>
+      </swiper-slide>
     }
-    </ul>
+  </swiper-container>
 
   </div>
 

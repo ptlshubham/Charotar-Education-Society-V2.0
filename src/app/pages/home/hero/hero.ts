@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, PLATFORM_ID, computed, inject, signal } from '@angular/core';
+import { afterNextRender, ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, PLATFORM_ID, computed, inject, signal, viewChild } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
@@ -13,19 +13,32 @@ interface Slide {
   blurb: string;
 }
 
+/** Minimal shape of the Swiper custom element we touch. */
+type SwiperEl = HTMLElement & {
+  swiper?: {
+    realIndex: number;
+    slideNext(): void;
+    slidePrev(): void;
+    slideToLoop(index: number): void;
+    autoplay?: { start(): void; stop(): void };
+  };
+  initialize(): void;
+};
+
 @Component({
   selector: 'app-hero',
   imports: [RouterLink],
   templateUrl: './hero.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './hero.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   host: { '(document:keydown.escape)': 'closeVideo()' },
 })
 export class Hero {
-  private readonly destroyRef = inject(DestroyRef);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly document = inject(DOCUMENT);
   private readonly sanitizer = inject(DomSanitizer);
+  private readonly swiperEl = viewChild<ElementRef<SwiperEl>>('swiperEl');
 
   /** Replace each `image` with real CES photography — see PLACEHOLDER.heroSlides. */
   readonly slides: readonly Slide[] = [
@@ -52,9 +65,6 @@ export class Hero {
   readonly active = signal(0);
   readonly current = computed(() => this.slides[this.active()]);
 
-  private timer?: ReturnType<typeof setInterval>;
-  private static readonly INTERVAL = 6000;
-
   readonly categories: readonly string[] = [
     'All Categories',
     'Schools',
@@ -79,63 +89,64 @@ export class Hero {
     `https://www.youtube-nocookie.com/embed/${Hero.VIDEO_ID}?autoplay=1&rel=0&modestbranding=1`,
   );
 
+  constructor() {
+    // Swiper Element is a web component: register + initialize browser-only so
+    // SSR/prerender never touches `customElements`.
+    afterNextRender(async () => {
+      const { register } = await import('swiper/element/bundle');
+      register();
+      const el = this.swiperEl()?.nativeElement;
+      if (!el) return;
+      Object.assign(el, {
+        loop: true,
+        effect: 'fade',
+        fadeEffect: { crossFade: true },
+        speed: 700,
+        autoplay: { delay: 6000, disableOnInteraction: false, pauseOnMouseEnter: true },
+        grabCursor: true,
+        a11y: { enabled: true },
+      });
+      el.initialize();
+    });
+  }
+
+  private get swiper() {
+    return this.swiperEl()?.nativeElement?.swiper;
+  }
+
+  /** Keep the heading + dots in step with the slide Swiper is showing. */
+  onSlideChange(event: Event): void {
+    const swiper = (event as CustomEvent<[{ realIndex: number }]>).detail?.[0];
+    if (swiper) this.active.set(swiper.realIndex);
+  }
+
+  select(i: number): void {
+    this.swiper?.slideToLoop(i);
+  }
+
+  next(): void {
+    this.swiper?.slideNext();
+  }
+
+  prev(): void {
+    this.swiper?.slidePrev();
+  }
+
   openVideo(): void {
     this.videoOpen.set(true);
-    this.stop();            // don't advance slides behind the modal
+    this.swiper?.autoplay?.stop();
     this.lockScroll(true);
   }
 
   closeVideo(): void {
-    if (!this.videoOpen()) return;   // the Escape handler fires page-wide
+    if (!this.videoOpen()) return; // the Escape handler fires page-wide
     this.videoOpen.set(false);
     this.lockScroll(false);
-    this.start();
+    this.swiper?.autoplay?.start();
   }
 
   private lockScroll(on: boolean): void {
     if (!this.isBrowser) return;
     this.document.body.style.overflow = on ? 'hidden' : '';
-  }
-
-  constructor() {
-    // Autoplay is browser-only: setInterval must never run during SSR/prerender.
-    if (this.isBrowser) {
-      this.start();
-      this.destroyRef.onDestroy(() => {
-        this.stop();
-        this.lockScroll(false);   // never leave the page unscrollable
-      });
-    }
-  }
-
-  select(i: number): void {
-    this.active.set(i);
-    this.restart();
-  }
-
-  next(): void {
-    this.active.update((i) => (i + 1) % this.slides.length);
-  }
-
-  prev(): void {
-    this.active.update((i) => (i - 1 + this.slides.length) % this.slides.length);
-  }
-
-  /** Pause on hover so a reader isn't yanked to the next slide mid-sentence. */
-  start(): void {
-    if (!this.isBrowser || this.timer) return;
-    this.timer = setInterval(() => this.next(), Hero.INTERVAL);
-  }
-
-  stop(): void {
-    if (this.timer) {
-      clearInterval(this.timer);
-      this.timer = undefined;
-    }
-  }
-
-  private restart(): void {
-    this.stop();
-    this.start();
   }
 }

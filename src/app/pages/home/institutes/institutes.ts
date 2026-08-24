@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
+import { afterNextRender, ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
 
@@ -10,15 +10,19 @@ interface Institute {
   image?: string;
 }
 
+/** Minimal shape of the Swiper custom element we touch. */
+type SwiperEl = HTMLElement & { swiper?: { slideNext(): void; slidePrev(): void }; initialize(): void };
+
 @Component({
   selector: 'app-institutes',
   imports: [RouterLink],
   templateUrl: './institutes.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './institutes.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class Institutes {
-  @ViewChild('track') track?: ElementRef<HTMLElement>;
+  private readonly swiperEl = viewChild<ElementRef<SwiperEl>>('swiperEl');
 
   readonly institutes: readonly Institute[] = [
     { title: 'Schools', desc: 'Nurturing young minds for a brighter future.', link: '/academic/school', image: PLACEHOLDER.institutes.schools },
@@ -28,12 +32,27 @@ export class Institutes {
     { title: 'Other Institutes', desc: 'Diverse programs for holistic development.', link: '/academic/others', image: PLACEHOLDER.institutes.others },
   ];
 
-  /** Scrolls by one card plus its gap, so cards land on the snap points. */
-  scrollBy(direction: -1 | 1): void {
-    const el = this.track?.nativeElement;
-    if (!el) return;
-    const card = el.querySelector('li');
-    const step = card ? card.getBoundingClientRect().width + 20 : el.clientWidth * 0.8;
-    el.scrollBy({ left: step * direction, behavior: 'smooth' });
+  constructor() {
+    // Browser-only: custom elements need `customElements`, absent during SSR.
+    afterNextRender(async () => {
+      const { register } = await import('swiper/element/bundle');
+      register();
+      const el = this.swiperEl()?.nativeElement;
+      if (!el) return;
+      Object.assign(el, {
+        slidesPerView: 'auto',
+        spaceBetween: 20,
+        grabCursor: true,
+        a11y: { enabled: true },
+      });
+      el.initialize();
+    });
+  }
+
+  slide(direction: -1 | 1): void {
+    const sw = this.swiperEl()?.nativeElement?.swiper;
+    if (!sw) return;
+    if (direction === 1) sw.slideNext();
+    else sw.slidePrev();
   }
 }

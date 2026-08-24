@@ -44,8 +44,9 @@ export class NavratriDetail {
     this.active.set(id);
   }
 
-  /** Generic event facts (the DB has only the theme write-up). */
+  /** Generic event facts (the DB has only the per-year theme write-up, shown in the article). */
   readonly highlights: ReadonlyArray<{ label: string; value: string; path: string[] }> = [
+    { label: 'Duration', value: `15th Sep – 24th Oct, ${this.year}`, path: ['M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z', 'M16 2v4M8 2v4M3 10h18'] },
     { label: 'Venue', value: 'CES Campus, Anand', path: ['M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z', 'M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'] },
     { label: 'Devotees', value: '100K+ Devotees', path: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', 'M22 21v-2a4 4 0 0 0-3-3.87'] },
     { label: 'Garba Nights', value: '9 Nights of Devotion & Dance', path: ['M9 18V5l12-2v13', 'M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0z'] },

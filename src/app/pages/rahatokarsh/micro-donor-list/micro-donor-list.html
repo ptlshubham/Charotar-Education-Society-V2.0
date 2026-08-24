@@ -113,13 +113,14 @@
             <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">
               <app-sort-header [sorter]="sorter" sortKey="amount">Amount (₹)</app-sort-header>
             </th>
+            <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap"><span class="sr-only">Donation Type</span></th>
           </tr>
         </thead>
         <tbody>
           @if (loading()) {
-            <tr><td colspan="5" class="px-5 py-10 text-center text-[13px] text-muted">Loading micro-donor list…</td></tr>
+            <tr><td colspan="6" class="px-5 py-10 text-center text-[13px] text-muted">Loading micro-donor list…</td></tr>
           } @else if (failed()) {
-            <tr><td colspan="5" class="px-5 py-10 text-center text-[13px] text-accent">Unable to load the micro-donor list right now. Please try again later.</td></tr>
+            <tr><td colspan="6" class="px-5 py-10 text-center text-[13px] text-accent">Unable to load the micro-donor list right now. Please try again later.</td></tr>
           } @else {
             @for (donor of pager.paged(); track $index; let i = $index) {
               <tr class="border-b border-gray-100 last:border-b-0 hover:bg-[#F7F9FC]">
@@ -130,9 +131,14 @@
                 <td class="px-5 py-3.5 text-[13px] font-medium text-primary">{{ donor.name }}</td>
                 <td class="px-5 py-3.5 text-[13px] text-muted">{{ donor.city }}</td>
                 <td class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap text-primary">₹ {{ donor.amount | number }}</td>
+                <td class="px-5 py-3.5 whitespace-nowrap">
+                  @if (donor.paymentId) {
+                    <span class="inline-flex items-center rounded-full bg-green-50 px-3 py-1 text-[11px] font-semibold text-green-600 ring-1 ring-green-200">Online</span>
+                  }
+                </td>
               </tr>
             } @empty {
-              <tr><td colspan="5" class="px-5 py-10 text-center text-[13px] text-muted">No donors match your search.</td></tr>
+              <tr><td colspan="6" class="px-5 py-10 text-center text-[13px] text-muted">No donors match your search.</td></tr>
             }
           }
         </tbody>

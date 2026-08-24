@@ -56,10 +56,13 @@ export class BeneficiaryStudents {
   readonly stats = computed(() => {
     const rows = this.all();
     const institutes = new Set(rows.map((r) => r.instituteName).filter(Boolean)).size;
-    // refundAmount is a percentage string like "50%"; parse it to average.
-    const avgRefund = rows.length
-      ? Math.round(rows.reduce((sum, r) => sum + (parseFloat(String(r.refundAmount)) || 0), 0) / rows.length)
-      : 0;
+    // refundAmount is free-text: mostly percentages ("50%") but some rows carry raw
+    // rupee amounts ("17400") or Gujarati notes. Average only clean 0-100% values so
+    // the stray amounts don't blow the mean up to nonsense (was showing 764%).
+    const pcts = rows
+      .map((r) => parseFloat(String(r.refundAmount)))
+      .filter((v) => !isNaN(v) && v > 0 && v <= 100);
+    const avgRefund = pcts.length ? Math.round(pcts.reduce((sum, v) => sum + v, 0) / pcts.length) : 0;
     const years = [...new Set(rows.map((r) => r.year).filter(Boolean))].sort();
     return [
       { value: rows.length.toLocaleString('en-IN'), label: 'Total Students', path: STAT_ICONS.students },

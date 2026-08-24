@@ -31,11 +31,6 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/about-us/index/index').then(m => m.Index)
       },
       {
-        path: 'team',
-        ...seo('team'),
-        loadComponent: () => import('./pages/team/index/index').then(m => m.Index)
-      },
-      {
         path: 'management',
         ...seo('management'),
         loadComponent: () => import('./pages/management/index/index').then(m => m.Index)

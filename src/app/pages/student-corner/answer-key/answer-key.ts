@@ -107,14 +107,19 @@ export class AnswerKey {
     const d = new Date(r.date);
     const valid = !isNaN(d.getTime());
     const message = r.message ?? '';
+    const name = this.strip(message);
+    // Standard is embedded in the paper name ("STD 11 …"); pull it out so the column
+    // and the Standard filter work. Subject has no reliable pattern (the stream ARTS/
+    // SCIENCE sometimes precedes it, sometimes is it), so it stays for admin to fill.
+    const std = name.match(/\bstd\.?\s*(\d+)/i);
     return {
       date: r.date ?? '',
       day: valid ? formatDate(d, 'dd', 'en-US') : '',
       month: valid ? formatDate(d, 'MMM', 'en-US') : '',
       year: valid ? formatDate(d, 'yyyy', 'en-US') : '',
-      name: this.strip(message),
+      name,
       message,
-      standard: '',
+      standard: std ? std[1] : '',
       subject: '',
       file: r.files && r.files !== 'null' ? r.files : '',
     };

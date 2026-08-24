@@ -113,7 +113,10 @@ export class SocialActivities {
     },
   ];
 
-  readonly visible = computed(() =>
-    this.activities.filter((a) => a.category === this.active()),
-  );
+  // "Activity" is the default, all-encompassing view (matches the mockup's 8 cards);
+  // "Initiative" and "Camp" narrow to their respective programmes.
+  readonly visible = computed(() => {
+    const cat = this.active();
+    return cat === 'activity' ? this.activities : this.activities.filter((a) => a.category === cat);
+  });
 }

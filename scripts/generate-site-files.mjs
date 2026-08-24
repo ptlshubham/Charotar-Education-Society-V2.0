@@ -26,7 +26,7 @@ const OPTIONAL_SECTIONS = new Set(['Legal']);
 
 const SUMMARY =
   'Charotar Education Society is an educational institution. This site covers the ' +
-  'institution, its team and careers, along with articles, support and policy pages.';
+  'institution and its careers, along with articles, support and policy pages.';
 
 // The live site is the only host worth advertising.
 const env = readFileSync(resolve(root, 'src/environments/environment.production.ts'), 'utf8');

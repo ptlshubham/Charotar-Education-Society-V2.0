@@ -1,6 +1,6 @@
 # ZarklyX
 
-> Charotar Education Society is an educational institution. This site covers the institution, its team and careers, along with articles, support and policy pages.
+> Charotar Education Society is an educational institution. This site covers the institution and its careers, along with articles, support and policy pages.
 
 ## Institution
 
@@ -10,7 +10,6 @@
 - [Social Activity](https://cesociety.in/social-activity)
 - [Projects](https://cesociety.in/project)
 - [Alumni](https://cesociety.in/alumni)
-- [Our Team](https://cesociety.in/team)
 - [Careers](https://cesociety.in/company/careers)
 
 ## Resources

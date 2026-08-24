@@ -54,7 +54,7 @@ export class Donation {
   readonly presets: readonly number[] = [100, 500, 1000, 5000];
 
   readonly raised = 1845000;
-  readonly goal = 25000000;
+  readonly goal = 2500000;
   readonly progress = computed(() => Math.round((this.raised / this.goal) * 100));
 
   readonly voices: ReadonlyArray<{ quote: string; name: string; role: string; photo: string }> = [

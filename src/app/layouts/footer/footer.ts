@@ -86,7 +86,6 @@ export class Footer {
       links: [
         { label: 'About Us', route: '/about' },
         { label: 'Management', route: '/management' },
-        { label: 'Our Team', route: '/team' },
         { label: 'Alumni', route: '/alumni' },
         { label: 'Centenary Celebration', route: '/celebration' },
         { label: 'Social Activity', route: '/social-activity' },

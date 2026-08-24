@@ -26,6 +26,8 @@ export interface MicroDonor {
   name: string;
   city: string;
   amount: number;
+  /** Razorpay payment reference — present on every micro donation (all are online). */
+  paymentId?: string;
 }
 
 /** A beneficiary student row, as returned by GET /admin/GetAllBeneficiaryList. */

@@ -61,3 +61,6 @@ scripts/run-graphify-watch.ps1
 
 # Playwright screenshot QA output
 /screenshots/
+
+# Design mockup references (not committed)
+design/

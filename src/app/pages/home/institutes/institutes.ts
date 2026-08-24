@@ -27,9 +27,9 @@ export class Institutes {
   readonly institutes: readonly Institute[] = [
     { title: 'Schools', desc: 'Nurturing young minds for a brighter future.', link: '/academic/school', image: PLACEHOLDER.institutes.schools },
     { title: 'Colleges', desc: 'Empowering learners with knowledge & skills.', link: '/academic/colleges', image: PLACEHOLDER.institutes.colleges },
-    { title: 'Professional Institutes', desc: 'Building career-ready professionals.', link: '/academic/others', image: PLACEHOLDER.institutes.professional },
-    { title: 'Hostels', desc: 'Safe, comfortable living environment.', link: '/academic/hostels', image: PLACEHOLDER.institutes.hostels },
-    { title: 'Other Institutes', desc: 'Diverse programs for holistic development.', link: '/academic/others', image: PLACEHOLDER.institutes.others },
+    { title: 'Professional Institutes', desc: 'Shaping career-ready professionals.', link: '/academic/others', image: PLACEHOLDER.institutes.professional },
+    { title: 'Hostels', desc: 'Safe, comfortable & homely environment.', link: '/academic/hostels', image: PLACEHOLDER.institutes.hostels },
+    { title: 'Other Institutes', desc: 'Encouraging research & community development.', link: '/academic/others', image: PLACEHOLDER.institutes.others },
   ];
 
   constructor() {

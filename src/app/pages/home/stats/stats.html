@@ -1,15 +1,17 @@
-<section class="mx-auto max-w-[1600px] px-4 pt-10 sm:px-6 lg:px-10">
-  <ul class="grid list-none grid-cols-2 gap-px overflow-hidden rounded-xl bg-gray-200 sm:grid-cols-3 lg:grid-cols-6">
-    @for (stat of stats; track stat.label) {
-      <li class="flex items-center justify-center gap-3 bg-white px-4 py-6">
-        <svg class="shrink-0 text-secondary" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          @for (d of stat.path; track d) { <path [attr.d]="d" /> }
-        </svg>
-        <div>
-          <p class="text-[20px] leading-tight font-bold text-primary">{{ stat.value }}</p>
-          <p class="text-[13px] text-muted">{{ stat.label }}</p>
-        </div>
-      </li>
-    }
-  </ul>
+<section class="bg-primary">
+  <div class="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-10">
+    <ul class="grid list-none grid-cols-2 gap-y-7 py-9 sm:grid-cols-4 sm:divide-x sm:divide-white/12">
+      @for (stat of stats; track stat.label) {
+        <li class="flex items-center justify-center gap-3.5 px-4">
+          <svg class="shrink-0 text-accent" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            @for (d of stat.path; track d) { <path [attr.d]="d" /> }
+          </svg>
+          <div>
+            <p class="text-[26px] leading-none font-bold text-white">{{ stat.value }}</p>
+            <p class="mt-1.5 text-[13px] text-white/70">{{ stat.label }}</p>
+          </div>
+        </li>
+      }
+    </ul>
+  </div>
 </section>

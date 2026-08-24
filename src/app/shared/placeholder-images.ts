@@ -28,28 +28,46 @@ const portrait = (id: number) => `https://i.pravatar.cc/300?img=${id}`;
 export const PLACEHOLDER = {
   heroCampus: scene('ces-campus', 1600, 900),
 
-  /** One per home-hero slide; slides 2–3 still await real campus photography. */
+  /** One per home-hero slide. Real education photography under /assets/images/home. */
   heroSlides: [
-    '/assets/images/hero/temp.jpg',
-    scene('ces-campus-life', 1600, 900),
-    scene('ces-campus-sports', 1600, 900),
+    '/assets/images/hero/home.jpeg',
+    '/assets/images/home/hero-life.jpg',
+    '/assets/images/home/hero-sports.jpg',
   ],
 
   institutes: {
-    schools: scene('ces-schools', 600, 400),
-    colleges: scene('ces-colleges', 600, 400),
-    professional: scene('ces-professional', 600, 400),
-    hostels: scene('ces-hostels', 600, 400),
-    others: scene('ces-others', 600, 400),
+    schools: '/assets/images/home/inst-schools.jpg',
+    colleges: '/assets/images/home/inst-colleges.jpg',
+    professional: '/assets/images/home/inst-professional.jpg',
+    hostels: '/assets/images/home/inst-hostels.jpg',
+    others: '/assets/images/home/inst-others.jpg',
   },
 
+  // Named real person (Shri Virusbhai Patel) — stays a neutral avatar until the
+  // real portrait is supplied; a stock face here would misrepresent him.
   chairman: portrait(68),
 
   successStories: [
-    scene('ces-story-1', 400, 300),
-    scene('ces-story-2', 400, 300),
-    scene('ces-story-3', 400, 300),
-    scene('ces-story-4', 400, 300),
+    '/assets/images/home/story-1.jpg',
+    '/assets/images/home/story-2.jpg',
+    '/assets/images/home/story-3.jpg',
+    '/assets/images/home/story-4.jpg',
+  ],
+
+  /** "More Than Classrooms" cards: Campus Life, Social Activities, Student Events, Community Initiatives. */
+  moreThanClassrooms: [
+    '/assets/images/home/mtc-campus.jpg',
+    '/assets/images/home/mtc-social.jpg',
+    '/assets/images/home/mtc-events.jpg',
+    '/assets/images/home/mtc-community.jpg',
+  ],
+
+  /** "Milestones That Made History" circular Guinness photos. */
+  milestonePhotos: [
+    '/assets/images/home/ms-quiz.jpg',
+    '/assets/images/home/ms-sudoku.jpg',
+    '/assets/images/home/ms-mehndi.jpg',
+    '/assets/images/home/ms-armlink.jpg',
   ],
 
   alumni: [portrait(12), portrait(45), portrait(33), portrait(47)],
@@ -225,10 +243,10 @@ export const PLACEHOLDER = {
   },
 
   news: {
-    classes: scene('ces-news-classes', 800, 500),
-    examTips: scene('ces-news-exams', 800, 500),
-    annualDay: scene('ces-news-annual-day', 300, 220),
-    research: scene('ces-news-research', 300, 220),
-    achievements: scene('ces-news-achievements', 300, 220),
+    classes: '/assets/images/home/news-classes.jpg',
+    examTips: '/assets/images/home/news-exams.jpg',
+    annualDay: '/assets/images/home/news-annualday.jpg',
+    research: '/assets/images/home/news-research.jpg',
+    achievements: '/assets/images/home/news-achievements.jpg',
   },
 } as const;

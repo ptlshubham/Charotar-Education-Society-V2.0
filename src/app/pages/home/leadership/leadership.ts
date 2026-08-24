@@ -1,6 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { PLACEHOLDER } from '../../../shared/placeholder-images';
+
+interface Leader {
+  // heading: string;
+  name: string;
+  role: string;
+  quote: string;
+  photo?: string;
+}
 
 @Component({
   selector: 'app-leadership',
@@ -10,23 +17,21 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
   styleUrl: './leadership.scss',
 })
 export class Leadership {
-  readonly chairman = {
-    name: 'Shri Virusbhai Patel',
-    role: 'Chairman, CES',
-    quote:
-      'Our mission is to create institutions that inspire, innovate and impact lives. Together, we can build a stronger and brighter tomorrow.',
-    /** Set to a portrait photograph to replace the placeholder avatar. */
-    photo: PLACEHOLDER.chairman,
-  };
-
-  /** Placeholder tiles for the success-stories gallery. */
-  readonly stories: readonly string[] = PLACEHOLDER.successStories;
-
-  readonly partners: readonly string[] = [
-    'Google for Education',
-    'Microsoft',
-    'IBM',
-    'NPTEL',
-    'Coursera',
+  // Real leaders and portraits, kept in step with the Management page (key-leaders).
+  readonly leaders: readonly Leader[] = [
+    {
+      // heading: 'Message from the Chairman',
+      name: 'Shri Niravkumar N. Patel',
+      role: 'Chairman, CES',
+      quote: 'Our mission is to create institutions that inspire, innovate and impact lives. Together, we can build a stronger and brighter tomorrow.',
+      photo: '/assets/images/directors/chairman.jpg',
+    },
+    {
+      // heading: 'Message from the Secretary',
+      name: 'Shri Ketankumar P. Patel',
+      role: 'Secretary, CES',
+      quote: 'Education is the most powerful tool to transform individuals and society. We remain committed to excellence in all that we do dfgh dwfg.',
+      photo: '/assets/images/directors/vc.jpg',
+    },
   ];
 }

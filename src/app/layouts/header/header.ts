@@ -92,10 +92,20 @@ export class Header implements AfterViewInit {
   /** Past the threshold the utility bar collapses, leaving brand + nav stuck to the top. */
   readonly scrolled = signal(false);
 
+  /** True on devices whose primary pointer can hover (desktop) — set in the browser. */
+  private hoverCapable = false;
+
   private readonly destroyRef = inject(DestroyRef);
 
   /** Which mobile accordion sections are expanded, keyed by label. */
   private readonly expanded = signal<ReadonlySet<string>>(new Set());
+
+  /**
+   * Which top-level desktop dropdown is open (by label), or null. Hover opens it;
+   * clicking the same tab toggles it shut — a CSS-only hover/focus menu would stay
+   * stuck open after a click (focus-within) with no way to click it closed.
+   */
+  readonly openMenu = signal<string | null>(null);
 
   /** Full nav tree — mirrors the live cesociety.in menu, including its third level. */
   readonly navLinks: ReadonlyArray<NavItem> = [
@@ -189,6 +199,28 @@ export class Header implements AfterViewInit {
     this.expanded.set(next);
   }
 
+  /**
+   * Hover opens/closes, but only on pointer devices that actually hover. On touch
+   * (`hover: none`), a tap fires mouseenter *and* click, which would open-then-close;
+   * there we skip hover and let `toggleDropdown` own it.
+   */
+  onEnter(label: string): void {
+    if (this.hoverCapable) this.openMenu.set(label);
+  }
+
+  onLeave(): void {
+    if (this.hoverCapable) this.openMenu.set(null);
+  }
+
+  closeDropdown(): void {
+    this.openMenu.set(null);
+  }
+
+  /** Click toggles, so clicking the already-open tab closes it (mouse and touch). */
+  toggleDropdown(label: string): void {
+    this.openMenu.update(current => (current === label ? null : label));
+  }
+
   @ViewChild('mobileSidebar') sidebarRef!: ElementRef<HTMLElement>;
   @ViewChild('mobileOverlay') overlayRef!: ElementRef<HTMLElement>;
 
@@ -200,6 +232,7 @@ export class Header implements AfterViewInit {
 
   ngAfterViewInit() {
     if (!isPlatformBrowser(this.platformId)) return;
+    this.hoverCapable = window.matchMedia('(hover: hover)').matches;
     gsap.set(this.sidebarRef.nativeElement, { x: '100%' });
     gsap.set(this.overlayRef.nativeElement, { autoAlpha: 0 });
     this.lastUpdated.set(

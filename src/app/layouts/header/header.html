@@ -116,14 +116,14 @@
   <nav class="hidden bg-primary xl:block" aria-label="Main">
     <ul class="mx-auto flex max-w-[1600px] list-none items-center px-5 xl:px-10">
       @for (item of navLinks; track item.label) {
-      <li class="group relative">
+      <li class="group relative" (mouseenter)="onEnter(item.label)" (mouseleave)="onLeave()">
 
         @if (item.link) {
         <a [routerLink]="item.link"
           class="flex items-center gap-1.5 px-4 py-4 text-[16px] whitespace-nowrap text-white no-underline transition-colors group-hover:bg-primary-light">{{
           item.label }}</a>
         } @else {
-        <button type="button"
+        <button type="button" (click)="toggleDropdown(item.label)"
           class="flex items-center gap-1.5 px-4 py-4 text-[16px] whitespace-nowrap text-white transition-colors group-hover:bg-primary-light">
           {{ item.label }}
           <span class="text-[18px] leading-none font-light" aria-hidden="true">+</span>
@@ -137,12 +137,13 @@
 
         @if (item.children) {
         <ul
-          class="absolute top-full left-0 z-50 hidden min-w-[260px] list-none rounded-xl bg-white p-2 shadow-[0_12px_40px_rgba(32,49,84,0.18)] group-last:right-0 group-last:left-auto group-focus-within:block group-hover:block group-hover:animate-dropdown">
+          class="absolute top-full left-0 z-50 min-w-[260px] list-none rounded-xl bg-white p-2 shadow-[0_12px_40px_rgba(32,49,84,0.18)] group-last:right-0 group-last:left-auto"
+          [class.hidden]="openMenu() !== item.label" [class.animate-dropdown]="openMenu() === item.label">
           @for (child of item.children; track child.label) {
           <li class="group/sub relative">
 
             @if (child.link) {
-            <a [routerLink]="child.link"
+            <a [routerLink]="child.link" (click)="closeDropdown()"
               class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-[15px] text-primary no-underline transition-colors hover:bg-accent hover:text-white"
               [class.bg-accent]="linkActive(child.link)" [class.text-white]="linkActive(child.link)">
               @if (child.icon) {
@@ -175,7 +176,7 @@
               class="absolute top-0 left-full z-50 hidden min-w-[230px] list-none rounded-xl bg-white p-2 shadow-[0_12px_40px_rgba(32,49,84,0.18)] group-last:right-full group-last:left-auto group-focus-within/sub:block group-hover/sub:block">
               @for (leaf of child.children; track leaf.label) {
               <li>
-                <a [routerLink]="leaf.link"
+                <a [routerLink]="leaf.link" (click)="closeDropdown()"
                   class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-[15px] text-primary no-underline transition-colors hover:bg-accent hover:text-white">
                   @if (leaf.icon) {
                   <svg class="shrink-0" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"

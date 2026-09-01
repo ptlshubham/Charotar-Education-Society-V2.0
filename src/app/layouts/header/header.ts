@@ -128,7 +128,10 @@ export class Header implements AfterViewInit {
     },
     {
       label: 'Glory of CES',
-      children: [{ label: 'Centenary Celebration', link: '/celebration', icon: 'award' }],
+      children: [
+        { label: 'Centenary Celebration', link: '/celebration', icon: 'award' },
+        { label: 'History of Vitthalbhai J. Patel', link: '/glory/history-vj', icon: 'award' },
+      ],
     },
     { label: 'Social Activity', link: '/social-activity' },
     { label: 'Project', link: '/project' },
@@ -211,6 +214,7 @@ export class Header implements AfterViewInit {
     '/about': 'about us history charotar education society motibhai amin legacy',
     '/management': 'trustees leaders chairman secretary committee board',
     '/celebration': 'centenary hundred 100 years guinness world records glory',
+    '/glory/history-vj': 'history vitthalbhai vj patel vitthal kaka visionary founder freedom fighter teacher',
     '/social-activity': 'social activities initiatives camps community service',
     '/project': 'projects initiatives development',
     '/alumni': 'alumni former students register network',
@@ -389,7 +393,7 @@ export class Header implements AfterViewInit {
     const pollVisitors = () => {
       this.resources.getOnlineVisitors().subscribe({
         next: res => this.onlineVisitors.set(this.parseCount(res)),
-        error: () => {},
+        error: () => { },
       });
     };
     pollVisitors();

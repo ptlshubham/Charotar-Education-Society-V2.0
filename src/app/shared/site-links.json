@@ -17,8 +17,8 @@
     {
       "icon": "resources",
       "title": "Resources",
-      "path": "/home/blog",
-      "links": [{ "label": "Blog", "path": "/home/blog" }]
+      "path": "/blog",
+      "links": [{ "label": "Blog", "path": "/blog" }]
     },
     {
       "icon": "resources",
@@ -28,7 +28,7 @@
         { "label": "Gallery", "path": "/glory/gallery" },
         { "label": "Navratri", "path": "/navratri" },
         { "label": "Next UP Podcast", "path": "/podcast" },
-        { "label": "Blog", "path": "/home/blog" }
+        { "label": "Blog", "path": "/blog" }
       ]
     },
     {

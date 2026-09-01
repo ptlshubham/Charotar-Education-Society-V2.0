@@ -28,6 +28,10 @@ export class ApiService {
   public static Upload80GTaxImageURL: string = ApiService.HOST_URL + '/admin/Upload80GTaxImage';
   // e-Gate Pass — institute dropdown + request submission.
   public static GetInstitutesURL: string = ApiService.HOST_URL + '/admin/GetAllInstituteDetails';
+  // Live site presence — visitors currently online. The GET doubles as the heartbeat
+  // (each poll marks this client active) and returns the count. Not yet built on the
+  // backend; the header badge stays hidden until this endpoint responds.
+  public static GetOnlineVisitorsURL: string = ApiService.HOST_URL + '/visitors/online';
   public static SaveGatePassURL: string = ApiService.HOST_URL + '/admin/SaveGatePassUserList';
   // Counselling — book an appointment (institute dropdown reuses GetInstitutesURL).
   public static SaveCounselingURL: string = ApiService.HOST_URL + '/admin/SaveCounselingDetails';

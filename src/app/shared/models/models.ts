@@ -12,6 +12,19 @@ export interface PaginatedResponse<T = any> {
   limit: number;
 }
 
+/** One searchable destination — a static page or a backend entity — for the universal search. */
+export interface SearchItem {
+  title: string;
+  category: string;
+  link: string;
+  /** Optional query params for the destination, e.g. selecting a campus tab. */
+  queryParams?: Record<string, string>;
+  /** Icon key from the header ICONS map (defaults to a generic file icon). */
+  icon?: string;
+  /** Lowercased extra terms (synonyms, ids, body snippets) the query is matched against. */
+  keywords: string;
+}
+
 /** A Rahatokarsh Fund donor row, as returned by GET /admin/GetAllDonnerList. */
 export interface Donor {
   donationDate: string;

@@ -80,7 +80,7 @@
 
               <div class="pl-[76px]">
                 <h2 class="text-[17px] leading-snug font-bold text-primary">
-                  <a [routerLink]="['/home/blog', f.id]" class="text-primary no-underline hover:text-accent">{{ f.title }}</a>
+                  <a [routerLink]="['/blog', f.id]" class="text-primary no-underline hover:text-accent">{{ f.title }}</a>
                 </h2>
                 <p class="mt-2 text-[12.5px] leading-relaxed text-muted">{{ f.excerpt }}</p>
               </div>
@@ -114,7 +114,7 @@
 
               <div class="flex flex-1 flex-col p-4">
                 <h3 class="text-[14px] leading-snug font-bold text-primary">
-                  <a [routerLink]="['/home/blog', post.id]" class="text-primary no-underline hover:text-accent">{{ post.title }}</a>
+                  <a [routerLink]="['/blog', post.id]" class="text-primary no-underline hover:text-accent">{{ post.title }}</a>
                 </h3>
                 <p class="mt-2 flex-1 text-[12px] leading-relaxed text-muted">{{ post.excerpt }}</p>
 
@@ -175,7 +175,7 @@
                 class="h-14 w-16 shrink-0 rounded-md bg-primary-light object-cover" />
               <div class="min-w-0">
                 <h3 class="text-[12.5px] leading-snug font-semibold text-primary">
-                  <a [routerLink]="['/home/blog', post.id]" class="text-primary no-underline hover:text-accent">{{ post.title }}</a>
+                  <a [routerLink]="['/blog', post.id]" class="text-primary no-underline hover:text-accent">{{ post.title }}</a>
                 </h3>
                 <p class="mt-1 text-[11px] text-muted">{{ post.date }}</p>
               </div>
@@ -183,7 +183,7 @@
           }
         </ul>
 
-        <a routerLink="/home/blog"
+        <a routerLink="/blog"
           class="mt-4 flex items-center justify-center rounded-md border border-gray-300 py-2.5 text-[12.5px] font-semibold text-primary no-underline transition-colors hover:border-primary hover:bg-primary hover:text-white">
           View All Posts
         </a>

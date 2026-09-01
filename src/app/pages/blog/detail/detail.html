@@ -11,7 +11,7 @@
       <ol class="flex list-none flex-wrap items-center gap-2 text-[13px] text-white/70">
         <li><a routerLink="/home" class="no-underline hover:text-white">Home</a></li>
         <li aria-hidden="true">&rsaquo;</li>
-        <li><a routerLink="/home/blog" class="no-underline hover:text-white">Blog</a></li>
+        <li><a routerLink="/blog" class="no-underline hover:text-white">Blog</a></li>
         <li aria-hidden="true">&rsaquo;</li>
         <li aria-current="page" class="text-secondary">{{ post()?.blogTitle || 'Blog Details' }}</li>
       </ol>
@@ -54,7 +54,7 @@
       } @else if (notFound()) {
         <div class="rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center">
           <p class="text-[14px] font-semibold text-primary">Post not found</p>
-          <a routerLink="/home/blog" class="mt-3 inline-block text-[13px] font-semibold text-accent no-underline hover:underline">← Back to all posts</a>
+          <a routerLink="/blog" class="mt-3 inline-block text-[13px] font-semibold text-accent no-underline hover:underline">← Back to all posts</a>
         </div>
       } @else if (post(); as p) {
         <img [src]="p.blogImage | mediaUrl" [alt]="p.blogTitle" loading="lazy"
@@ -84,7 +84,7 @@
         @if (prev() || next()) {
           <div class="mt-7 grid gap-4 border-t border-gray-100 pt-5 sm:grid-cols-2">
             @if (prev(); as p2) {
-              <a [routerLink]="['/home/blog', p2.id]" class="flex items-center gap-3 no-underline">
+              <a [routerLink]="['/blog', p2.id]" class="flex items-center gap-3 no-underline">
                 <svg class="shrink-0 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6" /></svg>
                 <img [src]="p2.image | mediaUrl" alt="" loading="lazy" class="h-12 w-14 shrink-0 rounded-md bg-primary-light object-cover" />
                 <span class="min-w-0">
@@ -96,7 +96,7 @@
             } @else { <span></span> }
 
             @if (next(); as n) {
-              <a [routerLink]="['/home/blog', n.id]" class="flex items-center gap-3 no-underline sm:flex-row-reverse sm:text-right">
+              <a [routerLink]="['/blog', n.id]" class="flex items-center gap-3 no-underline sm:flex-row-reverse sm:text-right">
                 <svg class="shrink-0 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>
                 <img [src]="n.image | mediaUrl" alt="" loading="lazy" class="h-12 w-14 shrink-0 rounded-md bg-primary-light object-cover" />
                 <span class="min-w-0">
@@ -137,7 +137,7 @@
         <ul class="mt-4 list-none space-y-1">
           @for (cat of categories; track cat.label) {
             <li>
-              <a routerLink="/home/blog"
+              <a routerLink="/blog"
                 class="flex items-center justify-between gap-3 rounded-md px-2 py-2 text-[13px] text-primary no-underline transition-colors hover:bg-[#F7F9FC]">
                 {{ cat.label }}
                 <span class="text-[12px] font-semibold text-muted">{{ cat.count }}</span>
@@ -158,7 +158,7 @@
                 class="h-14 w-16 shrink-0 rounded-md bg-primary-light object-cover" />
               <div class="min-w-0">
                 <h3 class="text-[12.5px] leading-snug font-semibold text-primary">
-                  <a [routerLink]="['/home/blog', item.id]" class="text-primary no-underline hover:text-accent">{{ item.title }}</a>
+                  <a [routerLink]="['/blog', item.id]" class="text-primary no-underline hover:text-accent">{{ item.title }}</a>
                 </h3>
                 <p class="mt-1 text-[11px] text-muted">{{ item.date }}</p>
               </div>
@@ -168,7 +168,7 @@
           }
         </ul>
 
-        <a routerLink="/home/blog"
+        <a routerLink="/blog"
           class="mt-4 flex items-center justify-center gap-2 rounded-md border border-gray-300 py-2.5 text-[12.5px] font-semibold text-primary no-underline transition-colors hover:border-primary hover:bg-primary hover:text-white">
           View All Posts
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>

@@ -9,12 +9,16 @@ import {
   DestroyRef,
   inject,
   signal,
+  computed,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import gsap from 'gsap';
 import { LenisService } from '../../core/services/lenis.service';
+import { SearchService } from '../../core/services/search.service';
+import { ResourcesService } from '../../core/services/resources.service';
 import { SOCIAL_LINKS } from '../../shared/social-links';
+import { SearchItem } from '../../shared/models/models';
 
 export interface NavItem {
   label: string;
@@ -96,6 +100,11 @@ export class Header implements AfterViewInit {
   private hoverCapable = false;
 
   private readonly destroyRef = inject(DestroyRef);
+  private readonly searchSvc = inject(SearchService);
+  private readonly resources = inject(ResourcesService);
+
+  /** Visitors currently online — null while unknown / until the backend endpoint exists. */
+  readonly onlineVisitors = signal<number | null>(null);
 
   /** Which mobile accordion sections are expanded, keyed by label. */
   private readonly expanded = signal<ReadonlySet<string>>(new Set());
@@ -166,7 +175,7 @@ export class Header implements AfterViewInit {
     {
       label: 'More',
       children: [
-        { label: 'Blogs', link: '/home/blog', icon: 'news' },
+        { label: 'Blogs', link: '/blog', icon: 'news' },
         {
           label: 'Management',
           icon: 'users',
@@ -177,6 +186,125 @@ export class Header implements AfterViewInit {
       ],
     },
   ];
+
+  // ─── Universal site search ───
+
+  readonly searchQuery = signal('');
+  readonly searchOpen = signal(false);
+
+  /** Shown in the empty search box so users know what they can jump to. */
+  readonly suggestions: ReadonlyArray<{ title: string; link: string; icon: IconKey }> = [
+    { title: 'About CES', link: '/about', icon: 'info' },
+    { title: 'Schools', link: '/academic/school', icon: 'building' },
+    { title: 'Colleges', link: '/academic/colleges', icon: 'building' },
+    { title: 'Donate to Rahatokarsh Fund', link: '/donation', icon: 'heart' },
+    { title: 'Navratri Celebration', link: '/navratri', icon: 'calendar' },
+    { title: 'Answer Keys', link: '/student-corner/answer-key', icon: 'key' },
+    { title: 'Photo Gallery', link: '/glory/gallery', icon: 'image' },
+    { title: 'Careers', link: '/more/career', icon: 'briefcase' },
+    { title: 'Contact Us', link: '/contact', icon: 'home' },
+  ];
+
+  /** Synonyms so queries like "donate", "results" or "jobs" reach the right page. */
+  private static readonly KEYWORDS: Record<string, string> = {
+    '/home': 'homepage main',
+    '/about': 'about us history charotar education society motibhai amin legacy',
+    '/management': 'trustees leaders chairman secretary committee board',
+    '/celebration': 'centenary hundred 100 years guinness world records glory',
+    '/social-activity': 'social activities initiatives camps community service',
+    '/project': 'projects initiatives development',
+    '/alumni': 'alumni former students register network',
+    '/academic/school': 'schools primary secondary students education',
+    '/academic/colleges': 'colleges degree graduation higher education',
+    '/academic/hostels': 'hostel accommodation boarding rooms stay',
+    '/academic/others': 'other institutes professional performing arts',
+    '/fund': 'rahatokarsh fee refund fund objective financial help',
+    '/donation': 'donate give contribute charity money support online payment',
+    '/beneficiary-students': 'beneficiary students refund list support',
+    '/donner-list': 'donors donor list donation records',
+    '/micro-donner': 'micro donors small donation list',
+    '/glory/gallery': 'gallery photos images pictures videos media',
+    '/navratri': 'navratri garba festival celebration event',
+    '/podcast': 'podcast next up video audio episodes',
+    '/ipcell': 'ip cell intellectual property patents trademarks copyrights',
+    '/student-corner/answer-key': 'answer key exam results papers standard',
+    '/student-corner/magazine': 'magazine balmitra balanitra publication read pdf',
+    '/counselling': 'counselling psychological mental health support free',
+    '/contact': 'contact address phone email map location reach',
+    '/blog': 'blog blogs articles news stories posts',
+    '/more/gate-pass': 'gate pass e-gate visitor entry management office',
+    '/more/tenders': 'tenders tender bid procurement notice',
+    '/more/career': 'career careers jobs vacancy recruitment hiring apply work',
+  };
+
+  /** Flattened, de-duped index of every navigable page, built from the nav tree. */
+  private readonly searchIndex: readonly SearchItem[] = this.buildSearchIndex();
+
+  private buildSearchIndex(): SearchItem[] {
+    const out: SearchItem[] = [];
+    const add = (node: NavItem, category: string): void => {
+      if (node.link) {
+        out.push({ title: node.label, category, link: node.link, icon: node.icon, keywords: Header.KEYWORDS[node.link] ?? '' });
+      }
+      for (const child of node.children ?? []) add(child, category);
+    };
+    for (const top of this.navLinks) add(top, top.children ? top.label : 'Pages');
+    const seen = new Set<string>();
+    return out.filter(item => (seen.has(item.link) ? false : (seen.add(item.link), true)));
+  }
+
+  /** Up to 8 best matches — every query term must appear in title/category/keywords. */
+  readonly searchResults = computed<SearchItem[]>(() => {
+    const q = this.searchQuery().trim().toLowerCase();
+    if (!q) return [];
+    const terms = q.split(/\s+/).filter(Boolean);
+    return [...this.searchIndex, ...this.searchSvc.dynamicIndex()]
+      .map(item => ({ item, score: this.scoreItem(item, terms, q) }))
+      .filter(r => r.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 10)
+      .map(r => r.item);
+  });
+
+  /** Matches grouped by nav category, for the panel's section headers. */
+  readonly searchGroups = computed<{ category: string; items: SearchItem[] }[]>(() => {
+    const groups: { category: string; items: SearchItem[] }[] = [];
+    for (const item of this.searchResults()) {
+      let group = groups.find(g => g.category === item.category);
+      if (!group) groups.push((group = { category: item.category, items: [] }));
+      group.items.push(item);
+    }
+    return groups;
+  });
+
+  private scoreItem(item: SearchItem, terms: string[], q: string): number {
+    const title = item.title.toLowerCase();
+    const hay = `${title} ${item.category.toLowerCase()} ${item.keywords}`;
+    if (!terms.every(t => hay.includes(t))) return 0;
+    return 1 + (title.includes(q) ? 5 : 0) + (title.startsWith(q) ? 5 : 0);
+  }
+
+  /** Start fetching the live index as soon as the box is focused. */
+  onSearchFocus(): void {
+    this.searchSvc.load();
+    this.searchOpen.set(true);
+  }
+
+  onSearchInput(value: string): void {
+    this.searchSvc.load();
+    this.searchQuery.set(value);
+    this.searchOpen.set(true);
+  }
+
+  clearSearch(): void {
+    this.searchQuery.set('');
+    this.searchOpen.set(false);
+  }
+
+  /** Icon paths for a result — dynamic items carry the icon key as a plain string. */
+  iconFor(key?: string): readonly string[] {
+    return (this.icons as Record<string, readonly string[]>)[key ?? 'file'] ?? this.icons.file;
+  }
 
   /** True when the current URL starts with the given prefix. */
   linkActive(prefix: string): boolean {
@@ -228,7 +356,7 @@ export class Header implements AfterViewInit {
     @Inject(PLATFORM_ID) private platformId: Object,
     private router: Router,
     private lenis: LenisService,
-  ) {}
+  ) { }
 
   ngAfterViewInit() {
     if (!isPlatformBrowser(this.platformId)) return;
@@ -248,6 +376,37 @@ export class Header implements AfterViewInit {
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     this.destroyRef.onDestroy(() => window.removeEventListener('scroll', onScroll));
+
+    // Close the search panel when clicking anywhere outside a search box.
+    const onDocClick = (e: MouseEvent) => {
+      if (!(e.target as HTMLElement).closest('[data-search]')) this.searchOpen.set(false);
+    };
+    document.addEventListener('click', onDocClick);
+    this.destroyRef.onDestroy(() => document.removeEventListener('click', onDocClick));
+
+    // Live visitor presence — poll the count; the GET also acts as this client's
+    // heartbeat. Stays null (badge hidden) until the backend endpoint responds.
+    const pollVisitors = () => {
+      this.resources.getOnlineVisitors().subscribe({
+        next: res => this.onlineVisitors.set(this.parseCount(res)),
+        error: () => {},
+      });
+    };
+    pollVisitors();
+    const visitorTimer = setInterval(pollVisitors, 20000);
+    this.destroyRef.onDestroy(() => clearInterval(visitorTimer));
+  }
+
+  /** Accept a bare number or common shapes ({ online }, { count }, { visitors }, { total }, { data }). */
+  private parseCount(res: unknown): number | null {
+    if (typeof res === 'number' && isFinite(res)) return res;
+    if (res && typeof res === 'object') {
+      const o = res as Record<string, unknown>;
+      const v = o['online'] ?? o['count'] ?? o['visitors'] ?? o['total'] ?? o['data'];
+      if (typeof v === 'number' && isFinite(v)) return v;
+      if (typeof v === 'string' && v.trim() !== '' && !isNaN(Number(v))) return Number(v);
+    }
+    return null;
   }
 
   openMobileMenu(): void {

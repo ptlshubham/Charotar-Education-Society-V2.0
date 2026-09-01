@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
 import { PLACEHOLDER } from '../../shared/placeholder-images';
 
 interface Campus {
@@ -63,6 +65,20 @@ export class Campuses {
 
   readonly activeKey = signal<Campus['key']>('anand');
   readonly activePhoto = signal(0);
+
+  private readonly route = inject(ActivatedRoute);
+
+  constructor() {
+    // Deep-link support: /more/campus?campus=khetiwadi opens that campus (and keeps
+    // reacting if the param changes while the page stays mounted, e.g. via search).
+    this.route.queryParamMap.pipe(takeUntilDestroyed()).subscribe((pm) => {
+      const key = pm.get('campus');
+      if (key === 'anand' || key === 'khetiwadi' || key === 'mogri') {
+        this.activeKey.set(key);
+        this.activePhoto.set(0);
+      }
+    });
+  }
 
   select(key: Campus['key']): void {
     this.activeKey.set(key);

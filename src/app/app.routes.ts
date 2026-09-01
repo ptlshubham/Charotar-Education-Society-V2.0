@@ -118,14 +118,19 @@ export const routes: Routes = [
       { path: 'more/magazine', redirectTo: '/student-corner/magazine', pathMatch: 'full' },
       // ─── Blog ───
       {
-        path: 'home/blog',
-        ...seo('home/blog'),
+        path: 'blog',
+        ...seo('blog'),
         loadComponent: () => import('./pages/blog/list/list').then(m => m.BlogList)
       },
       {
-        path: 'home/blog/:slug',
+        path: 'blog/:slug',
         loadComponent: () => import('./pages/blog/detail/detail').then(m => m.BlogDetail)
       },
+      // Old /home/blog URLs (bookmarks, external links) → new /blog. The detail
+      // redirect uses a function so the :slug is carried over (a string redirectTo
+      // would send everyone to the literal "/blog/:slug").
+      { path: 'home/blog', redirectTo: '/blog', pathMatch: 'full' },
+      { path: 'home/blog/:slug', redirectTo: (r) => `/blog/${r.params['slug']}` },
       // ─── Media ───
       {
         path: 'glory/gallery',

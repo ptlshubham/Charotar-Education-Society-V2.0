@@ -65,6 +65,16 @@ export class ResourcesService {
         });
     }
 
+    // Live visitor presence — how many people are currently on the site. The response
+    // shape is parsed loosely by the caller (number, or { online } / { count } etc.).
+    // SKIP_ERROR_REDIRECT so a missing endpoint never bounces the page — the header
+    // simply keeps the badge hidden.
+    getOnlineVisitors() {
+        return this.http.get<unknown>(ApiService.GetOnlineVisitorsURL, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
     saveGatePass(payload: GatePassPayload) {
         return this.http.post(ApiService.SaveGatePassURL, payload, {
             context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),

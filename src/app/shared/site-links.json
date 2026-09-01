@@ -8,6 +8,7 @@
         { "label": "About Us", "path": "/about" },
         { "label": "Management", "path": "/management" },
         { "label": "Centenary Celebration", "path": "/celebration" },
+        { "label": "History of VJ Patel", "path": "/glory/history-vj" },
         { "label": "Social Activity", "path": "/social-activity" },
         { "label": "Projects", "path": "/project" },
         { "label": "Alumni", "path": "/alumni" },

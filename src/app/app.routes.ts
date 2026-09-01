@@ -41,6 +41,11 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/celebration/index/index').then(m => m.Index)
       },
       {
+        path: 'glory/history-vj',
+        ...seo('glory/history-vj'),
+        loadComponent: () => import('./pages/history-vj/history-vj').then(m => m.HistoryVj)
+      },
+      {
         path: 'social-activity',
         ...seo('social-activity'),
         loadComponent: () => import('./pages/social-activity/index/index').then(m => m.Index)

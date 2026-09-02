@@ -67,3 +67,16 @@
     }
   }
 }
+
+/* ─── Site container ──────────────────────────────────────────────
+   Single source of truth for page width and horizontal gutters. Every
+   page or section wrapper uses class="site-container"; pair it with a
+   vertical-padding utility (py, pt or pb) inline per section.
+
+   To change left/right spacing or the max content width site-wide,
+   edit ONLY this rule — no need to touch individual pages.
+   Must sit AFTER the @theme block so its @apply can resolve the
+   spacing and breakpoint tokens. */
+@utility site-container {
+  @apply mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-12 xl:px-20;
+}

@@ -3,8 +3,7 @@
   <!-- ─── Utility bar — collapses away once the page is scrolled ─── -->
   <div class="overflow-hidden bg-primary text-white transition-all duration-300 ease-out" [class.max-h-0]="scrolled()"
     [class.opacity-0]="scrolled()" [class.max-h-16]="!scrolled()">
-    <div
-      class="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-5 py-3 text-[12px] sm:text-[13px] xl:px-10">
+    <div class="site-container flex items-center justify-between gap-4 py-3 text-[12px] sm:text-[13px]">
 
       <div class="flex items-center gap-3 sm:gap-5">
         <a [href]="'mailto:' + email" class="flex items-center gap-2 no-underline transition-opacity hover:opacity-80">
@@ -68,7 +67,7 @@
   </div>
 
   <!-- ─── Brand bar ─── -->
-  <div class="mx-auto flex max-w-[1600px] items-center justify-between gap-6 px-5 py-4 xl:px-10">
+  <div class="site-container flex items-center justify-between gap-6 py-4">
 
     <a class="shrink-0" routerLink="/home" aria-label="Charotar Education Society — home">
       <img src="/assets/logo/default-logo.svg" alt="Charotar Education Society" width="270" height="68"
@@ -194,7 +193,7 @@
 
   <!-- ─── Main nav ─── -->
   <nav class="hidden bg-primary xl:block" aria-label="Main">
-    <ul class="mx-auto flex max-w-[1600px] list-none items-center px-5 xl:px-10">
+    <ul class="site-container flex list-none items-center">
       @for (item of navLinks; track item.label) {
       <li class="group relative" (mouseenter)="onEnter(item.label)" (mouseleave)="onLeave()">
 

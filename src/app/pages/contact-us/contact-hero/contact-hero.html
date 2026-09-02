@@ -7,7 +7,7 @@
       <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary/40 lg:to-transparent"></div>
     </div>
 
-    <div class="relative mx-auto max-w-[1600px] px-5 pt-10 pb-20 sm:px-8 lg:px-10 lg:pt-12 lg:pb-[92px]">
+    <div class="site-container relative pt-10 pb-20 lg:pt-12 lg:pb-[92px]">
       <nav aria-label="Breadcrumb">
         <ol class="flex list-none items-center gap-2 text-[13px] text-white/70">
           <li><a routerLink="/home" class="no-underline hover:text-white">Home</a></li>
@@ -29,7 +29,7 @@
   </div>
 
   <!-- Stat bar -->
-  <div class="relative z-10 mx-auto -mt-14 max-w-[1600px] px-4 sm:px-6 lg:px-10">
+  <div class="site-container relative z-10 -mt-14">
     <ul class="grid list-none grid-cols-2 gap-y-6 rounded-xl bg-primary px-6 py-6 sm:grid-cols-3 lg:grid-cols-6">
       @for (stat of stats; track stat.label) {
         <li class="flex items-center justify-center gap-3">

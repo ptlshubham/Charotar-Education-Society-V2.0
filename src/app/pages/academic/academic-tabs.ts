@@ -17,7 +17,7 @@ export interface AcademicTab {
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div role="tablist" [attr.aria-label]="ariaLabel()"
-      class="-mx-4 flex gap-2 overflow-x-auto rounded-xl bg-white px-4 py-2 shadow-sm sm:mx-0 sm:px-2">
+      class="-mx-4 flex justify-center gap-2 overflow-x-auto rounded-xl bg-transparent px-4 py-2 sm:mx-0 sm:px-2">
       @for (tab of tabs(); track tab.id) {
         <button type="button" role="tab" [attr.aria-selected]="active() === tab.id" (click)="tabChange.emit(tab.id)"
           class="flex shrink-0 items-center gap-2 rounded-lg px-5 py-3 text-[13.5px] font-semibold whitespace-nowrap transition-colors"

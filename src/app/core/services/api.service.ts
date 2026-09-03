@@ -46,6 +46,9 @@ export class ApiService {
   public static GetAnswerkeyURL: string = ApiService.HOST_URL + '/admin/GetAllAnswerkey/';
   // Magazine — the society-wide Balmitra magazine archive (no id).
   public static GetMagazineURL: string = ApiService.HOST_URL + '/admin/GetMagazineList';
+  // Gallery — POST { institute_id }; returns a mixed banner/image list, the
+  // gallery keeps purpose === 'image'.
+  public static GetGalleryImagesURL: string = ApiService.HOST_URL + '/admin/GetImagesByIdDetails';
   // IP Cell — patent (Utility/Design), copyright and trademark registers.
   public static GetPatentDataURL: string = ApiService.HOST_URL + '/admin/GetPatentData';
   public static GetCopyrightDataURL: string = ApiService.HOST_URL + '/admin/GetCopyrightData';

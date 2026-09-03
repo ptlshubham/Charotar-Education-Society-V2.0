@@ -79,7 +79,7 @@
       </div>
 
       <label for="gal-sort" class="sr-only">Sort</label>
-      <select id="gal-sort" [(ngModel)]="sort"
+      <select id="gal-sort" [ngModel]="sortDir()" (ngModelChange)="setSort($event)"
         class="h-11 rounded-md border border-gray-300 bg-white px-4 text-[13px] text-primary outline-none focus:border-primary">
         <option value="latest">Latest First</option>
         <option value="oldest">Oldest First</option>
@@ -87,46 +87,181 @@
     </div>
   </div>
 
-  <!-- Category chips -->
-  <ul class="mt-5 flex list-none flex-wrap gap-2.5">
-    @for (cat of categories; track cat) {
-      <li>
-        <button type="button" (click)="selectCategory(cat)"
-          class="rounded-md border px-4 py-2 text-[12.5px] font-semibold transition-colors"
-          [class]="category() === cat ? 'border-primary bg-primary text-white' : 'border-gray-200 bg-white text-primary hover:border-primary'">
-          {{ cat }}
-        </button>
-      </li>
-    }
-  </ul>
-
   @if (tab() === 'photos') {
-    <!-- Masonry via CSS columns so varied heights tile naturally -->
-    <div class="animate-dropdown mt-6 gap-4 [column-count:1] sm:[column-count:2] lg:[column-count:3]">
-      @for (photo of pager.paged(); track photo.src) {
-        <figure class="mb-4 break-inside-avoid overflow-hidden rounded-lg">
-          <img [src]="photo.src" [alt]="photo.caption" loading="lazy"
-            class="w-full bg-primary-light object-cover transition-transform duration-300 hover:scale-105" />
-        </figure>
-      } @empty {
-        <p class="rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
-          No photos match this filter.
-        </p>
-      }
-    </div>
+    @if (loading()) {
+      <!-- Loading skeleton (masonry) -->
+      <div class="mt-6 gap-4 [column-count:1] sm:[column-count:2] lg:[column-count:3]">
+        @for (h of skeleton; track $index) {
+          <div class="mb-4 animate-pulse break-inside-avoid rounded-lg bg-gray-100" [style.height.px]="h"></div>
+        }
+      </div>
+    } @else if (failed()) {
+      <p class="mt-6 rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-12 text-center text-[13px] text-muted">
+        Couldn't load the gallery right now. Please try again later.
+      </p>
+    } @else {
+      <!-- Masonry via CSS columns so varied heights tile naturally -->
+      <div class="animate-dropdown mt-6 gap-4 [column-count:1] sm:[column-count:2] lg:[column-count:3]">
+        @for (photo of pager.paged(); track photo.id) {
+          <figure class="mb-4 break-inside-avoid overflow-hidden rounded-lg">
+            <button type="button" (click)="open(photo)" [attr.aria-label]="'View ' + photo.caption"
+              class="group relative block w-full cursor-zoom-in">
+              <img [src]="photo.src" [alt]="photo.caption" loading="lazy"
+                class="w-full bg-primary-light object-cover transition-transform duration-300 group-hover:scale-105" />
+              <span class="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all duration-300 group-hover:bg-black/25 group-hover:opacity-100"
+                aria-hidden="true">
+                <span class="flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-primary">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5M11 8v6M8 11h6" />
+                  </svg>
+                </span>
+              </span>
+            </button>
+          </figure>
+        } @empty {
+          <p class="rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
+            No photos found.
+          </p>
+        }
+      </div>
 
-    <!-- Pagination -->
-    @if (pager.totalPages() > 1) {
-      <app-pagination [pager]="pager" variant="compact" />
+      <!-- Pagination -->
+      @if (pager.totalPages() > 1) {
+        <app-pagination [pager]="pager" variant="compact" />
+      }
     }
   } @else {
-    <div class="mt-6 rounded-xl border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-16 text-center">
-      <svg class="mx-auto text-primary/40" width="42" height="42" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4a2.5 2.5 0 0 0-1.8 1.8A26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5 3z" />
-      </svg>
-      <p class="mt-3 text-[14px] font-semibold text-primary">Videos coming soon</p>
-      <p class="mt-1 text-[12.5px] text-muted">The video library will be published from the CES media archive.</p>
-    </div>
+    @if (loading()) {
+      <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        @for (n of [1, 2, 3]; track $index) {
+          <div class="aspect-video animate-pulse rounded-xl bg-gray-100"></div>
+        }
+      </div>
+    } @else if (failed()) {
+      <p class="mt-6 rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-12 text-center text-[13px] text-muted">
+        Couldn't load the gallery right now. Please try again later.
+      </p>
+    } @else {
+      <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        @for (video of videos(); track video.id) {
+          <button type="button" (click)="playVideo(video)"
+            class="group flex flex-col overflow-hidden rounded-xl border border-gray-100 bg-white text-left shadow-[0_6px_24px_rgba(32,49,84,0.06)] transition-shadow hover:shadow-[0_14px_36px_rgba(32,49,84,0.12)]">
+            <span class="relative block aspect-video overflow-hidden bg-primary">
+              @if (video.thumb) {
+                <img [src]="video.thumb" [alt]="video.title" loading="lazy"
+                  class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+              }
+              <span class="absolute inset-0 flex items-center justify-center bg-black/25 transition-colors group-hover:bg-black/35" aria-hidden="true">
+                <span class="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-logo transition-transform group-hover:scale-105">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                </span>
+              </span>
+            </span>
+            <span class="line-clamp-2 p-4 text-[14px] font-semibold text-primary">{{ video.title }}</span>
+          </button>
+        } @empty {
+          <div class="col-span-full rounded-xl border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-16 text-center">
+            <svg class="mx-auto text-primary/40" width="42" height="42" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4a2.5 2.5 0 0 0-1.8 1.8A26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5 3z" />
+            </svg>
+            <p class="mt-3 text-[14px] font-semibold text-primary">No videos yet</p>
+            <p class="mt-1 text-[12.5px] text-muted">Videos published from the CES media archive will appear here.</p>
+          </div>
+        }
+      </div>
+    }
   }
 
 </section>
+
+<!-- ─── Lightbox ─── -->
+@if (current(); as photo) {
+  <div class="fixed inset-0 z-[999] flex flex-col bg-black/90" (click)="close()">
+
+    <!-- Toolbar -->
+    <div class="flex items-center justify-between gap-3 px-4 py-3" (click)="$event.stopPropagation()">
+      <span class="text-[13px] font-medium text-white/80 tabular-nums">{{ lightboxPosition() }}</span>
+
+      <div class="flex items-center gap-1.5">
+        <button type="button" (click)="zoomOut()" [disabled]="zoom() <= 1" aria-label="Zoom out"
+          class="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25 disabled:cursor-not-allowed disabled:opacity-40">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5M8 11h6" /></svg>
+        </button>
+        <span class="w-11 text-center text-[12px] tabular-nums text-white/80">{{ zoomPercent() }}</span>
+        <button type="button" (click)="zoomIn()" [disabled]="zoom() >= 4" aria-label="Zoom in"
+          class="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25 disabled:cursor-not-allowed disabled:opacity-40">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5M11 8v6M8 11h6" /></svg>
+        </button>
+        <button type="button" (click)="resetZoom()" [disabled]="zoom() === 1" aria-label="Reset zoom"
+          class="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25 disabled:cursor-not-allowed disabled:opacity-40">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9 9 0 0 0-6.4 2.6L3 8" /><path d="M3 3v5h5" /></svg>
+        </button>
+
+        <span class="mx-1 h-5 w-px bg-white/25" aria-hidden="true"></span>
+
+        <button type="button" (click)="download()" aria-label="Download image"
+          class="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg>
+        </button>
+        <button type="button" (click)="close()" aria-label="Close viewer"
+          class="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Stage -->
+    <div class="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden px-2 pb-2 sm:px-16"
+      (click)="$event.stopPropagation()" (wheel)="onWheel($event)">
+
+      <button type="button" (click)="prev()" aria-label="Previous image"
+        class="absolute top-1/2 left-2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25 sm:left-4">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6" /></svg>
+      </button>
+
+      <img [src]="photo.src" [alt]="photo.caption" draggable="false"
+        class="max-h-full max-w-full touch-none object-contain select-none"
+        [class.transition-transform]="!dragging()"
+        [class.duration-150]="!dragging()"
+        [class.cursor-grab]="zoom() > 1 && !dragging()"
+        [class.cursor-grabbing]="dragging()"
+        [style.transform]="'translate(' + panX() + 'px,' + panY() + 'px) scale(' + zoom() + ')'"
+        (pointerdown)="onPointerDown($event)" (pointermove)="onPointerMove($event)"
+        (pointerup)="onPointerUp()" (pointercancel)="onPointerUp()" (dblclick)="toggleZoom()" />
+
+      <button type="button" (click)="next()" aria-label="Next image"
+        class="absolute top-1/2 right-2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25 sm:right-4">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6" /></svg>
+      </button>
+    </div>
+
+    <!-- Caption -->
+    <div class="px-4 pb-4 text-center" (click)="$event.stopPropagation()">
+      <p class="text-[13px] text-white/70">{{ photo.caption }}</p>
+    </div>
+  </div>
+}
+
+<!-- ─── Video player ─── -->
+@if (activeVideo(); as vid) {
+  <div class="fixed inset-0 z-[999] flex flex-col bg-black/90" (click)="closeVideo()">
+    <div class="flex items-center justify-between gap-3 px-4 py-3" (click)="$event.stopPropagation()">
+      <p class="truncate text-[13.5px] font-semibold text-white">{{ vid.title }}</p>
+      <button type="button" (click)="closeVideo()" aria-label="Close video"
+        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
+      </button>
+    </div>
+
+    <div class="flex min-h-0 flex-1 items-center justify-center px-2 pb-4 sm:px-6" (click)="$event.stopPropagation()">
+      <div class="aspect-video w-full max-w-5xl overflow-hidden rounded-xl bg-black">
+        @if (vid.embed; as embed) {
+          <iframe [src]="embed" [title]="vid.title" class="h-full w-full"
+            allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+        } @else {
+          <video [src]="vid.file" [title]="vid.title" class="h-full w-full" controls autoplay playsinline></video>
+        }
+      </div>
+    </div>
+  </div>
+}

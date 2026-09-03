@@ -185,3 +185,19 @@ export interface DonationPayload {
   /** 80G tax document; the public site has no upload field, so always null. */
   taxImage: string | null;
 }
+
+/**
+ * A gallery/banner image from POST /admin/GetImagesByIdDetails ({ institute_id }).
+ * The response mixes hero banners and gallery photos; the gallery page keeps only
+ * `purpose === 'image'`. `image` is a relative media path — resolve with MediaUrlPipe.
+ */
+export interface GalleryImage {
+  id?: number;
+  image: string;
+  /** 'image' (gallery photo), 'video', 'slider', 'banner'… */
+  purpose: string;
+  title?: string;
+  /** Video entries may carry the URL in a dedicated field instead of `image`. */
+  video?: string;
+  link?: string;
+}

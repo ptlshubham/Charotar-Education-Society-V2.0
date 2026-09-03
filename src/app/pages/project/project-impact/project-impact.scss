@@ -1,1 +1,45 @@
 /* Intentionally empty — styled with Tailwind utilities only. */
+:host {
+  display: block;
+}
+
+.impact-image-wrapper {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.impact-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  max-height: 520px;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.4s ease;
+}
+
+.impact-image-wrapper:hover .impact-image {
+  transform: scale(1.02);
+}
+
+@media (max-width: 1023px) {
+  .impact-image {
+    min-height: 360px;
+    max-height: 450px;
+  }
+}
+
+@media (max-width: 639px) {
+  .impact-image-wrapper {
+    border-radius: 12px;
+  }
+
+  .impact-image {
+    min-height: 280px;
+    max-height: 350px;
+  }
+}

@@ -1,20 +1,82 @@
-<section class="site-container pb-8">
-  <div class="rounded-xl border border-gray-200 bg-white p-6 lg:p-8">
+<section class="site-container mx-auto max-w-[1600px] px-4 py-12 sm:px-6 lg:px-10 lg:py-16">
+  <div class="grid items-center justify-center mx-auto gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16 max-w-6xl">
 
-    <h2 class="text-center text-[22px] font-bold text-primary sm:text-[26px]">Our Impact</h2>
-    <span class="mx-auto mt-3 block h-1 w-14 rounded-full bg-secondary" aria-hidden="true"></span>
+    <!-- LEFT IMAGE -->
+    <div class="impact-image-wrapper max-w-sm lg:max-w-md h-auto justify-self-end">
+      <img
+        src="/assets/ourimpact.png"
+        alt="Community members participating in a project"
+        class="impact-image w-full h-auto object-cover rounded-lg"
+      />
+    </div>
 
-    <ul class="mt-7 grid list-none grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-      @for (stat of stats; track stat.label) {
-        <li class="rounded-lg border border-gray-200 px-3 py-5 text-center transition-colors hover:border-primary">
-          <svg class="mx-auto text-primary" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            @for (d of stat.path; track d) { <path [attr.d]="d" /> }
-          </svg>
-          <p class="mt-3 text-[20px] leading-tight font-bold text-primary">{{ stat.value }}</p>
-          <p class="mt-1 text-[11px] leading-snug text-muted">{{ stat.label }}</p>
-        </li>
-      }
-    </ul>
+    <!-- RIGHT CONTENT -->
+    <div class="flex flex-col justify-center">
+
+      <!-- Small Label -->
+      <p class="text-sm font-bold uppercase tracking-[0.18em] text-secondary">
+        Our Impact
+      </p>
+
+      <!-- Heading -->
+      <h2
+        class="mt-3 text-[30px] font-bold leading-tight text-primary sm:text-[38px] lg:text-[44px]"
+      >
+        Creating Meaningful Change, Together
+      </h2>
+
+      <!-- Description -->
+      <p
+        class="mt-5 max-w-[620px] text-[15px] leading-7 text-muted sm:text-[16px]"
+      >
+        Every number represents real people, real communities, and real change. Together, we're building a stronger, healthier, and more compassionate society.
+      </p>
+
+      <!-- Gratitude Message -->
+      <p class="mt-4 text-[14px] italic font-medium text-secondary">
+        Thank you for being part of our journey.
+      </p>
+
+      <!-- COUNTERS -->
+      <ul class="mt-9 grid grid-cols-3 gap-5 list-none p-0 sm:gap-8">
+
+        @for (stat of stats; track stat.label) {
+          <li class="text-left">
+
+            <!-- Icon -->
+            <svg
+              class="text-primary"
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              @for (d of stat.path; track d) {
+                <path [attr.d]="d"></path>
+              }
+            </svg>
+
+            <!-- Number -->
+            <p class="mt-2 text-[22px] font-bold leading-tight text-primary sm:text-[25px]">
+              {{ stat.value }}
+            </p>
+
+            <!-- Label -->
+            <p class="mt-1 text-[11px] leading-snug text-muted sm:text-[12px]">
+              {{ stat.label }}
+            </p>
+
+          </li>
+        }
+
+      </ul>
+
+    </div>
 
   </div>
 </section>

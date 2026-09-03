@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { SKIP_ERROR_REDIRECT } from '../interceptors/error.interceptor';
-import { AnswerKeyEntry, BeneficiaryStudent, BlogPost, Copyright, CounsellingPayload, DonationPayload, Donor, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NavratriImage, Patent, PodcastEntry, Trademark } from '../../shared/models/models';
+import { AnswerKeyEntry, BeneficiaryStudent, BlogPost, Copyright, CounsellingPayload, DonationPayload, Donor, GalleryImage, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NavratriImage, Patent, PodcastEntry, Trademark } from '../../shared/models/models';
 
 
 @Injectable({
@@ -127,6 +127,17 @@ export class ResourcesService {
         return this.http.get<MagazineIssue[]>(ApiService.GetMagazineURL, {
             context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
         });
+    }
+
+    // Gallery — banner/image list for an institute (defaults to the society). The
+    // legacy backend takes { institute_id } and returns a mixed list; the gallery
+    // page keeps only purpose === 'image'.
+    getGalleryImages(instituteId: number | string) {
+        return this.http.post<GalleryImage[]>(
+            ApiService.GetGalleryImagesURL,
+            { institute_id: instituteId },
+            { context: new HttpContext().set(SKIP_ERROR_REDIRECT, true) },
+        );
     }
 
     // IP Cell registers. Patents come back mixed; the page splits them by `purpose`.

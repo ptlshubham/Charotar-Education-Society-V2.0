@@ -35,7 +35,7 @@ export class Colleges {
   ];
 
   readonly filters: ReadonlyArray<{ id: Stream; label: string; path: string[] }> = [
-    { id: 'all', label: 'Colleges', path: ['M3 21h18', 'M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16'] },
+    { id: 'all', label: 'All Colleges', path: ['M3 21h18', 'M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16'] },
     { id: 'science', label: 'Science', path: ['M9 2v6L4.5 17A2.5 2.5 0 0 0 6.8 21h10.4a2.5 2.5 0 0 0 2.3-4L15 8V2', 'M8 2h8', 'M7 15h10'] },
     { id: 'management', label: 'Management', path: ['M2 9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z', 'M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'] },
     { id: 'commerce', label: 'Commerce', path: ['M3 3v18h18', 'M7 15V9M12 15V6M17 15v-4'] },
@@ -86,15 +86,6 @@ export class Colleges {
     const f = this.active();
     return f === 'all' ? this.colleges : this.colleges.filter((c) => c.stream === f);
   });
-
-  readonly summary: ReadonlyArray<{ value: string; label: string; path: string[] }> = [
-    { value: '14', label: 'Colleges', path: ['M3 21h18', 'M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16'] },
-    { value: '25+', label: 'Undergraduate Programs', path: ['m12 3 9 5-9 5-9-5 9-5z', 'M21 8v6'] },
-    { value: '15+', label: 'Postgraduate Programs', path: ['M4 19.5A2.5 2.5 0 0 1 6.5 17H20', 'M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'] },
-    { value: '5K+', label: 'Students Enrolled', path: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z'] },
-    { value: '120+', label: 'Experienced Faculty', path: ['M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9.5 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', 'M22 11h-6'] },
-    { value: '100%', label: 'Placement Assistance', path: ['m11 17 2 2a1 1 0 1 0 3-3', 'm14 14 2.5 2.5a1 1 0 1 0 3-3l-3.9-3.9a2 2 0 0 1 0-2.8l.4-.4a2.8 2.8 0 0 1 4 0l4 4'] },
-  ];
 
   telHref(phone: string): string {
     return `tel:${phone.replace(/[^0-9]/g, '')}`;

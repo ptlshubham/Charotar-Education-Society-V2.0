@@ -44,8 +44,6 @@ export class School {
     { id: 'all', label: 'All Schools', path: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', 'M22 21v-2a4 4 0 0 0-3-3.87'] },
     { id: 'english', label: 'English Medium', path: ['M4 7V4h16v3', 'M9 20h6', 'M12 4v16'] },
     { id: 'gujarati', label: 'Gujarati Medium', path: ['M5 8h14M5 12h9M5 16h12'] },
-    { id: 'others', label: 'Others', path: ['M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z'] },
-    { id: 'hostels', label: 'Hostels', path: ['M2 20v-8h20v8', 'M2 12V7M22 12V9a1 1 0 0 0-1-1h-9v4'] },
   ];
 
   readonly active = signal<Medium>('all');

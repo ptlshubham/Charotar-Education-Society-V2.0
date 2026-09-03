@@ -1,10 +1,6 @@
-<app-page-hero
-  crumb="Schools"
-  title="Schools"
-  tagline="Rooted in Values, Soaring Towards Success!"
+<app-page-hero crumb="Schools" title="Schools" tagline="Rooted in Values, Soaring Towards Success!"
   blurb="Our schools provide a strong foundation for lifelong learning through quality education, holistic development and value-based teaching."
-  [image]="banner"
-  [stats]="heroStats" />
+  [image]="banner" [stats]="heroStats" />
 
 <section class="site-container py-8">
 
@@ -14,57 +10,45 @@
   <!-- Cards -->
   <ul class="animate-dropdown mt-6 grid list-none gap-5 sm:grid-cols-2 lg:grid-cols-4">
     @for (school of visible(); track school.name) {
-      <li class="group relative overflow-hidden rounded-xl">
-        <img [src]="school.image" [alt]="school.name" loading="lazy"
-          class="aspect-[4/3] w-full bg-primary-light object-cover transition-transform duration-300 group-hover:scale-105" />
+    <li class="group relative overflow-hidden rounded-xl">
+      <img [src]="school.image" [alt]="school.name" loading="lazy"
+        class="aspect-[4/3] w-full bg-primary-light object-cover transition-transform duration-300 group-hover:scale-105" />
 
-        <!-- Gradient scrim keeps the name legible over any photo -->
-        <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/55 to-transparent" aria-hidden="true"></div>
+      <!-- Gradient scrim keeps the name legible over any photo -->
+      <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/55 to-transparent" aria-hidden="true">
+      </div>
 
-        <span class="absolute top-4 left-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-primary shadow-md" aria-hidden="true">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-            @for (d of school.path; track d) { <path [attr.d]="d" /> }
-          </svg>
-        </span>
+      <div class="absolute inset-x-0 bottom-0 p-4">
+        <h2 class="text-[14px] leading-snug font-bold text-white">{{ school.name }}</h2>
 
-        <div class="absolute inset-x-0 bottom-0 p-4">
-          <h2 class="text-[14px] leading-snug font-bold text-white">{{ school.name }}</h2>
+        <div class="mt-3 flex items-center justify-between gap-3">
+          <a [href]="telHref(school.phone)"
+            class="inline-flex items-center gap-1.5 text-[11.5px] text-white/85 no-underline hover:text-white">
+            {{ school.phone }}
+          </a>
 
-          <div class="mt-3 flex items-center justify-between gap-3">
-            <a [href]="telHref(school.phone)"
-              class="inline-flex items-center gap-1.5 text-[11.5px] text-white/85 no-underline hover:text-white">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z" />
-              </svg>
-              {{ school.phone }}
-            </a>
-
-            @if (school.website) {
-              <a [href]="school.website" target="_blank" rel="noopener noreferrer"
-                class="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[11.5px] font-semibold text-primary no-underline transition-colors hover:bg-secondary hover:text-primary">
-                Visit Website
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg>
-              </a>
-            }
-          </div>
+          @if (school.website) {
+          <a [href]="school.website" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[11.5px] font-semibold text-primary no-underline transition-colors hover:bg-secondary hover:text-primary">
+            Visit Website
+          </a>
+          }
         </div>
-      </li>
+      </div>
+    </li>
     } @empty {
-      <li class="col-span-full rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
-        No schools in this category yet.
-      </li>
+    <li
+      class="col-span-full rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
+      No schools in this category yet.
+    </li>
     }
 
     <!-- Coming soon tile, as in the design -->
     @if (active() === 'all') {
-      <li class="flex aspect-[4/3] flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-gray-300 bg-white text-center">
-        <span class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/8 text-primary" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 21h18" /><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16" /><path d="M9 7h2M13 7h2M9 11h2M13 11h2" />
-          </svg>
-        </span>
-        <p class="px-4 text-[14px] leading-snug font-semibold text-primary">More Schools<br />Coming Soon...</p>
-      </li>
+    <li
+      class="flex aspect-[4/3] flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-gray-300 bg-white text-center">
+      <p class="px-4 text-[14px] leading-snug font-semibold text-primary">More Schools<br />Coming Soon...</p>
+    </li>
     }
   </ul>
 

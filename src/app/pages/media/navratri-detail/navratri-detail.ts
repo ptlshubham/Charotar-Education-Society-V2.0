@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { PageHero } from '../../../shared/page-hero/page-hero';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
 import { NavratriEntry, NavratriImage } from '../../../shared/models/models';
@@ -12,7 +13,7 @@ type Tab = 'overview' | 'gallery' | 'events' | 'news' | 'sponsors';
 
 @Component({
   selector: 'app-navratri-detail',
-  imports: [RouterLink, MediaUrlPipe, SafeHtmlPipe],
+  imports: [RouterLink, MediaUrlPipe, SafeHtmlPipe, PageHero],
   templateUrl: './navratri-detail.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './navratri-detail.scss',

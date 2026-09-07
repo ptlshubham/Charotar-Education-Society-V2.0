@@ -3,6 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DecimalPipe, formatDate } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { PageHero } from '../../../shared/page-hero/page-hero';
 import { catchError, of } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
 import { Donor } from '../../../shared/models/models';
@@ -13,7 +14,7 @@ import { SortHeader } from '../../../shared/sorting/sort-header';
 
 @Component({
   selector: 'app-donor-list',
-  imports: [DecimalPipe, FormsModule, RouterLink, Pagination, SortHeader],
+  imports: [DecimalPipe, FormsModule, RouterLink, Pagination, SortHeader, PageHero],
   templateUrl: './donor-list.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './donor-list.scss',

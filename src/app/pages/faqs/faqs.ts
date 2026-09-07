@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { PageHero } from '../../shared/page-hero/page-hero';
 
 interface Category {
   label: string;
@@ -10,7 +11,7 @@ interface Category {
 
 @Component({
   selector: 'app-faqs',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, PageHero],
   templateUrl: './faqs.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './faqs.scss',

@@ -1,44 +1,25 @@
 <!-- ─── Hero ─── -->
-<section class="relative min-h-[416px] overflow-hidden bg-primary">
-  <div class="pointer-events-none absolute inset-y-0 right-0 hidden w-[48%] lg:block" aria-hidden="true">
-    <img [src]="post()?.blogImage | mediaUrl" alt="" class="h-full w-full object-cover" />
-    <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/40 to-transparent"></div>
-    <div class="absolute inset-y-0 -left-1 w-28 bg-primary [clip-path:polygon(0_0,100%_0,0_100%)]"></div>
-  </div>
-
-  <div class="site-container relative py-10 lg:py-12">
-    <nav aria-label="Breadcrumb">
-      <ol class="flex list-none flex-wrap items-center gap-2 text-[13px] text-white/70">
-        <li><a routerLink="/home" class="no-underline hover:text-white">Home</a></li>
-        <li aria-hidden="true">&rsaquo;</li>
-        <li><a routerLink="/blog" class="no-underline hover:text-white">Blog</a></li>
-        <li aria-hidden="true">&rsaquo;</li>
-        <li aria-current="page" class="text-secondary">{{ post()?.blogTitle || 'Blog Details' }}</li>
-      </ol>
-    </nav>
-
-    <h1 class="mt-5 max-w-[520px] text-[26px] leading-snug font-bold text-white sm:text-[32px]">{{ post()?.blogTitle || 'Blog Details' }}</h1>
-
-    <ul class="mt-5 flex list-none flex-wrap items-center gap-x-6 gap-y-2 text-[12.5px] text-white/80">
-      @if (date()) {
-        <li class="inline-flex items-center gap-1.5">
-          <svg class="text-secondary" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" />
-          </svg>
-          {{ date() }}
-        </li>
-      }
-      @if (post()?.authorName) {
-        <li class="inline-flex items-center gap-1.5">
-          <svg class="text-secondary" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
-          </svg>
-          {{ post()?.authorName }}
-        </li>
-      }
-    </ul>
-  </div>
-</section>
+<app-page-hero crumb="Blog" [title]="post()?.blogTitle || 'Blog Details'"
+  [image]="post()?.blogImage | mediaUrl">
+  <ul class="mt-5 flex list-none flex-wrap items-center gap-x-6 gap-y-2 text-[12.5px] text-white/80">
+    @if (date()) {
+      <li class="inline-flex items-center gap-1.5">
+        <svg class="text-secondary" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" />
+        </svg>
+        {{ date() }}
+      </li>
+    }
+    @if (post()?.authorName) {
+      <li class="inline-flex items-center gap-1.5">
+        <svg class="text-secondary" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
+        </svg>
+        {{ post()?.authorName }}
+      </li>
+    }
+  </ul>
+</app-page-hero>
 
 <section class="site-container py-8">
   <div class="grid gap-6 lg:grid-cols-[1.9fr_1fr]">

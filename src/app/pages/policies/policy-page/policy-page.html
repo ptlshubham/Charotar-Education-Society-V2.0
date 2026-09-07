@@ -1,33 +1,6 @@
 <!-- ─── Hero ─── -->
-<section class="relative min-h-[416px] overflow-hidden bg-primary">
-  <div class="pointer-events-none absolute inset-y-0 right-0 hidden w-[52%] lg:block" aria-hidden="true">
-    <img [src]="banner" alt="" class="h-full w-full object-cover opacity-70" />
-    <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/60 to-primary/20"></div>
-    <!-- Diagonal slash, as in the design -->
-    <span class="absolute top-6 left-10 h-[78%] w-1.5 -rotate-[18deg] rounded-full bg-white/80"></span>
-  </div>
-
-  <div class="site-container relative py-10 lg:py-12">
-    <nav aria-label="Breadcrumb">
-      <ol class="flex list-none flex-wrap items-center gap-2 text-[13px] text-white/70">
-        <li><a routerLink="/home" class="no-underline hover:text-white">Home</a></li>
-        @if (policy().crumbParent) {
-          <li aria-hidden="true">&rsaquo;</li>
-          <li>{{ policy().crumbParent }}</li>
-        }
-        <li aria-hidden="true">&rsaquo;</li>
-        <li aria-current="page" class="text-secondary">{{ policy().titleLead }}{{ policy().titleAccent }}</li>
-      </ol>
-    </nav>
-
-    <h1 class="mt-5 text-[32px] leading-none font-bold text-white sm:text-[40px]">
-      {{ policy().titleLead }}<span class="text-secondary">{{ policy().titleAccent }}</span>
-    </h1>
-    <span class="mt-3 block h-1 w-14 rounded-full bg-secondary" aria-hidden="true"></span>
-
-    <p class="mt-4 max-w-[420px] text-[13.5px] leading-relaxed text-white/80">{{ policy().blurb }}</p>
-  </div>
-</section>
+<app-page-hero [crumb]="policy().titleLead + policy().titleAccent" [title]="policy().titleLead"
+  [accent]="policy().titleAccent" [blurb]="policy().blurb" [image]="banner" />
 
 <section class="site-container py-8">
   <div class="grid gap-5 lg:grid-cols-[280px_1fr]">

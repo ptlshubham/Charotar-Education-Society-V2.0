@@ -9,6 +9,7 @@ import { Paginator } from '../../../shared/pagination/paginator';
 import { Pagination } from '../../../shared/pagination/pagination';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
 import { environment } from '../../../../environments/environment';
+import { PageHero } from '../../../shared/page-hero/page-hero';
 
 /** Generic cover used for every magazine — the backend stores only the PDF, no cover. */
 const MAGAZINE_COVER = '/assets/images/magazine-cover.jpg';
@@ -22,7 +23,7 @@ interface Issue {
 
 @Component({
   selector: 'app-magazine',
-  imports: [FormsModule, Pagination],
+  imports: [FormsModule, Pagination, PageHero],
   templateUrl: './magazine.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './magazine.scss',

@@ -1,40 +1,14 @@
 <!-- ─── Hero ─── -->
-<section class="relative min-h-[416px] overflow-hidden bg-primary">
-  <div class="absolute inset-0" aria-hidden="true">
-    <img [src]="banner" alt="" class="h-full w-full object-cover" />
-    <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary/40"></div>
+<app-page-hero crumb="Beneficiary Students" title="Beneficiary" accent="Students List"
+  blurb="Empowering deserving students through financial support for a brighter tomorrow."
+  [image]="banner">
+  <div class="mt-7 inline-flex items-center gap-3 rounded-lg bg-white/10 px-5 py-4 backdrop-blur">
+    <svg class="shrink-0 text-white" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+    </svg>
+    <p class="text-[13px] leading-snug font-semibold text-white">Together, we build better futures.</p>
   </div>
-
-  <div class="site-container relative py-10 lg:py-12">
-    <nav aria-label="Breadcrumb">
-      <ol class="flex list-none flex-wrap items-center gap-2 text-[13px] text-white/70">
-        <li><a routerLink="/home" class="no-underline hover:text-white">Home</a></li>
-        <li aria-hidden="true">&rsaquo;</li>
-        <li><a routerLink="/fund" class="no-underline hover:text-white">Rahatokarsh Fund</a></li>
-        <li aria-hidden="true">&rsaquo;</li>
-        <li aria-current="page" class="text-white">Beneficiary Students</li>
-      </ol>
-    </nav>
-
-    <div class="mt-6 flex flex-wrap items-end justify-between gap-6">
-      <div>
-        <h1 class="text-[34px] leading-[1.12] font-bold text-white sm:text-[44px]">
-          Beneficiary<br />Students List
-        </h1>
-        <p class="mt-4 max-w-[400px] text-[14px] leading-relaxed text-white/75">
-          Empowering deserving students through financial support for a brighter tomorrow.
-        </p>
-      </div>
-
-      <div class="flex items-center gap-3 rounded-lg bg-white/10 px-5 py-4 backdrop-blur">
-        <svg class="shrink-0 text-white" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-        </svg>
-        <p class="text-[13px] leading-snug font-semibold text-white">Together, we build<br />better futures.</p>
-      </div>
-    </div>
-  </div>
-</section>
+</app-page-hero>
 
 <section class="site-container py-8">
 

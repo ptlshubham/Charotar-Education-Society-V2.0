@@ -1,1 +1,18 @@
-/* Intentionally empty — styled with Tailwind utilities only. */
+/* Home hero slider (Swiper element). */
+.hero-swiper {
+  display: block;
+  height: 100%;
+  width: 100%;
+
+  /* Brand-tinted pagination bullets, clear of the fade overlays. */
+  --swiper-pagination-color: #ed1c24;
+  --swiper-pagination-bullet-inactive-color: #203154;
+  --swiper-pagination-bullet-inactive-opacity: 0.45;
+  --swiper-pagination-bullet-size: 9px;
+  --swiper-pagination-bottom: 14px;
+
+  /* Pagination sits above the fade overlays so bullets stay clickable/visible. */
+  &::part(pagination) {
+    z-index: 3;
+  }
+}

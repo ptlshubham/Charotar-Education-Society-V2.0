@@ -1,40 +1,7 @@
 <!-- ─── Hero ─── -->
-<section class="relative min-h-[416px] overflow-hidden bg-gradient-to-r from-[#F4F7FC] to-[#E6EDF7]">
-  <div class="site-container relative grid items-center gap-8 py-10 lg:grid-cols-2">
-
-    <div class="flex items-end justify-center gap-5">
-      <svg class="h-[150px] w-auto" viewBox="0 0 60 90" fill="none" aria-hidden="true">
-        <ellipse cx="30" cy="86" rx="20" ry="4" class="fill-primary/10" />
-        <rect x="12" y="42" width="36" height="42" rx="4" fill="#fff" stroke="currentColor" stroke-width="2" class="text-primary/30" />
-        <path d="M14 44h32v6H14z" class="fill-primary/10" />
-        @for (leaf of [0,1,2,3,4]; track leaf) {
-          <ellipse [attr.cx]="30 + (leaf - 2) * 7" [attr.cy]="34 - (leaf % 2) * 6" rx="6" ry="9" class="fill-accent/70" />
-        }
-      </svg>
-
-      <div class="relative">
-        <div class="flex h-[170px] w-[130px] flex-col items-center justify-center rounded-md bg-white shadow-lg ring-1 ring-gray-200">
-          <span class="mb-3 h-1.5 w-14 rounded-full bg-primary/70" aria-hidden="true"></span>
-          <span class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/8 text-primary" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z" />
-            </svg>
-          </span>
-          <span class="mt-3 text-[10px] font-bold tracking-[0.2em] text-primary/70">DONATION BOX</span>
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <p class="text-[24px] leading-snug font-medium text-primary sm:text-[30px]">Thank You for</p>
-      <h1 class="text-[46px] leading-none font-bold tracking-tight text-primary sm:text-[62px]">Donating!</h1>
-      <p class="mt-4 max-w-[420px] text-[14px] leading-relaxed text-muted">
-        Your generosity helps us create opportunities and build a brighter future.
-      </p>
-    </div>
-
-  </div>
-</section>
+<app-page-hero crumb="Donor List" title="Thank You for" accent="Donating!"
+  blurb="Your generosity helps us create opportunities and build a brighter future."
+  image="/assets/images/hero/home.jpeg" />
 
 <section class="site-container py-8">
 

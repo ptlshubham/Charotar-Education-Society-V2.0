@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
+import { PageHero } from '../../shared/page-hero/page-hero';
 import { PLACEHOLDER } from '../../shared/placeholder-images';
 
 interface Campus {
@@ -17,6 +18,7 @@ interface Campus {
 
 @Component({
   selector: 'app-campuses',
+  imports: [PageHero],
   templateUrl: './campuses.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './campuses.scss',

@@ -1,51 +1,7 @@
 <!-- ─── Hero ─── -->
-<section class="relative min-h-[416px] overflow-hidden rounded-b-3xl bg-[#3B0A10]">
-  <div class="absolute inset-0" aria-hidden="true">
-    <img [src]="banner" alt="" class="h-full w-full object-cover opacity-35" />
-    <div class="absolute inset-0 bg-gradient-to-r from-[#3B0A10] via-[#3B0A10]/85 to-[#6B1119]/60"></div>
-  </div>
-
-  <div class="site-container relative grid items-center gap-8 py-12 lg:grid-cols-[1.4fr_1fr]">
-    <div>
-      <p class="flex items-center gap-2 text-[12px] font-semibold tracking-wide text-white/80 uppercase">
-        <svg class="text-logo" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" /><path d="M19 10a7 7 0 0 1-14 0" /><path d="M12 17v5" />
-        </svg>
-        CES Podcast
-      </p>
-
-      <h1 class="mt-4 text-[38px] leading-[1.05] font-bold text-white sm:text-[52px]">
-        Motivation<br />
-        <span class="text-logo">Inspire</span> Grow
-      </h1>
-
-      <p class="mt-4 text-[14px] leading-relaxed text-white/75">
-        Real conversations. Real stories.<br />
-        Real inspiration from the CES family.
-      </p>
-
-      <button type="button"
-        class="mt-7 inline-flex items-center gap-2 rounded-md bg-logo px-6 py-3 text-[13.5px] font-semibold text-white transition-opacity hover:opacity-90">
-        Explore Episodes
-        <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white/25" aria-hidden="true">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
-        </span>
-      </button>
-    </div>
-
-    <div class="text-center">
-      <span class="mx-auto flex h-24 w-24 items-center justify-center rounded-full border-2 border-white/70" aria-hidden="true">
-        <svg class="text-white" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" /><path d="M19 10a7 7 0 0 1-14 0" /><path d="M12 17v5M8 22h8" />
-        </svg>
-      </span>
-      <p class="mt-4 text-[30px] leading-none font-bold text-white">
-        Next <span class="text-logo">Up</span>
-      </p>
-      <p class="mt-2 text-[12px] text-white/65">A podcast by<br />Charotar Education Society</p>
-    </div>
-  </div>
-</section>
+<app-page-hero crumb="Podcast" eyebrow="CES Podcast — Next Up" title="Motivation, Inspire" accent="Grow"
+  blurb="Real conversations. Real stories. Real inspiration from the CES family."
+  [image]="banner" />
 
 <section class="site-container py-8">
 

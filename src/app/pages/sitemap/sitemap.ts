@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { PageHero } from '../../shared/page-hero/page-hero';
 import siteLinks from '../../shared/site-links.json';
 import { PLACEHOLDER } from '../../shared/placeholder-images';
 
@@ -26,7 +27,7 @@ const ICONS: Record<string, string[]> = {
 
 @Component({
   selector: 'app-sitemap',
-  imports: [RouterLink],
+  imports: [RouterLink, PageHero],
   templateUrl: './sitemap.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './sitemap.scss',

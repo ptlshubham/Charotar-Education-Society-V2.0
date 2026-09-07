@@ -5,6 +5,7 @@ import { catchError, of } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
 import { PodcastEntry } from '../../../shared/models/models';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
+import { PageHero } from '../../../shared/page-hero/page-hero';
 
 interface Episode {
   number: string;
@@ -15,6 +16,7 @@ interface Episode {
 
 @Component({
   selector: 'app-podcast',
+  imports: [PageHero],
   templateUrl: './podcast.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './podcast.scss',

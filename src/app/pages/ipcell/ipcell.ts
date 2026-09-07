@@ -9,12 +9,13 @@ import { Pagination } from '../../shared/pagination/pagination';
 import { Sorter } from '../../shared/sorting/sorter';
 import { SortHeader } from '../../shared/sorting/sort-header';
 import { MediaUrlPipe } from '../../shared/media-url.pipe';
+import { PageHero } from '../../shared/page-hero/page-hero';
 
 type Tab = 'about' | 'policy' | 'utility' | 'design' | 'copyrights' | 'trademarks' | 'forms';
 
 @Component({
   selector: 'app-ipcell',
-  imports: [Pagination, SortHeader, MediaUrlPipe],
+  imports: [Pagination, SortHeader, MediaUrlPipe, PageHero],
   templateUrl: './ipcell.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './ipcell.scss',

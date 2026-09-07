@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { PageHero } from '../../../shared/page-hero/page-hero';
 import { catchError, of } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
 import { BeneficiaryStudent } from '../../../shared/models/models';
@@ -21,7 +21,7 @@ const STAT_ICONS = {
 
 @Component({
   selector: 'app-beneficiary-students',
-  imports: [FormsModule, RouterLink, Pagination, SortHeader],
+  imports: [FormsModule, Pagination, SortHeader, PageHero],
   templateUrl: './beneficiary-students.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './beneficiary-students.scss',

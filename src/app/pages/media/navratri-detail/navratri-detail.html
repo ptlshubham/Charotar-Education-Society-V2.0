@@ -1,46 +1,22 @@
 <!-- ─── Hero ─── -->
-<section class="relative min-h-[416px] overflow-hidden bg-[#241243]">
-  <div class="absolute inset-0" aria-hidden="true">
-    <img [src]="banner" alt="" class="h-full w-full object-cover opacity-55" />
-    <div class="absolute inset-0 bg-gradient-to-r from-[#241243] via-[#241243]/85 to-transparent"></div>
-  </div>
-
-  <div class="site-container relative py-10 lg:py-12">
-    <nav aria-label="Breadcrumb">
-      <ol class="flex list-none flex-wrap items-center gap-2 text-[13px] text-white/70">
-        <li><a routerLink="/home" class="no-underline hover:text-white">Home</a></li>
-        <li aria-hidden="true">&rsaquo;</li>
-        <li><a routerLink="/navratri" class="no-underline hover:text-white">Navratri Celebration</a></li>
-        <li aria-hidden="true">&rsaquo;</li>
-        <li aria-current="page" class="text-white">Navratri {{ year }}</li>
-      </ol>
-    </nav>
-
-    <h1 class="mt-5 text-[34px] leading-none font-bold text-white sm:text-[42px]">
-      Navratri<br />
-      <span class="font-[400] text-secondary italic">Celebration</span> {{ year }}
-    </h1>
-
-    <p class="mt-4 max-w-[400px] text-[13.5px] leading-relaxed text-white/75">
-      A divine celebration of faith, culture and unity filled with devotion and joy.
-    </p>
-
-    <ul class="mt-6 flex list-none flex-wrap gap-x-8 gap-y-3 text-[13px] text-white/85">
-      <li class="flex items-center gap-2">
-        <svg class="text-secondary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" />
-        </svg>
-        15th Sep – 24th Oct, {{ year }}
-      </li>
-      <li class="flex items-center gap-2">
-        <svg class="text-secondary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z" /><circle cx="12" cy="10" r="3" />
-        </svg>
-        CES Campus, Anand
-      </li>
-    </ul>
-  </div>
-</section>
+<app-page-hero crumb="Navratri" title="Navratri" [accent]="'Celebration ' + year"
+  blurb="A divine celebration of faith, culture and unity filled with devotion and joy."
+  [image]="banner">
+  <ul class="mt-6 flex list-none flex-wrap gap-x-8 gap-y-3 text-[13px] text-white/85">
+    <li class="flex items-center gap-2">
+      <svg class="text-secondary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" />
+      </svg>
+      15th Sep – 24th Oct, {{ year }}
+    </li>
+    <li class="flex items-center gap-2">
+      <svg class="text-secondary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z" /><circle cx="12" cy="10" r="3" />
+      </svg>
+      CES Campus, Anand
+    </li>
+  </ul>
+</app-page-hero>
 
 <section class="site-container py-8">
 

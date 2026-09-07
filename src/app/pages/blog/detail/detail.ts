@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { formatDate } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { PageHero } from '../../../shared/page-hero/page-hero';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { catchError, of } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
@@ -21,7 +22,7 @@ interface Brief {
 
 @Component({
   selector: 'app-blog-detail',
-  imports: [FormsModule, RouterLink, MediaUrlPipe, SafeHtmlPipe],
+  imports: [FormsModule, RouterLink, MediaUrlPipe, SafeHtmlPipe, PageHero],
   templateUrl: './detail.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './detail.scss',

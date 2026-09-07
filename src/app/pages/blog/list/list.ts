@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { formatDate } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { PageHero } from '../../../shared/page-hero/page-hero';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { catchError, of } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
@@ -26,7 +27,7 @@ interface Post {
 
 @Component({
   selector: 'app-blog-list',
-  imports: [FormsModule, RouterLink, MediaUrlPipe],
+  imports: [FormsModule, RouterLink, MediaUrlPipe, PageHero],
   templateUrl: './list.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './list.scss',

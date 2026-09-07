@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { PageHero } from '../../shared/page-hero/page-hero';
 import { PLACEHOLDER } from '../../shared/placeholder-images';
 
 interface Item {
@@ -12,7 +13,7 @@ interface Item {
 
 @Component({
   selector: 'app-news',
-  imports: [FormsModule],
+  imports: [FormsModule, PageHero],
   templateUrl: './news.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './news.scss',

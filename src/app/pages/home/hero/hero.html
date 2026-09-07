@@ -1,12 +1,19 @@
 <section class="relative overflow-hidden bg-gradient-to-b from-[#EEF2F9] to-white lg:min-h-[540px]">
 
-  <!-- Campus photo — full-bleed to the right edge, spanning the hero height. -->
+  <!-- Campus photo slider — full-bleed to the right edge, spanning the hero height. -->
   <div class="relative h-[300px] sm:h-[380px] lg:absolute lg:inset-y-0 lg:right-0 lg:h-full lg:w-[62%]">
-    <img [src]="image" alt="Charotar Education Society campus — D.N. High School, Anand" fetchpriority="high"
-      class="h-full w-full object-cover object-right" />
-    <!-- Fade the photo into the light background so the copy stays legible. -->
-    <span class="pointer-events-none absolute inset-0 bg-gradient-to-r from-white via-white/45 to-transparent lg:via-white/10" aria-hidden="true"></span>
-    <span class="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/70 to-transparent lg:hidden" aria-hidden="true"></span>
+    <swiper-container init="false" #swiperEl class="hero-swiper block h-full w-full">
+      @for (src of slides; track src; let i = $index) {
+        <swiper-slide>
+          <img [src]="src" [alt]="'Charotar Education Society campus — slide ' + (i + 1)"
+            [attr.fetchpriority]="i === 0 ? 'high' : null" [attr.loading]="i === 0 ? null : 'lazy'"
+            class="h-full w-full object-cover object-right" />
+        </swiper-slide>
+      }
+    </swiper-container>
+    <!-- Fade the photo into the light background so the copy stays legible (kept above the slider). -->
+    <span class="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-r from-white via-white/45 to-transparent lg:via-white/10" aria-hidden="true"></span>
+    <span class="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-white/70 to-transparent lg:hidden" aria-hidden="true"></span>
   </div>
 
   <!-- Copy -->

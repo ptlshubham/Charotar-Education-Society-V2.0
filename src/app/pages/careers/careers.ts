@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, HostListener, inject, PLATFORM_ID, signal } from '@angular/core';
 import { NgTemplateOutlet, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { PageHero } from '../../shared/page-hero/page-hero';
 import { Paginator } from '../../shared/pagination/paginator';
 import { Pagination } from '../../shared/pagination/pagination';
 import { MediaUrlPipe } from '../../shared/media-url.pipe';
@@ -38,7 +39,7 @@ interface Notice {
 
 @Component({
   selector: 'app-careers',
-  imports: [NgTemplateOutlet, RouterLink, Pagination, MediaUrlPipe],
+  imports: [NgTemplateOutlet, RouterLink, Pagination, MediaUrlPipe, PageHero],
   templateUrl: './careers.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './careers.scss',

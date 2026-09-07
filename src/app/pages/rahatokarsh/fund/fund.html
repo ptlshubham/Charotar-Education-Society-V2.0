@@ -1,45 +1,8 @@
 <!-- ─── Hero ─── -->
-<section class="relative min-h-[416px] overflow-hidden bg-gradient-to-r from-[#F2F5FA] to-[#E4EBF6]">
-  <svg class="pointer-events-none absolute top-6 left-4 h-20 w-28" aria-hidden="true">
-    <defs>
-      <pattern id="ces-fund-dots" width="14" height="14" patternUnits="userSpaceOnUse">
-        <circle cx="2" cy="2" r="1.5" fill="currentColor" class="text-primary/20" />
-      </pattern>
-    </defs>
-    <rect width="100%" height="100%" fill="url(#ces-fund-dots)" />
-  </svg>
-
-  <div class="site-container relative grid items-center gap-8 py-12 lg:grid-cols-2">
-    <div>
-      <p class="text-[26px] leading-snug font-medium text-primary sm:text-[32px]">Make a</p>
-      <h1 class="text-[52px] leading-none font-bold tracking-tight text-primary sm:text-[72px]">Difference</h1>
-      <p class="mt-4 text-[15px] font-medium text-primary">Support education. Empower futures.</p>
-      <span class="mt-3 block h-1 w-14 rounded-full bg-secondary/85" aria-hidden="true"></span>
-
-      <p class="mt-5 max-w-[420px] text-[14px] leading-relaxed text-muted">
-        Your contribution to Rahatokarsh Fund helps deserving students continue their education and build
-        brighter tomorrows.
-      </p>
-    </div>
-
-    <div class="flex justify-center">
-      <svg class="h-[220px] w-auto text-primary" viewBox="0 0 220 220" fill="none" aria-label="Donation jar" role="img">
-        <ellipse cx="110" cy="200" rx="86" ry="9" class="fill-primary/10" />
-        <rect x="52" y="150" width="116" height="14" rx="3" class="fill-primary/20" />
-        <rect x="44" y="164" width="132" height="14" rx="3" class="fill-primary/30" />
-        <path d="M74 74h72v66a12 12 0 0 1-12 12H86a12 12 0 0 1-12-12z" class="fill-secondary/25" stroke="currentColor" stroke-width="3" />
-        <rect x="70" y="64" width="80" height="12" rx="4" stroke="currentColor" stroke-width="3" class="fill-white" />
-        @for (coin of [[92,132],[110,136],[128,132],[100,120],[120,120],[110,108]]; track coin) {
-          <circle [attr.cx]="coin[0]" [attr.cy]="coin[1]" r="8" class="fill-secondary" />
-        }
-        <text x="110" y="100" text-anchor="middle" class="fill-primary" font-size="11" font-weight="700">RAHATOKARSH</text>
-        <text x="110" y="112" text-anchor="middle" class="fill-primary" font-size="11" font-weight="700">FUND</text>
-        <path d="M62 60 110 34l48 26z" class="fill-primary" />
-        <rect x="104" y="34" width="6" height="26" rx="3" class="fill-secondary" />
-      </svg>
-    </div>
-  </div>
-</section>
+<app-page-hero crumb="Rahatokarsh Fund" title="Make a" accent="Difference"
+  tagline="Support education. Empower futures."
+  blurb="Your contribution to Rahatokarsh Fund helps deserving students continue their education and build brighter tomorrows."
+  image="/assets/images/hero/home.jpeg" />
 
 <!-- ─── Objective ─── -->
 <section class="mx-auto max-w-[1200px] px-4 py-10 sm:px-6 lg:px-12 xl:px-20">

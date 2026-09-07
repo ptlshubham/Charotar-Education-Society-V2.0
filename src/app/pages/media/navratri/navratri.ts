@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
+import { PageHero } from '../../../shared/page-hero/page-hero';
 import { catchError, of } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
 import { NavratriEntry } from '../../../shared/models/models';
@@ -11,7 +12,7 @@ type Glimpse = 'All' | 'Pandal' | 'Garba' | 'Cultural Programs' | 'Aarti' | 'Dev
 
 @Component({
   selector: 'app-navratri',
-  imports: [RouterLink, MediaUrlPipe],
+  imports: [RouterLink, MediaUrlPipe, PageHero],
   templateUrl: './navratri.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './navratri.scss',

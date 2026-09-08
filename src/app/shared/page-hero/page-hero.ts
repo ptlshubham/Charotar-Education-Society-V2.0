@@ -7,11 +7,18 @@ export interface HeroStat {
   path: string[];
 }
 
+/** An intermediate breadcrumb between "Home" and the current page. */
+export interface Crumb {
+  label: string;
+  /** RouterLink target; omit for a non-clickable category label. */
+  link?: string;
+}
+
 /**
- * Site-wide navy page banner (the "Project" hero style): breadcrumb, optional
- * gold eyebrow, title with an optional gold accent line, tagline, blurb, inline
- * stats, and a skewed photo ribbon on the right. Used by every page hero except
- * the homepage — edit here to restyle them all at once.
+ * Site-wide navy page banner: breadcrumb, optional gold eyebrow, title with an
+ * optional gold accent line, tagline, blurb, inline stats, and a photo on the
+ * right that the navy sweeps diagonally into. Used by every page hero except the
+ * homepage — edit here to restyle them all at once.
  */
 @Component({
   selector: 'app-page-hero',
@@ -29,14 +36,9 @@ export class PageHero {
   @Input() tagline = '';
   @Input() blurb = '';
   @Input({ required: true }) image = '';
-  /** Multiple images for the skewed ribbon; falls back to [image] when empty. */
-  @Input() panels: readonly string[] = [];
   @Input() stats: readonly HeroStat[] = [];
   /** Breadcrumb leaf label; "Home ›" is always prepended. */
   @Input({ required: true }) crumb = '';
-
-  /** Ribbon panels — the provided set, or the single hero image as one panel. */
-  get ribbon(): readonly string[] {
-    return this.panels.length ? this.panels : [this.image];
-  }
+  /** Intermediate breadcrumbs between Home and the leaf, e.g. [{ label: 'About Us', link: '/about' }]. */
+  @Input() trail: readonly Crumb[] = [];
 }

@@ -19,6 +19,7 @@ import { SearchService } from '../../core/services/search.service';
 import { ResourcesService } from '../../core/services/resources.service';
 import { SOCIAL_LINKS } from '../../shared/social-links';
 import { SearchItem } from '../../shared/models/models';
+import { LanguageSwitcher } from '../../shared/language-switcher/language-switcher';
 
 export interface NavItem {
   label: string;
@@ -71,7 +72,7 @@ export const ICONS = {
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink],
+  imports: [RouterLink, LanguageSwitcher],
   templateUrl: './header.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './header.scss',
@@ -391,10 +392,10 @@ export class Header implements AfterViewInit {
     // Live visitor presence — poll the count; the GET also acts as this client's
     // heartbeat. Stays null (badge hidden) until the backend endpoint responds.
     const pollVisitors = () => {
-      this.resources.getOnlineVisitors().subscribe({
-        next: res => this.onlineVisitors.set(this.parseCount(res)),
-        error: () => { },
-      });
+      // this.resources.getOnlineVisitors().subscribe({
+      //   next: res => this.onlineVisitors.set(this.parseCount(res)),
+      //   error: () => { },
+      // });
     };
     pollVisitors();
     const visitorTimer = setInterval(pollVisitors, 20000);

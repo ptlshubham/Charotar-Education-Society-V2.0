@@ -84,7 +84,17 @@ export class SeoService {
    */
   private payload$?: Observable<SeoPayload>;
 
+  /** TEMPORARY: set back to true to re-enable the live SEO endpoint. */
+  private readonly seoApiEnabled: boolean = false;
+
   private load(): Observable<SeoPayload> {
+    if (!this.seoApiEnabled) {
+      // SEO endpoint temporarily disabled — fall back to index.html's static meta.
+      this.payload$ ??= of<SeoPayload>({ pages: [], defaults: EMPTY_DEFAULTS }).pipe(
+        shareReplay({ bufferSize: 1, refCount: false }),
+      );
+      return this.payload$;
+    }
     this.payload$ ??= this.http.get<{ success: boolean; data: SeoPayload }>(ApiService.GetPublicSeoURL).pipe(
       map(res => res?.data ?? { pages: [], defaults: EMPTY_DEFAULTS }),
       // SEO data must never break page rendering  fall back to index.html's tags.

@@ -25,7 +25,7 @@ interface College {
   styleUrl: './colleges.scss',
 })
 export class Colleges {
-  readonly banner = PLACEHOLDER.academic.collegesBanner;
+  readonly banner = '/assets/images/hero/college.jpeg';
 
   readonly heroStats: readonly HeroStat[] = [
     { value: '14', label: 'Colleges', path: ['M3 21h18', 'M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16', 'M9 7h2M13 7h2M9 11h2M13 11h2'] },

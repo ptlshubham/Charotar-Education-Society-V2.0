@@ -1,20 +1,9 @@
 <!-- ─── Hero ─── -->
-<app-page-hero crumb="Micro Donor List" title="Thank You for" accent="Donating"
+<app-page-hero crumb="Micro Donor List" [trail]="[{ label: 'Rahatokarsh Fund', link: '/fund' }]" title="Thank You for" accent="Donating"
   blurb="Your small contribution creates a big impact."
   image="/assets/images/hero/home.jpeg" />
 
 <section class="site-container py-8">
-
-  <!-- Breadcrumb -->
-  <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[13px]">
-    <a routerLink="/home" aria-label="Home" class="text-primary no-underline hover:text-accent">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z" /></svg>
-    </a>
-    <span class="text-gray-300" aria-hidden="true">&rsaquo;</span>
-    <a routerLink="/fund" class="text-primary no-underline hover:text-accent">Rahatokarsh Fund</a>
-    <span class="text-gray-300" aria-hidden="true">&rsaquo;</span>
-    <span aria-current="page" class="font-semibold text-primary">Micro Donor List</span>
-  </nav>
 
   <!-- Heading + total + filter toggle -->
   <div class="mt-5 grid gap-5 lg:grid-cols-[1.6fr_auto_auto] lg:items-center">

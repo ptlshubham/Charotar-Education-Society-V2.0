@@ -1,5 +1,5 @@
 <!-- ─── Hero ─── -->
-<app-page-hero crumb="Blog" [title]="post()?.blogTitle || 'Blog Details'"
+<app-page-hero [crumb]="post()?.blogTitle || 'Blog Details'" [trail]="[{ label: 'Blog', link: '/blog' }]" [title]="post()?.blogTitle || 'Blog Details'"
   [image]="post()?.blogImage | mediaUrl">
   <ul class="mt-5 flex list-none flex-wrap items-center gap-x-6 gap-y-2 text-[12.5px] text-white/80">
     @if (date()) {

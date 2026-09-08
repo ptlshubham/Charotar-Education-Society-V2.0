@@ -158,6 +158,11 @@
       }
     </div>
 
+    <!-- Language (desktop / tablet) -->
+    <div class="hidden shrink-0 lg:block">
+      <app-language-switcher variant="light" />
+    </div>
+
     <!-- Quick links -->
     <div class="hidden items-center gap-6 xl:flex">
       <a routerLink="/more/news"
@@ -348,6 +353,12 @@
         }
       </div>
       }
+    </div>
+
+    <!-- Language -->
+    <div class="flex items-center justify-between gap-3 border-t border-primary/10 px-4 py-3">
+      <span class="text-[13px] font-semibold text-primary">Language</span>
+      <app-language-switcher variant="light" />
     </div>
 
     <!-- Accordion nav -->

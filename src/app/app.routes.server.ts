@@ -32,6 +32,13 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client,
   },
   {
+    // Legacy redirect route (/home/blog/:slug -> /blog/:slug). It carries a param,
+    // so it must not fall through to the prerender rule (which needs
+    // getPrerenderParams); Client mode redirects in the browser instead.
+    path: 'home/blog/:slug',
+    renderMode: RenderMode.Client,
+  },
+  {
     path: '**',
     renderMode: RenderMode.Prerender,
   },

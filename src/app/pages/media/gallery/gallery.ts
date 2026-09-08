@@ -44,10 +44,10 @@ export class Gallery {
 
   readonly banner = PLACEHOLDER.media.galleryBanner;
 
-  readonly stats: ReadonlyArray<{ value: string; label: string; tone: string; path: string[] }> = [
-    { value: '1,248+', label: 'Photos', tone: 'bg-primary/10 text-primary', path: ['M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z', 'M8.5 11a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z', 'm21 15-5-5L5 21'] },
-    { value: '156+', label: 'Videos', tone: 'bg-logo/10 text-logo', path: ['m23 7-7 5 7 5z', 'M1 5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2z'] },
-    { value: '32+', label: 'Albums', tone: 'bg-primary/10 text-primary', path: ['M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'] },
+  readonly stats: ReadonlyArray<{ value: string; label: string; tone: string; lineTone: string; path: string[] }> = [
+    { value: '1,248+', label: 'Photos', tone: 'bg-[#EFF6FF] text-[#3B82F6]', lineTone: 'bg-[#3B82F6]', path: ['M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z', 'M8.5 11a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z', 'm21 15-5-5L5 21'] },
+    { value: '156+', label: 'Videos', tone: 'bg-[#FEF2F2] text-[#EF4444]', lineTone: 'bg-[#EF4444]', path: ['m23 7-7 5 7 5z', 'M1 5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2z'] },
+    { value: '32+', label: 'Albums', tone: 'bg-[#F3E8FF] text-[#A855F7]', lineTone: 'bg-[#A855F7]', path: ['M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'] },
   ];
 
   readonly tab = signal<'photos' | 'videos'>('photos');

@@ -75,8 +75,7 @@ export class Counselling {
     { q: 'How will the counselling happen?', a: 'Sessions typically take place one-on-one with your counsellor, either in person on campus or sometimes online, depending on mutual convenience and availability. Your counsellor will discuss the best format with you when you book your session.' },
     { q: 'Who will I talk to?', a: 'You’ll talk to Dr. Jigar Jani and his team of qualified and experienced Counselling Psychologists. They have extensive experience working with young people and are here to help and support you, not to judge.' },
     { q: 'What if I can’t put it into words?', a: 'That’s perfectly okay! You don’t need to have all the answers or a clear problem statement. Just come with what you’re feeling or thinking. Figuring things out together is a core part of what counselling is for.' },
-    { q: 'Will it actually help?', a: 'Most students report feeling lighter, clearer, and more in control after just a few sessions. While it’s not a magic fix, it’s a strong and proactive step toward real personal growth and positive change.' },
-    { q: 'What if I’m nervous to try?', a: 'It’s completely normal to feel nervous when trying something new, especially counselling. You don’t have to go through tough times alone — help is here for you. Even if nothing feels “wrong”, a confidential conversation can bring unexpected clarity and support.' },
+    
   ];
 
   readonly openFaq = signal(-1);

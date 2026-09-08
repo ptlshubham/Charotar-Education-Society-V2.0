@@ -7,11 +7,10 @@
 
   <!-- Tabs -->
   <div role="tablist" aria-label="IP Cell sections"
-    class="mt-16 flex flex-wrap justify-center gap-2.5
-    ">
+    class="mt-16 flex justify-start gap-2.5 overflow-x-auto pb-2 lg:flex-wrap lg:justify-center lg:overflow-visible lg:pb-0">
     @for (tab of tabs; track tab.id) {
       <button type="button" role="tab" [attr.aria-selected]="active() === tab.id" (click)="select(tab.id)"
-        class="inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-[13px] font-semibold transition-colors"
+        class="inline-flex w-[calc(50%-0.3125rem)] shrink-0 items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-[13px] font-semibold transition-colors lg:w-auto"
         [class]="active() === tab.id ? 'bg-primary text-white shadow-md' : 'text-primary hover:bg-primary/10'">
         <span class="material-symbols-outlined shrink-0 !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">{{ tab.icon }}</span>
         {{ tab.label }}
@@ -300,7 +299,7 @@
 
   <!-- Focus areas -->
   <p class="mt-9 text-center text-[11.5px] font-bold tracking-[0.15em] text-muted uppercase">Our Focus Areas</p>
-  <ul class="mt-4 grid list-none gap-px overflow-hidden rounded-xl border border-gray-200 bg-gray-200 sm:grid-cols-3 lg:grid-cols-6">
+  <ul class="mt-4 grid grid-cols-2 list-none gap-px overflow-hidden rounded-xl border border-gray-200 bg-gray-200 lg:grid-cols-6">
     @for (area of focusAreas; track area.title) {
       <li class="bg-white px-4 py-6 text-center">
         <span class="material-symbols-outlined text-primary !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">{{ area.icon }}</span>

@@ -2,7 +2,6 @@ import { DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, NgZone, computed, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { PageHero } from '../../../shared/page-hero/page-hero';
 import { SuccessDialogService } from '../../../core/services/success-dialog.service';
 import { ResourcesService } from '../../../core/services/resources.service';
 import { RazorpayService, RazorpayOptions, RazorpaySuccess } from '../../../core/services/razorpay.service';
@@ -12,7 +11,7 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
 
 @Component({
   selector: 'app-donation',
-  imports: [DecimalPipe, ReactiveFormsModule, RouterLink, PageHero],
+  imports: [DecimalPipe, ReactiveFormsModule, RouterLink],
   templateUrl: './donation.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './donation.scss',
@@ -42,6 +41,12 @@ export class Donation {
     'Help for economically weaker and deserving students',
     'Transparent fund management and proper utilization',
     'Building a stronger, educated, and empowered society',
+  ];
+  readonly fundPoints: readonly string[] = [
+    'Support for tuition fees, books, and educational expenses',
+    'Help for economically weaker and deserving students',
+    'Transparent fund management and proper utilization',
+    'Empowering students to build a better and brighter future',
   ];
 
   readonly bank: ReadonlyArray<{ label: string; value: string }> = [

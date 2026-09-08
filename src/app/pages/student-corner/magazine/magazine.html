@@ -1,34 +1,7 @@
 <!-- ─── Hero ─── -->
-<section class="relative min-h-[416px] overflow-hidden bg-gradient-to-r from-[#F2F5FA] to-[#E2EAF6]">
-  <!-- Decorative bars, echoing the design -->
-  <span class="pointer-events-none absolute -top-6 right-24 hidden h-32 w-8 rotate-[35deg] rounded-full bg-[#2E6BE6] lg:block" aria-hidden="true"></span>
-  <span class="pointer-events-none absolute right-8 bottom-6 hidden h-24 w-7 rotate-[35deg] rounded-full bg-primary lg:block" aria-hidden="true"></span>
-
-  <div class="site-container relative grid items-center gap-8 py-12 lg:grid-cols-2">
-    <div>
-      <h1 class="text-[24px] leading-tight font-bold tracking-wide text-primary uppercase sm:text-[30px]">
-        The Stories of Our<br />
-        <span class="text-[36px] sm:text-[46px]">Students</span>
-      </h1>
-      <span class="mt-3 block h-1 w-16 rounded-full bg-secondary/85" aria-hidden="true"></span>
-
-      <p class="mt-5 max-w-[400px] text-[13.5px] leading-relaxed text-muted">
-        Explore our annual Balanitra magazines – a beautiful collection of creativity, achievements and
-        memorable moments.
-      </p>
-    </div>
-
-    <!-- Magazine stack -->
-    <div class="relative mx-auto flex h-[220px] w-full max-w-[380px] items-end justify-center">
-      <img [src]="PLACEHOLDER_COVER" alt="" aria-hidden="true"
-        class="absolute bottom-3 left-6 h-[130px] w-[100px] rotate-[-8deg] rounded-sm bg-primary-light object-cover shadow-lg" />
-      <img [src]="PLACEHOLDER_COVER2" alt="" aria-hidden="true"
-        class="absolute bottom-0 left-16 h-[120px] w-[95px] rotate-[-3deg] rounded-sm bg-primary-light object-cover shadow-lg" />
-      <img [src]="PLACEHOLDER_COVER3" alt="Balanitra magazine cover" loading="lazy"
-        class="relative h-[200px] w-[150px] rounded-sm bg-primary-light object-cover shadow-2xl" />
-    </div>
-  </div>
-</section>
+<app-page-hero crumb="Magazine" title="The Stories of Our" accent="Students"
+  blurb="Explore our annual Balanitra magazines – a beautiful collection of creativity, achievements and memorable moments."
+  [image]="PLACEHOLDER_COVER3" />
 
 <section class="site-container py-8">
 
@@ -86,9 +59,9 @@
       We couldn't load the magazines right now. Please try again later.
     </p>
   } @else {
-    <ul class="animate-dropdown mt-6 grid list-none grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
+    <ul class="animate-dropdown mt-6 flex snap-x snap-mandatory list-none gap-5 overflow-x-auto pb-3 lg:grid lg:grid-cols-6 lg:overflow-visible lg:pb-0">
       @for (item of pager.paged(); track $index) {
-        <li class="flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white">
+        <li class="flex min-w-[calc(50%-0.625rem)] snap-start flex-col overflow-hidden rounded-xl border border-gray-200 bg-white lg:min-w-0">
           @if (item.file) {
             <button type="button" (click)="openPdf(item)" [attr.aria-label]="'Read ' + item.name"
               class="group relative block w-full cursor-pointer overflow-hidden">
@@ -130,7 +103,7 @@
           </div>
         </li>
       } @empty {
-        <li class="col-span-full rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
+        <li class="min-w-full rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted lg:col-span-full lg:min-w-0">
           No magazines match your filters.
         </li>
       }

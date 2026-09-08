@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { PageHero } from '../../../shared/page-hero/page-hero';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
 
 @Component({
   selector: 'app-project-hero',
-  imports: [RouterLink],
+  imports: [PageHero],
   templateUrl: './project-hero.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './project-hero.scss',

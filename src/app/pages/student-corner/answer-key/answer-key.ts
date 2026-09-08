@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { PageHero } from '../../../shared/page-hero/page-hero';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { catchError, of } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
@@ -33,7 +33,7 @@ interface Paper {
 
 @Component({
   selector: 'app-answer-key',
-  imports: [FormsModule, RouterLink, Pagination, SortHeader, MediaUrlPipe, SafeHtmlPipe],
+  imports: [FormsModule, Pagination, SortHeader, MediaUrlPipe, SafeHtmlPipe, PageHero],
   templateUrl: './answer-key.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './answer-key.scss',

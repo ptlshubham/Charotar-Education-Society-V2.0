@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { PageHero } from '../../../shared/page-hero/page-hero';
 import { POLICIES } from '../policies.data';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
 
@@ -9,7 +10,7 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
  */
 @Component({
   selector: 'app-policy-page',
-  imports: [RouterLink],
+  imports: [RouterLink, PageHero],
   templateUrl: './policy-page.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './policy-page.scss',

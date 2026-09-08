@@ -1,50 +1,21 @@
 <!-- ─── Hero ─── -->
-<section class="relative min-h-[416px] overflow-hidden bg-primary">
-  <svg class="pointer-events-none absolute inset-y-0 right-0 hidden w-[45%] lg:block" viewBox="0 0 400 260" fill="none" aria-hidden="true">
-    @for (row of [0,1,2,3]; track row) {
-      @for (col of [0,1,2,3,4,5]; track col) {
-        <circle [attr.cx]="40 + col * 62" [attr.cy]="40 + row * 60" r="17" stroke="currentColor" stroke-width="2" fill="none" class="text-white/20" />
-        <text [attr.x]="40 + col * 62" [attr.y]="46 + row * 60" text-anchor="middle" class="fill-white/25" font-size="15">{{ ['A','B','C','D'][col % 4] }}</text>
-      }
-    }
-  </svg>
-  <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary to-primary/60" aria-hidden="true"></div>
-
-  <div class="site-container relative py-10 lg:py-12">
-    <nav aria-label="Breadcrumb">
-      <ol class="flex list-none flex-wrap items-center gap-2 text-[13px] text-white/70">
-        <li><a routerLink="/home" class="no-underline hover:text-white">Home</a></li>
-        <li aria-hidden="true">&rsaquo;</li>
-        <li>Student Corner</li>
-        <li aria-hidden="true">&rsaquo;</li>
-        <li>General Exam</li>
-        <li aria-hidden="true">&rsaquo;</li>
-        <li aria-current="page" class="text-white">Answer Key</li>
-      </ol>
-    </nav>
-
-    <h1 class="mt-4 text-[34px] leading-none font-bold text-white sm:text-[42px]">Answer Key</h1>
-    <span class="mt-3 block h-1 w-14 rounded-full bg-secondary/85" aria-hidden="true"></span>
-
-    <p class="mt-4 max-w-[420px] text-[13.5px] leading-relaxed text-white/75">
-      Access the official answer keys for various standard and subject examinations.
-    </p>
-
-    @if (lastUpdated()) {
-      <div class="mt-7 inline-flex items-center gap-3 rounded-lg bg-white px-5 py-3">
-        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-secondary/10 text-secondary/85" aria-hidden="true">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" />
-          </svg>
-        </span>
-        <div>
-          <p class="text-[11.5px] text-muted">Latest Updated</p>
-          <p class="text-[13.5px] font-bold text-secondary/85">{{ lastUpdated() }}</p>
-        </div>
+<app-page-hero crumb="Answer Key" title="Answer Key"
+  blurb="Access the official answer keys for various standard and subject examinations."
+  image="/assets/images/hero/home.jpeg">
+  @if (lastUpdated()) {
+    <div class="mt-7 inline-flex items-center gap-3 rounded-lg bg-white px-5 py-3">
+      <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-secondary/10 text-secondary/85" aria-hidden="true">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" />
+        </svg>
+      </span>
+      <div>
+        <p class="text-[11.5px] text-muted">Latest Updated</p>
+        <p class="text-[13.5px] font-bold text-secondary/85">{{ lastUpdated() }}</p>
       </div>
-    }
-  </div>
-</section>
+    </div>
+  }
+</app-page-hero>
 
 <section class="site-container py-8">
 

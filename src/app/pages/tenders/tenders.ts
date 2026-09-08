@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { PageHero } from '../../shared/page-hero/page-hero';
 import { Paginator } from '../../shared/pagination/paginator';
 import { Pagination } from '../../shared/pagination/pagination';
 import { Sorter } from '../../shared/sorting/sorter';
@@ -20,7 +20,7 @@ interface Tender {
 
 @Component({
   selector: 'app-tenders',
-  imports: [FormsModule, RouterLink, Pagination, SortHeader, MediaUrlPipe],
+  imports: [FormsModule, PageHero, Pagination, SortHeader, MediaUrlPipe],
   templateUrl: './tenders.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './tenders.scss',

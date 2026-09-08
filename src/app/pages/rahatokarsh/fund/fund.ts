@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { PageHero } from '../../../shared/page-hero/page-hero';
 
 /**
  * Objective of the Rahatokarsh Fund. Both language versions are copied verbatim
@@ -7,7 +7,7 @@ import { RouterLink } from '@angular/router';
  */
 @Component({
   selector: 'app-fund',
-  imports: [RouterLink],
+  imports: [PageHero],
   templateUrl: './fund.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './fund.scss',

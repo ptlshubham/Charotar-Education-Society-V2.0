@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, HostListener, inject, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { RouterLink } from '@angular/router';
+import { PageHero } from '../../shared/page-hero/page-hero';
 import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-history-vj',
-  imports: [RouterLink],
+  imports: [PageHero],
   templateUrl: './history-vj.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './history-vj.scss',

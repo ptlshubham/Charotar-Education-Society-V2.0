@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { PageHero } from '../../shared/page-hero/page-hero';
 import { catchError, of } from 'rxjs';
 import { SuccessDialogService } from '../../core/services/success-dialog.service';
 import { ResourcesService } from '../../core/services/resources.service';
@@ -19,7 +19,7 @@ const PHONE = /^[0-9]{10,15}$/;
 
 @Component({
   selector: 'app-gate-pass',
-  imports: [ReactiveFormsModule, RouterLink, CustomSelect],
+  imports: [ReactiveFormsModule, CustomSelect, PageHero],
   templateUrl: './gate-pass.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './gate-pass.scss',

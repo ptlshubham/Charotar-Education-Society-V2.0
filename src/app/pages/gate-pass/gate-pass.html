@@ -1,31 +1,8 @@
 
 <!-- ─── Hero ─── -->
-<section class="relative min-h-[416px] overflow-hidden bg-primary">
-  <div class="pointer-events-none absolute inset-y-0 right-0 hidden w-[52%] lg:block" aria-hidden="true">
-    <img [src]="banner" alt="" class="h-full w-full object-cover" />
-    <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/50 to-transparent"></div>
-    <span class="absolute top-4 left-8 h-[80%] w-1.5 -rotate-[18deg] rounded-full bg-white/80"></span>
-  </div>
-
-  <div class="site-container relative pt-10 pb-24 lg:pt-12">
-    <nav aria-label="Breadcrumb">
-      <ol class="flex list-none items-center gap-2 text-[13px] text-white/70">
-        <li><a routerLink="/home" class="no-underline hover:text-white">Home</a></li>
-        <li aria-hidden="true">&rsaquo;</li>
-        <li aria-current="page" class="text-secondary">e-Gate Pass</li>
-      </ol>
-    </nav>
-
-    <h1 class="mt-5 text-[32px] leading-tight font-bold text-white sm:text-[40px]">
-      Management<br /><span class="text-secondary">e-Gate Pass</span>
-    </h1>
-    <span class="mt-3 block h-1 w-14 rounded-full bg-secondary" aria-hidden="true"></span>
-
-    <p class="mt-4 max-w-[380px] text-[13.5px] leading-relaxed text-white/75">
-      Request your e-Gate Pass for hassle-free entry to the CES Management Office.
-    </p>
-  </div>
-</section>
+<app-page-hero crumb="e-Gate Pass" title="Management" accent="e-Gate Pass"
+  blurb="Request your e-Gate Pass for hassle-free entry to the CES Management Office."
+  [image]="banner" />
 
 
 <section class="site-container py-8">

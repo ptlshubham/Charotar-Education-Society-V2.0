@@ -130,7 +130,7 @@ export class Header implements AfterViewInit {
       label: 'Glory of CES',
       children: [
         { label: 'Centenary Celebration', link: '/celebration', icon: 'award' },
-        { label: 'History of Vitthalbhai J. Patel', link: '/glory/history-vj', icon: 'award' },
+        { label: 'History of V. J. Patel', link: '/glory/history-vj', icon: 'award' },
       ],
     },
     { label: 'Social Activity', link: '/social-activity' },

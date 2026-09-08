@@ -1,33 +1,7 @@
 <!-- ─── Hero ─── -->
-<section class="relative min-h-[416px] overflow-hidden bg-primary">
-  <svg class="pointer-events-none absolute top-10 right-16 hidden h-20 w-32 lg:block" aria-hidden="true">
-    <defs>
-      <pattern id="ces-tender-dots" width="14" height="14" patternUnits="userSpaceOnUse">
-        <circle cx="2" cy="2" r="1.6" fill="currentColor" class="text-white/25" />
-      </pattern>
-    </defs>
-    <rect width="100%" height="100%" fill="url(#ces-tender-dots)" />
-  </svg>
-
-  <div class="site-container relative pt-10 pb-24 lg:pt-12">
-    <nav aria-label="Breadcrumb">
-      <ol class="flex list-none items-center gap-2 text-[13px] text-white/70">
-        <li><a routerLink="/home" class="no-underline hover:text-white">Home</a></li>
-        <li aria-hidden="true">&rsaquo;</li>
-        <li aria-current="page" class="text-secondary">Tenders</li>
-      </ol>
-    </nav>
-
-    <h1 class="mt-5 text-[32px] leading-tight font-bold text-white sm:text-[40px]">
-      Tenders &amp;<br /><span class="text-secondary">Notifications</span>
-    </h1>
-    <span class="mt-3 block h-1 w-14 rounded-full bg-secondary" aria-hidden="true"></span>
-
-    <p class="mt-4 max-w-[360px] text-[13.5px] leading-relaxed text-white/75">
-      Transparent opportunities, fair process, stronger future.
-    </p>
-  </div>
-</section>
+<app-page-hero crumb="Tenders" title="Tenders &amp;" accent="Notifications"
+  blurb="Transparent opportunities, fair process, stronger future."
+  image="/assets/images/hero/home.jpeg" />
 
 <!-- Assurance bar -->
 <div class="site-container relative z-10 mt-8">

@@ -8,12 +8,7 @@
     <div class="flex items-start gap-4">
       <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary text-white"
         aria-hidden="true">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-          stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 21h18" />
-          <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16" />
-          <path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2" />
-        </svg>
+        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]">apartment</span>
       </span>
       <div>
         <h2 class="text-[17px] font-bold text-primary">Comfortable Living. Focused Learning.</h2>
@@ -28,11 +23,7 @@
     <ul class="grid list-none grid-cols-2 gap-y-5 border-gray-100 sm:grid-cols-4 lg:border-l lg:pl-6">
       @for (item of assurances; track item.label) {
       <li class="flex flex-col items-center px-1 text-center">
-        <svg class="text-primary" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          @for (d of item.path; track d) {
-          <path [attr.d]="d" /> }
-        </svg>
+        <span class="material-symbols-outlined text-primary !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">{{ item.icon }}</span>
         <p class="mt-2 text-[11px] leading-snug font-semibold text-primary">{{ item.label }}</p>
       </li>
       }

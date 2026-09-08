@@ -35,18 +35,14 @@
                 i === 4 ? 'bg-blue-100' :
                 'bg-yellow-100'
               )">
-              <svg [class]="
+                <span [class]="
                   i === 0 ? 'text-orange-500' :
                   i === 1 ? 'text-green-500' :
                   i === 2 ? 'text-purple-500' :
                   i === 3 ? 'text-pink-500' :
                   i === 4 ? 'text-blue-500' :
                   'text-yellow-500'
-                " width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                @for (d of stat.path; track d) {
-                <path [attr.d]="d" /> }
-              </svg>
+                " class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">{{ stat.icon }}</span>
             </div>
           </div>
           <p class="text-[24px] leading-tight font-bold text-primary mb-2">{{ stat.value }}</p>

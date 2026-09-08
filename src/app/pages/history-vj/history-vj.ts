@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, HostListener, inject, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { PageHero } from '../../shared/page-hero/page-hero';
+import { RouterLink } from '@angular/router';
 import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-history-vj',
-  imports: [PageHero],
+  imports: [RouterLink],
   templateUrl: './history-vj.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './history-vj.scss',
@@ -60,16 +60,16 @@ export class HistoryVj {
   ];
 
   /** "So, Vitthalbhai J Patel was…" — one card each. */
-  readonly traits: ReadonlyArray<{ text: string; path: string[] }> = [
-    { text: 'Teacher, Hostel warden, Principal, volunteer, secretary and member of governing body at Charotar Education Society during the course of 35 years of service to this prestigious organization.', path: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', 'M22 21v-2a4 4 0 0 0-3-3.87'] },
-    { text: 'A staunch follower of Gandhian Philosophy, an activist, a freedom fighter and a member of Quit India movement.', path: ['M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z', 'M4 22v-7'] },
-    { text: 'The one who committed to simplicity, discipline and service his entire working and retired life.', path: ['M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'] },
-    { text: 'A teacher par excellence and an admired administrator of Charotar region.', path: ['m12 3 9 5-9 5-9-5 9-5z', 'M21 8v6', 'M7 10.5V16c0 1.7 2.2 3 5 3s5-1.3 5-3v-5.5'] },
-    { text: 'A stream of karmathata, and saatvikta.', path: ['M12 2v20', 'M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6'] },
-    { text: 'A priest of honesty and a fatherly figure for students.', path: ['M20 7h-9M14 17H5', 'M17 20a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'] },
-    { text: 'A visionary and dynamic administrator.', path: ['M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z', 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'] },
-    { text: 'Transparent, orator and epitome of manner.', path: ['M3 11l18-5v12L3 14v-3z', 'M11.6 16.8a3 3 0 1 1-5.8-1.6'] },
-    { text: 'An ardent scholar and a complete believer of humanity.', path: ['M4 19.5A2.5 2.5 0 0 1 6.5 17H20', 'M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'] },
+  readonly traits: ReadonlyArray<{ text: string; icon: string }> = [
+    { text: 'Teacher, Hostel warden, Principal, volunteer, secretary and member of governing body at Charotar Education Society during the course of 35 years of service to this prestigious organization.', icon: 'group' },
+    { text: 'A staunch follower of Gandhian Philosophy, an activist, a freedom fighter and a member of Quit India movement.', icon: 'flag' },
+    { text: 'The one who committed to simplicity, discipline and service his entire working and retired life.', icon: 'shield' },
+    { text: 'A teacher par excellence and an admired administrator of Charotar region.', icon: 'school' },
+    { text: 'A stream of karmathata, and saatvikta.', icon: 'self_improvement' },
+    { text: 'A priest of honesty and a fatherly figure for students.', icon: 'tune' },
+    { text: 'A visionary and dynamic administrator.', icon: 'visibility' },
+    { text: 'Transparent, orator and epitome of manner.', icon: 'campaign' },
+    { text: 'An ardent scholar and a complete believer of humanity.', icon: 'menu_book' },
   ];
 
   // ── Tribute publication PDF viewer ("નમન… — ભૂતપૂર્વ શિષ્યગણની ગુરુવંદના") ──
@@ -129,3 +129,4 @@ export class HistoryVj {
     }
   }
 }
+

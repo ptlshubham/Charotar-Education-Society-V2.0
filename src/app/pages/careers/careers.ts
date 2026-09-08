@@ -50,10 +50,10 @@ export class Careers {
   /** Date the advertisement table was last refreshed on the legacy site. */
   readonly updatedOn = '24-06-2026';
 
-  readonly values: ReadonlyArray<{ title: string; body: string; path: string[] }> = [
-    { title: 'Purpose Driven', body: 'Make a meaningful impact through quality education.', path: ['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z', 'M12 8v8M8 12h8'] },
-    { title: 'Growth & Learning', body: 'Continuous opportunities for personal and professional growth.', path: ['m12 3 9 5-9 5-9-5 9-5z', 'M21 8v6', 'M7 10.5V16c0 1.7 2.2 3 5 3s5-1.3 5-3v-5.5'] },
-    { title: 'Inclusive Culture', body: 'A collaborative and respectful environment for all.', path: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', 'M22 21v-2a4 4 0 0 0-3-3.87'] },
+  readonly values: ReadonlyArray<{ title: string; body: string; icon: string }> = [
+    { title: 'Purpose Driven', body: 'Make a meaningful impact through quality education.', icon: 'target' },
+    { title: 'Growth & Learning', body: 'Continuous opportunities for personal and professional growth.', icon: 'school' },
+    { title: 'Inclusive Culture', body: 'A collaborative and respectful environment for all.', icon: 'group' },
   ];
 
   // ── Advertisement table (vacancies), carried over verbatim from the legacy site ──

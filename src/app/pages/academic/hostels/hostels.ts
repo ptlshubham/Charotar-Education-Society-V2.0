@@ -26,9 +26,9 @@ export class Hostels {
   readonly banner = PLACEHOLDER.academic.hostelsBanner;
 
   readonly tabs: readonly AcademicTab[] = [
-    { id: 'all', label: 'All Hostels', path: ['M3 21h18', 'M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16', 'M9 7h2M13 7h2M9 11h2M13 11h2'] },
-    { id: 'boys', label: 'Boys Hostel', path: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z'] },
-    { id: 'girls', label: 'Girls Hostel', path: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z'] },
+    { id: 'all', label: 'All Hostels', path: [], icon: 'apartment' },
+    { id: 'boys', label: 'Boys Hostel', path: [], icon: 'person' },
+    { id: 'girls', label: 'Girls Hostel', path: [], icon: 'person' },
   ];
 
   readonly active = signal<HostelCategory>('all');
@@ -37,11 +37,11 @@ export class Hostels {
     this.active.set(id as HostelCategory);
   }
 
-  readonly assurances: ReadonlyArray<{ label: string; path: string[] }> = [
-    { label: 'Safe & Secure', path: ['M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', 'm9 12 2 2 4-4'] },
-    { label: 'Comfortable Rooms', path: ['M2 20v-8h20v8', 'M2 12V7M22 12V9a1 1 0 0 0-1-1h-9v4'] },
-    { label: 'Nutritious Meals', path: ['M3 2v7c0 1.1.9 2 2 2h1a2 2 0 0 0 2-2V2', 'M5 2v20M16 2v20M16 12h4a2 2 0 0 0 0-10h-4z'] },
-    { label: '24/7 Student Support', path: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', 'M22 21v-2a4 4 0 0 0-3-3.87'] },
+  readonly assurances: ReadonlyArray<{ label: string; path: string[]; icon: string }> = [
+    { label: 'Safe & Secure', path: [], icon: 'verified_user' },
+    { label: 'Comfortable Rooms', path: [], icon: 'bed' },
+    { label: 'Nutritious Meals', path: [], icon: 'restaurant' },
+    { label: '24/7 Student Support', path: [], icon: 'support_agent' },
   ];
 
   readonly hostels: readonly Hostel[] = [

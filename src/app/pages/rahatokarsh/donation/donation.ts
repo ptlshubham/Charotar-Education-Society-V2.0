@@ -43,6 +43,12 @@ export class Donation {
     'Transparent fund management and proper utilization',
     'Building a stronger, educated, and empowered society',
   ];
+  readonly fundPoints: readonly string[] = [
+    'Support for tuition fees, books, and educational expenses',
+    'Help for economically weaker and deserving students',
+    'Transparent fund management and proper utilization',
+    'Empowering students to build a better and brighter future',
+  ];
 
   readonly bank: ReadonlyArray<{ label: string; value: string }> = [
     { label: 'Bank Name', value: 'State Bank of India' },

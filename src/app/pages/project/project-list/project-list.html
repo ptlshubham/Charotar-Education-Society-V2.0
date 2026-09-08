@@ -2,10 +2,10 @@
 
   <!-- Focus-area filters -->
   <div role="tablist" aria-label="Project focus area"
-    class="flex flex-wrap gap-3 justify-center py-6">
+    class="flex justify-start gap-3 overflow-x-auto py-6 pb-2 sm:justify-center lg:flex-wrap lg:overflow-visible">
     @for (filter of filters; track filter.id) {
       <button type="button" role="tab" [attr.aria-selected]="active() === filter.id" (click)="select(filter.id)"
-        class="flex items-center gap-2 rounded-lg px-4 py-2.5 text-[13px] font-semibold transition-colors"
+        class="flex shrink-0 items-center gap-2 rounded-lg px-4 py-2.5 text-[13px] font-semibold transition-colors"
         [class]="active() === filter.id
           ? 'bg-primary text-white shadow-md'
           : 'text-primary hover:bg-primary/10'">
@@ -18,9 +18,9 @@
   </div>
 
   <!-- Cards -->
-  <ul class="animate-dropdown mt-6 grid list-none gap-5 sm:grid-cols-2 lg:grid-cols-4">
+  <ul class="animate-dropdown mt-6 flex snap-x snap-mandatory list-none gap-4 overflow-x-auto pb-3 lg:grid lg:grid-cols-4 lg:gap-5 lg:overflow-visible lg:pb-0">
     @for (project of visible(); track project.title) {
-      <li class="flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white">
+      <li class="flex min-w-[calc(50%-0.5rem)] snap-start flex-col overflow-hidden rounded-xl border border-gray-200 bg-white lg:min-w-0">
 
         <div class="relative">
           <img [src]="project.image" [alt]="project.title" loading="lazy"
@@ -39,7 +39,7 @@
 
       </li>
     } @empty {
-      <li class="col-span-full rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
+      <li class="min-w-full rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted lg:col-span-full lg:min-w-0">
         No projects in this focus area yet.
       </li>
     }

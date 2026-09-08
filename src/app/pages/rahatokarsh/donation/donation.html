@@ -1,25 +1,40 @@
-<!-- ─── Hero ─── -->
-<app-page-hero crumb="Donate Now" title="Be the reason someone's tomorrow is brighter."
-  tagline="Support the Rahatokarsh Fund"
-  blurb="Your contribution helps deserving students continue their education and build a better future."
-  [image]="heroImage">
-  <div class="mt-7 flex flex-wrap items-center gap-4">
-    <a href="#donate-form"
-      class="inline-flex items-center gap-2 rounded-md bg-accent px-6 py-3 text-[14px] font-semibold text-white no-underline transition-colors hover:brightness-110">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z" />
-      </svg>
-      DONATE NOW
-    </a>
-    <a routerLink="/fund" class="inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-white no-underline hover:text-secondary">
-      Learn More
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-    </a>
+  <!-- ─── Hero ─── -->
+<section class="relative min-h-[416px] overflow-hidden bg-gradient-to-r from-[#EEF3FA] to-[#DCE6F5]">
+  <div class="site-container relative grid items-center gap-8 py-10 lg:grid-cols-[1fr_1.15fr]">
+    <div>
+      <h1 class="text-[28px] leading-[1.2] font-bold text-primary sm:text-[34px]">
+        Be the reason someone's tomorrow is brighter.
+      </h1>
+      <p class="mt-3 text-[16px] font-semibold text-primary">
+        Support the <span class="text-secondary/85">Rahatokarsh Fund</span>
+      </p>
+      <p class="mt-3 max-w-[380px] text-[13.5px] leading-relaxed text-muted">
+        Your contribution helps deserving students continue their education and build a better future.
+      </p>
+
+      <div class="mt-6 flex flex-wrap items-center gap-4">
+        <a href="#donate-form"
+          class="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-[14px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z" />
+          </svg>
+          DONATE NOW
+        </a>
+        <a routerLink="/fund" class="inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-primary no-underline hover:text-accent">
+          Learn More
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </a>
+      </div>
+    </div>
+
+    <img [src]="heroImage" alt="Students supported by the Rahatokarsh Fund" loading="lazy"
+      class="h-[240px] w-full rounded-lg bg-primary-light object-cover" />
   </div>
-</app-page-hero>
+</section>
 
 <!-- ─── Stat strip ─── -->
-<section class="site-container pt-6">
+ 
+<!-- <section class="site-container pt-6">
   <div class="rounded-xl border border-gray-200 bg-white p-6">
     <h2 class="text-center text-[17px] font-bold text-primary">Your Support. Their Future. Our Legacy.</h2>
 
@@ -35,9 +50,10 @@
       }
     </ul>
   </div>
-</section>
+</section> -->
 
-<!-- ─── About ─── -->
+
+<!-- About section disabled
 <section class="site-container pt-5">
   <div class="grid items-center gap-8 rounded-xl bg-[#EEF4FC] p-6 lg:grid-cols-2 lg:p-8">
     <div>
@@ -67,11 +83,12 @@
       class="h-[280px] w-full rounded-lg bg-primary-light object-cover" />
   </div>
 </section>
+-->
 
 <!-- ─── Donate ─── -->
 <section id="donate-form" class="site-container pt-8">
   <h2 class="text-center text-[22px] font-bold text-primary sm:text-[26px]">Make a Difference Today</h2>
-  <span class="mx-auto mt-3 block h-1 w-14 rounded-full bg-primary" aria-hidden="true"></span>
+  <span class="mx-auto mt-3 block h-1 w-14 rounded-full bg-secondary/85" aria-hidden="true"></span>
 
   <div class="mt-7 grid gap-5 rounded-xl border border-gray-200 bg-white p-6 lg:grid-cols-2 lg:p-8">
 
@@ -206,111 +223,83 @@
       </div>
     </form>
 
-    <!-- Other ways -->
-    <div>
-      <h3 class="text-[16px] font-bold text-primary">Other Ways to Donate</h3>
-
-      <ul class="mt-4 list-none space-y-3">
-        <li class="flex items-start gap-3.5 rounded-lg border border-gray-200 p-4">
-          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-primary/8 text-primary" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="5" y="2" width="14" height="20" rx="2" /><path d="M12 18h.01" />
-            </svg>
-          </span>
-          <div class="min-w-0 flex-1">
-            <p class="text-[13.5px] font-bold text-primary">UPI / QR Code</p>
-            <p class="text-[12px] text-muted">Scan &amp; pay using any UPI app</p>
-            <p class="mt-1.5 text-[11px] font-semibold text-muted">GPay &middot; Paytm &middot; PhonePe &middot; BHIM</p>
-          </div>
-          <!-- Placeholder QR: swap for the real payee QR -->
-          <svg class="h-16 w-16 shrink-0 text-primary" viewBox="0 0 32 32" fill="currentColor" aria-label="UPI QR code placeholder" role="img">
-            <path d="M2 2h10v10H2zm2 2v6h6V4zM20 2h10v10H20zm2 2v6h6V4zM2 20h10v10H2zm2 2v6h6v-6z" />
-            <path d="M14 2h2v4h-2zM14 8h2v6h-2zM18 14h4v2h-4zM14 16h2v4h-2zM20 18h2v4h-2zM24 14h2v2h-2zM28 16h2v4h-2zM16 24h4v2h-4zM22 22h2v2h-2zM26 24h4v2h-4zM18 28h4v2h-4zM24 28h2v2h-2zM28 28h2v2h-2z" />
-          </svg>
-        </li>
-
-        <li class="flex items-center gap-3.5 rounded-lg border border-gray-200 p-4">
-          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-primary/8 text-primary" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-              <path d="m3 10 9-6 9 6" /><path d="M5 10v9M19 10v9M9 10v9M15 10v9M3 21h18" />
-            </svg>
-          </span>
-          <div class="min-w-0 flex-1">
-            <p class="text-[13.5px] font-bold text-primary">Net Banking</p>
-            <p class="text-[12px] text-muted">Transfer directly to our bank account</p>
-          </div>
-          <svg class="shrink-0 text-primary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-        </li>
-
-        <li class="flex items-center gap-3.5 rounded-lg border border-gray-200 p-4">
-          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-primary/8 text-primary" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="5" width="20" height="14" rx="2" /><path d="M2 10h20" />
-            </svg>
-          </span>
-          <div class="min-w-0 flex-1">
-            <p class="text-[13.5px] font-bold text-primary">Cards &amp; Wallets</p>
-            <p class="text-[12px] text-muted">Pay securely using Cards or Wallets</p>
-            <p class="mt-1.5 text-[11px] font-semibold text-muted">VISA &middot; Mastercard &middot; RuPay &middot; Amex</p>
-          </div>
-          <svg class="shrink-0 text-primary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-        </li>
-      </ul>
-
-      <!-- Bank details -->
-      <div class="mt-4 rounded-lg border border-gray-200 bg-[#F7F9FC] p-5">
-        <p class="text-[13.5px] font-bold text-primary">Rahatokarsh Fund – Bank Details</p>
-        <dl class="mt-3 space-y-1.5">
-          @for (row of bank; track row.label) {
-            <div class="flex gap-2 text-[12.5px]">
-              <dt class="w-[104px] shrink-0 text-muted">{{ row.label }}</dt>
-              <dd class="font-medium text-primary">: {{ row.value }}</dd>
-            </div>
-          }
-        </dl>
+    <!-- Donate Fund information -->
+    <aside>
+      <div class="mt-4 flex items-center justify-center gap-3 text-center sm:mt-4">
+       <h3 class="text-[19px] font-bold text-primary">About Donate Fund</h3>
+        </div>
+      <div class="flex min-h-[280px] items-center justify-center bg-white px-4" aria-hidden="true">
+        
+        <!-- <svg class="h-64 w-full max-w-[300px] text-primary" viewBox="0 0 315 371" fill="none" role="img" aria-labelledby="donate-art-title donate-art-description">
+          <title id="donate-art-title">Hands supporting a rupee heart</title>
+          <desc id="donate-art-description">Two open hands hold an orange heart containing the Indian rupee symbol.</desc>
+          <path d="M128 73 115 52M183 62V24M238 73l13-21" stroke="#AEB9C9" stroke-width="8" stroke-linecap="round" />
+          <path d="M183 198c-13-8-54-34-54-72 0-27 31-42 54-17l8 10 8-10c23-25 54-10 54 17 0 38-41 64-70 72z" fill="#F4A51C" />
+          <path d="M145 125h76M183 107v86M145 151h44c15 0 23-7 23-16s-8-16-23-16h-44M163 166l25 27" stroke="white" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M119 279c-2-22-5-42-17-57-10-13-26-22-39-31-12-8-22-18-24-29-2-10 4-18 13-19 12-1 24 11 34 24 10 13 19 25 31 31" stroke="currentColor" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M143 279c-2-27-5-53-19-73-10-14-24-27-35-23-10 4-11 14-5 24 6 10 18 21 29 31" stroke="currentColor" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M196 279c2-22 5-42 17-57 10-13 26-22 39-31 12-8 22-18 24-29 2-10-4-18-13-19-12-1-24 11-34 24-10 13-19 25-31 31" stroke="currentColor" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M172 279c2-27 5-53 19-73 10-14 24-27 35-23 10 4 11 14 5 24-6 10-18 21-29 31" stroke="currentColor" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M108 273h52v57h-52zM206 273h52v57h-52z" fill="currentColor" />
+          <circle cx="134" cy="301" r="7" fill="white" /><circle cx="232" cy="301" r="7" fill="white" />
+        </svg> -->
       </div>
-    </div>
 
-  </div>
-</section>
-
-<!-- ─── Progress ─── -->
-<section class="site-container pt-6">
-  <div class="grid items-center gap-6 rounded-xl bg-primary p-6 lg:grid-cols-[1.1fr_1.6fr]">
-    <div class="flex items-center gap-4">
-      <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white text-logo" aria-hidden="true">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z" />
-        </svg>
-      </span>
-      <div>
-        <p class="text-[16px] font-bold text-white">Help us reach more dreams</p>
-        <p class="mt-1 text-[12.5px] leading-relaxed text-white/70">
-          Your small contribution can make a big difference in a student's life.
+      <div class="rounded-xl bg-white p-6 lg:p-8">
+        <!-- <div class="mt-4 flex items-center justify-center text-center sm:mt-6">
+          <h3 class="text-[19px] font-bold text-primary">Donate Fund</h3>
+        </div> -->
+        <p class="mt-4 text-[14px] leading-relaxed text-muted">
+          Your generous contribution helps us provide financial assistance to deserving and needy students, enabling them to pursue their education and achieve their dreams.
         </p>
-      </div>
-    </div>
-
-    <div>
-      <div class="flex items-center justify-between text-[13px] font-semibold text-white">
-        <span>₹{{ raised | number }} Raised</span>
-        <span>₹{{ goal | number }} Goal</span>
-      </div>
-
-      <div class="mt-2 h-3 w-full overflow-hidden rounded-full bg-white/20"
-        role="progressbar" [attr.aria-valuenow]="progress()" aria-valuemin="0" aria-valuemax="100"
-        [attr.aria-label]="'Fundraising progress: ' + progress() + '%'">
-        <div class="h-full rounded-full bg-secondary transition-all duration-500" [style.width.%]="progress()"></div>
+        <ul class="mt-4 list-none space-y-3">
+          @for (point of fundPoints; track point) {
+            <li class="flex items-start gap-3 text-[13.5px] leading-snug text-muted">
+              <svg class="mt-0.5 shrink-0 text-primary" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zm-1-6-4-4 1.4-1.4L11 13.2l4.6-4.6L17 10z" /></svg>
+              <span>{{ point }}</span>
+            </li>
+          }
+        </ul>
       </div>
 
-      <p class="mt-1.5 text-right text-[12px] font-semibold text-white/80">{{ progress() }}%</p>
-      <p class="mt-1 text-center text-[12.5px] text-white/70">Together, let's build a better tomorrow.</p>
-    </div>
+      <!-- Progress -->
+      <div class="mt-6 grid items-center gap-6 rounded-xl bg-primary p-6 lg:grid-cols-[1.1fr_1.6fr]">
+        <div class="flex items-center gap-4">
+          <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white text-logo" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z" />
+            </svg>
+          </span>
+          <div>
+            <p class="text-[16px] font-bold text-white">Help us reach more dreams</p>
+            <p class="mt-1 text-[12.5px] leading-relaxed text-white/70">
+              Your small contribution can make a big difference in a student's life.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between text-[13px] font-semibold text-white">
+            <span>₹1.845k Raised</span>
+            <span>₹2.5k Goal</span>
+          </div>
+
+          <div class="mt-2 h-3 w-full overflow-hidden rounded-full bg-white/20"
+            role="progressbar" [attr.aria-valuenow]="progress()" aria-valuemin="0" aria-valuemax="100"
+            [attr.aria-label]="'Fundraising progress: ' + progress() + '%'">
+            <div class="h-full rounded-full bg-secondary transition-all duration-500" [style.width.%]="progress()"></div>
+          </div>
+
+          <p class="mt-1.5 text-right text-[12px] font-semibold text-white/80">{{ progress() }}%</p>
+          <p class="mt-1 text-center text-[12.5px] text-white/70">Together, let's build a better tomorrow.</p>
+        </div>
+      </div>
+    </aside>
   </div>
 </section>
 
 <!-- ─── Voices ─── -->
-<section class="site-container py-10">
+<!-- <section class="site-container py-10">
   <h2 class="text-center text-[22px] font-bold text-primary sm:text-[26px]">Voices of Impact</h2>
   <span class="mx-auto mt-3 block h-1 w-14 rounded-full bg-primary" aria-hidden="true"></span>
 
@@ -334,4 +323,4 @@
       </li>
     }
   </ul>
-</section>
+</section> -->

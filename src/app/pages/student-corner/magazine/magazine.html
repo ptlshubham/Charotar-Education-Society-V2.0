@@ -59,9 +59,9 @@
       We couldn't load the magazines right now. Please try again later.
     </p>
   } @else {
-    <ul class="animate-dropdown mt-6 grid list-none grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
+    <ul class="animate-dropdown mt-6 flex snap-x snap-mandatory list-none gap-5 overflow-x-auto pb-3 lg:grid lg:grid-cols-6 lg:overflow-visible lg:pb-0">
       @for (item of pager.paged(); track $index) {
-        <li class="flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white">
+        <li class="flex min-w-[calc(50%-0.625rem)] snap-start flex-col overflow-hidden rounded-xl border border-gray-200 bg-white lg:min-w-0">
           @if (item.file) {
             <button type="button" (click)="openPdf(item)" [attr.aria-label]="'Read ' + item.name"
               class="group relative block w-full cursor-pointer overflow-hidden">
@@ -103,7 +103,7 @@
           </div>
         </li>
       } @empty {
-        <li class="col-span-full rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
+        <li class="min-w-full rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted lg:col-span-full lg:min-w-0">
           No magazines match your filters.
         </li>
       }

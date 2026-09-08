@@ -18,14 +18,14 @@ interface Project {
   styleUrl: './project-list.scss',
 })
 export class ProjectList {
-  readonly filters: ReadonlyArray<{ id: Focus; label: string; path: string[] }> = [
-    { id: 'all', label: 'All Projects', path: ['M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z'] },
-    { id: 'education', label: 'Education', path: ['m12 3 9 5-9 5-9-5 9-5z', 'M21 8v6', 'M7 10.5V16c0 1.7 2.2 3 5 3s5-1.3 5-3v-5.5'] },
-    { id: 'technology', label: 'Technology', path: ['M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', 'M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2'] },
-    { id: 'community', label: 'Community', path: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', 'M22 21v-2a4 4 0 0 0-3-3.87'] },
-    { id: 'environment', label: 'Environment', path: ['M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z', 'M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12'] },
-    { id: 'health', label: 'Health', path: ['M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z'] },
-    { id: 'skill', label: 'Skill Development', path: ['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z', 'M12 6v6l4 2'] },
+  readonly filters: ReadonlyArray<{ id: Focus; label: string; icon: string }> = [
+    { id: 'all', label: 'All Projects', icon: 'grid_view' },
+    { id: 'education', label: 'Education', icon: 'school' },
+    { id: 'technology', label: 'Technology', icon: 'light_mode' },
+    { id: 'community', label: 'Community', icon: 'group' },
+    { id: 'environment', label: 'Environment', icon: 'eco' },
+    { id: 'health', label: 'Health', icon: 'favorite' },
+    { id: 'skill', label: 'Skill Development', icon: 'schedule' },
   ];
 
   readonly active = signal<Focus>('all');

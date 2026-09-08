@@ -4,9 +4,7 @@
     <li class="flex flex-col rounded-xl border border-gray-200 bg-white p-6">
       <div class="flex items-start gap-4">
         <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-white" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-            @for (d of card.path; track d) { <path [attr.d]="d" /> }
-          </svg>
+          <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]">{{ card.icon }}</span>
         </span>
 
         <div class="min-w-0 flex-1">

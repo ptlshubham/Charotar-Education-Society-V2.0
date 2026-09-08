@@ -37,17 +37,13 @@
       <button type="button" role="tab" [attr.aria-selected]="tab() === 'visitor'" (click)="selectTab('visitor')"
         class="flex flex-1 items-center justify-center gap-2 rounded-t-lg px-6 py-3.5 text-[13.5px] font-semibold transition-colors"
         [class]="tab() === 'visitor' ? 'bg-primary text-white' : 'bg-[#F7F9FC] text-primary hover:bg-gray-100'">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
-        </svg>
+        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">person</span>
         For Visitor
       </button>
       <button type="button" role="tab" [attr.aria-selected]="tab() === 'staff'" (click)="selectTab('staff')"
         class="flex flex-1 items-center justify-center gap-2 rounded-t-lg px-6 py-3.5 text-[13.5px] font-semibold transition-colors"
         [class]="tab() === 'staff' ? 'bg-primary text-white' : 'bg-[#F7F9FC] text-primary hover:bg-gray-100'">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="2" y="4" width="20" height="16" rx="2" /><path d="M7 12h4M7 16h6" /><circle cx="16" cy="12" r="2" />
-        </svg>
+        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">badge</span>
         For Staff
       </button>
     </div>
@@ -110,9 +106,7 @@
 
           <button type="submit" [disabled]="submitting()"
             class="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3.5 text-[13px] font-semibold tracking-wide text-white uppercase transition-colors hover:bg-primary-dark disabled:opacity-70">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z" />
-            </svg>
+            <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">send</span>
             {{ submitting() ? 'Submitting…' : 'Submit Request' }}
           </button>
         </form>
@@ -185,9 +179,7 @@
 
           <button type="submit" [disabled]="submitting()"
             class="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3.5 text-[13px] font-semibold tracking-wide text-white uppercase transition-colors hover:bg-primary-dark disabled:opacity-70">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z" />
-            </svg>
+            <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">send</span>
             {{ submitting() ? 'Submitting…' : 'Submit Request' }}
           </button>
         </form>

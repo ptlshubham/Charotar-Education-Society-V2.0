@@ -10,9 +10,7 @@
     @for (step of steps; track step.title) {
       <li class="relative flex flex-col text-center">
         <span class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary text-secondary" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            @for (d of step.path; track d) { <path [attr.d]="d" /> }
-          </svg>
+          <span class="material-symbols-outlined !text-[21px] [font-variation-settings:'wght'_300]">{{ step.icon }}</span>
         </span>
 
         <p class="mt-4 text-[14px] font-bold text-primary">{{ step.title }}</p>

@@ -9,9 +9,7 @@
         [class]="active() === filter.id
           ? 'bg-primary text-white shadow-md'
           : 'text-primary hover:bg-primary/10'">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          @for (d of filter.path; track d) { <path [attr.d]="d" /> }
-        </svg>
+        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">{{ filter.icon }}</span>
         {{ filter.label }}
       </button>
     }

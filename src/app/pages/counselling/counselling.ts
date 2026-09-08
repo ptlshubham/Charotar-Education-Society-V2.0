@@ -21,11 +21,11 @@ export class Counselling {
   readonly hero = PLACEHOLDER.counselling.hero;
   readonly counsellor = PLACEHOLDER.counselling.counsellor;
 
-  readonly assurances: ReadonlyArray<{ title: string; body: string; path: string[] }> = [
-    { title: '100% Confidential', body: 'Your privacy is our priority.', path: ['M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'] },
-    { title: 'Professional Support', body: 'Guidance by certified psychologist.', path: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z'] },
-    { title: 'Free for Students', body: 'Completely free of cost.', path: ['M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z'] },
-    { title: 'Easy & Accessible', body: 'Online / In-person sessions available.', path: ['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z', 'M12 6v6l4 2'] },
+  readonly assurances: ReadonlyArray<{ title: string; body: string; icon: string }> = [
+    { title: '100% Confidential', body: 'Your privacy is our priority.', icon: 'shield' },
+    { title: 'Professional Support', body: 'Guidance by certified psychologist.', icon: 'person' },
+    { title: 'Free for Students', body: 'Completely free of cost.', icon: 'favorite' },
+    { title: 'Easy & Accessible', body: 'Online / In-person sessions available.', icon: 'schedule' },
   ];
 
   readonly points: readonly string[] = [

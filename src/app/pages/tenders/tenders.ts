@@ -26,12 +26,12 @@ interface Tender {
   styleUrl: './tenders.scss',
 })
 export class Tenders {
-  readonly assurances: ReadonlyArray<{ title: string; body: string; path: string[] }> = [
-    { title: 'Fair & Transparent', body: 'All tenders follow a fair and transparent process.', path: ['m3 10 9-6 9 6', 'M5 10v9M19 10v9M9 10v9M15 10v9M3 21h18'] },
-    { title: 'Secure Process', body: 'A secure and monitored tendering system.', path: ['M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', 'm9 12 2 2 4-4'] },
-    { title: 'Timely Updates', body: 'Latest opportunities and notifications.', path: ['M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z', 'M14 2v6h6'] },
-    { title: 'Open to All', body: 'Inviting capable vendors and service providers.', path: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', 'M22 21v-2a4 4 0 0 0-3-3.87'] },
-    { title: 'Need Help?', body: 'Contact our team for any clarifications.', path: ['M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z'] },
+  readonly assurances: ReadonlyArray<{ title: string; body: string; icon: string }> = [
+    { title: 'Fair & Transparent', body: 'All tenders follow a fair and transparent process.', icon: 'account_balance' },
+    { title: 'Secure Process', body: 'A secure and monitored tendering system.', icon: 'verified' },
+    { title: 'Timely Updates', body: 'Latest opportunities and notifications.', icon: 'description' },
+    { title: 'Open to All', body: 'Inviting capable vendors and service providers.', icon: 'group' },
+    { title: 'Need Help?', body: 'Contact our team for any clarifications.', icon: 'call' },
   ];
 
   // Real tender data carried over from the legacy CES site (single active tender).

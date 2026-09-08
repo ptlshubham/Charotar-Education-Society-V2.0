@@ -3,10 +3,10 @@
   <div class="rounded-xl bg-white ">
 
     <!-- Language / topic tabs -->
-    <div role="tablist" aria-label="Centenary overview" class="flex flex-wrap gap-2">
+    <div role="tablist" aria-label="Centenary overview" class="grid grid-cols-3 gap-2 lg:flex lg:flex-wrap">
       @for (tab of tabs; track tab.id) {
         <button type="button" role="tab" [attr.aria-selected]="active() === tab.id" (click)="select(tab.id)"
-          class="rounded-md border px-5 py-2.5 text-[13px] font-semibold transition-colors"
+          class="w-full rounded-md border px-2 py-2.5 text-[13px] font-semibold transition-colors lg:w-auto lg:px-5"
           [class]="active() === tab.id
             ? 'border-primary bg-primary text-white'
             : 'border-gray-200 bg-white text-primary hover:border-primary'">
@@ -50,9 +50,7 @@
         @for (item of highlights; track item.value) {
           <li class="text-center">
             <span class="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-secondary/15 text-secondary" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                @for (d of item.path; track d) { <path [attr.d]="d" /> }
-              </svg>
+              <span class="material-symbols-outlined text-[21px]">{{ item.icon }}</span>
             </span>
             <p class="mt-2.5 text-[14px] font-bold text-primary">{{ item.value }}</p>
             <p class="text-[11px] text-muted">{{ item.label }}</p>

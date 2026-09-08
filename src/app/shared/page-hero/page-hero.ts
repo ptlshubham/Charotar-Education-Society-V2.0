@@ -5,6 +5,8 @@ export interface HeroStat {
   value: string;
   label: string;
   path: string[];
+  icon?: string;
+  iconClass?: string;
 }
 
 /** An intermediate breadcrumb between "Home" and the current page. */
@@ -29,9 +31,8 @@ export interface Crumb {
 })
 export class PageHero {
   @Input({ required: true }) title = '';
-  /** Gold second line of the heading, e.g. "for a Better Tomorrow". */
+  /** Rendered in gold immediately after the tagline, e.g. "Excel!" */
   @Input() accent = '';
-  /** Small gold line above the heading, e.g. "Innovate. Implement. Inspire." */
   @Input() eyebrow = '';
   @Input() tagline = '';
   @Input() blurb = '';
@@ -42,3 +43,4 @@ export class PageHero {
   /** Intermediate breadcrumbs between Home and the leaf, e.g. [{ label: 'About Us', link: '/about' }]. */
   @Input() trail: readonly Crumb[] = [];
 }
+

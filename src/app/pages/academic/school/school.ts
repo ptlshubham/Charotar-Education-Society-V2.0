@@ -34,16 +34,16 @@ export class School {
   readonly banner = '/assets/images/hero/school.jpeg';
 
   readonly heroStats: readonly HeroStat[] = [
-    { value: '18+', label: 'Schools', path: ICON.building },
-    { value: '12K+', label: 'Students', path: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', 'M22 21v-2a4 4 0 0 0-3-3.87'] },
-    { value: '650+', label: 'Teachers', path: ['M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9.5 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', 'M22 11h-6'] },
-    { value: '6', label: 'Districts', path: ['M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z', 'M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'] },
+    { value: '18+', label: 'Schools', path: ICON.building, icon: 'apartment', iconClass: 'text-white' },
+    { value: '12K+', label: 'Students', path: [], icon: 'group', iconClass: 'text-white' },
+    { value: '650+', label: 'Teachers', path: [], icon: 'person', iconClass: 'text-white' },
+    { value: '6', label: 'Districts', path: [], icon: 'location_on', iconClass: 'text-white' },
   ];
 
-  readonly filters: ReadonlyArray<{ id: Medium; label: string; path: string[] }> = [
-    { id: 'all', label: 'All Schools', path: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', 'M22 21v-2a4 4 0 0 0-3-3.87'] },
-    { id: 'english', label: 'English Medium', path: ['M4 7V4h16v3', 'M9 20h6', 'M12 4v16'] },
-    { id: 'gujarati', label: 'Gujarati Medium', path: ['M5 8h14M5 12h9M5 16h12'] },
+  readonly filters: ReadonlyArray<{ id: Medium; label: string; path: string[]; icon?: string }> = [
+    { id: 'all', label: 'All Schools', path: [], icon: 'person' },
+    { id: 'english', label: 'English Medium', path: [], icon: 'format_size' },
+    { id: 'gujarati', label: 'Gujarati Medium', path: [], icon: 'format_align_left' },
   ];
 
   readonly active = signal<Medium>('all');

@@ -13,10 +13,10 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
 
 /** Stat-card glyphs, kept out of the computed so it stays cheap to recompute. */
 const STAT_ICONS = {
-  students: ['m12 3 9 5-9 5-9-5 9-5z', 'M21 8v6', 'M7 10.5V16c0 1.7 2.2 3 5 3s5-1.3 5-3v-5.5'],
-  institutes: ['M3 21h18', 'M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16', 'M9 7h2M13 7h2M9 11h2M13 11h2'],
-  support: ['M6 3h12M6 8h12M6 13h5a5 5 0 0 0 0-10M6 13l8 8'],
-  year: ['M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z', 'M16 2v4M8 2v4M3 10h18'],
+  students: 'school',
+  institutes: 'apartment',
+  support: 'currency_rupee',
+  year: 'calendar_today',
 };
 
 @Component({
@@ -65,10 +65,10 @@ export class BeneficiaryStudents {
     const avgRefund = pcts.length ? Math.round(pcts.reduce((sum, v) => sum + v, 0) / pcts.length) : 0;
     const years = [...new Set(rows.map((r) => r.year).filter(Boolean))].sort();
     return [
-      { value: rows.length.toLocaleString('en-IN'), label: 'Total Students', path: STAT_ICONS.students },
-      { value: String(institutes), label: 'Institutes', path: STAT_ICONS.institutes },
-      { value: avgRefund + '%', label: 'Average Refund', path: STAT_ICONS.support },
-      { value: years.at(-1) ?? '—', label: 'Latest Year', path: STAT_ICONS.year },
+      { value: rows.length.toLocaleString('en-IN'), label: 'Total Students', icon: STAT_ICONS.students },
+      { value: String(institutes), label: 'Institutes', icon: STAT_ICONS.institutes },
+      { value: avgRefund + '%', label: 'Average Refund', icon: STAT_ICONS.support },
+      { value: years.at(-1) ?? '—', label: 'Latest Year', icon: STAT_ICONS.year },
     ];
   });
 

@@ -41,12 +41,17 @@
         @for (stat of stats; track stat.label; let last = $last) {
         <li class="flex items-center gap-6">
           <span class="flex items-center gap-2.5">
+            @if (stat.icon) {
+            <span class="material-symbols-outlined shrink-0 !text-[23px] [font-variation-settings:'wght'_300]"
+              [class]="stat.iconClass ?? 'text-secondary'" aria-hidden="true">{{ stat.icon }}</span>
+            } @else {
             <svg class="shrink-0 text-secondary" width="21" height="21" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
               aria-hidden="true">
               @for (d of stat.path; track d) {
               <path [attr.d]="d" /> }
             </svg>
+            }
             <span>
               <span class="block text-[16px] leading-tight font-bold text-white">{{ stat.value }}</span>
               <span class="block text-[11px] text-white/65">{{ stat.label }}</span>

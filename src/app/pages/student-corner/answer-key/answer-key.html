@@ -5,9 +5,7 @@
   @if (lastUpdated()) {
     <div class="mt-7 inline-flex items-center gap-3 rounded-lg bg-white px-5 py-3">
       <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-secondary/10 text-secondary/85" aria-hidden="true">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" />
-        </svg>
+        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]">calendar_today</span>
       </span>
       <div>
         <p class="text-[11.5px] text-muted">Latest Updated</p>
@@ -24,18 +22,14 @@
     <button type="button" role="tab" [attr.aria-selected]="tab() === 'general'" (click)="selectTab('general')"
       class="flex items-center justify-center gap-2.5 rounded-lg border px-5 py-3.5 text-[14px] font-semibold transition-colors"
       [class]="tab() === 'general' ? 'border-primary bg-primary text-white' : 'border-gray-200 bg-white text-primary hover:border-primary'">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6M9 13h6M9 17h4" />
-      </svg>
+      <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">description</span>
       General Exam Answer Key
     </button>
 
     <button type="button" role="tab" [attr.aria-selected]="tab() === 'competitive'" (click)="selectTab('competitive')"
       class="flex items-center justify-center gap-2.5 rounded-lg border px-5 py-3.5 text-[14px] font-semibold transition-colors"
       [class]="tab() === 'competitive' ? 'border-primary bg-primary text-white' : 'border-gray-200 bg-white text-primary hover:border-primary'">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" /><path d="m8.2 13.9-1.4 7.1 5.2-2.6 5.2 2.6-1.4-7.1" />
-      </svg>
+      <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">workspace_premium</span>
       Competitive Exam Answer Key
     </button>
   </div>
@@ -46,9 +40,7 @@
       <div>
         <label for="ak-year" class="sr-only">Select Year</label>
         <div class="flex h-12 items-center gap-2.5 rounded-lg border border-gray-300 bg-white px-4">
-          <svg class="shrink-0 text-primary" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" />
-          </svg>
+          <span class="material-symbols-outlined shrink-0 text-primary !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">calendar_today</span>
           <select id="ak-year" [(ngModel)]="year" class="w-full bg-transparent text-[13px] text-primary outline-none">
             @for (y of years(); track y) { <option [value]="y">{{ y }}</option> }
           </select>
@@ -58,9 +50,7 @@
       <div>
         <label for="ak-std" class="sr-only">Select Standard</label>
         <div class="flex h-12 items-center gap-2.5 rounded-lg border border-gray-300 bg-white px-4">
-          <svg class="shrink-0 text-primary" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="m12 3 9 5-9 5-9-5 9-5z" /><path d="M21 8v6M7 10.5V16c0 1.7 2.2 3 5 3s5-1.3 5-3v-5.5" />
-          </svg>
+          <span class="material-symbols-outlined shrink-0 text-primary !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">school</span>
           <select id="ak-std" [(ngModel)]="standard" class="w-full bg-transparent text-[13px] text-primary outline-none">
             @for (s of standards(); track s) { <option [value]="s">{{ s }}</option> }
           </select>
@@ -70,9 +60,7 @@
       <div>
         <label for="ak-sub" class="sr-only">Select Subject</label>
         <div class="flex h-12 items-center gap-2.5 rounded-lg border border-gray-300 bg-white px-4">
-          <svg class="shrink-0 text-primary" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-          </svg>
+          <span class="material-symbols-outlined shrink-0 text-primary !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">menu_book</span>
           <select id="ak-sub" [(ngModel)]="subject" class="w-full bg-transparent text-[13px] text-primary outline-none">
             @for (s of subjects(); track s) { <option [value]="s">{{ s }}</option> }
           </select>
@@ -82,9 +70,7 @@
       <button type="button" (click)="apply()"
         class="flex h-12 items-center justify-center gap-2 rounded-lg bg-primary px-7 text-[13px] font-semibold text-white transition-colors hover:bg-primary-dark">
         Apply Filter
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M22 3H2l8 9.5V19l4 2v-8.5z" />
-        </svg>
+        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">filter_list</span>
       </button>
     </div>
 

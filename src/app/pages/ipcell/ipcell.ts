@@ -23,14 +23,14 @@ type Tab = 'about' | 'policy' | 'utility' | 'design' | 'copyrights' | 'trademark
 export class Ipcell {
   private readonly resources = inject(ResourcesService);
 
-  readonly tabs: ReadonlyArray<{ id: Tab; label: string; path: string[] }> = [
-    { id: 'about', label: 'About IP Cell', path: ['m3 10 9-6 9 6', 'M5 10v9M19 10v9M9 10v9M15 10v9M3 21h18'] },
-    { id: 'policy', label: 'Policy', path: ['M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z', 'M14 2v6h6', 'M9 13h6M9 17h4'] },
-    { id: 'utility', label: 'Utility Patent', path: ['M9 18h6', 'M10 22h4', 'M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z'] },
-    { id: 'design', label: 'Design Patent', path: ['m15 5 4 4', 'M13 7 3 17v4h4L17 11z', 'm16 4 4 4'] },
-    { id: 'copyrights', label: 'Copyrights', path: ['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z', 'M14.8 9.5a3.5 3.5 0 1 0 0 5'] },
-    { id: 'trademarks', label: 'Trademarks', path: ['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z', 'M7 9h10M12 9v7'] },
-    { id: 'forms', label: 'Forms', path: ['M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z', 'M14 2v6h6', 'M8 13h8M8 17h5'] },
+  readonly tabs: ReadonlyArray<{ id: Tab; label: string; icon: string }> = [
+    { id: 'about', label: 'About IP Cell', icon: 'account_balance' },
+    { id: 'policy', label: 'Policy', icon: 'description' },
+    { id: 'utility', label: 'Utility Patent', icon: 'lightbulb' },
+    { id: 'design', label: 'Design Patent', icon: 'edit' },
+    { id: 'copyrights', label: 'Copyrights', icon: 'copyright' },
+    { id: 'trademarks', label: 'Trademarks', icon: 'verified' },
+    { id: 'forms', label: 'Forms', icon: 'article' },
   ];
 
   readonly active = signal<Tab>('about');
@@ -122,21 +122,21 @@ export class Ipcell {
     return isNaN(d.getTime()) ? value : formatDate(d, 'mediumDate', 'en-US');
   }
 
-  readonly focusAreas: ReadonlyArray<{ title: string; body: string; path: string[] }> = [
-    { title: 'Awareness', body: 'Create awareness about IPR & its importance.', path: ['M9 18h6', 'M10 22h4', 'M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z'] },
-    { title: 'Support', body: 'Assist in patent, design, copyright & trademark filings.', path: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', 'M22 21v-2a4 4 0 0 0-3-3.87'] },
-    { title: 'Guidance', body: 'Provide expert guidance on IPR documentation & procedures.', path: ['M4 19.5A2.5 2.5 0 0 1 6.5 17H20', 'M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'] },
-    { title: 'Protection', body: 'Safeguard innovations and intellectual creations.', path: ['M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'] },
-    { title: 'Commercialization', body: 'Encourage technology transfer & commercialization of innovations.', path: ['M3 3v18h18', 'm19 9-5 5-4-4-4 4'] },
-    { title: 'Collaboration', body: 'Promote collaborations with industry, startups & institutions.', path: ['m11 17 2 2a1 1 0 1 0 3-3', 'm14 14 2.5 2.5a1 1 0 1 0 3-3l-3.9-3.9a2 2 0 0 1 0-2.8l.4-.4a2.8 2.8 0 0 1 4 0l4 4', 'M3 7l4-4 4 4'] },
+  readonly focusAreas: ReadonlyArray<{ title: string; body: string; icon: string }> = [
+    { title: 'Awareness', body: 'Create awareness about IPR & its importance.', icon: 'lightbulb' },
+    { title: 'Support', body: 'Assist in patent, design, copyright & trademark filings.', icon: 'group' },
+    { title: 'Guidance', body: 'Provide expert guidance on IPR documentation & procedures.', icon: 'menu_book' },
+    { title: 'Protection', body: 'Safeguard innovations and intellectual creations.', icon: 'shield' },
+    { title: 'Commercialization', body: 'Encourage technology transfer & commercialization of innovations.', icon: 'trending_up' },
+    { title: 'Collaboration', body: 'Promote collaborations with industry, startups & institutions.', icon: 'handshake' },
   ];
 
   // Counts come from the live registers, not hard-coded numbers.
   readonly counts = computed(() => [
-    { value: `${this.utility().length}`, label: 'Utility Patents', path: ['M9 18h6', 'M10 22h4', 'M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z'] },
-    { value: `${this.design().length}`, label: 'Design Patents', path: ['M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', 'm9 12 2 2 4-4'] },
-    { value: `${this.trademarkRows().length}`, label: 'Trademarks', path: ['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z', 'M7 9h10M12 9v7'] },
-    { value: `${this.copyrightRows().length}`, label: 'Copyrights', path: ['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z', 'M14.8 9.5a3.5 3.5 0 1 0 0 5'] },
+    { value: `${this.utility().length}`, label: 'Utility Patents', icon: 'lightbulb' },
+    { value: `${this.design().length}`, label: 'Design Patents', icon: 'verified_user' },
+    { value: `${this.trademarkRows().length}`, label: 'Trademarks', icon: 'verified' },
+    { value: `${this.copyrightRows().length}`, label: 'Copyrights', icon: 'copyright' },
   ]);
 
   readonly notices: readonly string[] = [

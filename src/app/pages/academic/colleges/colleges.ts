@@ -28,20 +28,20 @@ export class Colleges {
   readonly banner = '/assets/images/hero/college.jpeg';
 
   readonly heroStats: readonly HeroStat[] = [
-    { value: '14', label: 'Colleges', path: ['M3 21h18', 'M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16', 'M9 7h2M13 7h2M9 11h2M13 11h2'] },
-    { value: '25+', label: 'Programs', path: ['M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z', 'M14 2v6h6', 'M9 13h6M9 17h6'] },
-    { value: '5K+', label: 'Students', path: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', 'M22 21v-2a4 4 0 0 0-3-3.87'] },
-    { value: '120+', label: 'Faculty', path: ['M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9.5 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', 'M22 11h-6'] },
+    { value: '14', label: 'Colleges', path: [], icon: 'apartment' },
+    { value: '25+', label: 'Programs', path: [], icon: 'description' },
+    { value: '5K+', label: 'Students', path: [], icon: 'group' },
+    { value: '120+', label: 'Faculty', path: [], icon: 'person' },
   ];
 
-  readonly filters: ReadonlyArray<{ id: Stream; label: string; path: string[] }> = [
-    { id: 'all', label: 'All Colleges', path: ['M3 21h18', 'M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16'] },
-    { id: 'science', label: 'Science', path: ['M9 2v6L4.5 17A2.5 2.5 0 0 0 6.8 21h10.4a2.5 2.5 0 0 0 2.3-4L15 8V2', 'M8 2h8', 'M7 15h10'] },
-    { id: 'management', label: 'Management', path: ['M2 9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z', 'M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'] },
-    { id: 'commerce', label: 'Commerce', path: ['M3 3v18h18', 'M7 15V9M12 15V6M17 15v-4'] },
-    { id: 'arts', label: 'Arts', path: ['M12 22a10 10 0 1 1 10-10c0 2.2-1.8 3-3 3h-2a2 2 0 0 0-1.4 3.4A2 2 0 0 1 14 22z', 'M8.5 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2z'] },
-    { id: 'law', label: 'Law', path: ['M12 3v18M5 7h14', 'm5 7-3 6h6zM19 7l-3 6h6z', 'M7 21h10'] },
-    { id: 'others', label: 'Others', path: ['M5 12h.01M12 12h.01M19 12h.01'] },
+  readonly filters: ReadonlyArray<{ id: Stream; label: string; path: string[]; icon: string }> = [
+    { id: 'all', label: 'All Colleges', path: [], icon: 'school' },
+    { id: 'science', label: 'Science', path: [], icon: 'science' },
+    { id: 'management', label: 'Management', path: [], icon: 'business_center' },
+    { id: 'commerce', label: 'Commerce', path: [], icon: 'bar_chart' },
+    { id: 'arts', label: 'Arts', path: [], icon: 'palette' },
+    { id: 'law', label: 'Law', path: [], icon: 'balance' },
+    { id: 'others', label: 'Others', path: [], icon: 'more_horiz' },
   ];
 
   readonly active = signal<Stream>('all');

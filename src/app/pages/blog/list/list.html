@@ -4,8 +4,37 @@
   [image]="banner" />
 
 <section class="site-container py-8">
-  <div class="grid gap-6 lg:grid-cols-[1.9fr_1fr]">
+  <!-- Tabs + search (Full width) -->
+  <div class="mb-6 flex max-sm:flex-col sm:items-center justify-between gap-4 overflow-hidden">
+    <ul class="flex sm:flex-1 w-full list-none gap-2 overflow-x-auto pb-1 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      @for (t of tabs; track t) {
+      <li class="shrink-0 snap-start">
+        <button type="button" (click)="select(t)"
+          class="rounded-md px-4 sm:px-5 py-2.5 text-[12.5px] font-semibold whitespace-nowrap transition-colors"
+          [class]="tab() === t ? 'bg-primary text-white' : 'bg-gray-50 text-primary hover:bg-gray-100'">
+          {{ t }}
+        </button>
+      </li>
+      }
+    </ul>
 
+    <div class="flex max-sm:w-full h-11 min-w-[200px] shrink-0 items-stretch">
+      <label for="blog-search" class="sr-only">Search blogs</label>
+      <input id="blog-search" type="search" [(ngModel)]="search" (keyup.enter)="applySearch()"
+        placeholder="Search blogs..."
+        class="min-w-0 flex-1 rounded-l-md border border-r-0 border-gray-300 px-3.5 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary" />
+      <button type="button" (click)="applySearch()" aria-label="Search"
+        class="flex w-12 shrink-0 items-center justify-center rounded-r-md bg-primary text-white transition-colors hover:bg-primary-dark">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m20 20-3.5-3.5" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="grid gap-6 lg:grid-cols-[1.9fr_1fr]">
     <!-- Main column -->
     <div>
       <!-- Tabs + search -->
@@ -28,120 +57,138 @@
             class="min-w-0 flex-1 rounded-l-md border border-r-0 border-gray-300 px-3.5 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary" />
           <button type="button" (click)="applySearch()" aria-label="Search"
             class="flex w-12 shrink-0 items-center justify-center rounded-r-md bg-primary text-white transition-colors hover:bg-primary-dark">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" />
-            </svg>
+            <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">search</span>
           </button>
         </div>
       </div>
 
       @if (loading()) {
-        <p class="mt-6 text-[13px] text-muted">Loading posts…</p>
+      <p class="mt-6 text-[13px] text-muted">Loading posts…</p>
       } @else if (failed()) {
-        <p class="mt-6 rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
-          We couldn't load the blog right now. Please try again later.
-        </p>
+      <p
+        class="mt-6 rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
+        We couldn't load the blog right now. Please try again later.
+      </p>
       } @else {
-        <!-- Featured -->
-        @if (featured(); as f) {
-          <article class="relative mt-5 overflow-hidden rounded-xl border border-gray-200 bg-white">
-            <span class="absolute top-4 left-4 z-10 rounded-md bg-primary px-3 py-1 text-[10.5px] font-bold tracking-wide text-white uppercase">Featured</span>
-            <img [src]="f.image | mediaUrl" [alt]="f.title" loading="lazy"
-              class="aspect-[16/7] w-full bg-primary-light object-cover" />
+      <!-- Featured -->
+      @if (featured(); as f) {
+      <article class="relative overflow-hidden rounded-xl border border-gray-200 bg-white">
+        <span
+          class="absolute top-4 left-4 z-10 rounded-md bg-primary px-3 py-1 text-[10.5px] font-bold tracking-wide text-white uppercase">Featured</span>
+        <img [src]="f.image | mediaUrl" [alt]="f.title" loading="lazy"
+          class="aspect-[16/7] w-full bg-primary-light object-cover" />
 
-            <div class="relative p-5">
-              <span class="absolute -top-8 left-5 flex w-14 flex-col items-center rounded-md bg-secondary py-2 text-center text-primary">
-                <span class="text-[17px] leading-none font-bold">{{ f.day }}</span>
-                <span class="text-[10px] font-semibold">{{ f.month }}</span>
-                <span class="text-[10px]">{{ f.year }}</span>
+        <div class="relative p-5">
+          <span
+            class="absolute -top-8 left-5 flex w-14 flex-col items-center rounded-md bg-secondary py-2 text-center text-primary">
+            <span class="text-[17px] leading-none font-bold">{{ f.day }}</span>
+            <span class="text-[10px] font-semibold">{{ f.month }}</span>
+            <span class="text-[10px]">{{ f.year }}</span>
+          </span>
+
+          <div class="pl-[76px]">
+            <h2 class="text-[17px] leading-snug font-bold text-primary">
+              <a [routerLink]="['/blog', f.id]" class="text-primary no-underline hover:text-accent">{{ f.title }}</a>
+            </h2>
+            <p class="mt-2 text-[12.5px] leading-relaxed text-muted">{{ f.excerpt }}</p>
+          </div>
+
+          <div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 pt-3.5">
+            <span class="inline-flex items-center gap-2 text-[12px] text-muted">
+              <svg class="text-primary" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+              </svg>
+              {{ f.author }}
+            </span>
+            <span class="text-[12px] text-muted">{{ f.date }}</span>
+          </div>
+        </div>
+      </article>
+      }
+
+      <!-- Posts -->
+      <ul class="animate-dropdown mt-5 grid list-none gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        @for (post of visible(); track post.id) {
+        <li class="flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white">
+          <div class="relative">
+            <img [src]="post.image | mediaUrl" [alt]="post.title" loading="lazy"
+              class="aspect-[4/3] w-full bg-primary-light object-cover" />
+            <span
+              class="absolute bottom-3 left-3 flex w-12 flex-col items-center rounded-md bg-secondary py-1.5 text-center text-primary">
+              <span class="text-[15px] leading-none font-bold">{{ post.day }}</span>
+              <span class="text-[9px] font-semibold">{{ post.month }}</span>
+              <span class="text-[9px]">{{ post.year }}</span>
+            </span>
+          </div>
+
+          <div class="flex flex-1 flex-col p-4">
+            <h3 class="text-[14px] leading-snug font-bold text-primary">
+              <a [routerLink]="['/blog', post.id]" class="text-primary no-underline hover:text-accent">{{ post.title
+                }}</a>
+            </h3>
+            <p class="mt-2 flex-1 text-[12px] leading-relaxed text-muted">{{ post.excerpt }}</p>
+
+            <div class="mt-3.5 flex items-center justify-between gap-2 border-t border-gray-100 pt-3">
+              <span class="inline-flex items-center gap-1.5 text-[11.5px] text-muted">
+                <svg class="text-primary" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                </svg>
+                {{ post.author }}
               </span>
-
-              <div class="pl-[76px]">
-                <h2 class="text-[17px] leading-snug font-bold text-primary">
-                  <a [routerLink]="['/blog', f.id]" class="text-primary no-underline hover:text-accent">{{ f.title }}</a>
-                </h2>
-                <p class="mt-2 text-[12.5px] leading-relaxed text-muted">{{ f.excerpt }}</p>
-              </div>
-
-              <div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 pt-3.5">
-                <span class="inline-flex items-center gap-2 text-[12px] text-muted">
-                  <svg class="text-primary" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
-                  </svg>
-                  {{ f.author }}
-                </span>
-                <span class="text-[12px] text-muted">{{ f.date }}</span>
-              </div>
+              <span class="text-[11px] text-muted">{{ post.date }}</span>
             </div>
-          </article>
+          </div>
+        </li>
+        } @empty {
+        <li
+          class="col-span-full rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
+          No posts found.
+        </li>
         }
-
-        <!-- Posts -->
-        <ul class="animate-dropdown mt-5 grid list-none gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          @for (post of visible(); track post.id) {
-            <li class="flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white">
-              <div class="relative">
-                <img [src]="post.image | mediaUrl" [alt]="post.title" loading="lazy"
-                  class="aspect-[4/3] w-full bg-primary-light object-cover" />
-                <span class="absolute bottom-3 left-3 flex w-12 flex-col items-center rounded-md bg-secondary py-1.5 text-center text-primary">
-                  <span class="text-[15px] leading-none font-bold">{{ post.day }}</span>
-                  <span class="text-[9px] font-semibold">{{ post.month }}</span>
-                  <span class="text-[9px]">{{ post.year }}</span>
-                </span>
-              </div>
-
-              <div class="flex flex-1 flex-col p-4">
-                <h3 class="text-[14px] leading-snug font-bold text-primary">
-                  <a [routerLink]="['/blog', post.id]" class="text-primary no-underline hover:text-accent">{{ post.title }}</a>
-                </h3>
-                <p class="mt-2 flex-1 text-[12px] leading-relaxed text-muted">{{ post.excerpt }}</p>
-
-                <div class="mt-3.5 flex items-center justify-between gap-2 border-t border-gray-100 pt-3">
-                  <span class="inline-flex items-center gap-1.5 text-[11.5px] text-muted">
-                    <svg class="text-primary" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
-                    </svg>
-                    {{ post.author }}
-                  </span>
-                  <span class="text-[11px] text-muted">{{ post.date }}</span>
-                </div>
-              </div>
-            </li>
-          } @empty {
-            <li class="col-span-full rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
-              No posts found.
-            </li>
-          }
-        </ul>
+      </ul>
       }
     </div>
 
     <!-- Sidebar -->
     <aside class="space-y-5">
-      <!-- Recent -->
+      <!-- Search sidebar -->
+      <div class="rounded-xl border border-gray-200 bg-white p-5">
+        <h2 class="text-[16px] font-bold text-primary">Search</h2>
+        <span class="mt-2 block h-1 w-12 rounded-full bg-secondary" aria-hidden="true"></span>
+        <div class="mt-4 flex h-11 items-stretch">
+          <label for="blog-side-search" class="sr-only">Search blog</label>
+          <input id="blog-side-search" type="search" [(ngModel)]="search" (keyup.enter)="applySearch()" placeholder="Search..."
+            class="min-w-0 flex-1 rounded-l-md border border-r-0 border-gray-300 px-3.5 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary" />
+          <button type="button" (click)="applySearch()" aria-label="Search"
+            class="flex w-12 shrink-0 items-center justify-center rounded-r-md bg-primary text-white transition-colors hover:bg-primary-dark">
+            <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">search</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Recent posts -->
       <div class="rounded-xl border border-gray-200 bg-white p-5">
         <h2 class="text-[16px] font-bold text-primary">Recent Posts</h2>
         <span class="mt-2 block h-1 w-12 rounded-full bg-secondary" aria-hidden="true"></span>
-
         <ul class="mt-4 list-none space-y-4">
           @for (post of recent(); track post.id) {
-            <li class="flex gap-3">
-              <img [src]="post.image | mediaUrl" [alt]="post.title" loading="lazy"
-                class="h-14 w-16 shrink-0 rounded-md bg-primary-light object-cover" />
-              <div class="min-w-0">
-                <h3 class="text-[12.5px] leading-snug font-semibold text-primary">
-                  <a [routerLink]="['/blog', post.id]" class="text-primary no-underline hover:text-accent">{{ post.title }}</a>
-                </h3>
-                <p class="mt-1 text-[11px] text-muted">{{ post.date }}</p>
-              </div>
-            </li>
+          <li class="flex gap-3">
+            <img [src]="post.image | mediaUrl" [alt]="post.title" loading="lazy"
+              class="h-14 w-16 shrink-0 rounded-md bg-primary-light object-cover" />
+            <div class="min-w-0">
+              <h3 class="text-[12.5px] leading-snug font-semibold text-primary">
+                <a [routerLink]="['/blog', post.id]" class="text-primary no-underline hover:text-accent">{{ post.title
+                  }}</a>
+              </h3>
+              <p class="mt-1 text-[11px] text-muted">{{ post.date }}</p>
+            </div>
+          </li>
           }
         </ul>
-
-        <a routerLink="/blog"
-          class="mt-4 flex items-center justify-center rounded-md border border-gray-300 py-2.5 text-[12.5px] font-semibold text-primary no-underline transition-colors hover:border-primary hover:bg-primary hover:text-white">
-          View All Posts
-        </a>
       </div>
 
       <!-- Subscribe -->
@@ -159,9 +206,7 @@
           <button type="submit"
             class="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-md bg-secondary text-[13px] font-semibold text-primary transition-colors hover:bg-secondary-dark">
             Subscribe
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z" />
-            </svg>
+            <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">send</span>
           </button>
         </form>
 

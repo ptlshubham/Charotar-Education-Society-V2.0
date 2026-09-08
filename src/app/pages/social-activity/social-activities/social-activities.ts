@@ -18,24 +18,24 @@ interface Activity {
   styleUrl: './social-activities.scss',
 })
 export class SocialActivities {
-  readonly tabs: ReadonlyArray<{ id: Category; label: string; heading: string; path: string[] }> = [
+  readonly tabs: ReadonlyArray<{ id: Category; label: string; heading: string; icon: string }> = [
     {
       id: 'activity',
       label: 'Activity',
       heading: 'Our Social Activities',
-      path: ['M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'],
+      icon: 'shield',
     },
     {
       id: 'initiative',
       label: 'Initiative',
       heading: 'Our Initiatives',
-      path: ['M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z'],
+      icon: 'favorite',
     },
     {
       id: 'camp',
       label: 'Camp',
       heading: 'Our Camps',
-      path: ['M2 9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z', 'M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2', 'M12 11v6M9 14h6'],
+      icon: 'medical_services',
     },
   ];
 

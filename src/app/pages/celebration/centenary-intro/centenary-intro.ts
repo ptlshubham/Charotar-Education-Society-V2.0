@@ -33,10 +33,10 @@ export class CentenaryIntro {
     'CES set 6 Guinness World Records during the centenary year, creating history and bringing pride to the institution and the nation.',
   ];
 
-  readonly highlights: ReadonlyArray<{ value: string; label: string; path: string[] }> = [
-    { value: '100 Events', label: 'Across Categories', path: ['M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z', 'M16 2v4M8 2v4M3 10h18'] },
-    { value: '100 Years', label: 'Of Legacy', path: ['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z', 'M12 6v6l4 2'] },
-    { value: 'One Vision', label: 'Bright Future', path: ['M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z', 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'] },
-    { value: 'One Family', label: 'Stronger Together', path: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', 'M22 21v-2a4 4 0 0 0-3-3.87'] },
+  readonly highlights: ReadonlyArray<{ value: string; label: string; icon: string }> = [
+    { value: '100 Events', label: 'Across Categories', icon: 'calendar_month' },
+    { value: '100 Years', label: 'Of Legacy', icon: 'schedule' },
+    { value: 'One Vision', label: 'Bright Future', icon: 'visibility' },
+    { value: 'One Family', label: 'Stronger Together', icon: 'group' },
   ];
 }

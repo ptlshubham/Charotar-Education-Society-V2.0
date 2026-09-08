@@ -8,9 +8,10 @@
   <app-academic-tabs [tabs]="filters" [active]="active()" ariaLabel="School medium" (tabChange)="select($event)" />
 
   <!-- Cards -->
-  <ul class="animate-dropdown mt-6 grid list-none gap-5 sm:grid-cols-2 lg:grid-cols-4">
+  <ul
+    class="animate-dropdown mt-6 grid list-none max-sm:grid-rows-2 max-sm:auto-cols-[calc(85%-10px)] max-sm:grid-flow-col gap-5 overflow-x-auto snap-x snap-mandatory pb-4 hide-scrollbar sm:grid-cols-2 lg:grid-cols-4">
     @for (school of visible(); track school.name) {
-    <li class="group relative overflow-hidden rounded-xl">
+    <li class="group relative snap-start overflow-hidden rounded-xl">
       <img [src]="school.image" [alt]="school.name" loading="lazy"
         class="aspect-[4/3] w-full bg-primary-light object-cover transition-transform duration-300 group-hover:scale-105" />
 
@@ -46,7 +47,7 @@
     <!-- Coming soon tile, as in the design -->
     @if (active() === 'all') {
     <li
-      class="flex aspect-[4/3] flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-gray-300 bg-white text-center">
+      class="flex aspect-[4/3] snap-start flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-gray-300 bg-white text-center">
       <p class="px-4 text-[14px] leading-snug font-semibold text-primary">More Schools<br />Coming Soon...</p>
     </li>
     }

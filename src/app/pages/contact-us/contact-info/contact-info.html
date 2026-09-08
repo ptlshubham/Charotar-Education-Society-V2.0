@@ -13,7 +13,7 @@
           <h2 class="text-[16px] font-bold text-primary">{{ card.title }}</h2>
 
           @if (card.href) {
-            <a [href]="card.href" class="mt-1.5 block text-[14px] break-words text-muted no-underline transition-colors hover:text-accent">
+            <a [href]="card.href" class="mt-1.5 block text-[14px] break-words font-medium text-secondary no-underline">
               @for (line of card.lines; track line) { {{ line }} }
             </a>
           } @else {

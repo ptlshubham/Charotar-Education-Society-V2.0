@@ -1,3 +1,8 @@
-/* Intentionally empty — the header is styled with Tailwind utilities only.
-   The burger animation is class-bound utilities; the dropdown keyframes live
-   in the `@theme` block in src/tailwind.css as `--animate-dropdown`. */
+/* The header is styled with Tailwind utilities only.
+   The full header lives in normal flow and scrolls away; a fixed compact bar
+   (in the template) slides in on scroll — so this host opts out of the app-wide
+   `app-header { position: sticky }` rule in styles.scss. */
+:host {
+  display: block;
+  position: static;
+}

@@ -10,5 +10,5 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
   styleUrl: './alumni-hero.scss',
 })
 export class AlumniHero {
-  readonly campus = PLACEHOLDER.about.hero;
+  readonly campus = '/assets/images/hero/alumni.jpeg';
 }

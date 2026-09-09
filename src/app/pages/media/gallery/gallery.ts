@@ -42,7 +42,7 @@ export class Gallery {
   private readonly resources = inject(ResourcesService);
   private readonly sanitizer = inject(DomSanitizer);
 
-  readonly banner = PLACEHOLDER.media.galleryBanner;
+  readonly banner = 'assets/images/hero/gallery.jpeg';
 
   readonly stats: ReadonlyArray<{ value: string; label: string; tone: string; icon: string }> = [
     { value: '1,248+', label: 'Photos', tone: 'bg-primary/10 text-primary', icon: 'photo_library' },

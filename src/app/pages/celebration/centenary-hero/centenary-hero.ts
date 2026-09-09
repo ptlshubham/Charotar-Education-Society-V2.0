@@ -10,5 +10,5 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
   styleUrl: './centenary-hero.scss',
 })
 export class CentenaryHero {
-  readonly backdrop = PLACEHOLDER.about.hero;
+  readonly backdrop = '/assets/images/hero/centenary-celebration.jpeg';
 }

@@ -94,7 +94,8 @@ export class Header implements AfterViewInit {
    */
   readonly lastUpdated = signal('');
 
-  /** Past the threshold the utility bar collapses, leaving brand + nav stuck to the top. */
+  /** Past a small scroll threshold the full header gives way to the compact
+   *  sticky bar. */
   readonly scrolled = signal(false);
 
   /** True on devices whose primary pointer can hover (desktop) — set in the browser. */
@@ -189,6 +190,28 @@ export class Header implements AfterViewInit {
         { label: 'Career', link: '/more/career', icon: 'briefcase' },
       ],
     },
+  ];
+
+  /** The desktop nav is split around the centred emblem: left of it and right of it. */
+  readonly navLeft = this.navLinks.slice(0, 5); // Home … Academic
+  readonly navRight = this.navLinks.slice(5); // Alumni … More
+
+  /** Quick-access icon links on the right of the brand bar. */
+  readonly quickLinks: ReadonlyArray<{ label: string; short: string; link: string; icon: IconKey }> = [
+    { label: 'News', short: 'News', link: '/more/news', icon: 'news' },
+    { label: 'Free Psychological Counselling', short: 'Free Psychological Counselling', link: '/counselling', icon: 'heart' },
+    { label: 'Events', short: 'Events', link: '/navratri', icon: 'calendar' },
+    { label: 'Gallery', short: 'Gallery', link: '/glory/gallery', icon: 'image' },
+  ];
+
+  /** Extra links in the top utility strip. RTI/Grievance point at the nearest
+   *  existing pages until dedicated ones are built. */
+  readonly utilityLinks: ReadonlyArray<{ label: string; link?: string; href?: string }> = [
+    { label: 'Careers', link: '/more/career' },
+    { label: 'Tenders', link: '/more/tenders' },
+    { label: 'RTI', link: '/support/disclosure-policy' },
+    { label: 'Grievance', link: '/contact' },
+    { label: 'ERP Login', href: 'https://dashboard.cesociety.in' },
   ];
 
   // ─── Universal site search ───
@@ -322,6 +345,16 @@ export class Header implements AfterViewInit {
     return (item.children ?? []).some(child => this.branchActive(child));
   }
 
+  /**
+   * Which top-level tab renders as the filled navy "active" tab. The homepage is
+   * served at '/' (with '/home' redirecting to it), so the first (Home) item is
+   * active there even though no child link literally starts with '/'.
+   */
+  activeTab(item: NavItem, first: boolean): boolean {
+    if (first && (this.router.url === '/' || this.router.url.startsWith('/home'))) return true;
+    return this.branchActive(item);
+  }
+
   isExpanded(label: string): boolean {
     return this.expanded().has(label);
   }
@@ -377,7 +410,8 @@ export class Header implements AfterViewInit {
     );
 
     // Lenis scrolls the window for real, so the native scroll event still fires.
-    const onScroll = () => this.scrolled.set(window.scrollY > 40);
+    // Past the threshold the full header collapses into the compact sticky bar.
+    const onScroll = () => this.scrolled.set(window.scrollY > 160);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     this.destroyRef.onDestroy(() => window.removeEventListener('scroll', onScroll));

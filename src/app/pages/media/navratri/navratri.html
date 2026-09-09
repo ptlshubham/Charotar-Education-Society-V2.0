@@ -1,10 +1,11 @@
 <!-- ─── Hero ─── -->
 <app-page-hero crumb="Navratri" [trail]="[{ label: 'Media' }]" title="Navratri" accent="Celebration"
-  blurb="A celebration of faith, culture, unity and divine energy."
-  [image]="banner">
+  blurb="A celebration of faith, culture, unity and divine energy." [image]="banner">
   <div class="mt-7 flex items-center gap-3.5">
-    <svg class="shrink-0 text-secondary" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" />
+    <svg class="shrink-0 text-secondary" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="3" y="4" width="18" height="18" rx="2" />
+      <path d="M16 2v4M8 2v4M3 10h18" />
     </svg>
     <div>
       <p class="text-[17px] font-semibold text-white sm:text-[19px]">22nd Sep – 2nd Oct, 2026</p>
@@ -16,14 +17,17 @@
 <section class="site-container pb-8">
 
   <!-- Quick links — lifted over the hero's bottom edge, as in the reference. -->
-  <ul class="relative -mx-4 -mt-14 grid grid-cols-2 list-none gap-3 rounded-t-[32px] bg-white px-4 pt-8 sm:-mx-6 sm:px-6 lg:-mx-12 xl:-mx-20 lg:-mt-16 lg:grid-cols-6 lg:px-12 xl:px-20 lg:pt-9">
+  <ul
+    class="relative -mx-4 -mt-14 grid grid-cols-2 list-none gap-3 rounded-t-[32px] bg-white px-4 pt-8 sm:-mx-6 sm:px-6 lg:-mx-12 xl:-mx-20 lg:-mt-16 lg:grid-cols-6 lg:px-12 xl:px-20 lg:pt-9">
     @for (link of quickLinks; track link.label) {
-      <li>
-        <a href="#" class="flex h-full flex-col items-center gap-2.5 rounded-xl border border-gray-200 bg-white px-3 py-4 text-center no-underline transition-colors hover:border-primary">
-          <span class="material-symbols-outlined text-primary !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">{{ link.icon }}</span>
-          <span class="text-[11.5px] leading-snug font-semibold text-primary">{{ link.label }}</span>
-        </a>
-      </li>
+    <li>
+      <a href="#"
+        class="flex h-full flex-col items-center gap-2.5 rounded-xl border border-gray-200 bg-white px-3 py-4 text-center no-underline transition-colors hover:border-primary">
+        <span class="material-symbols-outlined text-primary !text-[23px] [font-variation-settings:'wght'_300]"
+          aria-hidden="true">{{ link.icon }}</span>
+        <span class="text-[11.5px] leading-snug font-semibold text-primary">{{ link.label }}</span>
+      </a>
+    </li>
     }
   </ul>
 
@@ -48,7 +52,10 @@
       <a routerLink="/navratri/2023"
         class="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-[13px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
         Know More About Navratri
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
       </a>
     </div>
 
@@ -57,7 +64,9 @@
         class="aspect-video w-full bg-primary-light object-cover" />
       <button type="button" aria-label="Play the Navratri video"
         class="absolute inset-0 m-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/90 text-primary transition-transform hover:scale-105">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M8 5v14l11-7z" />
+        </svg>
       </button>
     </div>
   </div>
@@ -66,84 +75,99 @@
   <p class="mt-10 text-center text-[11.5px] font-bold tracking-[0.15em] text-primary uppercase">Navratri at a Glance</p>
   <ul class="mt-4 grid list-none grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
     @for (stat of stats; track stat.label) {
-      <li class="rounded-xl border border-gray-200 bg-white px-3 py-5 text-center">
-        <span class="material-symbols-outlined text-secondary-dark !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">{{ stat.icon }}</span>
-        <p class="mt-2.5 text-[17px] leading-tight font-bold text-primary">{{ stat.value }}</p>
-        <p class="mt-1 text-[11px] leading-snug text-muted">{{ stat.label }}</p>
-      </li>
+    <li class="rounded-xl border border-gray-200 bg-white px-3 py-5 text-center">
+      <span class="material-symbols-outlined text-secondary-dark !text-[23px] [font-variation-settings:'wght'_300]"
+        aria-hidden="true">{{ stat.icon }}</span>
+      <p class="mt-2.5 text-[17px] leading-tight font-bold text-primary">{{ stat.value }}</p>
+      <p class="mt-1 text-[11px] leading-snug text-muted">{{ stat.label }}</p>
+    </li>
     }
   </ul>
 
   <!-- ─── Navratri celebrations by year (from the DB) ─── -->
-  <p class="mt-12 text-center text-[11.5px] font-bold tracking-[0.15em] text-muted uppercase">Navratri Through the Years</p>
+  <p class="mt-12 text-center text-[11.5px] font-bold tracking-[0.15em] text-muted uppercase">Navratri Through the Years
+  </p>
   <h2 class="mt-2 text-center text-[22px] leading-snug font-bold text-primary sm:text-[26px]">Our Celebrations</h2>
   <span class="mx-auto mt-3 block h-1 w-14 rounded-full bg-secondary" aria-hidden="true"></span>
 
   @if (loading()) {
-    <ul class="mt-6 grid auto-cols-[88%] grid-flow-col grid-rows-1 list-none gap-5 overflow-x-auto snap-x snap-mandatory lg:auto-cols-auto lg:grid-flow-row lg:grid-cols-3 lg:overflow-visible">
-      @for (n of [1, 2, 3]; track n) {
-        <li class="animate-pulse snap-start overflow-hidden rounded-xl border border-gray-200 bg-white">
-          <div class="aspect-video w-full bg-gray-100"></div>
-          <div class="space-y-2 p-5"><div class="h-4 w-2/3 rounded bg-gray-100"></div><div class="h-3 w-full rounded bg-gray-100"></div></div>
-        </li>
-      }
-    </ul>
+  <ul
+    class="mt-6 grid auto-cols-[88%] grid-flow-col grid-rows-1 list-none gap-5 overflow-x-auto snap-x snap-mandatory lg:auto-cols-auto lg:grid-flow-row lg:grid-cols-3 lg:overflow-visible">
+    @for (n of [1, 2, 3]; track n) {
+    <li class="animate-pulse snap-start overflow-hidden rounded-xl border border-gray-200 bg-white">
+      <div class="aspect-video w-full bg-gray-100"></div>
+      <div class="space-y-2 p-5">
+        <div class="h-4 w-2/3 rounded bg-gray-100"></div>
+        <div class="h-3 w-full rounded bg-gray-100"></div>
+      </div>
+    </li>
+    }
+  </ul>
   } @else if (failed()) {
-    <p class="mt-6 rounded-xl border border-dashed border-gray-300 bg-[#FDFAF5] px-4 py-10 text-center text-[13px] text-muted">
-      Unable to load the Navratri celebrations right now. Please try again later.
-    </p>
+  <p
+    class="mt-6 rounded-xl border border-dashed border-gray-300 bg-[#FDFAF5] px-4 py-10 text-center text-[13px] text-muted">
+    Unable to load the Navratri celebrations right now. Please try again later.
+  </p>
   } @else {
-    <ul class="mt-6 grid auto-cols-[88%] grid-flow-col grid-rows-1 list-none gap-5 overflow-x-auto snap-x snap-mandatory lg:auto-cols-auto lg:grid-flow-row lg:grid-cols-3 lg:overflow-visible">
-      @for (item of celebrations(); track item.id) {
-        <li class="group flex snap-start flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-md">
-          <a [routerLink]="['/navratri', item.year]" class="block overflow-hidden">
-            <img [src]="item.coverimage | mediaUrl" [alt]="item.title + ' Navratri ' + item.year" loading="lazy"
-              class="aspect-video w-full bg-primary-light object-cover transition-transform duration-300 group-hover:scale-105" />
-          </a>
-          <div class="flex flex-1 flex-col p-5">
-            <h3 class="text-[16px] leading-snug font-bold text-logo">
-              {{ item.title }} <span class="text-secondary-dark">Navratri {{ item.year }}</span>
-            </h3>
-            <p class="mt-2 flex-1 text-[12.5px] leading-relaxed text-muted">{{ teaser(item.themedetails) }}</p>
-            <a [routerLink]="['/navratri', item.year]"
-              class="mt-4 inline-flex w-fit items-center gap-2 rounded-md bg-primary px-4 py-2.5 text-[12.5px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
-              View More
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-            </a>
-          </div>
-        </li>
-      } @empty {
-        <li class="col-span-full rounded-xl border border-dashed border-gray-300 bg-[#FDFAF5] px-4 py-10 text-center text-[13px] text-muted">
-          Navratri celebration details will be published here soon.
-        </li>
-      }
-    </ul>
+  <ul
+    class="mt-6 grid auto-cols-[88%] grid-flow-col grid-rows-1 list-none gap-5 overflow-x-auto snap-x snap-mandatory lg:auto-cols-auto lg:grid-flow-row lg:grid-cols-3 lg:overflow-visible">
+    @for (item of celebrations(); track item.id) {
+    <li
+      class="group flex snap-start flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-md">
+      <a [routerLink]="['/navratri', item.year]" class="block overflow-hidden">
+        <img [src]="item.coverimage | mediaUrl" [alt]="item.title + ' Navratri ' + item.year" loading="lazy"
+          class="aspect-video w-full bg-primary-light object-cover transition-transform duration-300 group-hover:scale-105" />
+      </a>
+      <div class="flex flex-1 flex-col p-5">
+        <h3 class="text-[16px] leading-snug font-bold text-logo">
+          {{ item.title }} <span class="text-secondary-dark">Navratri {{ item.year }}</span>
+        </h3>
+        <p class="mt-2 flex-1 text-[12.5px] leading-relaxed text-muted">{{ teaser(item.themedetails) }}</p>
+        <a [routerLink]="['/navratri', item.year]"
+          class="mt-4 inline-flex w-fit items-center gap-2 rounded-md bg-primary px-4 py-2.5 text-[12.5px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
+          View More
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </a>
+      </div>
+    </li>
+    } @empty {
+    <li
+      class="col-span-full rounded-xl border border-dashed border-gray-300 bg-[#FDFAF5] px-4 py-10 text-center text-[13px] text-muted">
+      Navratri celebration details will be published here soon.
+    </li>
+    }
+  </ul>
   }
 
   <!-- Glimpses -->
   <div class="mt-12 rounded-xl  bg-white p-6">
     <p class="text-center text-[11.5px] font-bold tracking-[0.15em] text-primary uppercase">Glimpses of Navratri</p>
 
-    <ul class="mt-4 flex list-none gap-2 overflow-x-auto px-1 pb-1 lg:flex-wrap lg:justify-center lg:overflow-visible lg:px-0 lg:pb-0">
+    <ul
+      class="mt-4 flex list-none gap-2 overflow-x-auto px-1 pb-1 lg:flex-wrap lg:justify-center lg:overflow-visible lg:px-0 lg:pb-0">
       @for (f of filters; track f) {
-        <li class="shrink-0">
-          <button type="button" (click)="select(f)"
-            class="rounded-md px-4 py-2 text-[12px] font-semibold transition-colors"
-            [class]="filter() === f ? 'bg-primary text-white' : 'bg-white text-primary hover:bg-gray-100'">
-            {{ f }}
-          </button>
-        </li>
+      <li class="shrink-0">
+        <button type="button" (click)="select(f)"
+          class="rounded-md px-4 py-2 text-[12px] font-semibold transition-colors"
+          [class]="filter() === f ? 'bg-primary text-white' : 'bg-white text-primary hover:bg-gray-100'">
+          {{ f }}
+        </button>
+      </li>
       }
     </ul>
 
-    <ul class="animate-dropdown mt-5 grid auto-cols-[80%] grid-flow-col grid-rows-2 list-none gap-4 overflow-x-auto snap-x snap-mandatory lg:auto-cols-auto lg:grid-flow-row lg:grid-cols-4 lg:grid-rows-none lg:overflow-visible">
+    <ul
+      class="animate-dropdown mt-5 grid auto-cols-[80%] grid-flow-col grid-rows-2 list-none gap-4 overflow-x-auto snap-x snap-mandatory lg:auto-cols-auto lg:grid-flow-row lg:grid-cols-4 lg:grid-rows-none lg:overflow-visible">
       @for (g of visible(); track g.src) {
-        <li class="overflow-hidden rounded-lg snap-start">
-          <img [src]="g.src" [alt]="'Navratri ' + g.tag" loading="lazy"
-            class="aspect-[4/3] w-full bg-primary-light object-cover transition-transform duration-300 hover:scale-105" />
-        </li>
+      <li class="overflow-hidden rounded-lg snap-start">
+        <img [src]="g.src" [alt]="'Navratri ' + g.tag" loading="lazy"
+          class="aspect-[4/3] w-full bg-primary-light object-cover transition-transform duration-300 hover:scale-105" />
+      </li>
       } @empty {
-        <li class="col-span-full py-8 text-center text-[13px] text-muted">No photos in this category yet.</li>
+      <li class="col-span-full py-8 text-center text-[13px] text-muted">No photos in this category yet.</li>
       }
     </ul>
 
@@ -157,22 +181,27 @@
 
   <!-- Highlights -->
   <p class="mt-10 text-center text-[11.5px] font-bold tracking-[0.15em] text-primary uppercase">Navratri Highlights</p>
-  <ul class="relative -mx-4 -mt-14 grid grid-cols-2 list-none gap-3 rounded-t-[32px] bg-white px-4 pt-8 sm:-mx-6 sm:px-6 lg:-mx-12 xl:-mx-20 lg:-mt-16 lg:grid-cols-6 lg:px-12 xl:px-20 lg:pt-9">
+  <ul
+    class="relative -mx-4 -mt-14 grid grid-cols-2 list-none gap-3 rounded-t-[32px] bg-white px-4 pt-8 sm:-mx-6 sm:px-6 lg:-mx-12 xl:-mx-20 lg:-mt-16 lg:grid-cols-6 lg:px-12 xl:px-20 lg:pt-9">
     @for (h of highlights; track h.title) {
-      <li class="rounded-xl border border-gray-200 bg-white px-4 py-5 text-center">
-        <span class="material-symbols-outlined text-secondary-dark !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">{{ h.icon }}</span>
-        <h3 class="mt-3 text-[13px] font-bold text-primary">{{ h.title }}</h3>
-        <p class="mt-1.5 text-[11px] leading-relaxed text-muted">{{ h.body }}</p>
-      </li>
+    <li class="rounded-xl border border-gray-200 bg-white px-4 py-5 text-center">
+      <span class="material-symbols-outlined text-secondary-dark !text-[23px] [font-variation-settings:'wght'_300]"
+        aria-hidden="true">{{ h.icon }}</span>
+      <h3 class="mt-3 text-[13px] font-bold text-primary">{{ h.title }}</h3>
+      <p class="mt-1.5 text-[11px] leading-relaxed text-muted">{{ h.body }}</p>
+    </li>
     }
   </ul>
 
   <!-- CTA -->
   <div class="mt-8 flex flex-wrap items-center justify-between gap-5 rounded-xl bg-[#2A1035] p-6">
     <div class="flex items-center gap-4">
-      <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-secondary/20 text-secondary" aria-hidden="true">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2s4 5 4 8a4 4 0 0 1-8 0c0-3 4-8 4-8z" /><path d="M8 21h8" />
+      <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-secondary/20 text-secondary"
+        aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2s4 5 4 8a4 4 0 0 1-8 0c0-3 4-8 4-8z" />
+          <path d="M8 21h8" />
         </svg>
       </span>
       <div>
@@ -187,7 +216,10 @@
     <button type="button"
       class="inline-flex items-center gap-2 rounded-md bg-secondary px-6 py-3 text-[13px] font-semibold text-primary transition-colors hover:bg-secondary-dark">
       View Schedule 2026
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 12h14M13 6l6 6-6 6" />
+      </svg>
     </button>
   </div>
 

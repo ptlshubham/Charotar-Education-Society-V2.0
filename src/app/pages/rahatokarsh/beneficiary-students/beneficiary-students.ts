@@ -10,6 +10,7 @@ import { Pagination } from '../../../shared/pagination/pagination';
 import { Sorter } from '../../../shared/sorting/sorter';
 import { SortHeader } from '../../../shared/sorting/sort-header';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
+import { CustomSelect } from '../../../shared/custom-select/custom-select';
 
 /** Stat-card glyphs, kept out of the computed so it stays cheap to recompute. */
 const STAT_ICONS = {
@@ -21,7 +22,7 @@ const STAT_ICONS = {
 
 @Component({
   selector: 'app-beneficiary-students',
-  imports: [FormsModule, Pagination, SortHeader, PageHero],
+  imports: [CustomSelect, FormsModule, Pagination, SortHeader, PageHero],
   templateUrl: './beneficiary-students.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './beneficiary-students.scss',

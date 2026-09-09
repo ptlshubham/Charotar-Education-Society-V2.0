@@ -14,15 +14,17 @@ import { PageHero } from '../../../shared/page-hero/page-hero';
 })
 export class Fund {
   readonly active = signal<'english' | 'gujarati'>('english');
+  readonly expanded = signal(false);
 
   select(lang: 'english' | 'gujarati'): void {
     this.active.set(lang);
+    this.expanded.set(false);
   }
 
   readonly english: readonly string[] = [
     "The objective of 'Rahatokarsh Fund' is to provide financial aid to the poor students who are brilliant and studying in any of the institutions (from KG to PG) managed by Charotar Education Society, Anand. To assist the students who are not receiving any scholarship or economical help and who are willing to study further in order to build their career.",
     'Shri Ketankumar P. Patel administers the said fund in a transparent manner.',
-    'The "Rahatokarsh Fund" initiative was started by Charotar Education Society as a part of the centenary celebrations that will be held from April 2015 to April 2016. On www.cesociety.in, information on the accumulated fund\'s interest, the donors\' identities, and the students who benefited are all listed.',
+    'The "Rahatokarsh Fund" initiative was started by Charotar Education Society as a part of the centenary celebrations that will be held from April 2015 to April 2016. On www.cesociety.in, information on the accumulated fund\'s interest, the donors\' identities, and the students who benefited are all listed....',
     '"While donating doesn\'t look at what you have in hands, But consider what you have in your heart."',
     'Charotar Education Society was established with the motive of helping and educating the children/students of Charotar region and it has been playing its role in the society since 1916. Today the institution has earned name and fame at international level. I would like to share the idea that has occurred to me on the occasion of the centenary celebration of Charotar Education Society.',
     'People often come to me with a request to provide exemption for fees to some bright students who are keen to study but either they are orphans or their parents are financially incapable and deprived of any other source of income. But still they economise and try to manage for the expenditures for their children\'s bright future.',

@@ -12,6 +12,7 @@ import { Sorter } from '../../../shared/sorting/sorter';
 import { SortHeader } from '../../../shared/sorting/sort-header';
 import { MediaUrlPipe } from '../../../shared/media-url.pipe';
 import { SafeHtmlPipe } from '../../../shared/safe-html.pipe';
+import { CustomSelect } from '../../../shared/custom-select/custom-select';
 
 /** The society's own institute id (id 1 in the CES DB); answer keys are stored per institute. */
 const ANSWERKEY_INSTITUTE_ID = 1;
@@ -33,7 +34,7 @@ interface Paper {
 
 @Component({
   selector: 'app-answer-key',
-  imports: [FormsModule, Pagination, SortHeader, MediaUrlPipe, SafeHtmlPipe, PageHero],
+  imports: [CustomSelect, FormsModule, Pagination, SortHeader, MediaUrlPipe, SafeHtmlPipe, PageHero],
   templateUrl: './answer-key.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './answer-key.scss',

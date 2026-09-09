@@ -18,16 +18,16 @@
     </span>
 
     <!-- Visitor / Staff tabs -->
-    <div role="tablist" aria-label="Pass type" class="mt-6 flex max-w-[420px] gap-1">
+    <div role="tablist" aria-label="Pass type" class="mt-6 flex max-w-[420px] gap-2">
       <button type="button" role="tab" [attr.aria-selected]="tab() === 'visitor'" (click)="selectTab('visitor')"
-        class="flex flex-1 items-center justify-center gap-2 rounded-t-lg px-6 py-3.5 text-[13.5px] font-semibold transition-colors"
-        [class]="tab() === 'visitor' ? 'bg-primary text-white' : 'bg-[#F7F9FC] text-primary hover:bg-gray-100'">
+        class="flex flex-1 items-center justify-center gap-2 rounded-md border px-6 py-3.5 text-[13.5px] font-semibold transition-colors"
+        [class]="tab() === 'visitor' ? 'border-primary bg-primary text-white' : 'border-gray-200 bg-white text-primary hover:border-primary'">
         <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">person</span>
         For Visitor
       </button>
       <button type="button" role="tab" [attr.aria-selected]="tab() === 'staff'" (click)="selectTab('staff')"
-        class="flex flex-1 items-center justify-center gap-2 rounded-t-lg px-6 py-3.5 text-[13.5px] font-semibold transition-colors"
-        [class]="tab() === 'staff' ? 'bg-primary text-white' : 'bg-[#F7F9FC] text-primary hover:bg-gray-100'">
+        class="flex flex-1 items-center justify-center gap-2 rounded-md border px-6 py-3.5 text-[13.5px] font-semibold transition-colors"
+        [class]="tab() === 'staff' ? 'border-primary bg-primary text-white' : 'border-gray-200 bg-white text-primary hover:border-primary'">
         <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">badge</span>
         For Staff
       </button>

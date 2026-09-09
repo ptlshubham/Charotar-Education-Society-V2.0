@@ -128,8 +128,8 @@
       @for (f of filters; track f) {
         <li class="shrink-0">
           <button type="button" (click)="select(f)"
-            class="rounded-md px-4 py-2 text-[12px] font-semibold transition-colors"
-            [class]="filter() === f ? 'bg-primary text-white' : 'bg-white text-primary hover:bg-gray-100'">
+            class="rounded-md border px-4 py-2 text-[12px] font-semibold transition-colors"
+            [class]="filter() === f ? 'border-primary bg-primary text-white' : 'border-gray-200 bg-white text-primary hover:border-primary'">
             {{ f }}
           </button>
         </li>

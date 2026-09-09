@@ -53,7 +53,7 @@ export class Navratri {
   }
 
   readonly quickLinks: ReadonlyArray<{ label: string; icon: string }> = [
-    { label: 'Navratri 2026 Schedule', icon: 'calendar_today' },
+    { label: 'Navratri 2026 Schedule', icon: 'calendar_month' },
     { label: 'Darshan & Pandal Information', icon: 'home' },
     { label: 'Cultural Programs & Events', icon: 'group' },
     { label: 'Gallery', icon: 'photo_library' },
@@ -63,7 +63,7 @@ export class Navratri {
 
   readonly stats: ReadonlyArray<{ value: string; label: string; icon: string }> = [
     { value: '100K+', label: 'Devotees Every Year', icon: 'group' },
-    { value: '9 Days', label: 'of Celebration', icon: 'calendar_today' },
+    { value: '9 Days', label: 'of Celebration', icon: 'calendar_month' },
     { value: '1 Grand Pandal', label: 'CES Campus', icon: 'home' },
     { value: '50+', label: 'Cultural Performances', icon: 'music_note' },
     { value: '500+', label: 'Volunteers', icon: 'favorite' },

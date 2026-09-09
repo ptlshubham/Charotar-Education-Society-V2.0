@@ -2,34 +2,28 @@
 <app-page-hero crumb="Blog" title="CES" accent="Blog"
   blurb="Insights, updates and stories from the CES community. Stay informed. Stay inspired."
   [image]="banner" />
-
 <section class="site-container py-8">
-  <!-- Tabs + search (Full width) -->
-  <div class="mb-6 flex max-sm:flex-col sm:items-center justify-between gap-4 overflow-hidden">
-    <ul class="flex sm:flex-1 w-full list-none gap-2 overflow-x-auto pb-1 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+  <!-- Tabs + search (Full width row) -->
+  <div class="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <ul class="flex list-none gap-2 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] lg:flex-wrap lg:overflow-visible lg:pb-0">
       @for (t of tabs; track t) {
-      <li class="shrink-0 snap-start">
-        <button type="button" (click)="select(t)"
-          class="rounded-md px-4 sm:px-5 py-2.5 text-[12.5px] font-semibold whitespace-nowrap transition-colors"
-          [class]="tab() === t ? 'bg-primary text-white' : 'bg-gray-50 text-primary hover:bg-gray-100'">
-          {{ t }}
-        </button>
-      </li>
+        <li class="shrink-0">
+          <button type="button" (click)="select(t)"
+            class="whitespace-nowrap rounded-md border px-4 py-2 text-[12.5px] font-semibold transition-colors"
+            [class]="tab() === t ? 'border-primary bg-primary text-white' : 'border-gray-200 bg-white text-primary hover:border-primary'">
+            {{ t }}
+          </button>
+        </li>
       }
     </ul>
 
-    <div class="flex max-sm:w-full h-11 min-w-[200px] shrink-0 items-stretch">
+    <div class="flex h-11 w-full min-w-0 items-stretch lg:w-auto lg:min-w-[260px]">
       <label for="blog-search" class="sr-only">Search blogs</label>
-      <input id="blog-search" type="search" [(ngModel)]="search" (keyup.enter)="applySearch()"
-        placeholder="Search blogs..."
+      <input id="blog-search" type="search" [(ngModel)]="search" (keyup.enter)="applySearch()" placeholder="Search blogs..."
         class="min-w-0 flex-1 rounded-l-md border border-r-0 border-gray-300 px-3.5 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary" />
       <button type="button" (click)="applySearch()" aria-label="Search"
         class="flex w-12 shrink-0 items-center justify-center rounded-r-md bg-primary text-white transition-colors hover:bg-primary-dark">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="11" cy="11" r="7" />
-          <path d="m20 20-3.5-3.5" />
-        </svg>
+        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">search</span>
       </button>
     </div>
   </div>
@@ -37,30 +31,6 @@
   <div class="grid gap-6 lg:grid-cols-[1.9fr_1fr]">
     <!-- Main column -->
     <div>
-      <!-- Tabs + search -->
-      <div class="flex flex-wrap items-center justify-between gap-4">
-        <ul class="flex list-none flex-wrap gap-2">
-          @for (t of tabs; track t) {
-            <li>
-              <button type="button" (click)="select(t)"
-                class="rounded-md px-4 py-2 text-[12.5px] font-semibold transition-colors"
-                [class]="tab() === t ? 'bg-primary text-white' : 'bg-white text-primary hover:bg-gray-100'">
-                {{ t }}
-              </button>
-            </li>
-          }
-        </ul>
-
-        <div class="flex h-11 min-w-[220px] items-stretch">
-          <label for="blog-search" class="sr-only">Search blogs</label>
-          <input id="blog-search" type="search" [(ngModel)]="search" (keyup.enter)="applySearch()" placeholder="Search blogs..."
-            class="min-w-0 flex-1 rounded-l-md border border-r-0 border-gray-300 px-3.5 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary" />
-          <button type="button" (click)="applySearch()" aria-label="Search"
-            class="flex w-12 shrink-0 items-center justify-center rounded-r-md bg-primary text-white transition-colors hover:bg-primary-dark">
-            <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">search</span>
-          </button>
-        </div>
-      </div>
 
       @if (loading()) {
       <p class="mt-6 text-[13px] text-muted">Loading posts…</p>
@@ -156,20 +126,6 @@
     <!-- Sidebar -->
     <aside class="space-y-5">
       <!-- Search sidebar -->
-      <div class="rounded-xl border border-gray-200 bg-white p-5">
-        <h2 class="text-[16px] font-bold text-primary">Search</h2>
-        <span class="mt-2 block h-1 w-12 rounded-full bg-secondary" aria-hidden="true"></span>
-        <div class="mt-4 flex h-11 items-stretch">
-          <label for="blog-side-search" class="sr-only">Search blog</label>
-          <input id="blog-side-search" type="search" [(ngModel)]="search" (keyup.enter)="applySearch()" placeholder="Search..."
-            class="min-w-0 flex-1 rounded-l-md border border-r-0 border-gray-300 px-3.5 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary" />
-          <button type="button" (click)="applySearch()" aria-label="Search"
-            class="flex w-12 shrink-0 items-center justify-center rounded-r-md bg-primary text-white transition-colors hover:bg-primary-dark">
-            <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">search</span>
-          </button>
-        </div>
-      </div>
-
       <!-- Recent posts -->
       <div class="rounded-xl border border-gray-200 bg-white p-5">
         <h2 class="text-[16px] font-bold text-primary">Recent Posts</h2>

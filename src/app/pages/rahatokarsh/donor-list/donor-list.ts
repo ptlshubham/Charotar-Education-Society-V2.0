@@ -11,10 +11,11 @@ import { Paginator } from '../../../shared/pagination/paginator';
 import { Pagination } from '../../../shared/pagination/pagination';
 import { Sorter } from '../../../shared/sorting/sorter';
 import { SortHeader } from '../../../shared/sorting/sort-header';
+import { CustomSelect } from '../../../shared/custom-select/custom-select';
 
 @Component({
   selector: 'app-donor-list',
-  imports: [DecimalPipe, FormsModule, RouterLink, Pagination, SortHeader, PageHero],
+  imports: [CustomSelect, DecimalPipe, FormsModule, RouterLink, Pagination, SortHeader, PageHero],
   templateUrl: './donor-list.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './donor-list.scss',

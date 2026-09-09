@@ -34,10 +34,8 @@
     </div>
 
     <button type="button" (click)="toggleFilters()" [attr.aria-expanded]="filtersOpen()"
-      class="flex h-12 items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-5 text-[13px] font-semibold text-primary transition-colors hover:border-primary">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M22 3H2l8 9.5V19l4 2v-8.5z" />
-      </svg>
+      class="flex h-12 items-center justify-center gap-2 rounded-lg border border-gray-300 bg-primary px-5 text-[13px] font-semibold text-white transition-colors hover:border-primary">
+      <span class="material-symbols-outlined !text-[21px] [font-variation-settings:'wght'_300]" aria-hidden="true">filter_alt</span>
       Filter / Search
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
         class="transition-transform duration-200" [class.rotate-180]="filtersOpen()" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>

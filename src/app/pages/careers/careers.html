@@ -19,29 +19,18 @@
   </ul>
 </app-page-hero>
 
-<!-- Notice bar -->
-<div class="site-container relative z-10 -mt-10">
-  <div class="flex items-center gap-4 rounded-xl bg-[#EEF3FB] px-6 py-5">
-    <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-white"
-      aria-hidden="true">
-      <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]">mail</span>
-    </span>
-    <p class="text-[13px] leading-relaxed text-primary">
-      The Charotar Education Society is currently inviting applications from eligible candidates for the
-      following posts.
-    </p>
-  </div>
-</div>
 
 <!-- Reusable download-chip list for the advertisement columns -->
 <ng-template #docs let-list>
   @if (list.length) {
-  <div class="flex flex-col gap-1.5">
+  <div class="flex flex-col items-start gap-1.5">
     @for (doc of list; track doc.file) {
     <a [href]="doc.file | mediaUrl" download (click)="download($event, doc.file, doc.label)"
       class="inline-flex items-start gap-1.5 rounded-md border border-gray-200 px-2.5 py-1.5 text-[11px] font-medium text-primary no-underline transition-colors hover:border-primary hover:bg-primary/[0.03]">
-      <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300] shrink-0 text-logo"
-        aria-hidden="true">download</span>
+      <svg class="mt-0.5 shrink-0 text-logo" width="12" height="12" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+      </svg>
       <span>{{ doc.label }}</span>
     </a>
     }
@@ -143,11 +132,7 @@
     <div class="flex items-center gap-4">
       <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-primary"
         aria-hidden="true">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-          stroke-linecap="round" stroke-linejoin="round">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-          <path d="M14 2v6h6M9 13h6M9 17h4" />
-        </svg>
+        <span class="material-symbols-outlined !text-[24px] [font-variation-settings:'wght'_300]">description</span>
       </span>
       <div>
         <p class="text-[16px] font-bold text-primary">Don't see the right opportunity?</p>
@@ -161,10 +146,7 @@
     <a routerLink="/contact"
       class="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-[13px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
       Send Your Resume
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z" />
-      </svg>
+      <span class="material-symbols-outlined !text-[16px] [font-variation-settings:'wght'_300]" aria-hidden="true">send</span>
     </a>
   </div>
 
@@ -202,8 +184,10 @@
             <td class="px-4 py-3.5">
               <a [href]="notice.file | mediaUrl" download (click)="download($event, notice.file, notice.title)"
                 class="inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-[12px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
-                <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]"
-                  aria-hidden="true">download</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                </svg>
                 Download
               </a>
             </td>
@@ -216,29 +200,7 @@
     <app-pagination [pager]="noticePager" />
   </div>
 
-  <!-- Resume CTA -->
-  <div class="mt-6 flex flex-wrap items-center justify-between gap-5 rounded-xl bg-[#EEF3FB] p-6">
-    <div class="flex items-center gap-4">
-      <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-primary"
-        aria-hidden="true">
-        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]">description</span>
-      </span>
-      <div>
-        <p class="text-[16px] font-bold text-primary">Don't see the right opportunity?</p>
-        <p class="mt-1 text-[12.5px] leading-relaxed text-muted">
-          We're always looking for talented and passionate individuals.<br />Share your resume with us for future
-          openings.
-        </p>
-      </div>
-    </div>
 
-    <a routerLink="/contact"
-      class="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-[13px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
-      Send Your Resume
-      <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]"
-        aria-hidden="true">send</span>
-    </a>
-  </div>
 
 </section>
 
@@ -247,7 +209,10 @@
 <div class="fixed inset-0 z-[999] flex items-center justify-center bg-black/85 p-4" (click)="closeLightbox()">
   <button type="button" (click)="closeLightbox()" aria-label="Close image"
     class="absolute top-5 right-5 flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25">
-    <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]">close</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 6 6 18M6 6l12 12" />
+    </svg>
   </button>
   <img [src]="src" alt="Vacancy advertisement" (click)="$event.stopPropagation()"
     class="max-h-[90vh] max-w-[92vw] rounded-lg object-contain shadow-2xl" />

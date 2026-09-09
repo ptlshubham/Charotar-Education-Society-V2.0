@@ -11,8 +11,8 @@
   <div role="tablist" aria-label="Language" class="flex gap-1">
     @for (lang of ['english', 'gujarati']; track lang) {
       <button type="button" role="tab" [attr.aria-selected]="active() === lang" (click)="select($any(lang))"
-        class="flex items-center gap-2 rounded-t-lg px-8 py-3 text-[14px] font-semibold transition-colors"
-        [class]="active() === lang ? 'bg-primary text-white' : 'bg-white text-primary hover:bg-gray-50'">
+        class="flex items-center gap-2 rounded-t-lg px-8 py-3 text-[14px] border border-gray-300 font-semibold transition-colors"
+        [class]="active() === lang ? 'bg-primary text-white' : 'bg-white text-primary hover:border hover:border-primary '">
         <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">language</span>
         {{ lang === 'english' ? 'English' : 'Gujarati' }}
       </button>
@@ -35,15 +35,31 @@
 
     <div class="animate-dropdown mt-6 space-y-4">
       @if (active() === 'english') {
-        @for (para of english; track para) {
-          <p class="text-[13.5px] leading-relaxed text-muted">{{ para }}</p>
+        @for (para of english; track para; let i = $index) {
+          <p class="text-[13.5px] leading-relaxed text-muted lg:!block" [class.hidden]="!expanded() && i >= 3">
+            {{ para }}
+            @if ((!expanded() && i === 2) || (expanded() && i === english.length - 1)) {
+              <button type="button" class="ml-1 inline text-[13px] font-semibold text-primary underline underline-offset-2 lg:hidden"
+                (click)="expanded.set(!expanded())">
+                {{ expanded() ? 'Read Less' : 'Read More' }}
+              </button>
+            }
+          </p>
         }
       } @else {
-        @for (block of gujarati; track block.text) {
+        @for (block of gujarati; track block.text; let i = $index) {
           @if (block.kind === 'h') {
-            <h3 class="pt-2 text-[15px] font-bold text-primary">{{ block.text }}</h3>
+            <h3 class="pt-2 text-[15px] font-bold text-primary lg:!block" [class.hidden]="!expanded() && i >= 3">{{ block.text }}</h3>
           } @else {
-            <p class="text-[13.5px] leading-relaxed text-muted">{{ block.text }}</p>
+            <p class="text-[13.5px] leading-relaxed text-muted lg:!block" [class.hidden]="!expanded() && i >= 3">
+              {{ block.text }}
+              @if ((!expanded() && i === 2) || (expanded() && i === gujarati.length - 1)) {
+                <button type="button" class="ml-1 inline text-[13px] font-semibold text-primary  lg:hidden"
+                  (click)="expanded.set(!expanded())">
+                  {{ expanded() ? 'Read Less' : 'Read More' }}
+                </button>
+              }
+            </p>
           }
         }
       }

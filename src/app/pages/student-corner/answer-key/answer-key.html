@@ -39,38 +39,23 @@
     <div class="animate-dropdown mt-5 grid gap-4 lg:grid-cols-[1fr_1fr_1fr_auto] lg:items-end">
       <div>
         <label for="ak-year" class="sr-only">Select Year</label>
-        <div class="flex h-12 items-center gap-2.5 rounded-lg border border-gray-300 bg-white px-4">
-          <span class="material-symbols-outlined shrink-0 text-primary !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">calendar_today</span>
-          <select id="ak-year" [(ngModel)]="year" class="w-full bg-transparent text-[13px] text-primary outline-none">
-            @for (y of years(); track y) { <option [value]="y">{{ y }}</option> }
-          </select>
-        </div>
+        <app-custom-select [(ngModel)]="year" [options]="years()" icon="calendar_month" />
       </div>
 
       <div>
         <label for="ak-std" class="sr-only">Select Standard</label>
-        <div class="flex h-12 items-center gap-2.5 rounded-lg border border-gray-300 bg-white px-4">
-          <span class="material-symbols-outlined shrink-0 text-primary !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">school</span>
-          <select id="ak-std" [(ngModel)]="standard" class="w-full bg-transparent text-[13px] text-primary outline-none">
-            @for (s of standards(); track s) { <option [value]="s">{{ s }}</option> }
-          </select>
-        </div>
+        <app-custom-select [(ngModel)]="standard" [options]="standards()" icon="school" />
       </div>
 
       <div>
         <label for="ak-sub" class="sr-only">Select Subject</label>
-        <div class="flex h-12 items-center gap-2.5 rounded-lg border border-gray-300 bg-white px-4">
-          <span class="material-symbols-outlined shrink-0 text-primary !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">menu_book</span>
-          <select id="ak-sub" [(ngModel)]="subject" class="w-full bg-transparent text-[13px] text-primary outline-none">
-            @for (s of subjects(); track s) { <option [value]="s">{{ s }}</option> }
-          </select>
-        </div>
+        <app-custom-select [(ngModel)]="subject" [options]="subjects()" icon="menu_book" />
       </div>
 
       <button type="button" (click)="apply()"
         class="flex h-12 items-center justify-center gap-2 rounded-lg bg-primary px-7 text-[13px] font-semibold text-white transition-colors hover:bg-primary-dark">
         Apply Filter
-        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">filter_list</span>
+        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">filter_alt</span>
       </button>
     </div>
 

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Country, State, City } from 'country-state-city';
 import { SuccessDialogService } from '../../../core/services/success-dialog.service';
+import { CustomSelect } from '../../../shared/custom-select/custom-select';
 
 /**
  * Ported from the legacy alumni page: same fields, validators and payload keys
@@ -10,7 +11,7 @@ import { SuccessDialogService } from '../../../core/services/success-dialog.serv
  */
 @Component({
   selector: 'app-alumni-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CustomSelect],
   templateUrl: './alumni-form.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './alumni-form.scss',
@@ -35,6 +36,7 @@ export class AlumniForm {
   );
 
   readonly countries = Country.getAllCountries().map((c) => ({ name: c.name, iso: c.isoCode }));
+  readonly countryNames = this.countries.map((country) => country.name);
   readonly states = signal<ReadonlyArray<{ name: string; iso: string; countryIso: string }>>([]);
   readonly cities = signal<readonly string[]>([]);
 

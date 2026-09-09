@@ -151,7 +151,7 @@
           <p class="mb-1.5 text-[12.5px] font-semibold text-primary">
             Donation Amount <span class="text-logo">(Minimum ₹10)</span> <span class="text-logo">*</span>
           </p>
-          <div class="grid grid-cols-5 gap-2">
+          <div class="grid grid-cols-3 gap-2 sm:grid-cols-5">
             @for (preset of presets; track preset) {
             <button type="button" (click)="choose(preset)"
               class="h-10 rounded-md border text-[12.5px] font-semibold transition-colors" [class]="!customAmount() && f['amount'].value === preset

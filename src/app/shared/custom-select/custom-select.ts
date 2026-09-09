@@ -3,9 +3,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  EventEmitter,
   forwardRef,
   HostListener,
   Input,
+  Output,
   computed,
   inject,
   signal,
@@ -25,20 +27,24 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 @Component({
   selector: 'app-custom-select',
   imports: [FormsModule],
+  styles: [':host { display: block; width: 100%; }'],
   changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CustomSelect), multi: true },
   ],
   template: `
-    <div class="relative">
+    <div class="relative w-full">
       <button type="button" [disabled]="disabled" (click)="toggle()"
         [attr.aria-expanded]="open()" aria-haspopup="listbox"
-        class="flex h-11 w-full items-center justify-between gap-2 rounded-md border bg-white px-3.5 text-left text-[13px] outline-none transition-colors focus:border-primary disabled:opacity-60"
+        class="flex h-11 w-full items-center justify-start gap-2 rounded-md border bg-white px-3.5 text-left text-[13px] outline-none transition-colors focus:border-primary disabled:opacity-60"
         [class]="invalid ? 'border-red-400' : 'border-gray-300'">
+        @if (icon) {
+          <span class="material-symbols-outlined shrink-0 text-primary !text-[20px] [font-variation-settings:'wght'_300]" aria-hidden="true">{{ icon }}</span>
+        }
         <span [class]="value() ? 'text-primary' : 'text-gray-400'" class="truncate">
           {{ value() || placeholder }}
         </span>
-        <svg class="shrink-0 text-gray-400 transition-transform duration-200" [class.rotate-180]="open()"
+        <svg class="ml-auto shrink-0 text-gray-400 transition-transform duration-200" [class.rotate-180]="open()"
           width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="m6 9 6 6 6-6" />
         </svg>
@@ -56,10 +62,10 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
           <ul role="listbox" data-lenis-prevent class="max-h-[220px] overflow-y-auto overscroll-contain py-1">
             @for (option of filtered(); track option) {
-              <li role="option" [attr.aria-selected]="option === value()">
+              <li role="option" [attr.aria-selected]="stringValue(option) === stringValue(value())">
                 <button type="button" (click)="select(option)"
-                  class="block w-full px-3.5 py-2 text-left text-[13px] transition-colors hover:bg-[#F1F5FB]"
-                  [class]="option === value() ? 'bg-[#EEF3FB] font-semibold text-primary' : 'text-primary'">
+                  class="block w-full px-3.5 py-2 text-left text-[13px] transition-colors"
+                    [class]="stringValue(option) === stringValue(value()) ? 'bg-secondary font-bold text-white' : 'text-primary hover:bg-secondary hover:text-white'">
                   {{ option }}
                 </button>
               </li>
@@ -75,9 +81,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class CustomSelect implements ControlValueAccessor {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
 
-  @Input() options: readonly string[] = [];
+  @Input() options: readonly (string | number)[] = [];
   @Input() placeholder = 'Select';
+  @Input() icon = '';
   @Input({ transform: booleanAttribute }) invalid = false;
+  @Input() disabled = false;
+  @Output() valueChange = new EventEmitter<string>();
   /** Show the search box once the list is longer than this. */
   @Input() searchThreshold = 8;
 
@@ -86,16 +95,19 @@ export class CustomSelect implements ControlValueAccessor {
   readonly query = signal('');
   /** Bound to the search input; mirrored into the `query` signal. */
   term = '';
-  disabled = false;
 
-  private onChange: (v: string) => void = () => {};
-  private onTouched: () => void = () => {};
+  private onChange: (v: string) => void = () => { };
+  private onTouched: () => void = () => { };
 
   readonly showSearch = computed(() => this.options.length > this.searchThreshold);
   readonly filtered = computed(() => {
     const q = this.query().trim().toLowerCase();
-    return q ? this.options.filter((o) => o.toLowerCase().includes(q)) : this.options;
+    return q ? this.options.filter((o) => String(o).toLowerCase().includes(q)) : this.options;
   });
+
+  stringValue(value: string | number | null | undefined): string {
+    return String(value);
+  }
 
   writeValue(value: string): void {
     this.value.set(value ?? '');
@@ -116,9 +128,11 @@ export class CustomSelect implements ControlValueAccessor {
     if (!this.open()) this.onTouched();
   }
 
-  select(option: string): void {
-    this.value.set(option);
-    this.onChange(option);
+  select(option: string | number): void {
+    const strVal = String(option);
+    this.value.set(strVal);
+    this.onChange(strVal);
+    this.valueChange.emit(strVal);
     this.close();
   }
 

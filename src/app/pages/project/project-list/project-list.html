@@ -5,10 +5,10 @@
     class="flex justify-start gap-3 overflow-x-auto py-6 pb-2 sm:justify-center lg:flex-wrap lg:overflow-visible">
     @for (filter of filters; track filter.id) {
       <button type="button" role="tab" [attr.aria-selected]="active() === filter.id" (click)="select(filter.id)"
-        class="flex shrink-0 items-center gap-2 rounded-lg px-4 py-2.5 text-[13px] font-semibold transition-colors"
+        class="flex shrink-0 items-center gap-2 rounded-lg border px-4 py-2.5 text-[13px] font-semibold transition-colors"
         [class]="active() === filter.id
-          ? 'bg-primary text-white shadow-md'
-          : 'text-primary hover:bg-primary/10'">
+          ? 'border-primary bg-primary text-white shadow-md'
+          : 'border-gray-200 bg-gray-50/50 text-primary hover:border-primary hover:bg-white'">
         <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">{{ filter.icon }}</span>
         {{ filter.label }}
       </button>

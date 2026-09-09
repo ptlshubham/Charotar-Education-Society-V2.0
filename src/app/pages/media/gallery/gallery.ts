@@ -52,6 +52,7 @@ export class Gallery {
 
   readonly tab = signal<'photos' | 'videos'>('photos');
   readonly sortDir = signal<'latest' | 'oldest'>('latest');
+  readonly sortDropdownOpen = signal(false);
   search = '';
   private readonly query = signal('');
 

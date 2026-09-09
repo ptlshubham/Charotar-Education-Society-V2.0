@@ -272,17 +272,12 @@
 
     <ul class="list-none space-y-3 border-gray-200 lg:border-l lg:pl-6">
       @for (fact of counsellorInfo.facts; track fact) {
-      <li class="flex items-start gap-3">
-        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-[#4F5BD5]"
-          aria-hidden="true">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="m12 3 9 5-9 5-9-5 9-5z" />
-            <path d="M21 8v6" />
-          </svg>
-        </span>
-        <span class="pt-1.5 text-[12.5px] leading-relaxed text-muted">{{ fact }}</span>
-      </li>
+        <li class="flex items-start gap-3">
+          <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-[#4F5BD5]" aria-hidden="true">
+            <span class="material-symbols-outlined !text-[17px] [font-variation-settings:'wght'_300]">school</span>
+          </span>
+          <span class="pt-1.5 text-[12.5px] leading-relaxed text-muted">{{ fact }}</span>
+        </li>
       }
     </ul>
   </div>

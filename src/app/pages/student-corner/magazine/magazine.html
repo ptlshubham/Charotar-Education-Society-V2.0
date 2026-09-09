@@ -7,20 +7,14 @@
 
   <!-- Filters -->
   <div class="flex flex-wrap items-center gap-4">
-    <div class="flex h-11 min-w-[170px] items-center gap-2.5 rounded-md border border-gray-300 px-3.5">
-      <span class="material-symbols-outlined shrink-0 text-primary !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">calendar_today</span>
+    <div class="min-w-[170px]">
       <label for="mag-year" class="sr-only">Filter by year</label>
-      <select id="mag-year" [(ngModel)]="year" (change)="apply()" class="w-full bg-transparent text-[13px] text-primary outline-none">
-        @for (y of years(); track y) { <option [value]="y">{{ y }}</option> }
-      </select>
+      <app-custom-select [(ngModel)]="year" (ngModelChange)="apply()" [options]="years()" icon="calendar_month" />
     </div>
 
-    <div class="flex h-11 min-w-[170px] items-center gap-2.5 rounded-md border border-gray-300 px-3.5">
-      <span class="material-symbols-outlined shrink-0 text-primary !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">menu_book</span>
+    <div class="min-w-[170px]">
       <label for="mag-issue" class="sr-only">Filter by issue</label>
-      <select id="mag-issue" [(ngModel)]="issue" (change)="apply()" class="w-full bg-transparent text-[13px] text-primary outline-none">
-        @for (i of issues(); track i) { <option [value]="i">{{ i }}</option> }
-      </select>
+      <app-custom-select [(ngModel)]="issue" (ngModelChange)="apply()" [options]="issues()" icon="menu_book" />
     </div>
 
     <div class="flex h-11 min-w-[220px] flex-1 items-stretch">

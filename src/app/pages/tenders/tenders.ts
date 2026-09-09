@@ -60,6 +60,10 @@ export class Tenders {
   status = 'Status: All';
   search = '';
 
+  readonly catOpen = signal(false);
+  readonly depOpen = signal(false);
+  readonly statusOpen = signal(false);
+
   private readonly query = signal({ department: 'All Departments', status: 'Status: All', search: '' });
 
   apply(): void {

@@ -11,10 +11,10 @@ import { isPlatformBrowser } from '@angular/common';
 import { LenisService } from '../../core/services/lenis.service';
 
 /**
- * Global "back to top" button. Fixed to the bottom-right corner (stacked above
- * the AI button) and rendered from the main layout, so it appears on every route.
- * Hidden at the top of the page; fades in once the user scrolls down a little,
- * with a circular ring that fills to show scroll progress.
+ * Global "back to top" button. A solid circular button (so it stays visible on any
+ * background, including navy sections) fixed to the bottom-right corner, below the
+ * AI button, and rendered from the main layout so it appears on every route.
+ * Hidden at the top of the page; fades in once the user scrolls down a little.
  */
 @Component({
   selector: 'app-scroll-to-top',
@@ -23,25 +23,11 @@ import { LenisService } from '../../core/services/lenis.service';
   templateUrl: './scroll-to-top.html',
 })
 export class ScrollToTop {
-  /** Radius of the progress ring (viewBox is 0 0 50 50, centre 25,25). Must match
-   *  the r of the <circle> elements in the template so the arc fills accurately. */
-  private readonly radius = 23;
-  /** Full circumference  the progress arc's dash length. */
-  readonly circumference = 2 * Math.PI * this.radius;
-
-  /** Page scroll progress, 0 (top) .. 1 (bottom). */
-  progress = signal(0);
-
   /** Whether the button is shown  true once scrolled past the threshold. */
   visible = signal(false);
 
   /** Reveal the button after the user scrolls this many pixels down. */
   private readonly showAfter = 200;
-
-  /** Dash offset that reveals the arc proportionally to scroll progress. */
-  get dashOffset(): number {
-    return this.circumference * (1 - this.progress());
-  }
 
   private readonly lenis = inject(LenisService);
 
@@ -50,13 +36,7 @@ export class ScrollToTop {
     const destroyRef = inject(DestroyRef);
     if (!isPlatformBrowser(platformId)) return;
 
-    const onScroll = () => {
-      const doc = document.documentElement;
-      const scrollable = doc.scrollHeight - doc.clientHeight;
-      const p = scrollable > 0 ? window.scrollY / scrollable : 0;
-      this.progress.set(Math.min(1, Math.max(0, p)));
-      this.visible.set(window.scrollY > this.showAfter);
-    };
+    const onScroll = () => this.visible.set(window.scrollY > this.showAfter);
 
     afterNextRender(() => {
       onScroll();

@@ -138,7 +138,7 @@
      launcher. Retires as soon as it's dismissed or the panel is opened. ═══ -->
 @if (greetingVisible() && (!open() || minimized())) {
 <div
-  class="ai-greeting fixed bottom-[86px] right-6 z-[86] w-[250px] rounded-[12px] bg-white p-3 pr-7 shadow-[0_18px_40px_-12px_rgba(11,40,39,0.3)] ring-1 ring-primary/[0.06]"
+  class="ai-greeting fixed bottom-[146px] right-6 z-[86] w-[250px] rounded-[12px] bg-white p-3 pr-7 shadow-[0_18px_40px_-12px_rgba(11,40,39,0.3)] ring-1 ring-primary/[0.06]"
   role="status" aria-live="polite">
   <button type="button" (click)="openFromGreeting()" class="flex items-start gap-2.5 text-left w-full cursor-pointer">
     <span class="ai-badge flex items-center justify-center w-7 h-7 rounded-full shrink-0">
@@ -165,7 +165,7 @@
 <!-- ═══ Launcher — hidden while the panel is open (the panel has its own close) ═══ -->
 @if (!open() || minimized()) {
 <button type="button" (click)="toggle()" aria-label="Open AI assistant" aria-expanded="false"
-  class="fixed bottom-6 right-6 z-[85] w-[50px] h-[50px] rounded-full flex items-center justify-center shadow-lg cursor-pointer transition-transform hover:scale-105 bg-primary">
+  class="fixed bottom-[84px] right-6 z-[85] w-[50px] h-[50px] rounded-full flex items-center justify-center shadow-lg cursor-pointer transition-transform hover:scale-105 bg-primary ring-2 ring-white/60">
   <img src="/assets/icons/ai-icon.svg" alt="Sarthi assistant" aria-hidden="true" class="w-8 h-8" />
   @if (greetingVisible()) {
   <span class="ai-launcher-ping absolute inset-0 rounded-full ring-2 ring-[#7FA6FF]" aria-hidden="true"></span>

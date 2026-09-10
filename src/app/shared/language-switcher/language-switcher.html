@@ -1,29 +1,44 @@
 <!-- notranslate: keep the language names themselves untranslated. -->
-<div class="relative notranslate" translate="no" data-lang-switcher>
+<div class="relative notranslate" [class.compact]="compact" translate="no" data-lang-switcher>
   <button type="button" (click)="toggle()" [attr.aria-expanded]="open()" aria-label="Change language"
-    class="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-[13px] font-medium transition-colors"
+    class="inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-[13px] font-medium transition-colors"
     [class]="variant === 'dark'
-      ? 'text-white/90 hover:bg-white/10'
-      : 'border border-gray-300 text-primary hover:border-primary'">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <circle cx="12" cy="12" r="10" /><path d="M2 12h20" /><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z" />
+      ? 'border-white/45 text-white hover:bg-white/10'
+      : 'border-gray-300 text-primary hover:border-primary'">
+    @if (compact) {
+    <img src="/assets/images/header/icons/translate.svg" width="16" height="16" alt="" />
+    } @else {
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+      stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M2 12h20" />
+      <path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z" />
     </svg>
+    }
     <span>{{ currentLang().native }}</span>
-    <svg class="transition-transform" [class.rotate-180]="open()" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+    @if (compact) {
+    <img class="compact-chevron" src="/assets/images/header/icons/language-chevron.svg" width="14" height="14" alt="" />
+    } @else {
+    <svg class="transition-transform" [class.rotate-180]="open()" width="12" height="12" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+    }
   </button>
 
   @if (open()) {
-    <ul class="animate-dropdown absolute right-0 z-[80] mt-2 w-44 list-none overflow-hidden rounded-lg border border-gray-100 bg-white py-1 text-primary shadow-[0_16px_40px_rgba(32,49,84,0.2)]">
-      @for (lang of languages; track lang.code) {
-        <li>
-          <button type="button" (click)="select(lang.code)"
-            class="flex w-full items-center justify-between gap-3 px-4 py-2 text-left transition-colors hover:bg-accent/8"
-            [class.font-semibold]="lang.code === current()">
-            <span class="text-[13.5px]" [class.text-accent]="lang.code === current()">{{ lang.native }}</span>
-            <span class="text-[11px] text-muted">{{ lang.label }}</span>
-          </button>
-        </li>
-      }
-    </ul>
+  <ul
+    class="animate-dropdown absolute right-0 z-[80] mt-2 w-44 list-none overflow-hidden rounded-lg border border-gray-100 bg-white py-1 text-primary shadow-[0_16px_40px_rgba(32,49,84,0.2)]">
+    @for (lang of languages; track lang.code) {
+    <li>
+      <button type="button" (click)="select(lang.code)"
+        class="flex w-full items-center justify-between gap-3 px-4 py-2 text-left transition-colors hover:bg-accent/8"
+        [class.font-semibold]="lang.code === current()">
+        <span class="text-[13.5px]" [class.text-accent]="lang.code === current()">{{ lang.native }}</span>
+        <span class="text-[11px] text-muted">{{ lang.label }}</span>
+      </button>
+    </li>
+    }
+  </ul>
   }
 </div>

@@ -6,6 +6,7 @@ import {
   PLATFORM_ID,
   AfterViewInit,
   ChangeDetectionStrategy,
+  CUSTOM_ELEMENTS_SCHEMA,
   DestroyRef,
   inject,
   signal,
@@ -53,6 +54,12 @@ export const ICONS = {
     'M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z',
   ],
   heart: ['M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z'],
+  headset: [
+    'M4 14v-2a8 8 0 1 1 16 0v2',
+    'M4 13h1.5A1.5 1.5 0 0 1 7 14.5v3A1.5 1.5 0 0 1 5.5 19H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1z',
+    'M20 13h-1.5a1.5 1.5 0 0 0-1.5 1.5v3a1.5 1.5 0 0 0 1.5 1.5H20a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1z',
+    'M20 19v.5a2.5 2.5 0 0 1-2.5 2.5H14',
+  ],
   list: ['M8 6h13M8 12h13M8 18h13', 'M3 6h.01M3 12h.01M3 18h.01'],
   image: [
     'M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z',
@@ -70,15 +77,21 @@ export const ICONS = {
 } as const;
 
 
+/** Minimal shape of the Swiper custom element we initialise for the ad banner. */
+type SwiperEl = HTMLElement & { initialize(): void };
+
 @Component({
   selector: 'app-header',
   imports: [RouterLink, LanguageSwitcher],
   templateUrl: './header.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './header.scss',
+  host: { '[class.header-condensed]': 'headerCondensed()' },
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class Header implements AfterViewInit {
   mobileMenuOpen = false;
+  readonly headerCondensed = signal(false);
 
   readonly email = 'cesociety@cesociety.in';
   readonly phone = '02692 - 243083';
@@ -93,10 +106,6 @@ export class Header implements AfterViewInit {
    * and freeze it into the static HTML for every visitor.
    */
   readonly lastUpdated = signal('');
-
-  /** Past a small scroll threshold the full header gives way to the compact
-   *  sticky bar. */
-  readonly scrolled = signal(false);
 
   /** True on devices whose primary pointer can hover (desktop) — set in the browser. */
   private hoverCapable = false;
@@ -117,6 +126,7 @@ export class Header implements AfterViewInit {
    * stuck open after a click (focus-within) with no way to click it closed.
    */
   readonly openMenu = signal<string | null>(null);
+  readonly openSubmenu = signal<string | null>(null);
 
   /** Full nav tree — mirrors the live cesociety.in menu, including its third level. */
   readonly navLinks: ReadonlyArray<NavItem> = [
@@ -192,16 +202,46 @@ export class Header implements AfterViewInit {
     },
   ];
 
-  /** The desktop nav is split around the centred emblem: left of it and right of it. */
-  readonly navLeft = this.navLinks.slice(0, 5); // Home … Academic
-  readonly navRight = this.navLinks.slice(5); // Alumni … More
+  readonly desktopNav: ReadonlyArray<NavItem> = [
+    ...this.navLinks.slice(0, 8),
+    this.navLinks[9], // Student Corner
+    this.navLinks[8], // IP Cell
+    {
+      ...this.navLinks[11],
+      children: [
+        ...(this.navLinks[11].children ?? []),
+        { label: 'Contact Us', link: '/contact' },
+        { label: 'RTI', link: '/support/disclosure-policy' },
+        { label: 'Grievance', link: '/contact' },
+      ],
+    },
+  ];
+
+  readonly desktopSocials = ['Instagram', 'LinkedIn', 'Behance', 'Facebook', 'YouTube'].map(label => ({
+    label,
+    href: this.socials.find(social => social.label === label)?.href,
+    asset: label === 'YouTube' ? null : `/assets/images/header/icons/${label.toLowerCase()}.svg`,
+    path: this.socials.find(social => social.label === label)?.path,
+  }));
 
   /** Quick-access icon links on the right of the brand bar. */
   readonly quickLinks: ReadonlyArray<{ label: string; short: string; link: string; icon: IconKey }> = [
     { label: 'News', short: 'News', link: '/more/news', icon: 'news' },
-    { label: 'Free Psychological Counselling', short: 'Free Psychological Counselling', link: '/counselling', icon: 'heart' },
+    { label: 'Free Psychological Counselling', short: 'Free Psychological Counselling', link: '/counselling', icon: 'headset' },
     { label: 'Events', short: 'Events', link: '/navratri', icon: 'calendar' },
     { label: 'Gallery', short: 'Gallery', link: '/glory/gallery', icon: 'image' },
+  ];
+
+  /**
+   * Rotating promo banners shown top-right of the brand bar. Auto-plays when there
+   * is more than one slide (a single entry just shows statically). Replace or extend
+   * these as campaigns change — drop artwork in /assets/images/header/ads/ (220×64,
+   * or any 3.4:1 image) and add an entry here; `link` is optional.
+   */
+  readonly ads: ReadonlyArray<{ image: string; alt: string; link?: string }> = [
+    { image: '/assets/images/header/icons/heritage.png', alt: 'Educating Since 1916' },
+    { image: '/assets/images/header/ads/admissions.svg', alt: 'Admissions Open 2025–26 — Apply Now', link: '/academic/school' },
+    { image: '/assets/images/header/ads/centenary.svg', alt: 'Centenary Celebration — 110+ Years', link: '/celebration' },
   ];
 
   /** Extra links in the top utility strip. RTI/Grievance point at the nearest
@@ -336,7 +376,9 @@ export class Header implements AfterViewInit {
 
   /** True when the current URL starts with the given prefix. */
   linkActive(prefix: string): boolean {
-    return this.router.url.startsWith(prefix);
+    const path = this.router.url.split(/[?#]/)[0];
+    if (prefix === '/home' && path === '/') return true;
+    return path === prefix || path.startsWith(prefix + '/');
   }
 
   /** True when the item itself, or any descendant, matches the current URL. */
@@ -346,12 +388,12 @@ export class Header implements AfterViewInit {
   }
 
   /**
-   * Which top-level tab renders as the filled navy "active" tab. The homepage is
+   * Which top-level tab receives the active colour. The homepage is
    * served at '/' (with '/home' redirecting to it), so the first (Home) item is
    * active there even though no child link literally starts with '/'.
    */
   activeTab(item: NavItem, first: boolean): boolean {
-    if (first && (this.router.url === '/' || this.router.url.startsWith('/home'))) return true;
+    if (first && this.linkActive('/home')) return true;
     return this.branchActive(item);
   }
 
@@ -371,24 +413,42 @@ export class Header implements AfterViewInit {
    * there we skip hover and let `toggleDropdown` own it.
    */
   onEnter(label: string): void {
-    if (this.hoverCapable) this.openMenu.set(label);
+    if (this.hoverCapable && this.openMenu() !== label) {
+      this.openSubmenu.set(null);
+      this.openMenu.set(label);
+    }
   }
 
   onLeave(): void {
-    if (this.hoverCapable) this.openMenu.set(null);
+    if (this.hoverCapable) this.closeDropdown();
   }
 
   closeDropdown(): void {
+    this.openSubmenu.set(null);
     this.openMenu.set(null);
   }
 
   /** Click toggles, so clicking the already-open tab closes it (mouse and touch). */
   toggleDropdown(label: string): void {
+    this.openSubmenu.set(null);
     this.openMenu.update(current => (current === label ? null : label));
+  }
+
+  onSubmenuEnter(label: string): void {
+    if (this.hoverCapable) this.openSubmenu.set(label);
+  }
+
+  onSubmenuLeave(): void {
+    if (this.hoverCapable) this.openSubmenu.set(null);
+  }
+
+  toggleSubmenu(label: string): void {
+    this.openSubmenu.update(current => current === label ? null : label);
   }
 
   @ViewChild('mobileSidebar') sidebarRef!: ElementRef<HTMLElement>;
   @ViewChild('mobileOverlay') overlayRef!: ElementRef<HTMLElement>;
+  @ViewChild('adSwiper') adSwiperRef?: ElementRef<SwiperEl>;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -396,7 +456,7 @@ export class Header implements AfterViewInit {
     private lenis: LenisService,
   ) { }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     if (!isPlatformBrowser(this.platformId)) return;
     this.hoverCapable = window.matchMedia('(hover: hover)').matches;
     gsap.set(this.sidebarRef.nativeElement, { x: '100%' });
@@ -409,12 +469,37 @@ export class Header implements AfterViewInit {
       }),
     );
 
-    // Lenis scrolls the window for real, so the native scroll event still fires.
-    // Past the threshold the full header collapses into the compact sticky bar.
-    const onScroll = () => this.scrolled.set(window.scrollY > 160);
-    onScroll();
+    // Move the sticky host up by the two upper rows, preserving its flow height
+    // so toggling the header never changes scrollY or causes a layout jump.
+    const desktop = window.matchMedia('(min-width: 1280px)');
+    let previousY = Math.max(0, window.scrollY);
+    const resetHeader = () => {
+      previousY = Math.max(0, window.scrollY);
+      this.headerCondensed.set(desktop.matches && previousY > 104);
+    };
+    const onScroll = () => {
+      const currentY = Math.max(0, window.scrollY);
+      const delta = currentY - previousY;
+      if (!desktop.matches || currentY <= 8) {
+        this.headerCondensed.set(false);
+      } else {
+        // Ignore tiny trackpad movements, but accumulate them until direction is clear.
+        if (Math.abs(delta) < 6) return;
+        if (delta < 0) this.headerCondensed.set(false);
+        else if (currentY > 104) {
+          this.headerCondensed.set(true);
+          this.searchOpen.set(false);
+        }
+      }
+      previousY = currentY;
+    };
+    resetHeader();
     window.addEventListener('scroll', onScroll, { passive: true });
-    this.destroyRef.onDestroy(() => window.removeEventListener('scroll', onScroll));
+    desktop.addEventListener('change', resetHeader);
+    this.destroyRef.onDestroy(() => {
+      window.removeEventListener('scroll', onScroll);
+      desktop.removeEventListener('change', resetHeader);
+    });
 
     // Close the search panel when clicking anywhere outside a search box.
     const onDocClick = (e: MouseEvent) => {
@@ -434,6 +519,24 @@ export class Header implements AfterViewInit {
     pollVisitors();
     const visitorTimer = setInterval(pollVisitors, 20000);
     this.destroyRef.onDestroy(() => clearInterval(visitorTimer));
+
+    // Rotating ad banner — Swiper's custom elements need `customElements`, absent
+    // during SSR, so this runs browser-only. A single ad stays static (no autoplay).
+    if (this.ads.length > 1 && this.adSwiperRef) {
+      const { register } = await import('swiper/element/bundle');
+      register();
+      const el = this.adSwiperRef.nativeElement;
+      Object.assign(el, {
+        loop: true,
+        speed: 700,
+        effect: 'fade',
+        fadeEffect: { crossFade: true },
+        autoplay: { delay: 3500, disableOnInteraction: false, pauseOnMouseEnter: true },
+        allowTouchMove: false,
+        a11y: { enabled: true },
+      });
+      el.initialize();
+    }
   }
 
   /** Accept a bare number or common shapes ({ online }, { count }, { visitors }, { total }, { data }). */

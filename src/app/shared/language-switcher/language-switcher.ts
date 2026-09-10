@@ -35,6 +35,7 @@ export class LanguageSwitcher {
 
   /** 'dark' for the navy top bar (white text); 'light' for a white surface. */
   @Input() variant: 'dark' | 'light' = 'dark';
+  @Input() compact = false;
 
   readonly languages: readonly Lang[] = [
     { code: 'en', label: 'English', native: 'English' },

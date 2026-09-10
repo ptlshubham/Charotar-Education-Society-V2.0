@@ -10,7 +10,7 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
   styleUrl: './others.scss',
 })
 export class Others {
-  readonly banner = PLACEHOLDER.academic.othersBanner;
+  readonly banner = '/assets/images/hero/others.jpeg';
 
   readonly featured = {
     name: 'CES Performing Arts And Fine Arts Academy',

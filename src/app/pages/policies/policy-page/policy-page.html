@@ -1,5 +1,6 @@
 <!-- ─── Hero ─── -->
-<app-page-hero [crumb]="policy().titleLead + policy().titleAccent" [title]="policy().titleLead"
+<app-page-hero [crumb]="policy().titleLead + policy().titleAccent"
+  [trail]="policy().crumbParent ? [{ label: policy().crumbParent! }] : []" [title]="policy().titleLead"
   [accent]="policy().titleAccent" [blurb]="policy().blurb" [image]="banner" />
 
 <section class="site-container py-8">

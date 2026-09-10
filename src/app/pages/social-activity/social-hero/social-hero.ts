@@ -10,5 +10,5 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
   styleUrl: './social-hero.scss',
 })
 export class SocialHero {
-  readonly backdrop = PLACEHOLDER.about.hero;
+  readonly backdrop = '/assets/images/hero/social-activity.jpeg';
 }

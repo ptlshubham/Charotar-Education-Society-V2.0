@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DecimalPipe, formatDate } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { PageHero } from '../../../shared/page-hero/page-hero';
 import { catchError, of } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
@@ -15,7 +14,7 @@ import { CustomSelect } from '../../../shared/custom-select/custom-select';
 
 @Component({
   selector: 'app-donor-list',
-  imports: [CustomSelect, DecimalPipe, FormsModule, RouterLink, Pagination, SortHeader, PageHero],
+  imports: [CustomSelect, DecimalPipe, FormsModule, Pagination, SortHeader, PageHero],
   templateUrl: './donor-list.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './donor-list.scss',

@@ -8,7 +8,7 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
   styleUrl: './guinness-record.scss',
 })
 export class GuinnessRecord {
-  readonly certificate = PLACEHOLDER.celebration.certificate;
+  readonly certificate = '/assets/images/celebration/certificate.jpeg'
 
   readonly records: readonly string[] = [
     'Largest Quiz Competition (3,832 participants)',

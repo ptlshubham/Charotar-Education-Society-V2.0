@@ -10,5 +10,5 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
   styleUrl: './leadership-hero.scss',
 })
 export class LeadershipHero {
-  readonly heroImage = PLACEHOLDER.about.hero;
+  readonly heroImage = '/assets/images/hero/management.jpeg';
 }

@@ -31,7 +31,7 @@ const ICON = {
   styleUrl: './school.scss',
 })
 export class School {
-  readonly banner = PLACEHOLDER.academic.schoolsBanner;
+  readonly banner = '/assets/images/hero/school.jpeg';
 
   readonly heroStats: readonly HeroStat[] = [
     { value: '18+', label: 'Schools', path: ICON.building, icon: 'apartment', iconClass: 'text-white' },

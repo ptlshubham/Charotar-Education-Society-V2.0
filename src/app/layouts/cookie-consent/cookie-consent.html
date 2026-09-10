@@ -16,8 +16,8 @@
         We value your privacy
       </h2>
       <p class="text-[#203154]/70 text-[13px] md:text-[14px] leading-relaxed mb-5">
-        We use cookies to keep ZarklyX secure, remember your preferences, and understand how our
-        platform is used so we can improve it. Choose “Accept All” to allow all cookies, “Reject All”
+        We use cookies to keep our website secure, remember your preferences, and understand how it's
+        used so we can improve it. Choose “Accept All” to allow all cookies, “Reject All”
         to keep only the essential ones, or “Customize” to set your preferences. Learn more in our
         <a routerLink="/support/privacy-policy" class="underline font-medium text-[#203154] hover:text-[#203154]">Cookie Policy</a>.
       </p>
@@ -36,7 +36,7 @@
         </button>
         <button type="button" id="cookie-accept-sm" (click)="accept()"
           class="flex-1 sm:flex-none px-5 py-2 rounded-lg bg-[#203154] text-white
-                 text-[13px] font-semibold hover:bg-[#1a3d3c] transition-colors duration-200 cursor-pointer">
+                 text-[13px] font-semibold hover:bg-primary-dark transition-colors duration-200 cursor-pointer">
           Accept All
         </button>
       </div>
@@ -51,8 +51,8 @@
             We value your privacy
           </h2>
           <p class="text-muted text-[14px] font-medium leading-relaxed">
-            We use cookies to keep ZarklyX secure, remember your preferences, and understand how our
-            platform is used so we can improve it. Choose “Accept All” to allow all cookies, “Reject All”
+            We use cookies to keep our website secure, remember your preferences, and understand how it's
+            used so we can improve it. Choose “Accept All” to allow all cookies, “Reject All”
             to keep only the essential ones, or “Customize” to set your preferences. Learn more in our
             <a routerLink="/support/privacy-policy" class="underline font-medium text-primary hover:text-[#203154]">Cookie Policy</a>.
           </p>
@@ -75,7 +75,7 @@
         </button>
         <button type="button" id="cookie-accept" (click)="accept()"
           class="px-6 py-2.5 rounded-lg bg-[#203154] text-white text-[14px] font-semibold
-                 hover:bg-[#1a3d3c] transition-colors duration-200 cursor-pointer whitespace-nowrap">
+                 hover:bg-primary-dark transition-colors duration-200 cursor-pointer whitespace-nowrap">
           Accept All
         </button>
       </div>
@@ -87,7 +87,9 @@
   @if (showPreferences()) {
     <div class="fixed inset-0 z-[10000] flex items-end sm:items-center justify-center p-3 sm:p-4 bg-black/50">
       <div role="dialog" aria-modal="true" aria-label="Cookie preferences"
-        class="bg-white w-full max-w-[560px] max-h-[88vh] overflow-y-auto rounded-2xl shadow-2xl p-5 md:p-7">
+        class="flex max-h-[88vh] w-full max-w-[560px] flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
+        <div
+          class="min-h-0 flex-1 overflow-y-auto overscroll-contain p-5 md:p-7 [scrollbar-color:rgba(32,49,84,0.3)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-primary/30 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:w-1.5">
 
         <h2 class="text-primary font-semibold text-[19px] md:text-[20px] mb-1">Cookie Preferences</h2>
         <p class="text-muted text-[13px] md:text-[14px] leading-relaxed mb-5">
@@ -175,11 +177,12 @@
           </button>
           <button type="button" (click)="accept()"
             class="flex-1 px-5 py-2.5 rounded-lg bg-[#203154] text-white text-[13px] font-semibold
-                   hover:bg-[#1a3d3c] transition-colors duration-200 cursor-pointer">
+                   hover:bg-primary-dark transition-colors duration-200 cursor-pointer">
             Accept All
           </button>
         </div>
 
+        </div>
       </div>
     </div>
   }

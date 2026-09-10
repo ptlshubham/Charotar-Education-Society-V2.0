@@ -81,3 +81,25 @@ html.lenis body {
   pointer-events: none;
 }
 
+/* ─── Google Website Translator ───
+   The widget injects a top banner + a "top: 40px" offset on <body> and various
+   tooltips. We drive translation from our own dropdown, so hide all of Google's
+   chrome and keep the page pinned to the top. */
+.goog-te-banner-frame,
+.goog-te-gadget,
+#goog-gt-tt,
+.goog-te-balloon-frame,
+.skiptranslate iframe {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+  position: static !important;
+}
+
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+}
+

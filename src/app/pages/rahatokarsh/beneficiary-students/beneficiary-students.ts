@@ -30,7 +30,7 @@ const STAT_ICONS = {
 export class BeneficiaryStudents {
   private readonly resources = inject(ResourcesService);
 
-  readonly banner = PLACEHOLDER.about.hero;
+  readonly banner = '/assets/images/hero/benificiary-student.jpeg';
 
   readonly loading = signal(true);
   readonly failed = signal(false);

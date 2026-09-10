@@ -23,7 +23,7 @@ interface Hostel {
   styleUrl: './hostels.scss',
 })
 export class Hostels {
-  readonly banner = PLACEHOLDER.academic.hostelsBanner;
+  readonly banner = '/assets/images/hero/hostel.jpeg';
 
   readonly tabs: readonly AcademicTab[] = [
     { id: 'all', label: 'All Hostels', path: [], icon: 'apartment' },

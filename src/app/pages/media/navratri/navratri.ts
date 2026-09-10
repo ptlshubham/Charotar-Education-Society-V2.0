@@ -20,7 +20,7 @@ type Glimpse = 'All' | 'Pandal' | 'Garba' | 'Cultural Programs' | 'Aarti' | 'Dev
 export class Navratri {
   private readonly resources = inject(ResourcesService);
 
-  readonly banner = PLACEHOLDER.media.navratriBanner;
+  readonly banner = '/assets/images/hero/navratri.jpeg';
 
   // ─── Real Navratri celebrations from the DB ───
   readonly loading = signal(true);

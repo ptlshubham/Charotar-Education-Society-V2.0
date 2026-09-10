@@ -1,29 +1,7 @@
 <!-- ─── Hero ─── -->
-<section class="relative min-h-[416px] overflow-hidden bg-primary">
-  <div class="absolute inset-0" aria-hidden="true">
-    <img [src]="banner" alt="" class="h-full w-full object-cover object-right opacity-25" />
-    <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-primary/50"></div>
-  </div>
-
-  <div class="site-container relative flex min-h-[416px] flex-col justify-center py-12">
-    <nav aria-label="Breadcrumb">
-      <ol class="flex list-none flex-wrap items-center gap-2 text-[13px] text-white/70">
-        <li><a routerLink="/home" class="no-underline hover:text-white">Home</a></li>
-        <li aria-hidden="true">&rsaquo;</li>
-        <li>Glory of CES</li>
-        <li aria-hidden="true">&rsaquo;</li>
-        <li aria-current="page" class="text-white">History of VJ Patel</li>
-      </ol>
-    </nav>
-
-    <h1 class="mt-5 text-[34px] leading-none font-bold text-white sm:text-[46px]">History of VJ Patel</h1>
-    <span class="mt-4 block h-1 w-16 rounded-full bg-secondary" aria-hidden="true"></span>
-    <p class="mt-4 max-w-xl text-[15px] leading-relaxed text-white/80">
-      A teacher. A freedom fighter. A visionary.<br />
-      The man who laid the foundation of Charotar Education Society.
-    </p>
-  </div>
-</section>
+<app-page-hero crumb="History of VJ Patel" [trail]="[{ label: 'Glory of CES' }]" title="History of VJ Patel"
+  blurb="A teacher, a freedom fighter and a visionary — the man who laid the foundation of Charotar Education Society."
+  [image]="banner" />
 
 <!-- ─── Life-sketch ─── -->
 <section class="bg-[#F3EBDA]">

@@ -33,6 +33,7 @@ export const PLACEHOLDER = {
     '/assets/images/hero/home.jpeg',
     '/assets/images/home/hero-life.jpg',
     '/assets/images/home/hero-sports.jpg',
+    '/assets/images/hero/social-activity.jpeg',
   ],
 
   institutes: {

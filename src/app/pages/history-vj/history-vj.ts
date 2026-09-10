@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, HostListener, inject, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { RouterLink } from '@angular/router';
+import { PageHero } from '../../shared/page-hero/page-hero';
 import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-history-vj',
-  imports: [RouterLink],
+  imports: [PageHero],
   templateUrl: './history-vj.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './history-vj.scss',
@@ -15,18 +15,18 @@ export class HistoryVj {
   readonly portrait = '/assets/images/history/life.png';
   readonly historical = '/assets/images/history/prime.jpg';
   readonly freedom = '/assets/images/history/freedom.jpg';
-  readonly banner = '/assets/images/hero/home.jpeg';
+  readonly banner = '/assets/images/hero/vj-patel.jpeg';
 
   /** Life-sketch paragraphs (verbatim from the legacy CES site). */
   readonly intro: readonly string[] = [
     'Shri Vitthalbhai J. Patel, Vitthal kaka, a serene, unassuming personality who reinforced the foundation of ' +
-      'this giant tree called "Charotar Education Society". His pupils still have fond memories of his excellent ' +
-      'pedagogical skills, his strong acumen in finding and nurturing talent and a complete dedication towards ' +
-      'development of student community in Charotar Region.',
+    'this giant tree called "Charotar Education Society". His pupils still have fond memories of his excellent ' +
+    'pedagogical skills, his strong acumen in finding and nurturing talent and a complete dedication towards ' +
+    'development of student community in Charotar Region.',
     'He listened to students patiently while being firm in making them obedient and hardworking persons. The ' +
-      'students, parents, colleagues and the members of society respected him for his active listening abilities, ' +
-      'complete dedication towards uplifting members of society and creating an ecosystem where fun and duties are ' +
-      'combined in making students a thorough professional.',
+    'students, parents, colleagues and the members of society respected him for his active listening abilities, ' +
+    'complete dedication towards uplifting members of society and creating an ecosystem where fun and duties are ' +
+    'combined in making students a thorough professional.',
   ];
 
   readonly earlyLife: readonly string[] = [

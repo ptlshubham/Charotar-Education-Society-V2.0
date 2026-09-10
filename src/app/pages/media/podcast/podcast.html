@@ -1,5 +1,6 @@
 <!-- ─── Hero ─── -->
-<app-page-hero crumb="Podcast" eyebrow="CES Podcast — Next Up" title="Motivation, Inspire" accent="Grow"
+<app-page-hero crumb="Podcast" [trail]="[{ label: 'Media' }]" eyebrow="CES Podcast — Next Up"
+  title="Motivation, Inspire" accent="Grow"
   blurb="Real conversations. Real stories. Real inspiration from the CES family." [image]="banner" />
 
 <section class="site-container py-8">
@@ -8,31 +9,34 @@
   <ul
     class="mt-8 grid list-none gap-px overflow-hidden rounded-xl border border-gray-200 bg-gray-200 sm:grid-cols-2 lg:grid-cols-4">
     @for (pillar of pillars; track pillar.title) {
-      <li class="flex items-center gap-3.5 bg-white p-5">
-        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-secondary/10 text-secondary" aria-hidden="true">
-          <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]">{{ pillar.icon }}</span>
-        </span>
-        <div class="min-w-0">
-          <h2 class="text-[13.5px] font-bold text-secondary">{{ pillar.title }}</h2>
-          <p class="mt-1 text-[11.5px] leading-relaxed text-muted">{{ pillar.body }}</p>
-        </div>
-      </li>
+    <li class="flex items-center gap-3.5 bg-white p-5">
+      <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-secondary/10 text-secondary"
+        aria-hidden="true">
+        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]">{{ pillar.icon
+          }}</span>
+      </span>
+      <div class="min-w-0">
+        <h2 class="text-[13.5px] font-bold text-secondary">{{ pillar.title }}</h2>
+        <p class="mt-1 text-[11.5px] leading-relaxed text-muted">{{ pillar.body }}</p>
+      </div>
+    </li>
     }
   </ul>
 
   <!-- Categories -->
   <ul class="mt-12 flex list-none gap-3 overflow-x-auto pb-4 sm:justify-center no-scrollbar">
     @for (cat of categories; track cat.label) {
-      <li>
-        <button type="button"
-          class="inline-flex items-center gap-2 rounded-lg border px-4 py-2.5 text-left text-[13px] font-semibold shadow-none transition-colors"
-          [class]="cat.active ? 'border-primary bg-primary text-white' : 'border-gray-200 bg-transparent text-primary hover:border-primary'">
-          <span class="material-symbols-outlined shrink-0 text-current !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">{{ cat.icon }}</span>
-          <span>{{ cat.label }}</span>
-          <span class="rounded-full px-1.5 py-0.5 text-[10px] font-medium"
-            [class]="cat.active ? 'bg-white/15 text-white/85' : 'bg-gray-100 text-muted'">{{ cat.count }}</span>
-        </button>
-      </li>
+    <li>
+      <button type="button"
+        class="inline-flex items-center gap-2 rounded-lg border px-4 py-2.5 text-left text-[13px] font-semibold shadow-none transition-colors"
+        [class]="cat.active ? 'border-primary bg-primary text-white' : 'border-gray-200 bg-transparent text-primary hover:border-primary'">
+        <span class="material-symbols-outlined shrink-0 text-current !text-[23px] [font-variation-settings:'wght'_300]"
+          aria-hidden="true">{{ cat.icon }}</span>
+        <span>{{ cat.label }}</span>
+        <span class="rounded-full px-1.5 py-0.5 text-[10px] font-medium"
+          [class]="cat.active ? 'bg-white/15 text-white/85' : 'bg-gray-100 text-muted'">{{ cat.count }}</span>
+      </button>
+    </li>
     }
   </ul>
 

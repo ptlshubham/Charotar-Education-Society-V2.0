@@ -8,7 +8,7 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
   styleUrl: './freedom-fight.scss',
 })
 export class FreedomFight {
-  readonly image = PLACEHOLDER.about.freedomFight;
+  readonly image = '/assets/images/about/freedom-fighter.jpeg';
 
   readonly events: ReadonlyArray<{ year: string; title: string; body: string; path: string[] }> = [
     {

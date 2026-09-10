@@ -25,7 +25,7 @@ export class Podcast {
   private readonly resources = inject(ResourcesService);
   private readonly sanitizer = inject(DomSanitizer);
 
-  readonly banner = PLACEHOLDER.media.podcastBanner;
+  readonly banner = '/assets/images/hero/nextup.jpeg';
 
   readonly pillars: ReadonlyArray<{ title: string; body: string; icon: string }> = [
     { title: 'Inspiring Stories', body: 'Real journeys of success & struggle', icon: 'headphones' },

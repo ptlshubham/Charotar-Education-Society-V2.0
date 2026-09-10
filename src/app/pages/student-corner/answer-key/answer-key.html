@@ -1,7 +1,7 @@
 <!-- ─── Hero ─── -->
-<app-page-hero crumb="Answer Key" title="Answer Key"
+<app-page-hero crumb="Answer Key" [trail]="[{ label: 'Student Corner', link: '/student-corner' }]" title="Answer Key"
   blurb="Access the official answer keys for various standard and subject examinations."
-  image="/assets/images/hero/home.jpeg">
+  image="/assets/images/hero/answer-key.jpeg">
   @if (lastUpdated()) {
     <div class="mt-7 inline-flex items-center gap-3 rounded-lg bg-white px-5 py-3">
       <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-secondary/10 text-secondary/85" aria-hidden="true">

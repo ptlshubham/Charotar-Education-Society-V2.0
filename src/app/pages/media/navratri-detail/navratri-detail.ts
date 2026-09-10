@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, HostListener, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PageHero } from '../../../shared/page-hero/page-hero';
@@ -8,6 +8,7 @@ import { NavratriEntry, NavratriImage } from '../../../shared/models/models';
 import { MediaUrlPipe } from '../../../shared/media-url.pipe';
 import { SafeHtmlPipe } from '../../../shared/safe-html.pipe';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
+import { environment } from '../../../../environments/environment';
 
 type Tab = 'overview' | 'gallery' | 'events' | 'news' | 'sponsors';
 
@@ -79,8 +80,170 @@ export class NavratriDetail {
       .subscribe((imgs) => this.images.set(Array.isArray(imgs) ? imgs : []));
   }
 
-  /** Best available URL field on a gallery image. */
+  /** Best available URL field on a gallery image (thumbnail for the grid). */
   imgSrc(img: NavratriImage): string {
     return img.thumb ?? img.image ?? img.original ?? img.path ?? '';
+  }
+
+  // ── Lightbox (zoom / pan / download / prev-next) ──────────────────────────
+  /** Full-resolution, resolved URLs for the lightbox and download. */
+  readonly lightboxItems = computed(() =>
+    this.images().map((img, i) => ({
+      src: this.resolve(img.original ?? img.image ?? img.path ?? img.thumb ?? ''),
+      caption: `Navratri ${this.year} — Photo ${i + 1}`,
+    })),
+  );
+
+  readonly lightboxIndex = signal<number | null>(null);
+  readonly zoom = signal(1);
+  readonly panX = signal(0);
+  readonly panY = signal(0);
+  readonly dragging = signal(false);
+
+  private dragStartX = 0;
+  private dragStartY = 0;
+  private panStartX = 0;
+  private panStartY = 0;
+
+  readonly current = computed(() => {
+    const i = this.lightboxIndex();
+    return i === null ? null : (this.lightboxItems()[i] ?? null);
+  });
+
+  readonly lightboxPosition = computed(() => {
+    const i = this.lightboxIndex();
+    return i === null ? '' : `${i + 1} / ${this.lightboxItems().length}`;
+  });
+
+  readonly zoomPercent = computed(() => `${Math.round(this.zoom() * 100)}%`);
+
+  open(index: number): void {
+    if (index < 0 || index >= this.lightboxItems().length) return;
+    this.lightboxIndex.set(index);
+    this.resetZoom();
+  }
+
+  close(): void {
+    this.lightboxIndex.set(null);
+    this.resetZoom();
+  }
+
+  next(): void {
+    const n = this.lightboxItems().length;
+    const i = this.lightboxIndex();
+    if (i === null || !n) return;
+    this.lightboxIndex.set((i + 1) % n);
+    this.resetZoom();
+  }
+
+  prev(): void {
+    const n = this.lightboxItems().length;
+    const i = this.lightboxIndex();
+    if (i === null || !n) return;
+    this.lightboxIndex.set((i - 1 + n) % n);
+    this.resetZoom();
+  }
+
+  zoomIn(): void {
+    this.zoom.set(Math.min(4, +(this.zoom() + 0.5).toFixed(2)));
+  }
+
+  zoomOut(): void {
+    const z = Math.max(1, +(this.zoom() - 0.5).toFixed(2));
+    this.zoom.set(z);
+    if (z === 1) {
+      this.panX.set(0);
+      this.panY.set(0);
+    }
+  }
+
+  resetZoom(): void {
+    this.zoom.set(1);
+    this.panX.set(0);
+    this.panY.set(0);
+  }
+
+  toggleZoom(): void {
+    if (this.zoom() > 1) this.resetZoom();
+    else this.zoom.set(2);
+  }
+
+  onWheel(e: WheelEvent): void {
+    e.preventDefault();
+    if (e.deltaY < 0) this.zoomIn();
+    else this.zoomOut();
+  }
+
+  onPointerDown(e: PointerEvent): void {
+    if (this.zoom() <= 1) return;
+    this.dragging.set(true);
+    this.dragStartX = e.clientX;
+    this.dragStartY = e.clientY;
+    this.panStartX = this.panX();
+    this.panStartY = this.panY();
+    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+    e.preventDefault();
+  }
+
+  onPointerMove(e: PointerEvent): void {
+    if (!this.dragging()) return;
+    this.panX.set(this.panStartX + (e.clientX - this.dragStartX));
+    this.panY.set(this.panStartY + (e.clientY - this.dragStartY));
+  }
+
+  onPointerUp(): void {
+    this.dragging.set(false);
+  }
+
+  /**
+   * Download the current image. A cross-origin `<a download>` is ignored by the
+   * browser, so fetch the bytes and save a blob URL; fall back to opening it.
+   */
+  async download(): Promise<void> {
+    const p = this.current();
+    if (!p) return;
+    try {
+      const res = await fetch(p.src);
+      if (!res.ok) throw new Error('download failed');
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = this.filename(p.src);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch {
+      window.open(p.src, '_blank', 'noopener');
+    }
+  }
+
+  private filename(src: string): string {
+    const clean = src.split('?')[0].split('#')[0];
+    const name = clean.substring(clean.lastIndexOf('/') + 1);
+    return name || `navratri-${this.year}.jpg`;
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    if (this.lightboxIndex() !== null) this.close();
+  }
+
+  @HostListener('document:keydown.arrowright')
+  onArrowRight(): void {
+    if (this.lightboxIndex() !== null) this.next();
+  }
+
+  @HostListener('document:keydown.arrowleft')
+  onArrowLeft(): void {
+    if (this.lightboxIndex() !== null) this.prev();
+  }
+
+  /** Mirrors MediaUrlPipe: prefix a relative media path with the API host. */
+  private resolve(path: string): string {
+    if (!path) return '';
+    if (/^https?:\/\//i.test(path)) return path;
+    return `${environment.apiUrl.replace(/\/+$/, '')}/${path.replace(/^\/+/, '')}`;
   }
 }

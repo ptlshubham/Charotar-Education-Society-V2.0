@@ -17,6 +17,9 @@
   /* Neutral muted body copy (was the ZarklyX --color-secondary grey). */
   --color-muted: #546968;
 
+  /* Cursive display face for the header's "Education for a Better Tomorrow" tagline. */
+  --font-script: 'Dancing Script', cursive;
+
   --animate-dropdown: dropdown 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 
   @keyframes dropdown {

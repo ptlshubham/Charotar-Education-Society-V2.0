@@ -18,7 +18,7 @@ export class Counselling {
   private readonly fb = inject(FormBuilder);
   private readonly resources = inject(ResourcesService);
 
-  readonly hero = PLACEHOLDER.counselling.hero;
+  readonly hero = '/assets/images/hero/counselling.jpeg';
   readonly counsellor = PLACEHOLDER.counselling.counsellor;
 
   readonly assurances: ReadonlyArray<{ title: string; body: string; icon: string }> = [

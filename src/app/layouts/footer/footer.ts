@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SOCIAL_LINKS } from '../../shared/social-links';
+import { LenisService } from '../../core/services/lenis.service';
 
 interface FooterLink {
   label: string;
@@ -17,6 +18,8 @@ interface FooterLink {
   changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class Footer {
+  private readonly lenis = inject(LenisService);
+
   readonly currentYear = new Date().getFullYear();
   readonly socials = SOCIAL_LINKS;
 
@@ -24,6 +27,16 @@ export class Footer {
   readonly phone = '(02692) - 243083';
   readonly phoneHref = 'tel:02692243083';
   readonly address = 'D. N. High School Campus, Station Road, Anand - 388001, Gujarat, India';
+
+  /** Opens Google Maps directions to the campus. */
+  readonly mapsUrl =
+    'https://www.google.com/maps/dir/?api=1&destination=' +
+    encodeURIComponent('D. N. High School Campus, Station Road, Anand 388001 Gujarat');
+
+  /** Smooth-scrolls back to the top (SSR-safe: Lenis is browser-only). */
+  scrollToTop(): void {
+    this.lenis.scrollTo(0, { duration: 1 });
+  }
 
   /** Same host in every environment on the legacy site, so it lives here rather than environment.ts. */
   private static readonly DASHBOARD_URL = 'https://dashboard.cesociety.in';
@@ -91,7 +104,6 @@ export class Footer {
         { label: 'Social Activity', route: '/social-activity' },
         { label: 'Projects', route: '/project' },
         { label: 'Contact Us', route: '/contact' },
-        { label: 'Staff Login', href: `${Footer.DASHBOARD_URL}/account/employee` },
       ],
     },
   ];

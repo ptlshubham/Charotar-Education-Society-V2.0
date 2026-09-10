@@ -2,6 +2,7 @@ import { DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, NgZone, computed, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { PageHero } from '../../../shared/page-hero/page-hero';
 import { SuccessDialogService } from '../../../core/services/success-dialog.service';
 import { ResourcesService } from '../../../core/services/resources.service';
 import { RazorpayService, RazorpayOptions, RazorpaySuccess } from '../../../core/services/razorpay.service';
@@ -11,7 +12,7 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
 
 @Component({
   selector: 'app-donation',
-  imports: [DecimalPipe, ReactiveFormsModule, RouterLink],
+  imports: [DecimalPipe, ReactiveFormsModule, RouterLink, PageHero],
   templateUrl: './donation.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './donation.scss',
@@ -25,7 +26,7 @@ export class Donation {
   /** Razorpay LIVE key, carried over from the legacy site — charges real money. */
   private static readonly RAZORPAY_KEY = 'rzp_live_leOKtvTfzPgxqJ';
 
-  readonly heroImage = PLACEHOLDER.social.heroCollage[0];
+  readonly heroImage = '/assets/images/hero/donate-now.jpeg';
   readonly aboutImage = PLACEHOLDER.about.whoWeAre;
 
   readonly stats: ReadonlyArray<{ value: string; label: string; path: string[] }> = [

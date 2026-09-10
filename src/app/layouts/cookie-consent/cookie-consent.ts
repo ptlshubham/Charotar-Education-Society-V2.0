@@ -6,11 +6,13 @@ import {
   Inject,
   PLATFORM_ID,
   signal,
+  inject,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import gsap from 'gsap';
+import { LenisService } from '../../core/services/lenis.service';
 
 @Component({
   selector: 'app-cookie-consent',
@@ -22,6 +24,8 @@ import gsap from 'gsap';
 export class CookieConsent implements AfterViewInit {
   @ViewChild('cookieBanner') bannerRef!: ElementRef<HTMLElement>;
   @ViewChild('cookieBackdrop') backdropRef!: ElementRef<HTMLElement>;
+
+  private readonly lenis = inject(LenisService);
 
   dismissed = signal(false);
   showPreferences = signal(false);
@@ -73,9 +77,10 @@ export class CookieConsent implements AfterViewInit {
     this.acceptEverything();
   }
 
-  /** Opens the detailed cookie preferences modal. */
+  /** Opens the detailed cookie preferences modal and locks page scroll behind it. */
   customize(): void {
     this.showPreferences.set(true);
+    this.lenis.stop();
   }
 
   /** Called by the buttons inside the preferences modal. */
@@ -92,6 +97,7 @@ export class CookieConsent implements AfterViewInit {
       localStorage.setItem('cookie_consent', 'accepted');
     }
     this.showPreferences.set(false);
+    this.lenis.start();
     this.animateOut();
   }
 

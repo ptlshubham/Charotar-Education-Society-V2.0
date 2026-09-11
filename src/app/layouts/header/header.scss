@@ -245,7 +245,7 @@
 
 .submenu-item { position: relative; }
 
-.submenu-trigger, .mobile-submenu-trigger {
+.submenu-trigger {
   display: flex;
   width: 100%;
   min-height: 44px;
@@ -290,13 +290,6 @@
   .header-ads { flex-basis: 160px; width: 160px; }
   .search-row, .quick-links { gap: 24px; }
   .nav-items { padding-inline: 24px; }
-}
-
-.mobile-institute-brand {
-  display: block;
-  width: min(76vw, 360px);
-  height: 69px;
-  object-fit: contain;
 }
 
 // Keep the selected page distinct from hover in desktop and mobile submenus.

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" width="1080" height="1350" role="img" aria-label="Admissions Open 2025-26 — Charotar Education Society">
+  <defs>
+    <linearGradient id="admm-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7b93f"/>
+      <stop offset="1" stop-color="#f5a623"/>
+    </linearGradient>
+  </defs>
+  <rect width="1080" height="1350" fill="url(#admm-bg)"/>
+  <!-- bottom photo placeholder -->
+  <rect x="0" y="880" width="1080" height="470" fill="#152650"/>
+  <text x="540" y="1140" text-anchor="middle" font-family="system-ui,'Segoe UI',Arial,sans-serif" font-size="34" font-weight="600" fill="#5f7099">[ campus photo ]</text>
+  <g font-family="system-ui,'Segoe UI',Arial,sans-serif" fill="#152650" text-anchor="middle">
+    <text x="540" y="230" font-size="34" font-weight="700" letter-spacing="6">CHAROTAR EDUCATION SOCIETY</text>
+    <text x="540" y="470" font-size="118" font-weight="800">Admissions</text>
+    <text x="540" y="590" font-size="118" font-weight="800">Open</text>
+    <text x="540" y="700" font-size="72" font-weight="700" fill="#ffffff">2025  26</text>
+    <text x="540" y="780" font-size="46" font-weight="700">Apply Now</text>
+    <text x="540" y="845" font-size="30" font-weight="500">Schools &#183; Colleges &#183; Hostels</text>
+  </g>
+  <text x="540" y="1318" text-anchor="middle" font-family="system-ui,Arial,sans-serif" font-size="22" fill="#efeae0">placeholder  1080 × 1350</text>
+</svg>

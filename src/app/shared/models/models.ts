@@ -200,4 +200,11 @@ export interface GalleryImage {
   /** Video entries may carry the URL in a dedicated field instead of `image`. */
   video?: string;
   link?: string;
+  /**
+   * Hero-slider banners only. `image` is the desktop crop (≈1920×520); when the
+   * backend also stores a portrait crop (≈1080×1350) it comes back here, else the
+   * hero falls back to `image` on mobile. `keywords` is the alt text (legacy field).
+   */
+  mobileImage?: string;
+  keywords?: string;
 }

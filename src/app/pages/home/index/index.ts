@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Hero } from '../hero/hero';
+import { Stats } from '../stats/stats';
 import { Institutes } from '../institutes/institutes';
 import { Legacy } from '../legacy/legacy';
 import { Academics } from '../academics/academics';
@@ -12,9 +13,10 @@ import { Announcements } from '../announcements/announcements';
 import { FutureCta } from '../future-cta/future-cta';
 
 @Component({
-  selector: 'app-index',
+  selector: 'app-home-index',
   imports: [
     Hero,
+    Stats,
     Institutes,
     Legacy,
     Academics,

@@ -74,6 +74,9 @@ export const ICONS = {
   news: ['M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9h4', 'M10 6h8M10 10h8M10 14h4'],
   ticket: ['M2 9a3 3 0 0 0 0 6v3a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-3a3 3 0 0 1 0-6V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z', 'M13 5v2M13 11v2M13 17v2'],
   briefcase: ['M2 9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z', 'M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'],
+  cap: ['M22 10 12 5 2 10l10 5 10-5z', 'M6 12v5c0 1.1 2.7 2 6 2s6-.9 6-2v-5', 'M22 10v5'],
+  user: ['M20 21v-1a5 5 0 0 0-5-5H9a5 5 0 0 0-5 5v1', 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z'],
+  bulb: ['M9 18h6', 'M10 22h4', 'M12 2a7 7 0 0 0-4 12.7c.5.4.9 1 .9 1.6V17h6.2v-.7c0-.6.4-1.2.9-1.6A7 7 0 0 0 12 2z'],
 } as const;
 
 
@@ -132,6 +135,7 @@ export class Header implements AfterViewInit {
   readonly navLinks: ReadonlyArray<NavItem> = [
     {
       label: 'Home',
+      icon: 'home',
       children: [
         { label: 'Home', link: '/home', icon: 'home' },
         { label: 'About Us', link: '/about', icon: 'info' },
@@ -140,15 +144,17 @@ export class Header implements AfterViewInit {
     },
     {
       label: 'Glory of CES',
+      icon: 'users',
       children: [
         { label: 'Centenary Celebration', link: '/celebration', icon: 'award' },
         { label: 'History of V. J. Patel', link: '/glory/history-vj', icon: 'award' },
       ],
     },
-    { label: 'Social Activity', link: '/social-activity' },
-    { label: 'Project', link: '/project' },
+    { label: 'Social Activity', link: '/social-activity', icon: 'heart' },
+    { label: 'Project', link: '/project', icon: 'file' },
     {
       label: 'Academic',
+      icon: 'cap',
       children: [
         { label: 'Schools', link: '/academic/school', icon: 'building' },
         { label: 'Colleges', link: '/academic/colleges', icon: 'building' },
@@ -156,9 +162,10 @@ export class Header implements AfterViewInit {
         { label: 'Hostels', link: '/academic/hostels', icon: 'bed' },
       ],
     },
-    { label: 'Alumni', link: '/alumni' },
+    { label: 'Alumni', link: '/alumni', icon: 'users' },
     {
       label: 'Rahatokarsh Fund',
+      icon: 'heart',
       children: [
         { label: 'Objective', link: '/fund', icon: 'target' },
         { label: 'Donate Now', link: '/donation', icon: 'heart' },
@@ -169,15 +176,17 @@ export class Header implements AfterViewInit {
     },
     {
       label: 'Media',
+      icon: 'play',
       children: [
         { label: 'Gallery', link: '/glory/gallery', icon: 'image' },
         { label: 'Navratri', link: '/navratri', icon: 'calendar' },
         { label: 'Next UP', link: '/podcast', icon: 'play' },
       ],
     },
-    { label: 'IP Cell', link: '/ipcell' },
+    { label: 'IP Cell', link: '/ipcell', icon: 'bulb' },
     {
       label: 'Student Corner',
+      icon: 'user',
       children: [
         // 'Evaluation Form' (/more/student-evaluation) is not built yet; it is left
         // out rather than shipped as a nav item that 404s on every page.
@@ -186,9 +195,10 @@ export class Header implements AfterViewInit {
         { label: 'Free Psychological Counselling', link: '/counselling', icon: 'heart' },
       ],
     },
-    { label: 'Contact Us', link: '/contact' },
+    { label: 'Contact Us', link: '/contact', icon: 'headset' },
     {
       label: 'More',
+      icon: 'grid',
       children: [
         { label: 'Blogs', link: '/blog', icon: 'news' },
         {
@@ -215,6 +225,18 @@ export class Header implements AfterViewInit {
         { label: 'Grievance', link: '/contact' },
       ],
     },
+  ];
+
+  /**
+   * Inline items on the tablet nav bar (kept to five so they never overflow between
+   * md and xl); everything else is reachable through the "More" drawer.
+   */
+  readonly tabletNav: ReadonlyArray<NavItem> = [
+    this.navLinks[0], // Home
+    this.navLinks[1], // Glory of CES
+    this.navLinks[2], // Social Activity
+    this.navLinks[3], // Project
+    this.navLinks[4], // Academic
   ];
 
   readonly desktopSocials = ['Instagram', 'LinkedIn', 'Behance', 'Facebook', 'YouTube'].map(label => ({

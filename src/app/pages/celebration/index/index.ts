@@ -8,7 +8,7 @@ import { CommunityVoices } from '../community-voices/community-voices';
 import { AdmissionsCta } from '../../../shared/admissions-cta/admissions-cta';
 
 @Component({
-  selector: 'app-index',
+  selector: 'app-celebration-index',
   imports: [
     CentenaryHero,
     CentenaryIntro,

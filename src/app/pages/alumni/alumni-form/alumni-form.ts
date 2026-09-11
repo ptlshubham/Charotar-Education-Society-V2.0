@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Country, State, City } from 'country-state-city';
 import { SuccessDialogService } from '../../../core/services/success-dialog.service';
@@ -63,6 +63,21 @@ export class AlumniForm {
       description: ['', Validators.required],
       status: ['', Validators.required],
     });
+
+    // Enable the dependent selects only once their option lists load. Driven through
+    // the FormControl (not a template `[disabled]`) to avoid Angular's reactive-forms
+    // "disabled attribute" warning.
+    effect(() => {
+      this.setEnabled('state', this.states().length > 0);
+      this.setEnabled('city', this.cities().length > 0);
+    });
+  }
+
+  private setEnabled(name: string, enabled: boolean): void {
+    const ctrl = this.form.get(name);
+    if (!ctrl) return;
+    if (enabled && ctrl.disabled) ctrl.enable({ emitEvent: false });
+    else if (!enabled && ctrl.enabled) ctrl.disable({ emitEvent: false });
   }
 
   get f() {

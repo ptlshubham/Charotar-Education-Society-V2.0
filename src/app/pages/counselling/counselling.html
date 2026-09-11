@@ -222,7 +222,7 @@
             [class.border-gray-300]="!(submitted() && f.instituteName.invalid)"
             [class.text-gray-400]="!f.instituteName.value" [class.text-primary]="f.instituteName.value">
             <option value="" disabled>Select Institute</option>
-            @for (inst of institutes(); track inst.name) { <option [value]="inst.name">{{ inst.name }}</option> }
+            @for (inst of institutes(); track $index) { <option [value]="inst.name">{{ inst.name }}</option> }
           </select>
           @if (submitted() && f.instituteName.invalid) { <p class="mt-1 text-[11px] text-red-600">Please select an
             institute.</p> }

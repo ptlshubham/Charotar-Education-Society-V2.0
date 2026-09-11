@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 520" width="1920" height="520" role="img" aria-label="Admissions Open 2025-26 — Charotar Education Society">
+  <defs>
+    <linearGradient id="adm-bg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f7b93f"/>
+      <stop offset="1" stop-color="#f5a623"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="520" fill="url(#adm-bg)"/>
+  <!-- right photo placeholder -->
+  <path d="M1920 0 H1020 A320 520 0 0 0 1300 520 H1920 Z" fill="#152650"/>
+  <text x="1560" y="290" text-anchor="middle" font-family="system-ui,'Segoe UI',Arial,sans-serif" font-size="30" font-weight="600" fill="#5f7099">[ campus photo ]</text>
+  <g font-family="system-ui,'Segoe UI',Arial,sans-serif" fill="#152650">
+    <text x="130" y="170" font-size="30" font-weight="700" letter-spacing="6">CHAROTAR EDUCATION SOCIETY</text>
+    <text x="126" y="300" font-size="104" font-weight="800">Admissions Open</text>
+    <text x="130" y="380" font-size="60" font-weight="700" fill="#ffffff">2025  26 &#183; Apply Now</text>
+    <text x="130" y="445" font-size="30" font-weight="500">Schools &#183; Colleges &#183; Professional Institutes &#183; Hostels</text>
+  </g>
+  <text x="40" y="500" font-family="system-ui,Arial,sans-serif" font-size="16" fill="#8a5a00">placeholder  1920 × 520</text>
+</svg>

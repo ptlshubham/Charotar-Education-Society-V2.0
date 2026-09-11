@@ -10,7 +10,7 @@ import { FreedomFight } from '../freedom-fight/freedom-fight';
 import { AdmissionsCta } from '../../../shared/admissions-cta/admissions-cta';
 
 @Component({
-  selector: 'app-index',
+  selector: 'app-about-index',
   imports: [
     AboutHero,
     WhoWeAre,

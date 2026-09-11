@@ -75,7 +75,7 @@
               }
               @if (vac.institutes?.length) {
               <ol class="mt-2 list-decimal space-y-1 pl-5 text-[12px] text-muted">
-                @for (inst of vac.institutes; track inst.name) {
+                @for (inst of vac.institutes; track $index) {
                 <li><a [href]="inst.url" target="_blank" rel="noopener noreferrer"
                     class="text-accent no-underline hover:underline">{{ inst.name }}</a></li>
                 }
@@ -172,7 +172,7 @@
           <tr class="border-b border-gray-100 last:border-b-0 hover:bg-[#F7F9FC]">
             <td class="px-4 py-3.5 min-w-[240px]">
               <ol class="list-decimal space-y-1 pl-5 text-[12px] text-muted">
-                @for (inst of noticeInstitutes; track inst.name) {
+                @for (inst of noticeInstitutes; track $index) {
                 <li><a [href]="inst.url" target="_blank" rel="noopener noreferrer"
                     class="text-accent no-underline hover:underline">{{ inst.name }}</a></li>
                 }

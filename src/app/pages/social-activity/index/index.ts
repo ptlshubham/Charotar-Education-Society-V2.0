@@ -6,7 +6,7 @@ import { SocialMoments } from '../social-moments/social-moments';
 import { AdmissionsCta } from '../../../shared/admissions-cta/admissions-cta';
 
 @Component({
-  selector: 'app-index',
+  selector: 'app-social-index',
   imports: [SocialHero, SocialActivities, SocialImpact, SocialMoments, AdmissionsCta],
   templateUrl: './index.html',
   changeDetection: ChangeDetectionStrategy.Eager,

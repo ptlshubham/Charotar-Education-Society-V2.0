@@ -1,7 +1,7 @@
 import { HttpClient, HttpContext, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { ApiService } from './api.service';
 import { SKIP_ERROR_REDIRECT } from '../interceptors/error.interceptor';
 import { AnswerKeyEntry, BeneficiaryStudent, BlogPost, Copyright, CounsellingPayload, DonationPayload, Donor, GalleryImage, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NavratriImage, Patent, PodcastEntry, Trademark } from '../../shared/models/models';
@@ -137,6 +137,24 @@ export class ResourcesService {
             ApiService.GetGalleryImagesURL,
             { institute_id: instituteId },
             { context: new HttpContext().set(SKIP_ERROR_REDIRECT, true) },
+        );
+    }
+
+    // Home hero banners — the same mixed image list as the gallery (one endpoint),
+    // kept to purpose 'slider'/'banner' and newest-first (highest id). The legacy
+    // admin site loaded these exactly this way. SKIP_ERROR_REDIRECT so a failure
+    // leaves the hero on its built-in fallback banners instead of bouncing the page.
+    getSliderBanners(instituteId: number | string) {
+        return this.http.post<GalleryImage[]>(
+            ApiService.GetGalleryImagesURL,
+            { institute_id: instituteId },
+            { context: new HttpContext().set(SKIP_ERROR_REDIRECT, true) },
+        ).pipe(
+            map((list) =>
+                (list ?? [])
+                    .filter((b) => (b.purpose === 'slider' || b.purpose === 'banner') && !!b.image)
+                    .sort((a, b) => (b.id ?? 0) - (a.id ?? 0)),
+            ),
         );
     }
 

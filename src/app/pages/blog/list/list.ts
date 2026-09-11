@@ -4,14 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { PageHero } from '../../../shared/page-hero/page-hero';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { catchError, of } from 'rxjs';
+import { catchError, of, switchMap } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
+import { InstituteService } from '../../../core/services/institute.service';
 import { BlogPost } from '../../../shared/models/models';
 import { MediaUrlPipe } from '../../../shared/media-url.pipe';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
-
-/** The society's own institute id (id 1 in the CES DB); blogs are stored per institute. */
-const BLOG_INSTITUTE_ID = 1;
 
 interface Post {
   id: string;
@@ -34,6 +32,7 @@ interface Post {
 })
 export class BlogList {
   private readonly resources = inject(ResourcesService);
+  private readonly institute = inject(InstituteService);
 
   readonly banner = PLACEHOLDER.blog.banner;
 
@@ -59,9 +58,10 @@ export class BlogList {
   private readonly allPosts = signal<readonly Post[]>([]);
 
   constructor() {
-    this.resources
-      .getBlogs(BLOG_INSTITUTE_ID)
+    this.institute
+      .resolve()
       .pipe(
+        switchMap((id) => this.resources.getBlogs(id)),
         catchError(() => {
           this.failed.set(true);
           return of<BlogPost[]>([]);

@@ -34,7 +34,7 @@ export class BlogList {
   private readonly resources = inject(ResourcesService);
   private readonly institute = inject(InstituteService);
 
-  readonly banner = PLACEHOLDER.blog.banner;
+  readonly banner = '/assets/images/hero/blog.jpeg';
 
   // Category tabs are kept for when the admin adds categorisation; the live feed
   // has no category, so selecting a tab only highlights it (search still filters).

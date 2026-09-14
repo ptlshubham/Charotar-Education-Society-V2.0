@@ -29,7 +29,7 @@ export class GatePass {
   private readonly resources = inject(ResourcesService);
   private readonly fb = inject(FormBuilder);
 
-  readonly banner = PLACEHOLDER.about.hero;
+  readonly banner = '/assets/images/hero/e-gate-pass.jpeg';
 
   readonly stats: readonly HeroStat[] = [
     { value: '110+', label: 'Years of Legacy', path: ['M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z', 'M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'] },

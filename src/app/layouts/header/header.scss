@@ -171,7 +171,7 @@
   width: 100%;
   height: 64px;
   overflow: hidden;         // clip stacked slides to one row before Swiper upgrades
-  border-radius: 6px;
+  // border-radius: 6px;
 
   swiper-slide { display: flex; }
   a { display: block; width: 100%; }

@@ -239,7 +239,7 @@ export class Header implements AfterViewInit {
     this.navLinks[4], // Academic
   ];
 
-  readonly desktopSocials = ['Instagram', 'LinkedIn', 'Behance', 'Facebook', 'YouTube'].map(label => ({
+  readonly desktopSocials = ['Instagram', 'LinkedIn', 'Facebook', 'YouTube'].map(label => ({
     label,
     href: this.socials.find(social => social.label === label)?.href,
     asset: label === 'YouTube' ? null : `/assets/images/header/icons/${label.toLowerCase()}.svg`,
@@ -261,9 +261,8 @@ export class Header implements AfterViewInit {
    * or any 3.4:1 image) and add an entry here; `link` is optional.
    */
   readonly ads: ReadonlyArray<{ image: string; alt: string; link?: string }> = [
-    { image: '/assets/images/header/icons/heritage.png', alt: 'Educating Since 1916' },
-    { image: '/assets/images/header/ads/admissions.svg', alt: 'Admissions Open 2025–26 — Apply Now', link: '/academic/school' },
-    { image: '/assets/images/header/ads/centenary.svg', alt: 'Centenary Celebration — 110+ Years', link: '/celebration' },
+    { image: '/assets/images/header/ads/navratri.jpeg', alt: 'Admissions Open 2025–26 — Apply Now', link: '/navratri/2026' },
+    { image: '/assets/images/header/ads/heritage.png', alt: 'Educating Since 1916' },
   ];
 
   /** Extra links in the top utility strip. RTI/Grievance point at the nearest

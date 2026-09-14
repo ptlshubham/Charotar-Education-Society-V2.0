@@ -35,7 +35,7 @@ export class Magazine {
   /** Fanned stack in the hero (decorative). */
   readonly PLACEHOLDER_COVER = PLACEHOLDER.magazines[1];
   readonly PLACEHOLDER_COVER2 = PLACEHOLDER.magazines[2];
-  readonly PLACEHOLDER_COVER3 = PLACEHOLDER.magazines[0];
+  readonly PLACEHOLDER_COVER3 = '/assets/images/hero/magazine.jpeg';
 
   readonly loading = signal(true);
   readonly failed = signal(false);

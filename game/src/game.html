@@ -2,28 +2,28 @@
   @if (screen() === 'welcome') {
     <section class="welcome scene" aria-labelledby="welcome-title">
       <div class="welcome-art" aria-hidden="true">
-        <img class="cloud cloud-one" src="assets/cloud-small.png" alt="" width="189" height="80">
-        <img class="cloud cloud-two" src="assets/cloud-wide.png" alt="" width="240" height="80">
-        <img class="cloud cloud-three" src="assets/cloud-small.png" alt="" width="94" height="40">
-        <img class="birds" src="assets/birds.png" alt="" width="61" height="28">
+        <img class="cloud cloud-one" src="assets/props/cloud-small.png" alt="" width="189" height="80">
+        <img class="cloud cloud-two" src="assets/props/cloud-wide.png" alt="" width="240" height="80">
+        <img class="cloud cloud-three" src="assets/props/cloud-small.png" alt="" width="94" height="40">
+        <img class="birds" src="assets/props/birds.png" alt="" width="61" height="28">
         <div class="fireflies">
           @for (particle of particles; track $index) {
             <span [style.left.%]="particle.x" [style.top.%]="particle.y" [style.--delay]="particle.delay + 's'" [style.--duration]="particle.duration + 's'"></span>
           }
         </div>
       </div>
-      <button class="balloon scene-toy" [class.is-discovered]="playfulElement() === 'balloon'" aria-label="Send the balloon on an adventure" (click)="discover('balloon')"><img src="assets/balloon.png" alt="" width="67" height="100"></button>
-      <button class="flag scene-toy" [class.is-discovered]="playfulElement() === 'flag'" aria-label="Wave the CES flag" (click)="discover('flag')"><img src="assets/flag.png" alt="" width="104" height="147"></button>
+      <button class="balloon scene-toy" [class.is-discovered]="playfulElement() === 'balloon'" aria-label="Send the balloon on an adventure" (click)="discover('balloon')"><img src="assets/props/balloon.png" alt="" width="67" height="100"></button>
+      <button class="flag scene-toy" [class.is-discovered]="playfulElement() === 'flag'" aria-label="Wave the CES flag" (click)="discover('flag')"><img src="assets/props/flag.png" alt="" width="104" height="147"></button>
       <button class="land-trophy scene-toy" aria-label="Open your trophy collection" (click)="achievements.showModal()">
         <span class="trophy-halo" aria-hidden="true"></span>
-        <img src="assets/trophy.png" alt="" width="111" height="95">
+        <img src="assets/props/trophy.png" alt="" width="111" height="95">
         <span class="sparkle sparkle-one" aria-hidden="true"></span><span class="sparkle sparkle-two" aria-hidden="true"></span><span class="sparkle sparkle-three" aria-hidden="true"></span>
       </button>
-      <a class="pixel-button back-button" [href]="config.schoolUrl"><img src="assets/back.svg" alt="" width="16" height="16"> Back <span class="sr-only">to CES website</span></a>
+      <a class="pixel-button back-button" [href]="config.schoolUrl"><img src="assets/props/back.svg" alt="" width="16" height="16"> Back <span class="sr-only">to CES website</span></a>
       <div class="scene-controls controls-left"><button class="control-button control-sound" [attr.aria-label]="soundEnabled() ? 'Turn sound off' : 'Turn sound on'" (click)="toggleSound()"><img [src]="soundEnabled() ? 'assets/icons/icon-sound-on.png' : 'assets/icons/icon-sound-off.png'" alt="" width="26" height="26"></button></div>
-      <button class="map-scroll" aria-label="Explore the island map" (click)="navigate('map')"><img src="assets/map-scroll.png" alt="" width="220" height="147"><span>Explore map</span></button>
+      <button class="map-scroll" aria-label="Explore the island map" (click)="navigate('map')"><img src="assets/props/map-scroll.png" alt="" width="220" height="147"><span>Explore map</span></button>
       <aside class="player-card paper">
-        <div class="player-name"><img src="assets/avatar.png" alt="" width="44" height="44"><strong>{{ progress().name }}</strong></div>
+        <div class="player-name"><img src="assets/props/avatar.png" alt="" width="44" height="44"><strong>{{ progress().name }}</strong></div>
         <p class="eyebrow">YOUR ADVENTURE</p>
         <div class="player-level">Level {{ level() }} explorer</div>
         <div class="player-stat"><span>Total best score</span><strong>{{ total() }} XP</strong></div>
@@ -40,6 +40,7 @@
           <label for="explorer-name">What should we call you, explorer?</label>
           <input #explorerName id="explorer-name" maxlength="20" autocomplete="off" [value]="progress().name === 'Explorer' ? '' : progress().name" placeholder="Your explorer name">
           <button class="pixel-button primary" type="submit">{{ progress().completed.length ? 'Continue adventure' : 'Let’s play' }} <span aria-hidden="true">→</span></button>
+          <a class="pixel-button" href="index.html#/arcade">Play the arcade <span aria-hidden="true">→</span></a>
         </form>
         <p class="small-note">Free to explore · No sign-up needed · Learn at your pace</p>
       </div>
@@ -47,31 +48,31 @@
   } @else if (screen() === 'map') {
     <section class="map-scene scene" aria-labelledby="map-title">
       <header class="map-header">
-        <button class="pixel-button back-button" (click)="back()"><img src="assets/back.svg" alt="" width="16" height="16"> Back</button>
+        <button class="pixel-button back-button" (click)="back()"><img src="assets/props/back.svg" alt="" width="16" height="16"> Back</button>
         <div class="scene-controls controls-left"><button class="control-button control-sound" [attr.aria-label]="soundEnabled() ? 'Turn sound off' : 'Turn sound on'" (click)="toggleSound()"><img [src]="soundEnabled() ? 'assets/icons/icon-sound-on.png' : 'assets/icons/icon-sound-off.png'" alt="" width="26" height="26"></button></div>
         <div class="map-heading"><h1 id="map-title" tabindex="-1" data-screen-heading>Choose your next adventure</h1><p>Pick an island. Discover something new.</p></div>
-        <button class="score-chip" (click)="achievements.showModal()"><img src="assets/trophy.png" alt="" width="32" height="30">{{ total() }} XP <span class="sr-only">— view badges</span></button>
+        <button class="score-chip" (click)="achievements.showModal()"><img src="assets/props/trophy.png" alt="" width="32" height="30">{{ total() }} XP <span class="sr-only">— view badges</span></button>
       </header>
       <div class="island-map">
-        <div class="traveller" aria-hidden="true"><img class="captain" src="assets/avatar-map.png" alt="" width="44" height="44"><img src="assets/ship.png" alt="" width="168" height="112"></div>
+        <div class="traveller" aria-hidden="true"><img class="captain" src="assets/props/avatar-map.png" alt="" width="44" height="44"><img src="assets/props/ship.png" alt="" width="168" height="112"></div>
         @for (zone of zones; track zone.id) {
           <button [class]="'island island-' + zone.id" (click)="enter(zone)" [attr.aria-label]="'Explore ' + zone.name + (progress().completed.includes(zone.id) ? ', best score ' + progress().best[zone.id] + ' out of 100' : '')">
             <img class="island-art" [src]="'assets/' + zone.image" alt="" width="506" height="338">
             <span class="island-label">
               @if (zone.icon) { <img class="zone-icon" [src]="'assets/' + zone.icon" alt="" width="50" height="50"> }
               {{ zone.name }}
-              @if (zone.id === 'science') { <img class="flask" src="assets/flask.png" alt="" width="46" height="43"> }
+              @if (zone.id === 'science') { <img class="flask" src="assets/props/flask.png" alt="" width="46" height="43"> }
               @if (progress().completed.includes(zone.id)) { <span class="island-complete">{{ progress().best[zone.id] }} / 100</span> }
             </span>
             <span class="island-hint">Explore island <span aria-hidden="true">→</span></span>
           </button>
         }
-        <img class="rock rock-one" src="assets/rock-a.png" alt="" width="53" height="35">
-        <img class="rock rock-two" src="assets/rock-a.png" alt="" width="73" height="48">
-        <img class="rock rock-three" src="assets/rock-b.png" alt="" width="48" height="32">
-        <img class="rock rock-four" src="assets/rock-b.png" alt="" width="68" height="45">
-        <img class="rock rock-five" src="assets/rock-b.png" alt="" width="48" height="32">
-        <img class="rock rock-six" src="assets/rock-b.png" alt="" width="33" height="22">
+        <img class="rock rock-one" src="assets/props/rock-a.png" alt="" width="53" height="35">
+        <img class="rock rock-two" src="assets/props/rock-a.png" alt="" width="73" height="48">
+        <img class="rock rock-three" src="assets/props/rock-b.png" alt="" width="48" height="32">
+        <img class="rock rock-four" src="assets/props/rock-b.png" alt="" width="68" height="45">
+        <img class="rock rock-five" src="assets/props/rock-b.png" alt="" width="48" height="32">
+        <img class="rock rock-six" src="assets/props/rock-b.png" alt="" width="33" height="22">
       </div>
       <p class="map-footer">Your journey, your pace. Earn a badge with 3 correct answers in a round.</p>
     </section>
@@ -79,18 +80,18 @@
     <section [class]="'zone-scene scene zone-' + activeZone().id" [attr.aria-label]="activeZone().name">
       <div class="zone-background" aria-hidden="true">
           @if (activeZone().id === 'brain' || activeZone().id === 'discovery') {
-            <img class="scene-image" [src]="'assets/scene-' + activeZone().id + '-base.png'" alt="" width="1440" height="960">
+            <img class="scene-image" [src]="'assets/scenes/scene-' + activeZone().id + '-base.png'" alt="" width="1440" height="960">
           }
-          <img class="scene-image scene-foreground" [src]="'assets/scene-' + activeZone().id + '.png'" alt="" width="1440" height="960">
+          <img class="scene-image scene-foreground" [src]="'assets/scenes/scene-' + activeZone().id + '.png'" alt="" width="1440" height="960">
       </div>
       <header class="zone-header">
-        <button class="pixel-button back-button" (click)="back(leaveDialog)"><img src="assets/back.svg" alt="" width="16" height="16"> Back</button>
+        <button class="pixel-button back-button" (click)="back(leaveDialog)"><img src="assets/props/back.svg" alt="" width="16" height="16"> Back</button>
         <img class="zone-title" [src]="'assets/title-' + activeZone().id + '.png'" [alt]="activeZone().name" width="363" height="120">
         <div class="scene-controls">
-          <button class="control-button control-home" (click)="navigate('welcome')" aria-label="Go to the welcome screen"><img src="assets/control-home.png" alt="" width="26" height="26"></button>
-          <button class="control-button control-xp" (click)="achievements.showModal()" [attr.aria-label]="'View badges — ' + total() + ' XP earned'"><img src="assets/control-xp.png" alt="" width="28" height="28"></button>
+          <button class="control-button control-home" (click)="navigate('welcome')" aria-label="Go to the welcome screen"><img src="assets/controls/control-home.png" alt="" width="26" height="26"></button>
+          <button class="control-button control-xp" (click)="achievements.showModal()" [attr.aria-label]="'View badges — ' + total() + ' XP earned'"><img src="assets/controls/control-xp.png" alt="" width="28" height="28"></button>
           <button class="control-button control-sound" [attr.aria-label]="soundEnabled() ? 'Turn sound off' : 'Turn sound on'" (click)="toggleSound()"><img [src]="soundEnabled() ? 'assets/icons/icon-sound-on.png' : 'assets/icons/icon-sound-off.png'" alt="" width="26" height="26"></button>
-          <button class="control-button control-close" (click)="back(leaveDialog)" aria-label="Leave this island"><img src="assets/control-close.png" alt="" width="26" height="26"></button>
+          <button class="control-button control-close" (click)="back(leaveDialog)" aria-label="Leave this island"><img src="assets/controls/control-close.png" alt="" width="26" height="26"></button>
         </div>
       </header>
       @if (screen() === 'island') {
@@ -148,7 +149,7 @@
                 <span [style.left.%]="particle.x" [style.--delay]="particle.delay / 3 + 's'" [style.--drift]="particle.drift + 'px'"></span>
               }
             </div>
-            <img class="result-trophy" src="assets/trophy.png" alt="" width="111" height="95">
+            <img class="result-trophy" src="assets/props/trophy.png" alt="" width="111" height="95">
             <p class="eyebrow">QUEST COMPLETE</p>
             <h1 tabindex="-1" data-screen-heading>{{ score() >= 60 ? 'You did it, explorer!' : 'Keep your curiosity alive!' }}</h1>
             <div class="result-score">{{ score() }} <span>/ 100 XP</span></div>

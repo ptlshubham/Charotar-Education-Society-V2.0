@@ -42,7 +42,88 @@ The app uses a relative base URL and hash navigation, so the same build works at
 - Round actions sit in a top-corner cluster of home, badges, sound, and close buttons. Leaving a round part-way asks in an in-game dialog built from the same island artwork rather than a browser confirm box.
 - Motion is always on; there is no pause control. Sound starts off and enables optional quiet synthesized chimes. Reduced-motion settings suppress animation, and background tabs suspend audio and pause motion. All effects remain inside `game/`; no animation or audio dependencies are needed. Scenery effects are styled in `src/effects.scss`.
 
+## CES Arcade (the platformer)
+
+A second, separate game lives at `#/arcade` inside this same app: a side-scrolling
+platformer in the Learning Quest art style. It is lazy-loaded, so the quiz's initial
+bundle is unaffected (`main` 45 kB, `arcade` 35 kB deferred).
+
+| Level | Theme | Width | Coins | Enemies | Recorded run |
+|---|---|---:|---:|---|---:|
+| Jungle Run | jungle | 120 | 19 | 4w 2f | 824 / 3600 |
+| Dune Dash | desert | 150 | 24 | 5w 1f | 1045 / 4500 |
+| Ember Climb | volcano | 180 | 27 | 7w 3f | 1309 / 5400 |
+| Frost Trail | ice | 227 | 19 | 4w 1f | 1592 / 5000 |
+| Castle Climb | castle | 260 | 20 | 4w 2f | 1842 / 5600 |
+| Canopy Dash | canopy | 290 | 20 | 5w 2f | 2069 / 6200 |
+| Circuit Run | village | 309 | 20 | 5w 3f | 2207 / 6600 |
+
+All seven worlds from the quiz have a level, each with its own backdrop, tileset,
+island card and dialog panel. Clearing a level carries your lives and score into the next one; the level-complete
+dialog offers **Next level** until the last, then **Back to levels**. Cleared levels and
+your best run total are saved to `localStorage` under `ces-arcade-v1`.
+
+- **Controls** — Arrow keys or A/D to move, Space / W / Up to jump, Escape to pause. On a
+  touch screen the pad below the stage does the same; it never overlaps the play area.
+- **Rules** — run, jump, stomp enemies, collect coins, bump question blocks, touch the
+  checkpoint, reach the CES flag. Spikes and lava cost a life; three lives per run.
+- **Rendering** — a fixed 512 x 288 virtual resolution upscaled with `image-rendering:
+  pixelated`, 16 px tiles, 18 rows. Levels are exactly one screen tall, so the camera is a
+  horizontal clamp only.
+- **Physics is discrete Euler** (`vy += g` then `y += vy`), so the jump envelope is a finite
+  sum and NOT the textbook `v^2/2g`. The real numbers, computed in `levels.ts` and asserted
+  by `npm test`: apex **45.00 px (2.81 tiles)**, airtime **28 ticks**, horizontal range
+  **61.60 px (3.85 tiles)**. A 3-tile gap is comfortable; a 4-tile gap is impossible.
+- **`validateLevel()` throws at load** if a question block is out of jump reach, a flyer's
+  swept box clips terrain, a spawn sits inside a solid, or a row is ragged. These are the
+  failures that otherwise ship as "the game is broken and nobody knows why".
+- **Determinism** — nothing in `engine.ts`, `levels.ts` or `render.ts` reads a clock or a
+  random number; `npm run art:check` greps for them and fails the build. Each level ships a
+  recorded input script (`solution`) that `npm test` replays headlessly, asserting the level
+  still clears within budget without losing a life. Re-record after any physics change.
+
+### Adding or editing a level
+
+Levels are plain character grids in `src/platformer/levels.ts`, one character per tile:
+
+| `.` air | `#` terrain | `B` brick | `?` question block | `^` spike | `~` lava/water |
+|---|---|---|---|---|---|
+| `o` coin | `c` checkpoint | `P` spawn | `w` walker | `f` flyer | `G` goal |
+
+Rows may be shorter than 18; the compiler top-pads them. `P`, `w` and `G` mean the entity's
+bottom edge rests on that cell's bottom edge. Terrain skins itself (grass top vs fill) from
+one rule, so there is nothing to hand-pick. Re-record the level's `solution` afterwards.
+
+### Replacing the placeholder art
+
+Every sprite is a named slot in `src/platformer/sprites.ts` — the only file in the repo that
+holds a sprite path, sheet size, frame size or frame order. `npm run art` regenerates the
+placeholder PNGs and rewrites `public/assets/arcade/SWAP-LIST.md`, which is the hand-off
+document for the art team and ships with the build at `/game/assets/arcade/SWAP-LIST.md`.
+
+- Overwrite the PNG at the same path, same grid, same frame order. No code changes.
+- The declared size or any exact 2x / 3x / 4x of it is accepted, same multiple on both axes.
+- `npm run art` never overwrites art it did not generate — a SHA ledger in
+  `scripts/.placeholders.json` tracks its own output, so replaced files are left alone.
+  `npm run art -- --force` overrides that and names every file it is about to destroy.
+- `npm run art:check` (step 0 of `npm test`) fails by slot name with the size it expected, so
+  a mis-sized replacement never reaches the browser as a silently broken sprite.
+- The 13 files the arcade reuses from the quiz are listed separately in SWAP-LIST.md as
+  do-not-replace, because changing them also changes the quiz.
+
+### Not implemented, deliberately
+
+Slopes, one-way and moving platforms, wall-jump, crouch, swimming, invulnerability frames,
+knockback, particles, screen shake, swept collision. Two enemy types are one `if/else`, not
+an entity system.
+
 ## Design sources
+
+### Jungle arcade artwork
+
+The jungle map now uses generated safari-explorer animation, a snail, a macaw, gold coins, mossy terrain, a waterfall backdrop, and jungle props. Preview the full asset set at `assets/arcade/jungle/preview.html`; prompts and provenance are in `public/assets/arcade/jungle/ART.md`.
+
+Original PNGs remain intact. `sprites.ts` declares the source dimensions and frame order, and `atlas.ts` trims transparent actor margins into cached 4x sheets at load time. Each theme has its own folder under `assets/arcade/`: `jungle`, `desert`, `volcano`, `ice`, `castle`, `canopy`, and `village`. Other maps use `assets/arcade/shared/` for their original shared characters and coins. Pipe, bridge, and supplementary item art are supplied for future map work; no new power-up or pipe mechanics are implied. The placeholder generator preserves authored art.
 
 File: https://www.figma.com/design/gbObfnTUNTQ8iNDaM9u7rA/Game-UI
 

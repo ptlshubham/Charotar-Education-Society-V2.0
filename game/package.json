@@ -6,7 +6,9 @@
   "scripts": {
     "start": "ng serve --port 4201",
     "build": "ng build",
-    "test": "node scripts/verify.mjs"
+    "test": "node scripts/verify.mjs",
+    "art": "node scripts/make-sprites.mjs",
+    "art:check": "node scripts/make-sprites.mjs --check"
   },
   "dependencies": {
     "@angular/common": "22.0.7",

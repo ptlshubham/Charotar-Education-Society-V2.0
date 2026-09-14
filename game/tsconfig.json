@@ -3,15 +3,25 @@
     "target": "ES2022",
     "module": "preserve",
     "moduleResolution": "bundler",
-    "lib": ["ES2022", "DOM"],
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
     "strict": true,
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "isolatedModules": true,
+    "allowImportingTsExtensions": true,
     "importHelpers": true,
     "outDir": "out-tsc",
-    "types": []
+    "types": [],
+    "rewriteRelativeImportExtensions": true
   },
-  "angularCompilerOptions": { "strictTemplates": true, "strictInjectionParameters": true },
-  "include": ["src/**/*.ts"]
+  "angularCompilerOptions": {
+    "strictTemplates": true,
+    "strictInjectionParameters": true
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
 }

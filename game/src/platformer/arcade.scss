@@ -1,0 +1,73 @@
+// CES Arcade. Additive only — the panel, button, control and dialog shapes all
+// come from styles.scss so the arcade inherits the quiz's ink tokens untouched.
+
+.arcade-shell { max-width: 2400px; margin: auto; background: var(--ink); }
+
+.jungle-art .arcade-play { background: radial-gradient(ellipse at top, #1c6245, #08291e 72%); }
+.jungle-art .arcade-bar h1 { display: flex; align-items: center; gap: 10px; color: #fff4cf; }
+.arcade-portrait { width: 44px; height: 44px; object-fit: contain; }
+.jungle-art .arcade-chip { color: #fff6da; background: #093a2bd9; border: 1px solid #397d59; border-radius: 10px; box-shadow: 0 2px 0 #041e17; }
+.jungle-art .arcade-chip img { width: 26px; height: 26px; }
+.jungle-art .arcade-canvas { border-color: #4f9870; box-shadow: 0 8px 32px #031f18a6; }
+.jungle-art .arcade-key, .jungle-art .arcade-controls .control-button { background: #ecdfb4; border-color: #3c6b46; box-shadow: 3px 3px #143828; }
+.jungle-art .arcade-key-text { color: #24523b; }
+.jungle-art .arcade-key::before { filter: hue-rotate(155deg) saturate(.55) brightness(.6); }
+@media (max-width: 700px) { .jungle-art .arcade-bar h1 { justify-content: center; } }
+
+.arcade-menu { position: relative; min-height: 100svh; overflow: hidden; padding: 110px 24px 48px; background: url('../../public/assets/props/ocean.png') center / cover; text-align: center; }
+.arcade-menu-controls { position: absolute; z-index: 5; top: 42px; right: 5.55%; display: flex; gap: 10px; }
+.arcade-menu-head { position: relative; max-width: 720px; margin: 0 auto 36px; color: #fff6dd; text-shadow: 1px 2px 2px #241c69; }
+.arcade-menu-head .eyebrow { color: #ffe9b6; font-size: 10px; }
+.arcade-menu-head h1 { font-size: clamp(52px, 7vw, 96px); line-height: .9; margin: 14px 0 10px; color: #fff9e7; -webkit-text-stroke: 1px #593280; text-shadow: 4px 5px 0 #68399c; }
+.arcade-menu-head h1 span { color: #ffd774; }
+.arcade-menu-tagline { font-size: 14px; line-height: 1.7; }
+.arcade-menu-best { margin-top: 14px; display: inline-block; padding: 8px 14px; background: #fff9e9; color: #583380; font-size: 13px; font-weight: 800; border: 1px solid var(--line); box-shadow: 2px 2px var(--line); text-shadow: none; }
+
+.arcade-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 300px)); justify-content: center; gap: 22px; }
+.arcade-card { position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 14px 14px 18px; border: 1px solid var(--line); box-shadow: 3px 3px 0 var(--line); background: #fffdf6; transition: transform .18s, box-shadow .18s; }
+.arcade-card:hover, .arcade-card:focus-visible { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--line); }
+.arcade-card-art { width: 100%; height: auto; aspect-ratio: 1.5; object-fit: contain; }
+.arcade-card-name { font-family: 'Passion One', Impact, sans-serif; font-size: 30px; color: var(--purple); line-height: 1; }
+.arcade-card-state { font-size: 11px; font-weight: 700; padding: 5px 9px; background: #efe8f6; color: #6a5a7d; }
+.arcade-card-state.is-cleared { background: #e4ffcf; color: #315824; }
+.arcade-menu-note { max-width: 620px; margin: 30px auto 0; color: #fff7de; background: #191940b8; padding: 10px 15px; font-size: 11px; line-height: 1.7; border-radius: 4px; }
+.arcade-issues { max-width: 720px; margin: 18px auto 0; padding: 14px 18px 14px 34px; text-align: left; background: #fff1d1; color: var(--ink); font-size: 11px; line-height: 1.7; border: 1px solid var(--line); }
+
+.arcade-play { display: flex; flex-direction: column; align-items: center; gap: 14px; min-height: 100svh; padding: 18px 12px 24px; background: var(--ink); }
+.arcade-bar { width: min(100%, 1536px); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px 16px; }
+.arcade-bar h1 { font-size: 30px; color: #fff9e7; line-height: 1; }
+.arcade-hud { display: flex; align-items: center; gap: 10px; }
+.arcade-chip { display: inline-flex; align-items: center; gap: 7px; min-height: 34px; padding: 5px 11px; background: #fff9e9; color: #583380; font-size: 14px; font-weight: 800; border: 1px solid var(--line); box-shadow: 2px 2px var(--line); }
+.arcade-chip img { width: 20px; height: 20px; object-fit: contain; }
+.arcade-lives { gap: 3px; }
+.arcade-score { font-family: 'Passion One', Impact, sans-serif; font-weight: 400; font-size: 22px; }
+.arcade-controls { display: flex; gap: 10px; }
+
+// A width-constrained canvas keeps the 16:9 bitmap sharp; height-capping it with
+// max-height lets the browser stretch the aspect ratio instead.
+.arcade-canvas { display: block; width: min(100%, 1536px, calc((100svh - 168px) * 16 / 9)); aspect-ratio: 16 / 9; height: auto; background: #0d0d24; border: 1px solid var(--line); box-shadow: 0 0 30px #ffd70033; image-rendering: pixelated; }
+
+// Always below the canvas and always in flow, so the pad can never cover the stage.
+.arcade-pad { width: min(100%, 1536px); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.arcade-pad-group { display: flex; gap: 10px; }
+.arcade-key { position: relative; display: grid; place-items: center; gap: 2px; min-width: 44px; min-height: 44px; width: 78px; height: 66px; padding: 0; border: 1px solid var(--line); box-shadow: 3px 3px 0 var(--line); background: #fff9e9; touch-action: none; user-select: none; }
+.arcade-key:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--line); background: var(--cream); }
+.arcade-key::before { content: ''; display: block; width: 24px; height: 21px; background: url('../../public/assets/props/back.svg') center / contain no-repeat; }
+.arcade-key-left::before { transform: rotate(-90deg); }
+.arcade-key-right::before { transform: rotate(90deg); }
+.arcade-key-jump { width: 112px; }
+.arcade-key-text { font-family: 'Passion One', Impact, sans-serif; font-size: 20px; color: var(--purple); line-height: 1; }
+
+@media (max-width: 700px) {
+  .arcade-menu { padding: 96px 16px 40px; }
+  .arcade-menu-controls { top: 20px; right: 20px; gap: 8px; }
+  .arcade-menu-head { margin-bottom: 26px; }
+  .arcade-menu-head h1 { font-size: 56px; }
+  .arcade-cards { grid-template-columns: minmax(0, 320px); }
+  .arcade-play { padding: 14px 10px 20px; gap: 12px; }
+  .arcade-bar { justify-content: center; }
+  .arcade-bar h1 { width: 100%; text-align: center; font-size: 26px; }
+  .arcade-chip { font-size: 12px; padding: 4px 8px; }
+  .arcade-key { width: 64px; height: 56px; }
+  .arcade-key-jump { width: 96px; }
+}

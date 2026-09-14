@@ -1,4 +1,4 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { GameComponent } from './game';
+import { ShellComponent } from './shell';
 
-bootstrapApplication(GameComponent).catch(console.error);
+bootstrapApplication(ShellComponent).catch(console.error);

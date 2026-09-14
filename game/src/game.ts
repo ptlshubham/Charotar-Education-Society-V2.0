@@ -26,8 +26,6 @@ export class GameComponent implements OnDestroy {
   readonly badges = computed(() => zones.filter(zone => (this.progress().best[zone.id] ?? 0) >= 60));
   readonly level = computed(() => 1 + Math.floor(this.total() / 100));
   readonly letters = ['A', 'B', 'C', 'D'];
-  readonly motionEnabled = signal(true);
-  readonly reducedMotion = signal(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   readonly pageVisible = signal(!document.hidden);
   readonly soundEnabled = signal(false);
   readonly sceneMessage = signal('');
@@ -39,16 +37,12 @@ export class GameComponent implements OnDestroy {
   }));
   private messageTimer?: ReturnType<typeof setTimeout>;
   private audio?: AudioContext;
-  private readonly motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  private readonly onMotionPreference = (event: MediaQueryListEvent) => this.reducedMotion.set(event.matches);
 
   @HostListener('document:visibilitychange')
   visibilityChanged(): void {
     this.pageVisible.set(!document.hidden);
     if (document.hidden) void this.audio?.suspend().catch(() => {});
   }
-
-  toggleMotion(): void { this.motionEnabled.update(value => !value); }
 
   toggleSound(): void {
     this.soundEnabled.update(value => !value);
@@ -99,12 +93,10 @@ export class GameComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     clearTimeout(this.messageTimer);
-    this.motionQuery.removeEventListener('change', this.onMotionPreference);
     void this.audio?.close().catch(() => {});
   }
 
   constructor() {
-    this.motionQuery.addEventListener('change', this.onMotionPreference);
     try {
       const saved = JSON.parse(localStorage.getItem(gameConfig.storageKey) ?? 'null');
       if (saved && typeof saved === 'object') {
@@ -199,12 +191,15 @@ export class GameComponent implements OnDestroy {
     this.focusHeading();
   }
 
-  back(): void {
-    if (this.screen() === 'quiz') {
-      if (!window.confirm('Leave this round? Your answers in this round will not be saved. Your previous best scores are safe.')) return;
-      this.screen.set('island');
-      this.focusHeading();
-    } else this.navigate(this.screen() === 'map' ? 'welcome' : 'map');
+  back(leaveDialog?: HTMLDialogElement): void {
+    if (this.screen() === 'quiz') leaveDialog?.showModal();
+    else this.navigate(this.screen() === 'map' ? 'welcome' : 'map');
+  }
+
+  leaveRound(dialog: HTMLDialogElement): void {
+    dialog.close();
+    this.screen.set('island');
+    this.focusHeading();
   }
 
   private save(): void {

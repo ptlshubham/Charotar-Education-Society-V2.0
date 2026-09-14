@@ -1,4 +1,4 @@
-<main class="game-shell" [class.effects-paused]="!motionEnabled() || !pageVisible()" [class.map-mode]="screen() === 'map'" [class.zone-mode]="screen() === 'island' || screen() === 'quiz' || screen() === 'result'">
+<main class="game-shell" [class.effects-paused]="!pageVisible()" [class.map-mode]="screen() === 'map'" [class.zone-mode]="screen() === 'island' || screen() === 'quiz' || screen() === 'result'">
   @if (screen() === 'welcome') {
     <section class="welcome scene" aria-labelledby="welcome-title">
       <div class="welcome-art" aria-hidden="true">
@@ -20,6 +20,7 @@
         <span class="sparkle sparkle-one" aria-hidden="true"></span><span class="sparkle sparkle-two" aria-hidden="true"></span><span class="sparkle sparkle-three" aria-hidden="true"></span>
       </button>
       <a class="pixel-button back-button" [href]="config.schoolUrl"><img src="assets/back.svg" alt="" width="16" height="16"> Back <span class="sr-only">to CES website</span></a>
+      <div class="scene-controls controls-left"><button class="control-button control-sound" [attr.aria-label]="soundEnabled() ? 'Turn sound off' : 'Turn sound on'" (click)="toggleSound()"><img [src]="soundEnabled() ? 'assets/icons/icon-sound-on.png' : 'assets/icons/icon-sound-off.png'" alt="" width="26" height="26"></button></div>
       <button class="map-scroll" aria-label="Explore the island map" (click)="navigate('map')"><img src="assets/map-scroll.png" alt="" width="220" height="147"><span>Explore map</span></button>
       <aside class="player-card paper">
         <div class="player-name"><img src="assets/avatar.png" alt="" width="44" height="44"><strong>{{ progress().name }}</strong></div>
@@ -47,6 +48,7 @@
     <section class="map-scene scene" aria-labelledby="map-title">
       <header class="map-header">
         <button class="pixel-button back-button" (click)="back()"><img src="assets/back.svg" alt="" width="16" height="16"> Back</button>
+        <div class="scene-controls controls-left"><button class="control-button control-sound" [attr.aria-label]="soundEnabled() ? 'Turn sound off' : 'Turn sound on'" (click)="toggleSound()"><img [src]="soundEnabled() ? 'assets/icons/icon-sound-on.png' : 'assets/icons/icon-sound-off.png'" alt="" width="26" height="26"></button></div>
         <div class="map-heading"><h1 id="map-title" tabindex="-1" data-screen-heading>Choose your next adventure</h1><p>Pick an island. Discover something new.</p></div>
         <button class="score-chip" (click)="achievements.showModal()"><img src="assets/trophy.png" alt="" width="32" height="30">{{ total() }} XP <span class="sr-only">— view badges</span></button>
       </header>
@@ -82,62 +84,80 @@
           <img class="scene-image scene-foreground" [src]="'assets/scene-' + activeZone().id + '.png'" alt="" width="1440" height="960">
       </div>
       <header class="zone-header">
-        <button class="pixel-button back-button" (click)="back()"><img src="assets/back.svg" alt="" width="16" height="16"> Back</button>
+        <button class="pixel-button back-button" (click)="back(leaveDialog)"><img src="assets/back.svg" alt="" width="16" height="16"> Back</button>
         <img class="zone-title" [src]="'assets/title-' + activeZone().id + '.png'" [alt]="activeZone().name" width="363" height="120">
-        <button class="score-chip" (click)="achievements.showModal()"><img src="assets/trophy.png" alt="" width="32" height="30">{{ total() }} XP<span class="sr-only"> — view badges</span></button>
+        <div class="scene-controls">
+          <button class="control-button control-home" (click)="navigate('welcome')" aria-label="Go to the welcome screen"><img src="assets/control-home.png" alt="" width="26" height="26"></button>
+          <button class="control-button control-xp" (click)="achievements.showModal()" [attr.aria-label]="'View badges — ' + total() + ' XP earned'"><img src="assets/control-xp.png" alt="" width="28" height="28"></button>
+          <button class="control-button control-sound" [attr.aria-label]="soundEnabled() ? 'Turn sound off' : 'Turn sound on'" (click)="toggleSound()"><img [src]="soundEnabled() ? 'assets/icons/icon-sound-on.png' : 'assets/icons/icon-sound-off.png'" alt="" width="26" height="26"></button>
+          <button class="control-button control-close" (click)="back(leaveDialog)" aria-label="Leave this island"><img src="assets/control-close.png" alt="" width="26" height="26"></button>
+        </div>
       </header>
       @if (screen() === 'island') {
-        <div class="island-intro paper">
-          <p class="eyebrow">YOUR NEXT DISCOVERY AWAITS</p>
-          <h1 tabindex="-1" data-screen-heading>{{ activeZone().name }}</h1>
-          <p>{{ activeZone().subtitle }}</p>
-          <div class="round-details"><span>5 questions</span><span>100 XP to discover</span><span>No timer</span></div>
-          <button class="pixel-button primary" (click)="startRound()">Start quest <span aria-hidden="true">→</span></button>
-          @if (progress().completed.includes(activeZone().id)) { <p class="small-note">Your best: {{ progress().best[activeZone().id] }} / 100 · Play again to improve!</p> }
-          @else { <p class="small-note">Get 3 answers right to earn the {{ activeZone().badge }} badge.</p> }
+        <div class="zone-panel island-intro">
+          <img class="zone-panel-art" [src]="'assets/panel-' + activeZone().id + '.png'" alt="" width="866" height="484">
+          <div class="zone-panel-body">
+            <p class="eyebrow">YOUR NEXT DISCOVERY AWAITS</p>
+            <h1 tabindex="-1" data-screen-heading>{{ activeZone().name }}</h1>
+            <p>{{ activeZone().subtitle }}</p>
+            <div class="round-details"><span>5 questions</span><span>100 XP to discover</span><span>No timer</span><span>{{ total() }} XP earned</span></div>
+            <div class="zone-menu">
+              <button class="pixel-button primary" (click)="startRound()">Start quest <span aria-hidden="true">→</span></button>
+              <button class="pixel-button" (click)="achievements.showModal()">My badges</button>
+              <button class="pixel-button" (click)="navigate('map')">Back to map</button>
+            </div>
+            @if (progress().completed.includes(activeZone().id)) { <p class="small-note">Your best: {{ progress().best[activeZone().id] }} / 100 · Play again to improve!</p> }
+            @else { <p class="small-note">Get 3 answers right to earn the {{ activeZone().badge }} badge.</p> }
+          </div>
         </div>
       } @else if (screen() === 'quiz') {
-        <div class="quiz-panel paper">
-          <div class="quiz-meta"><span>{{ activeZone().name }}</span><strong>{{ score() }} XP</strong></div>
-          @if (selected() !== null && selected() === question().answer) { <span class="xp-pop" aria-hidden="true">+20 XP</span> }
-          <div class="question-progress"><span>Question {{ questionIndex() + 1 }} of {{ questions().length }}</span><progress [value]="questionIndex() + 1" [max]="questions().length" aria-label="Question progress"></progress></div>
-          <h1 tabindex="-1" data-screen-heading>{{ question().prompt }}</h1>
-          <div class="answers" role="group" aria-label="Choose one answer">
-            @for (option of question().options; track $index) {
-              <button class="answer" [class.correct]="selected() !== null && $index === question().answer" [class.incorrect]="selected() === $index && $index !== question().answer" [disabled]="selected() !== null" (click)="answer($index)">
-                <span class="answer-letter">{{ letters[$index] }}</span><span>{{ option }}</span>
-                @if (selected() !== null && $index === question().answer) { <span class="answer-state">Correct</span> }
-                @else if (selected() === $index) { <span class="answer-state">Your answer</span> }
-              </button>
-            }
+        <div class="zone-panel quiz-panel">
+          <img class="zone-panel-art" [src]="'assets/panel-' + activeZone().id + '.png'" alt="" width="866" height="484">
+          <div class="zone-panel-body">
+            <div class="quiz-meta"><span>{{ activeZone().name }}</span><strong>{{ score() }} XP</strong></div>
+            @if (selected() !== null && selected() === question().answer) { <span class="xp-pop" aria-hidden="true">+20 XP</span> }
+            <div class="question-progress"><span>Question {{ questionIndex() + 1 }} of {{ questions().length }}</span><progress [value]="questionIndex() + 1" [max]="questions().length" aria-label="Question progress"></progress></div>
+            <h1 tabindex="-1" data-screen-heading>{{ question().prompt }}</h1>
+            <div class="answers" role="group" aria-label="Choose one answer">
+              @for (option of question().options; track $index) {
+                <button class="answer" [class.correct]="selected() !== null && $index === question().answer" [class.incorrect]="selected() === $index && $index !== question().answer" [disabled]="selected() !== null" (click)="answer($index)">
+                  <span class="answer-letter">{{ letters[$index] }}</span><span>{{ option }}</span>
+                  @if (selected() !== null && $index === question().answer) { <span class="answer-state">Correct</span> }
+                  @else if (selected() === $index) { <span class="answer-state">Your answer</span> }
+                </button>
+              }
+            </div>
+            <div aria-live="polite" aria-atomic="true">
+              @if (selected() !== null) {
+                <div class="answer-feedback" [class.try-again]="selected() !== question().answer">
+                  <strong>{{ selected() === question().answer ? 'Great discovery! +20 XP' : 'A new thing to learn!' }}</strong>
+                  <p>{{ question().explanation }}</p>
+                </div>
+              }
+            </div>
+            @if (selected() !== null) { <button id="next-question" class="pixel-button primary next-button" (click)="next()">{{ questionIndex() === questions().length - 1 ? 'See my results' : 'Next question' }} <span aria-hidden="true">→</span></button> }
+            @else { <p class="small-note">Take your time. Every question is a chance to learn.</p> }
           </div>
-          <div aria-live="polite" aria-atomic="true">
-            @if (selected() !== null) {
-              <div class="answer-feedback" [class.try-again]="selected() !== question().answer">
-                <strong>{{ selected() === question().answer ? 'Great discovery! +20 XP' : 'A new thing to learn!' }}</strong>
-                <p>{{ question().explanation }}</p>
-              </div>
-            }
-          </div>
-          @if (selected() !== null) { <button id="next-question" class="pixel-button primary next-button" (click)="next()">{{ questionIndex() === questions().length - 1 ? 'See my results' : 'Next question' }} <span aria-hidden="true">→</span></button> }
-          @else { <p class="small-note">Take your time. Every question is a chance to learn.</p> }
         </div>
       } @else {
-        <div class="result-panel paper">
-          <div class="celebration" aria-hidden="true">
-            @for (particle of particles; track $index) {
-              <span [style.left.%]="particle.x" [style.--delay]="particle.delay / 3 + 's'" [style.--drift]="particle.drift + 'px'"></span>
-            }
+        <div class="zone-panel result-panel">
+          <img class="zone-panel-art" [src]="'assets/panel-' + activeZone().id + '.png'" alt="" width="866" height="484">
+          <div class="zone-panel-body">
+            <div class="celebration" aria-hidden="true">
+              @for (particle of particles; track $index) {
+                <span [style.left.%]="particle.x" [style.--delay]="particle.delay / 3 + 's'" [style.--drift]="particle.drift + 'px'"></span>
+              }
+            </div>
+            <img class="result-trophy" src="assets/trophy.png" alt="" width="111" height="95">
+            <p class="eyebrow">QUEST COMPLETE</p>
+            <h1 tabindex="-1" data-screen-heading>{{ score() >= 60 ? 'You did it, explorer!' : 'Keep your curiosity alive!' }}</h1>
+            <div class="result-score">{{ score() }} <span>/ 100 XP</span></div>
+            <p>You answered {{ score() / config.pointsPerAnswer }} of {{ questions().length }} questions correctly.</p>
+            @if (score() >= 60) { <p class="badge-earned">Badge earned: {{ activeZone().badge }}</p> }
+            @else { <p class="badge-earned">Try again — 3 correct answers earn your island badge.</p> }
+            <p class="small-note">Island best: {{ progress().best[activeZone().id] }} XP · Total best: {{ total() }} XP</p>
+            <div class="result-actions"><button class="pixel-button primary" (click)="navigate('map')">Explore more islands</button><button class="pixel-button" (click)="startRound()">Play again</button></div>
           </div>
-          <img class="result-trophy" src="assets/trophy.png" alt="" width="111" height="95">
-          <p class="eyebrow">QUEST COMPLETE</p>
-          <h1 tabindex="-1" data-screen-heading>{{ score() >= 60 ? 'You did it, explorer!' : 'Keep your curiosity alive!' }}</h1>
-          <div class="result-score">{{ score() }} <span>/ 100 XP</span></div>
-          <p>You answered {{ score() / config.pointsPerAnswer }} of {{ questions().length }} questions correctly.</p>
-          @if (score() >= 60) { <p class="badge-earned">Badge earned: {{ activeZone().badge }}</p> }
-          @else { <p class="badge-earned">Try again — 3 correct answers earn your island badge.</p> }
-          <p class="small-note">Island best: {{ progress().best[activeZone().id] }} XP · Total best: {{ total() }} XP</p>
-          <div class="result-actions"><button class="pixel-button primary" (click)="navigate('map')">Explore more islands</button><button class="pixel-button" (click)="startRound()">Play again</button></div>
         </div>
       }
     </section>
@@ -145,10 +165,20 @@
   @if (!storageAvailable()) { <p class="storage-notice" role="status">Progress is available for this visit. Browser storage is unavailable, so it may not be saved after you leave.</p> }
   <div class="scene-message" role="status" [class.is-visible]="sceneMessage() !== ''">{{ sceneMessage() }}</div>
 </main>
-<div class="effects-controls" role="group" aria-label="Game effects">
-  <button [attr.aria-pressed]="!motionEnabled() || reducedMotion()" [disabled]="reducedMotion()" (click)="toggleMotion()">{{ reducedMotion() ? 'Motion reduced' : motionEnabled() ? 'Pause motion' : 'Resume motion' }}</button>
-  <button [attr.aria-pressed]="soundEnabled()" (click)="toggleSound()">Sound {{ soundEnabled() ? 'on' : 'off' }}</button>
-</div>
+<dialog #leaveDialog [class]="'leave-confirm zone-' + activeZone().id" aria-labelledby="leave-title">
+  <div class="zone-panel">
+    <img class="zone-panel-art" [src]="'assets/panel-' + activeZone().id + '.png'" alt="" width="866" height="484">
+    <div class="zone-panel-body">
+      <p class="eyebrow">HOLD ON, EXPLORER</p>
+      <h2 id="leave-title">Leave this round?</h2>
+      <p>Your answers in this round will not be saved. Your previous best scores are safe.</p>
+      <div class="zone-menu">
+        <button class="pixel-button primary" (click)="leaveRound(leaveDialog)">Leave round</button>
+        <button class="pixel-button" (click)="leaveDialog.close()">Keep playing</button>
+      </div>
+    </div>
+  </div>
+</dialog>
 <dialog #achievements class="achievements paper" aria-labelledby="badges-title">
   <form method="dialog"><button class="dialog-close" aria-label="Close badges">×</button></form>
   <p class="eyebrow">YOUR ADVENTURE JOURNAL</p>

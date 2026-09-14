@@ -41,17 +41,13 @@ try {
   await page.keyboard.press('Enter');
   await page.locator('dialog[open]').waitFor();
   await page.keyboard.press('Escape');
-  await page.getByRole('button', { name: 'Pause motion', exact: true }).click();
-  await page.locator('.effects-paused').waitFor();
-  assert.equal(await page.locator('.cloud-one').evaluate(el => getComputedStyle(el).animationPlayState), 'paused');
-  await page.getByRole('button', { name: 'Resume motion', exact: true }).click();
+  assert.equal(await page.locator('.effects-controls').count(), 0, 'No motion toggle');
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.getByRole('button', { name: 'Motion reduced' }).waitFor();
-  assert.equal(await page.locator('.balloon > img').evaluate(el => getComputedStyle(el).animationName), 'none');
+  await page.waitForFunction(() => getComputedStyle(document.querySelector('.balloon > img')).animationName === 'none');
   await page.emulateMedia({ reducedMotion: 'no-preference' });
-  await page.getByRole('button', { name: 'Sound off', exact: true }).click();
-  await page.getByRole('button', { name: 'Sound on', exact: true }).click();
-  await page.getByRole('button', { name: 'Sound off', exact: true }).waitFor();
+  await page.getByRole('button', { name: 'Turn sound on', exact: true }).click();
+  await page.getByRole('button', { name: 'Turn sound off', exact: true }).click();
+  await page.getByRole('button', { name: 'Turn sound on', exact: true }).waitFor();
   await page.screenshot({ path: resolve(screenshots, 'welcome-desktop.png'), fullPage: true, animations: 'disabled' });
   await page.getByLabel('What should we call you, explorer?').fill('Student Explorer');
   await page.getByRole('button', { name: 'Let’s play' }).click();
@@ -66,11 +62,7 @@ try {
     await page.screenshot({ path: resolve(screenshots, `island-${zone.id}-desktop.png`), fullPage: true, animations: 'disabled' });
     await page.reload({ waitUntil: 'networkidle' });
     await page.getByRole('heading', { name: zone.name, exact: true }).waitFor();
-    if (zone.id === 'knowledge') {
-      await page.getByRole('button', { name: 'Pause motion', exact: true }).click();
-      assert.equal(await page.locator('.island-intro').evaluate(el => getComputedStyle(el).opacity), '1', 'Pausing keeps panel content visible');
-      await page.getByRole('button', { name: 'Resume motion', exact: true }).click();
-    }
+    assert.equal(await page.locator('.island-intro .zone-panel-art').evaluate(el => el.naturalWidth > 0), true, `${zone.id} panel artwork loads`);
     await page.getByRole('button', { name: 'Back', exact: true }).click();
   }
 
@@ -106,15 +98,17 @@ try {
   await page.getByRole('button', { name: 'view badges' }).click();
   assert.equal(await page.locator('.badge-row.earned').count(), 1);
   await page.keyboard.press('Escape');
-  assert.equal(await page.locator('dialog').evaluate(el => el.open), false);
+  assert.equal(await page.locator('dialog.achievements').evaluate(el => el.open), false);
   await page.getByRole('button', { name: 'Explore more islands' }).click();
   await page.getByRole('button', { name: /^Explore General Knowledge/ }).click();
   await page.getByRole('button', { name: 'Start quest' }).click();
-  page.once('dialog', dialog => dialog.dismiss());
   await page.getByRole('button', { name: 'Back', exact: true }).click();
+  await page.locator('.leave-confirm[open]').waitFor();
+  assert.equal(await page.locator('.leave-confirm .zone-panel-art').evaluate(el => el.naturalWidth > 0), true, 'Leave dialog uses the island artwork');
+  await page.getByRole('button', { name: 'Keep playing' }).click();
   assert.equal(await page.locator('.quiz-panel').count(), 1);
-  page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: 'Back', exact: true }).click();
+  await page.getByRole('button', { name: 'Leave round' }).click();
   assert.equal(await page.locator('.island-intro').count(), 1);
 
   for (const width of [390, 320]) {
@@ -150,7 +144,7 @@ try {
   assert.equal(await blockedPage.locator('.storage-notice').count(), 1);
   await blocked.close();
   assert.deepEqual(errors, [], 'No browser errors or failed assets');
-  console.log('PASS: animated scenery, interactive props, motion pause, reduced motion, opt-in sound, seven island scenes, deep links, correct/incorrect rounds, unique questions, score locking, badges, persistence, quit confirmation, root/subpath hosting, mobile layouts, and storage recovery.');
+  console.log('PASS: animated scenery, interactive props, reduced motion, opt-in sound, per-island panel artwork, seven island scenes, deep links, correct/incorrect rounds, unique questions, score locking, badges, persistence, quit confirmation, root/subpath hosting, mobile layouts, and storage recovery.');
 } finally {
   await browser?.close();
   await new Promise(resolve => server.close(resolve));

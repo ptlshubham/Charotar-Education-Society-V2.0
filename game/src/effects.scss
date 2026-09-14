@@ -1,0 +1,99 @@
+// Keep animated artwork separate from its hit target and from readable content.
+game-root { display: block; position: relative; }
+.scene-toy { animation: none; }
+.scene-toy > img { transition: filter .25s; }
+.scene-toy:hover > img, .scene-toy:focus-visible > img { filter: drop-shadow(0 0 12px #fff1a8); }
+.balloon > img { animation: balloon-sail 9s ease-in-out infinite; transform-origin: 50% 85%; }
+.balloon.is-discovered > img { animation: balloon-lift 4.2s ease-in-out; }
+.flag > img { transform-origin: 10% 88%; animation: flag-breeze 3.8s ease-in-out infinite; }
+.flag.is-discovered > img { animation: flag-wave .7s ease-in-out 6; }
+.land-trophy > img { position: relative; animation: trophy-hover 4.5s ease-in-out infinite; }
+.trophy-halo { position: absolute; inset: -35%; border-radius: 50%; background: radial-gradient(circle, #ffe78580 0, #ffd84930 35%, transparent 67%); animation: halo-breathe 4.5s ease-in-out infinite; pointer-events: none; }
+.sparkle { position: absolute; width: 9px; height: 9px; background: #fff4bc; box-shadow: 0 0 9px #ffe691; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); animation: sparkle-drift 4s ease-in-out infinite; pointer-events: none; }
+.sparkle-one { left: 4%; top: 15%; }
+.sparkle-two { right: 2%; top: 40%; animation-delay: -1.5s; width: 14px; height: 14px; }
+.sparkle-three { left: 47%; top: -12%; animation-delay: -2.5s; }
+.cloud { animation: cloud-drift 24s ease-in-out infinite alternate; }
+.cloud-one { --cloud-flip: -1; animation-duration: 29s; }
+.cloud-two { animation-delay: -12s; animation-duration: 34s; }
+.cloud-three { animation-delay: -7s; animation-duration: 22s; }
+.birds { animation: birds-glide 18s ease-in-out infinite; }
+.map-scroll > img { animation: scroll-float 6s ease-in-out infinite; filter: drop-shadow(0 7px 5px #56309345); }
+.map-scroll:hover > img, .map-scroll:focus-visible > img { filter: drop-shadow(0 0 16px #ffe894b3); }
+.map-scroll:hover, .map-scroll:focus-visible { transform: scale(1.04); }
+.map-scroll > span { transition: color .2s; }
+.map-scroll:hover > span { color: #692eae; }
+.fireflies { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.fireflies > span { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #ffefb3; box-shadow: 0 0 7px 2px #ffeda170; opacity: 0; animation: firefly-rise var(--duration) ease-in-out var(--delay) infinite; }
+.fireflies > span:nth-child(3n) { width: 3px; height: 3px; background: #fff; }
+.island-art { animation: island-bob 7s ease-in-out infinite; }
+.island:nth-of-type(2n) .island-art { animation-delay: -2.5s; animation-duration: 8.5s; }
+.island:nth-of-type(3n) .island-art { animation-delay: -4s; }
+.island:hover .island-art, .island:focus-visible .island-art { filter: drop-shadow(0 0 9px #d9f6ff70); }
+.island .zone-icon { transform-origin: 50% 80%; animation: icon-sway 6s ease-in-out infinite; }
+.island:hover .island-label, .island:focus-visible .island-label { background: #fff8e8; box-shadow: 4px 5px #201426; }
+.island-label { transition: background .2s, box-shadow .2s; }
+.traveller { animation: boat-rock 7s ease-in-out infinite; }
+.zone-scene { padding-bottom: 86px; }
+.island-intro, .quiz-panel, .result-panel { animation: panel-arrive .45s cubic-bezier(.2,.7,.3,1) both; }
+.answer { transition: background .18s, box-shadow .18s, border-color .18s; }
+.answer.correct { animation: answer-discovery .4s ease-out; }
+.answer-feedback { animation: feedback-arrive .3s ease-out both; }
+.xp-pop { position: absolute; top: 30px; right: 36px; pointer-events: none; color: #6830a5; font: 400 26px 'Passion One', Impact, sans-serif; animation: xp-rise 1.1s ease-out both; }
+.result-trophy { animation: reward-arrive .8s cubic-bezier(.2,.7,.3,1) both; filter: drop-shadow(0 0 18px #ffd35b80); }
+.badge-earned { animation: feedback-arrive .4s .2s ease-out both; }
+.celebration { position: absolute; inset: -70px -10px 0; overflow: hidden; pointer-events: none; }
+.celebration > span { position: absolute; top: 0; width: 8px; height: 13px; background: #eebd48; opacity: 0; animation: confetti-fall 2.2s ease-out var(--delay) both; }
+.celebration > span:nth-child(3n) { background: #a168de; }
+.celebration > span:nth-child(3n + 1) { background: #65c4b2; border-radius: 50%; width: 9px; height: 9px; }
+.effects-controls { position: absolute; z-index: 8; bottom: 12px; left: 14px; display: flex; gap: 4px; padding: 4px; border: 1px solid #baa3d3; border-radius: 8px; background: #fffaf4f5; box-shadow: 0 2px 8px #19194025; }
+.effects-controls button { min-height: 36px; padding: 7px 10px; border: 0; border-radius: 5px; color: #503371; background: transparent; font-size: 11px; font-weight: 700; }
+.effects-controls button:hover { background: #efe0ff; }
+.effects-controls button[aria-pressed='true'] { background: #ede0fa; }
+.effects-controls button:disabled { color: #6b5c7c; cursor: default; }
+.scene-message { position: fixed; z-index: 7; bottom: 74px; left: 50%; transform: translateX(-50%); max-width: min(430px, calc(100% - 36px)); padding: 14px 22px; border: 1px solid #784da5; box-shadow: 3px 3px #342049; background: #fff9e8; color: #51356b; font-size: 13px; line-height: 1.6; text-align: center; pointer-events: none; opacity: 0; transition: opacity .2s; }
+.scene-message.is-visible { opacity: 1; }
+.effects-paused *, .effects-paused *::before, .effects-paused *::after { animation-play-state: paused !important; transition: none !important; }
+// Content must remain visible even if motion is paused before an entrance starts.
+.effects-paused .island-intro, .effects-paused .quiz-panel, .effects-paused .result-panel,
+.effects-paused .answer-feedback, .effects-paused .badge-earned, .effects-paused .result-trophy { animation: none !important; }
+.effects-paused .celebration, .effects-paused .xp-pop, .effects-paused .fireflies { display: none; }
+
+@keyframes cloud-drift { from { transform: translateX(-22px) scaleX(var(--cloud-flip, 1)); } to { transform: translateX(32px) scaleX(var(--cloud-flip, 1)); } }
+@keyframes balloon-sail { 0%, 100% { transform: translate(0, 0) rotate(-3deg); } 50% { transform: translate(10px, -20px) rotate(4deg); } }
+@keyframes balloon-lift { 0%, 100% { transform: translateY(0) rotate(-3deg); } 35%, 60% { transform: translateY(-45px) rotate(7deg); } }
+@keyframes flag-breeze { 0%, 100% { transform: skewY(-1deg) rotate(-.5deg); } 50% { transform: skewY(1.5deg) rotate(.7deg); } }
+@keyframes flag-wave { 0%, 100% { transform: skewY(-2deg); } 50% { transform: skewY(3deg) rotate(1deg); } }
+@keyframes trophy-hover { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-9px) rotate(2deg); } }
+@keyframes halo-breathe { 0%, 100% { opacity: .55; transform: scale(.9); } 50% { opacity: .95; transform: scale(1.06); } }
+@keyframes sparkle-drift { 0%, 100% { transform: translateY(3px) scale(.5); opacity: .15; } 50% { transform: translateY(-6px) scale(1.1); opacity: .9; } }
+@keyframes birds-glide { 0%, 100% { transform: translate(0, 0) rotate(0); } 50% { transform: translate(-35px, -12px) rotate(-4deg); } }
+@keyframes scroll-float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-7px) rotate(2deg); } }
+@keyframes firefly-rise { 0%, 100% { opacity: 0; transform: translate(0, 12px); } 35% { opacity: .7; } 70% { opacity: .25; transform: translate(14px, -28px); } }
+@keyframes island-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes icon-sway { 0%, 100% { rotate: -3deg; } 50% { rotate: 4deg; } }
+@keyframes boat-rock { 0%, 100% { transform: translate(0, 0) rotate(-2deg); } 50% { transform: translate(8px, -7px) rotate(2deg); } }
+@keyframes panel-arrive { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes answer-discovery { 50% { box-shadow: 0 0 0 4px #74bd5c35; } }
+@keyframes feedback-arrive { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes xp-rise { 0% { opacity: 0; transform: translateY(0); } 20% { opacity: 1; } 100% { opacity: 0; transform: translateY(-44px); } }
+@keyframes reward-arrive { 0% { opacity: 0; transform: translateY(10px) scale(.75) rotate(-8deg); } 65% { opacity: 1; transform: translateY(-3px) scale(1.06) rotate(3deg); } 100% { opacity: 1; transform: none; } }
+@keyframes confetti-fall { 0% { opacity: 0; transform: translate(0, -10px) rotate(0); } 12% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--drift), 330px) rotate(320deg); } }
+
+@media (max-width: 700px) {
+  .balloon { left: 40%; top: 97px; }
+  .birds { left: 20%; }
+  .land-trophy { display: block; left: 16%; top: auto; bottom: 4%; width: 72px; height: 65px; }
+  .map-scroll > img { animation-name: scroll-float; }
+  .effects-controls { bottom: 8px; left: 10px; }
+  .effects-controls button { min-height: 40px; font-size: 10px; padding: 7px 9px; }
+  .map-scene { padding-bottom: 116px; }
+  .map-footer { bottom: 68px; }
+  .zone-scene { padding-bottom: 86px; }
+  .scene-message { bottom: 76px; width: calc(100% - 36px); font-size: 12px; }
+  .fireflies > span:nth-child(n + 11) { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .celebration, .xp-pop, .fireflies { display: none; }
+}

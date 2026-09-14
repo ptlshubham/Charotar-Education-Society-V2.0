@@ -1,0 +1,17 @@
+.student-game-entry {
+  background: #f3edf9;
+  padding: 54px 0;
+
+  .student-game-content { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+  .student-game-content > div { max-width: 670px; }
+  .student-game-eyebrow { color: #743db2; font-size: 11px; font-weight: 700; letter-spacing: .18em; margin-bottom: 10px; }
+  h2 { color: #292348; font-size: clamp(25px, 3vw, 34px); font-weight: 700; line-height: 1.25; margin-bottom: 12px; }
+  p:not(.student-game-eyebrow) { color: #635c76; font-size: 14px; line-height: 1.8; }
+  .student-game-link { display: inline-flex; flex-shrink: 0; align-items: center; justify-content: center; gap: 16px; min-height: 52px; padding: 14px 24px; background: #7139af; color: white; font-size: 14px; font-weight: 700; text-decoration: none; border-radius: 6px; }
+  .student-game-link:hover { background: #55248a; }
+  .student-game-link:focus-visible { outline: 3px solid #7139af; outline-offset: 5px; }
+
+  @media (max-width: 767px) {
+    .student-game-content { align-items: flex-start; flex-direction: column; gap: 24px; }
+  }
+}

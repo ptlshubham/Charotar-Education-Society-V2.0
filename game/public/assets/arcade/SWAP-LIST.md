@@ -1,11 +1,11 @@
 # CES Arcade — Art Swap List
 
 GENERATED FILE — do not edit by hand. Run `npm run art` to regenerate.
-manifest-hash: 3bd552a694a0c3e0
+manifest-hash: ff01b6a839c5e777
 
 ## How to hand off final art
 
-1. Overwrite the PNG at the exact path below. Do not rename it, do not add a suffix.
+1. Overwrite the WebP image at the exact path below. Do not rename it, do not add a suffix.
 2. Keep the grid: the same number of columns and rows, in the same frame order.
 3. Frame size may be the listed size OR an exact 2x, 3x or 4x of it — the same
    multiple on BOTH axes. The exact authored-atlas size listed for a slot is also accepted.
@@ -22,7 +22,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 ## Sprite manifest — 61 files
 
-### player — assets/arcade/jungle/player.png
+### player — assets/arcade/jungle/player.webp
 
 | | |
 |---|---|
@@ -38,7 +38,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 - Drawn facing RIGHT; the engine mirrors horizontally for left.
 - run-a/b/c cycle every 8 ticks while moving; rise while ascending, fall while descending.
 
-### walker — assets/arcade/jungle/walker.png
+### walker — assets/arcade/jungle/walker.webp
 
 | | |
 |---|---|
@@ -53,7 +53,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 - squashed shows for 20 ticks after a stomp, then the enemy is removed.
 - Drawn facing RIGHT; the engine mirrors for left.
 
-### flyer — assets/arcade/jungle/flyer.png
+### flyer — assets/arcade/jungle/flyer.webp
 
 | | |
 |---|---|
@@ -68,7 +68,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 - squashed shows for 20 ticks after a stomp, then the enemy is removed.
 - Drawn facing RIGHT; the engine mirrors for left.
 
-### coin — assets/arcade/jungle/coin.png
+### coin — assets/arcade/jungle/coin.webp
 
 | | |
 |---|---|
@@ -81,7 +81,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 - Fills its 16x16 tile. Keep a 2px clear margin all round so it never touches terrain.
 - spin-0 is the full face, spin-2 is edge-on; the cycle advances every 8 ticks.
 
-### tiles-jungle — assets/arcade/jungle/tiles.png
+### tiles-jungle — assets/arcade/jungle/tiles.webp
 
 | | |
 |---|---|
@@ -96,7 +96,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 - Cells 5, 8 and 9 sit on transparency and are drawn over the backdrop.
 - Cell 0 is used wherever the cell above is empty, cell 1 everywhere else.
 
-### tiles-castle — assets/arcade/castle/tiles.png
+### tiles-castle — assets/arcade/castle/tiles.webp
 
 | | |
 |---|---|
@@ -111,7 +111,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 - Cells 5, 8 and 9 sit on transparency and are drawn over the backdrop.
 - Cell 0 is used wherever the cell above is empty, cell 1 everywhere else.
 
-### tiles-canopy — assets/arcade/canopy/tiles.png
+### tiles-canopy — assets/arcade/jungle/tiles.webp
 
 | | |
 |---|---|
@@ -126,7 +126,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 - Cells 5, 8 and 9 sit on transparency and are drawn over the backdrop.
 - Cell 0 is used wherever the cell above is empty, cell 1 everywhere else.
 
-### desert-player — assets/arcade/desert/player.png
+### desert-player — assets/arcade/desert/player.webp
 
 | | |
 |---|---|
@@ -136,10 +136,10 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 | Frame order | 0 idle · 1 run-a · 2 run-b · 3 run-c · 4 rise · 5 fall · 6 cheer |
 | Rendering | pixel art, nearest-neighbour |
 
-- Supplied artwork. Black matte is keyed at load; source PNG bytes stay intact.
+- Supplied artwork. Black matte is keyed at load; source image bytes stay intact.
 - Frame mapping follows the supplied poses; missing poses reuse an existing frame.
 
-### desert-beetle — assets/arcade/desert/beetle.png
+### desert-beetle — assets/arcade/desert/beetle.webp
 
 | | |
 |---|---|
@@ -149,10 +149,10 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 | Frame order | 0 move-1 · 1 move-2 · 2 move-3 · 3 move-4 · 4 hurt · 5 defeated · 6 effect |
 | Rendering | pixel art, nearest-neighbour |
 
-- Supplied artwork. Black matte is keyed at load; source PNG bytes stay intact.
+- Supplied artwork. Black matte is keyed at load; source image bytes stay intact.
 - Frame mapping follows the supplied poses; missing poses reuse an existing frame.
 
-### desert-flyer — assets/arcade/desert/flyer.png
+### desert-flyer — assets/arcade/desert/flyer.webp
 
 | | |
 |---|---|
@@ -162,10 +162,10 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 | Frame order | 0 move-1 · 1 move-2 · 2 move-3 · 3 move-4 · 4 hurt · 5 defeated · 6 effect |
 | Rendering | pixel art, nearest-neighbour |
 
-- Supplied artwork. Black matte is keyed at load; source PNG bytes stay intact.
+- Supplied artwork. Black matte is keyed at load; source image bytes stay intact.
 - Frame mapping follows the supplied poses; missing poses reuse an existing frame.
 
-### desert-plant — assets/arcade/desert/plant.png
+### desert-plant — assets/arcade/desert/plant.webp
 
 | | |
 |---|---|
@@ -175,10 +175,10 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 | Frame order | 0 inside · 1 emerging · 2 open · 3 descending · 4 hurt · 5 defeated · 6 effect |
 | Rendering | pixel art, nearest-neighbour |
 
-- Supplied artwork. Black matte is keyed at load; source PNG bytes stay intact.
+- Supplied artwork. Black matte is keyed at load; source image bytes stay intact.
 - Frame mapping follows the supplied poses; missing poses reuse an existing frame.
 
-### desert-walker — assets/arcade/desert/walker.png
+### desert-walker — assets/arcade/desert/walker.webp
 
 | | |
 |---|---|
@@ -188,10 +188,10 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 | Frame order | 0 walk-a · 1 walk-b · 2 squashed |
 | Rendering | pixel art, nearest-neighbour |
 
-- Supplied artwork. Black matte is keyed at load; source PNG bytes stay intact.
+- Supplied artwork. Black matte is keyed at load; source image bytes stay intact.
 - Frame mapping follows the supplied poses; missing poses reuse an existing frame.
 
-### ice-player — assets/arcade/ice/player.png
+### ice-player — assets/arcade/ice/player.webp
 
 | | |
 |---|---|
@@ -201,10 +201,10 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 | Frame order | 0 idle · 1 run-a · 2 run-b · 3 run-c · 4 rise · 5 fall · 6 cheer |
 | Rendering | pixel art, nearest-neighbour |
 
-- Supplied artwork. Black matte is keyed at load; source PNG bytes stay intact.
+- Supplied artwork. Black matte is keyed at load; source image bytes stay intact.
 - Frame mapping follows the supplied poses; missing poses reuse an existing frame.
 
-### ice-beetle — assets/arcade/ice/beetle.png
+### ice-beetle — assets/arcade/ice/beetle.webp
 
 | | |
 |---|---|
@@ -214,10 +214,10 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 | Frame order | 0 move-1 · 1 move-2 · 2 move-3 · 3 move-4 · 4 hurt · 5 defeated · 6 effect |
 | Rendering | pixel art, nearest-neighbour |
 
-- Supplied artwork. Black matte is keyed at load; source PNG bytes stay intact.
+- Supplied artwork. Black matte is keyed at load; source image bytes stay intact.
 - Frame mapping follows the supplied poses; missing poses reuse an existing frame.
 
-### ice-flyer — assets/arcade/ice/flyer.png
+### ice-flyer — assets/arcade/ice/flyer.webp
 
 | | |
 |---|---|
@@ -227,10 +227,10 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 | Frame order | 0 move-1 · 1 move-2 · 2 move-3 · 3 move-4 · 4 hurt · 5 defeated · 6 effect |
 | Rendering | pixel art, nearest-neighbour |
 
-- Supplied artwork. Black matte is keyed at load; source PNG bytes stay intact.
+- Supplied artwork. Black matte is keyed at load; source image bytes stay intact.
 - Frame mapping follows the supplied poses; missing poses reuse an existing frame.
 
-### ice-plant — assets/arcade/ice/plant.png
+### ice-plant — assets/arcade/ice/plant.webp
 
 | | |
 |---|---|
@@ -240,10 +240,10 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 | Frame order | 0 inside · 1 emerging · 2 open · 3 descending · 4 hurt · 5 defeated · 6 effect |
 | Rendering | pixel art, nearest-neighbour |
 
-- Supplied artwork. Black matte is keyed at load; source PNG bytes stay intact.
+- Supplied artwork. Black matte is keyed at load; source image bytes stay intact.
 - Frame mapping follows the supplied poses; missing poses reuse an existing frame.
 
-### volcano-player — assets/arcade/volcano/player.png
+### volcano-player — assets/arcade/volcano/player.webp
 
 | | |
 |---|---|
@@ -253,10 +253,10 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 | Frame order | 0 idle · 1 run-a · 2 run-b · 3 run-c · 4 rise · 5 fall · 6 cheer |
 | Rendering | pixel art, nearest-neighbour |
 
-- Supplied artwork. Black matte is keyed at load; source PNG bytes stay intact.
+- Supplied artwork. Black matte is keyed at load; source image bytes stay intact.
 - Frame mapping follows the supplied poses; missing poses reuse an existing frame.
 
-### volcano-beetle — assets/arcade/volcano/beetle.png
+### volcano-beetle — assets/arcade/volcano/beetle.webp
 
 | | |
 |---|---|
@@ -266,10 +266,10 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 | Frame order | 0 move-1 · 1 move-2 · 2 move-3 · 3 move-4 · 4 hurt · 5 defeated · 6 effect |
 | Rendering | pixel art, nearest-neighbour |
 
-- Supplied artwork. Black matte is keyed at load; source PNG bytes stay intact.
+- Supplied artwork. Black matte is keyed at load; source image bytes stay intact.
 - Frame mapping follows the supplied poses; missing poses reuse an existing frame.
 
-### volcano-flyer — assets/arcade/volcano/flyer.png
+### volcano-flyer — assets/arcade/volcano/flyer.webp
 
 | | |
 |---|---|
@@ -279,10 +279,10 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 | Frame order | 0 move-1 · 1 move-2 · 2 move-3 · 3 move-4 · 4 hurt · 5 defeated · 6 effect |
 | Rendering | pixel art, nearest-neighbour |
 
-- Supplied artwork. Black matte is keyed at load; source PNG bytes stay intact.
+- Supplied artwork. Black matte is keyed at load; source image bytes stay intact.
 - Frame mapping follows the supplied poses; missing poses reuse an existing frame.
 
-### volcano-plant — assets/arcade/volcano/plant.png
+### volcano-plant — assets/arcade/volcano/plant.webp
 
 | | |
 |---|---|
@@ -292,10 +292,10 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 | Frame order | 0 inside · 1 emerging · 2 open · 3 descending · 4 hurt · 5 defeated · 6 effect |
 | Rendering | pixel art, nearest-neighbour |
 
-- Supplied artwork. Black matte is keyed at load; source PNG bytes stay intact.
+- Supplied artwork. Black matte is keyed at load; source image bytes stay intact.
 - Frame mapping follows the supplied poses; missing poses reuse an existing frame.
 
-### volcano-walker — assets/arcade/volcano/walker.png
+### volcano-walker — assets/arcade/volcano/walker.webp
 
 | | |
 |---|---|
@@ -305,10 +305,10 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 | Frame order | 0 walk-a · 1 walk-b · 2 squashed |
 | Rendering | pixel art, nearest-neighbour |
 
-- Supplied artwork. Black matte is keyed at load; source PNG bytes stay intact.
+- Supplied artwork. Black matte is keyed at load; source image bytes stay intact.
 - Frame mapping follows the supplied poses; missing poses reuse an existing frame.
 
-### village-player — assets/arcade/village/player.png
+### village-player — assets/arcade/village/player.webp
 
 | | |
 |---|---|
@@ -318,10 +318,10 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 | Frame order | 0 idle · 1 run-a · 2 run-b · 3 run-c · 4 rise · 5 fall · 6 cheer |
 | Rendering | pixel art, nearest-neighbour |
 
-- Supplied artwork. Black matte is keyed at load; source PNG bytes stay intact.
+- Supplied artwork. Black matte is keyed at load; source image bytes stay intact.
 - Frame mapping follows the supplied poses; missing poses reuse an existing frame.
 
-### village-beetle — assets/arcade/village/beetle.png
+### village-beetle — assets/arcade/village/beetle.webp
 
 | | |
 |---|---|
@@ -331,10 +331,10 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 | Frame order | 0 move-1 · 1 move-2 · 2 move-3 · 3 move-4 · 4 hurt · 5 defeated · 6 effect |
 | Rendering | pixel art, nearest-neighbour |
 
-- Supplied artwork. Black matte is keyed at load; source PNG bytes stay intact.
+- Supplied artwork. Black matte is keyed at load; source image bytes stay intact.
 - Frame mapping follows the supplied poses; missing poses reuse an existing frame.
 
-### village-flyer — assets/arcade/village/flyer.png
+### village-flyer — assets/arcade/village/flyer.webp
 
 | | |
 |---|---|
@@ -344,10 +344,10 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 | Frame order | 0 move-1 · 1 move-2 · 2 move-3 · 3 move-4 · 4 hurt · 5 defeated · 6 effect |
 | Rendering | pixel art, nearest-neighbour |
 
-- Supplied artwork. Black matte is keyed at load; source PNG bytes stay intact.
+- Supplied artwork. Black matte is keyed at load; source image bytes stay intact.
 - Frame mapping follows the supplied poses; missing poses reuse an existing frame.
 
-### village-walker — assets/arcade/village/walker.png
+### village-walker — assets/arcade/village/walker.webp
 
 | | |
 |---|---|
@@ -357,10 +357,10 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 | Frame order | 0 walk-a · 1 walk-b · 2 squashed |
 | Rendering | pixel art, nearest-neighbour |
 
-- Supplied artwork. Black matte is keyed at load; source PNG bytes stay intact.
+- Supplied artwork. Black matte is keyed at load; source image bytes stay intact.
 - Frame mapping follows the supplied poses; missing poses reuse an existing frame.
 
-### desert-coin — assets/arcade/desert/pickups.png
+### desert-coin — assets/arcade/desert/pickups.webp
 
 | | |
 |---|---|
@@ -372,7 +372,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Coin frames sampled from the supplied pickup atlas.
 
-### desert-rewards — assets/arcade/desert/pickups.png
+### desert-rewards — assets/arcade/desert/pickups.webp
 
 | | |
 |---|---|
@@ -384,7 +384,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Gem/flower grants points; mushroom restores one heart; star charges the pulse.
 
-### ice-coin — assets/arcade/ice/pickups.png
+### ice-coin — assets/arcade/ice/pickups.webp
 
 | | |
 |---|---|
@@ -396,7 +396,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Coin frames sampled from the supplied pickup atlas.
 
-### ice-rewards — assets/arcade/ice/pickups.png
+### ice-rewards — assets/arcade/ice/pickups.webp
 
 | | |
 |---|---|
@@ -408,7 +408,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Gem/flower grants points; mushroom restores one heart; star charges the pulse.
 
-### volcano-coin — assets/arcade/volcano/pickups.png
+### volcano-coin — assets/arcade/volcano/pickups.webp
 
 | | |
 |---|---|
@@ -420,7 +420,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Coin frames sampled from the supplied pickup atlas.
 
-### volcano-rewards — assets/arcade/volcano/pickups.png
+### volcano-rewards — assets/arcade/volcano/pickups.webp
 
 | | |
 |---|---|
@@ -432,7 +432,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Gem/flower grants points; mushroom restores one heart; star charges the pulse.
 
-### village-coin — assets/arcade/village/pickups.png
+### village-coin — assets/arcade/village/pickups.webp
 
 | | |
 |---|---|
@@ -444,7 +444,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Coin frames sampled from the supplied pickup atlas.
 
-### village-rewards — assets/arcade/village/pickups.png
+### village-rewards — assets/arcade/village/pickups.webp
 
 | | |
 |---|---|
@@ -456,7 +456,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Gem/flower grants points; mushroom restores one heart; star charges the pulse.
 
-### ice-walker — assets/arcade/ice/pickups.png
+### ice-walker — assets/arcade/ice/pickups.webp
 
 | | |
 |---|---|
@@ -468,7 +468,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Snail frames occupy the upper row of the shared ice pickup atlas.
 
-### village-layers — assets/arcade/village/layers.png
+### village-layers — assets/arcade/village/layers.webp
 
 | | |
 |---|---|
@@ -480,7 +480,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Supplied village scenery layers scroll at different speeds.
 
-### desert-props — assets/arcade/desert/props.png
+### desert-props — assets/arcade/desert/props.webp
 
 | | |
 |---|---|
@@ -492,7 +492,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Prop regions sampled from the supplied environment and block sheets.
 
-### tiles-desert — assets/arcade/desert/tiles.png
+### tiles-desert — assets/arcade/desert/tiles.webp
 
 | | |
 |---|---|
@@ -504,7 +504,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Terrain assembled from source regions; collision surfaces align with the top of each cell.
 
-### ice-props — assets/arcade/ice/props.png
+### ice-props — assets/arcade/ice/props.webp
 
 | | |
 |---|---|
@@ -516,7 +516,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Prop regions sampled from the supplied environment and block sheets.
 
-### tiles-ice — assets/arcade/ice/tiles.png
+### tiles-ice — assets/arcade/ice/tiles.webp
 
 | | |
 |---|---|
@@ -528,7 +528,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Terrain assembled from source regions; collision surfaces align with the top of each cell.
 
-### volcano-props — assets/arcade/volcano/props.png
+### volcano-props — assets/arcade/volcano/props.webp
 
 | | |
 |---|---|
@@ -540,7 +540,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Prop regions sampled from the supplied environment and block sheets.
 
-### tiles-volcano — assets/arcade/volcano/tiles.png
+### tiles-volcano — assets/arcade/volcano/tiles.webp
 
 | | |
 |---|---|
@@ -552,7 +552,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Terrain assembled from source regions; collision surfaces align with the top of each cell.
 
-### village-props — assets/arcade/village/props.png
+### village-props — assets/arcade/village/props.webp
 
 | | |
 |---|---|
@@ -564,7 +564,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Prop regions sampled from the supplied environment and block sheets.
 
-### tiles-village — assets/arcade/village/tiles.png
+### tiles-village — assets/arcade/village/tiles.webp
 
 | | |
 |---|---|
@@ -576,7 +576,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Terrain assembled from source regions; collision surfaces align with the top of each cell.
 
-### castle-beetle — assets/arcade/castle/knight.png
+### castle-beetle — assets/arcade/castle/knight.webp
 
 | | |
 |---|---|
@@ -588,7 +588,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Armoured knight uses two-hit enemy behaviour.
 
-### castle-player — assets/arcade/castle/player.png
+### castle-player — assets/arcade/castle/player.webp
 
 | | |
 |---|---|
@@ -600,7 +600,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - The supplied explorer is the player; the purple knight is an enemy.
 
-### legacy-player — assets/arcade/shared/player.png
+### legacy-player — assets/arcade/shared/player.webp
 
 | | |
 |---|---|
@@ -616,7 +616,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 - Drawn facing RIGHT; the engine mirrors horizontally for left.
 - run-a/b/c cycle every 8 ticks while moving; rise while ascending, fall while descending.
 
-### legacy-walker — assets/arcade/shared/walker.png
+### legacy-walker — assets/arcade/shared/walker.webp
 
 | | |
 |---|---|
@@ -631,7 +631,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 - squashed shows for 20 ticks after a stomp, then the enemy is removed.
 - Drawn facing RIGHT; the engine mirrors for left.
 
-### legacy-flyer — assets/arcade/shared/flyer.png
+### legacy-flyer — assets/arcade/shared/flyer.webp
 
 | | |
 |---|---|
@@ -646,7 +646,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 - squashed shows for 20 ticks after a stomp, then the enemy is removed.
 - Drawn facing RIGHT; the engine mirrors for left.
 
-### legacy-coin — assets/arcade/shared/coin.png
+### legacy-coin — assets/arcade/shared/coin.webp
 
 | | |
 |---|---|
@@ -659,7 +659,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 - Fills its 16x16 tile. Keep a 2px clear margin all round so it never touches terrain.
 - spin-0 is the full face, spin-2 is edge-on; the cycle advances every 8 ticks.
 
-### jungle-props — assets/arcade/jungle/props.png
+### jungle-props — assets/arcade/jungle/props.webp
 
 | | |
 |---|---|
@@ -671,7 +671,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Each prop is sampled separately; scenery never changes collision geometry.
 
-### jungle-items — assets/arcade/jungle/items.png
+### jungle-items — assets/arcade/jungle/items.webp
 
 | | |
 |---|---|
@@ -683,7 +683,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Heart and portrait are HUD art; supplementary items do not imply power-up mechanics.
 
-### jungle-beetle — assets/arcade/jungle/beetle.png
+### jungle-beetle — assets/arcade/jungle/beetle.webp
 
 | | |
 |---|---|
@@ -695,7 +695,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Four action frames, hurt, defeated, and a separate defeat effect. Original atlas is assembled at load.
 
-### jungle-plant — assets/arcade/jungle/plant.png
+### jungle-plant — assets/arcade/jungle/plant.webp
 
 | | |
 |---|---|
@@ -707,7 +707,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Four action frames, hurt, defeated, and a separate defeat effect. Original atlas is assembled at load.
 
-### jungle-parrot — assets/arcade/jungle/parrot.png
+### jungle-parrot — assets/arcade/jungle/parrot.webp
 
 | | |
 |---|---|
@@ -719,7 +719,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Four action frames, hurt, defeated, and a separate defeat effect. Original atlas is assembled at load.
 
-### jungle-rewards — assets/arcade/jungle/rewards.png
+### jungle-rewards — assets/arcade/jungle/rewards.webp
 
 | | |
 |---|---|
@@ -731,7 +731,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Gem: 50 points. Mushroom: restores one heart and grants 25 points. Star: one power charge.
 
-### castle-walker — assets/arcade/castle/walker.png
+### castle-walker — assets/arcade/castle/walker.webp
 
 | | |
 |---|---|
@@ -743,7 +743,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Castle World art. Drawn facing RIGHT; original atlas is assembled at load.
 
-### castle-flyer — assets/arcade/castle/flyer.png
+### castle-flyer — assets/arcade/castle/flyer.webp
 
 | | |
 |---|---|
@@ -755,7 +755,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Castle World art. Drawn facing RIGHT; original atlas is assembled at load.
 
-### castle-plant — assets/arcade/castle/plant.png
+### castle-plant — assets/arcade/castle/plant.webp
 
 | | |
 |---|---|
@@ -767,7 +767,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Castle World art. Drawn facing RIGHT; original atlas is assembled at load.
 
-### castle-coin — assets/arcade/castle/coin.png
+### castle-coin — assets/arcade/castle/coin.webp
 
 | | |
 |---|---|
@@ -779,7 +779,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Castle World art. Drawn facing RIGHT; original atlas is assembled at load.
 
-### castle-rewards — assets/arcade/castle/rewards.png
+### castle-rewards — assets/arcade/castle/rewards.webp
 
 | | |
 |---|---|
@@ -791,7 +791,7 @@ Authored atlases and legacy sheets are always preserved by the placeholder gener
 
 - Same pickups and order as jungle-rewards.
 
-### castle-props — assets/arcade/castle/props.png
+### castle-props — assets/arcade/castle/props.webp
 
 | | |
 |---|---|
@@ -814,16 +814,16 @@ needed here, raise it as a separate change.
 
 | File | Size | Used by the arcade for |
 |---|---|---|
-| assets/scenes/scene-discovery.png | 1535 x 1024 | Level 1 parallax backdrop |
-| assets/scenes/scene-science.png | 1536 x 1024 | Level 2 parallax backdrop |
-| assets/scenes/scene-challenges.png | 1536 x 1024 | Level 3 parallax backdrop |
-| assets/props/flag.png | 664 x 972 | The in-world goal, drawn 40 x 58 on the G tile |
-| assets/icons/icon-star.png | 128 x 128 | One 20x20 star per remaining life |
-| assets/icons/icon-medal-gold.png | 128 x 128 | 20x20 disc beside the coin counter |
-| assets/islands/island-discovery.png | 1536 x 1024 | Level-select card art |
-| assets/islands/island-science.png | 1536 x 1024 | Level-select card art |
-| assets/islands/island-maths.png | 1536 x 1024 | Level-select card art |
-| assets/panels/panel-discovery.png | 1672 x 941 | Pause / cleared / game-over dialog surface |
-| assets/panels/panel-science.png | 1672 x 941 | Pause / cleared / game-over dialog surface |
-| assets/panels/panel-challenges.png | 1672 x 941 | Pause / cleared / game-over dialog surface |
-| assets/props/trophy.png | 1357 x 1159 | Level-complete dialog |
+| assets/scenes/scene-discovery.webp | 1535 x 1024 | Level 1 parallax backdrop |
+| assets/scenes/scene-science.webp | 1536 x 1024 | Level 2 parallax backdrop |
+| assets/scenes/scene-challenges.webp | 1536 x 1024 | Level 3 parallax backdrop |
+| assets/props/flag.webp | 664 x 972 | The in-world goal, drawn 40 x 58 on the G tile |
+| assets/icons/icon-star.webp | 128 x 128 | One 20x20 star per remaining life |
+| assets/icons/icon-medal-gold.webp | 128 x 128 | 20x20 disc beside the coin counter |
+| assets/islands/island-discovery.webp | 1536 x 1024 | Level-select card art |
+| assets/islands/island-science.webp | 1536 x 1024 | Level-select card art |
+| assets/islands/island-maths.webp | 1536 x 1024 | Level-select card art |
+| assets/panels/panel-discovery.webp | 1672 x 941 | Pause / cleared / game-over dialog surface |
+| assets/panels/panel-science.webp | 1672 x 941 | Pause / cleared / game-over dialog surface |
+| assets/panels/panel-challenges.webp | 1672 x 941 | Pause / cleared / game-over dialog surface |
+| assets/props/trophy.webp | 1357 x 1159 | Level-complete dialog |

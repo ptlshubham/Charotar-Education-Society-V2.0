@@ -3,8 +3,8 @@
     <section class="arcade-menu" aria-labelledby="arcade-menu-title">
       <button class="pixel-button back-button" (click)="exit()"><img src="assets/props/back.svg" alt="" width="16" height="16"> Exit <span class="sr-only">to Learning Quest</span></button>
       <div class="arcade-menu-controls">
-        <button class="control-button" [attr.aria-label]="soundEnabled() ? 'Turn sound off' : 'Turn sound on'" (click)="toggleSound()"><img [src]="soundEnabled() ? 'assets/icons/icon-sound-on.png' : 'assets/icons/icon-sound-off.png'" alt="" width="26" height="26"></button>
-        <button class="control-button" aria-label="Exit to Learning Quest" (click)="exit()"><img src="assets/icons/icon-home.png" alt="" width="26" height="26"></button>
+        <button class="control-button" [attr.aria-label]="soundEnabled() ? 'Turn sound off' : 'Turn sound on'" (click)="toggleSound()"><img [src]="soundEnabled() ? 'assets/icons/icon-sound-on.webp' : 'assets/icons/icon-sound-off.webp'" alt="" width="26" height="26"></button>
+        <button class="control-button" aria-label="Exit to Learning Quest" (click)="exit()"><img src="assets/icons/icon-home.webp" alt="" width="26" height="26"></button>
       </div>
       <div class="arcade-menu-head">
         <p class="eyebrow">CHAROTAR EDUCATION SOCIETY PRESENTS</p>
@@ -38,17 +38,17 @@
         <div class="arcade-hud">
           <span class="arcade-chip" [attr.aria-label]="hud().lives + ' lives left'"><img class="arcade-portrait" [src]="hudArt()?.portrait" alt="" width="32" height="32"> × {{ hud().lives }}</span>
           <span class="arcade-chip arcade-lives" [attr.aria-label]="hud().health + ' hearts remaining'">
-            @for (slot of lifeSlots(); track slot) { <img class="hud-life" [src]="hudArt()?.heart || 'assets/icons/icon-star.png'" alt="" width="20" height="20"> }
+            @for (slot of lifeSlots(); track slot) { <img class="hud-life" [src]="hudArt()?.heart || 'assets/icons/icon-star.webp'" alt="" width="20" height="20"> }
           </span>
-          <span class="arcade-chip"><img [src]="hudArt()?.coin || 'assets/icons/icon-medal-gold.png'" alt="" width="20" height="20"> <span class="hud-coins">{{ hud().coins }}</span> / {{ hud().coinTotal }} <span class="sr-only">coins</span></span>
+          <span class="arcade-chip"><img [src]="hudArt()?.coin || 'assets/icons/icon-medal-gold.webp'" alt="" width="20" height="20"> <span class="hud-coins">{{ hud().coins }}</span> / {{ hud().coinTotal }} <span class="sr-only">coins</span></span>
           <span class="arcade-chip arcade-score">{{ hud().score }} <span class="sr-only">points</span></span>
           <span class="arcade-chip" [attr.aria-label]="hud().stars + ' star power charges'"><img [src]="hudArt()?.star" alt="" width="24" height="24"> × {{ hud().stars }}</span>
           <span class="arcade-chip arcade-time" [class.time-low]="hud().seconds <= 30" [attr.aria-label]="hud().seconds + ' seconds remaining'"><span aria-hidden="true">◷</span> {{ hud().seconds }}</span>
         </div>
         <div class="arcade-controls">
-          <button class="control-button" aria-label="Pause the game" (click)="togglePause()"><img src="assets/icons/icon-pause.png" alt="" width="26" height="26"></button>
-          <button class="control-button" [attr.aria-label]="soundEnabled() ? 'Turn sound off' : 'Turn sound on'" (click)="toggleSound()"><img [src]="soundEnabled() ? 'assets/icons/icon-sound-on.png' : 'assets/icons/icon-sound-off.png'" alt="" width="26" height="26"></button>
-          <button class="control-button" aria-label="Exit to Learning Quest" (click)="exit()"><img src="assets/icons/icon-home.png" alt="" width="26" height="26"></button>
+          <button class="control-button" aria-label="Pause the game" (click)="togglePause()"><img src="assets/icons/icon-pause.webp" alt="" width="26" height="26"></button>
+          <button class="control-button" [attr.aria-label]="soundEnabled() ? 'Turn sound off' : 'Turn sound on'" (click)="toggleSound()"><img [src]="soundEnabled() ? 'assets/icons/icon-sound-on.webp' : 'assets/icons/icon-sound-off.webp'" alt="" width="26" height="26"></button>
+          <button class="control-button" aria-label="Exit to Learning Quest" (click)="exit()"><img src="assets/icons/icon-home.webp" alt="" width="26" height="26"></button>
         </div>
       </header>
       <canvas id="arcade-canvas" class="arcade-canvas" width="1536" height="864" aria-label="Platformer stage"></canvas>
@@ -85,7 +85,7 @@
   <div class="zone-panel">
     <img class="zone-panel-art" [src]="'assets/' + level().panel" alt="" width="866" height="484">
     <div class="zone-panel-body">
-      <img class="result-trophy" src="assets/props/trophy.png" alt="" width="111" height="95">
+      <img class="result-trophy" src="assets/props/trophy.webp" alt="" width="111" height="95">
       <p class="eyebrow">LEVEL COMPLETE</p>
       <h2 id="arcade-clear-title">You reached the flag!</h2>
       <p>{{ hud().coins }} of {{ hud().coinTotal }} coins · {{ hud().score }} points · {{ hud().lives }} lives left</p>

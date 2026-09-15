@@ -9,7 +9,7 @@ import {
 } from './engine';
 import { draw } from './render';
 import { isRich, levels, PHYS, RENDER_SCALE, TICK_HZ, VIEW_H, VIEW_W, type Level } from './levels';
-import { loadSheets, SPRITES, JUNGLE_BACKDROP, type AssetIssue, type AssetReport, type Sheets } from './sprites';
+import { loadImage, loadSheets, SPRITES, JUNGLE_BACKDROP, type AssetIssue, type AssetReport, type Sheets } from './sprites';
 import { atlasIcon } from './atlas';
 import { ARCADE_STYLES } from './themes';
 
@@ -485,9 +485,7 @@ export class ArcadeComponent implements OnDestroy {
     const cached = this.backdrops.get(file);
     if (cached) { this.backdrop = cached; return Promise.resolve(); }
     this.backdrop = null;
-    const img = new Image();
-    img.src = `assets/${file}`;
-    return img.decode().then(() => {
+    return loadImage(`assets/${file}`).then(img => {
       this.backdrops.set(file, img);
       this.backdrop = img;
     }).catch(() => {});

@@ -26,7 +26,7 @@ To move to a subdomain:
 3. Update the home-page play link in `src/app/pages/home/index/index.html` to the new subdomain.
 4. Review `src/config.ts` for the return link to the CES website.
 
-The app uses a relative base URL and hash navigation, so the same build works at `/game/index.html` and at a subdomain root without special rewrite rules. Original PNG assets are preserved from Figma; enable hosting compression/caching and allow for the artwork download size.
+The app uses a relative base URL and hash navigation, so the same build works at `/game/index.html` and at a subdomain root without special rewrite rules. Artwork ships as WebP (converted from the original Figma PNG exports); enable hosting caching for `assets/`.
 
 ## Gameplay and content
 
@@ -38,7 +38,7 @@ The app uses a relative base URL and hash navigation, so the same build works at
 - The explorer nickname, completed islands, and best scores are saved to localStorage on the current browser/device. Unfinished rounds are not saved. Storage failures allow play to continue with a visible notice. Progress does not automatically transfer to another device or a future subdomain.
 - Keyboard controls use normal Tab/Enter/Space navigation, with focus management and an accessible badge dialog. Small screens use a two-column island list and single-column quiz answers. Reduced-motion preferences are respected.
 - The welcome artwork includes drifting clouds, a swaying balloon and flag, a glowing trophy, floating map, and fireflies. The trophy opens the badge journal; the balloon and flag respond to clicks or keyboard activation. Islands gently bob, correct answers show a short XP animation, and completed rounds have a brief confetti celebration.
-- Each island frames its content on that island's own panel artwork (`public/assets/panel-<island>.png`): jungle planks, desert sandstone, ice, castle slate, volcanic basalt, and village cobblestone. Panel text switches between light and dark ink to suit the material, and the artwork is overscanned so the board meets the panel edge.
+- Each island frames its content on that island's own panel artwork (`public/assets/panel-<island>.webp`): jungle planks, desert sandstone, ice, castle slate, volcanic basalt, and village cobblestone. Panel text switches between light and dark ink to suit the material, and the artwork is overscanned so the board meets the panel edge.
 - Round actions sit in a top-corner cluster of home, badges, sound, and close buttons. Leaving a round part-way asks in an in-game dialog built from the same island artwork rather than a browser confirm box.
 - Motion is always on; there is no pause control. Sound starts off and enables optional quiet synthesized chimes. Reduced-motion settings suppress animation, and background tabs suspend audio and pause motion. All effects remain inside `game/`; no animation or audio dependencies are needed. Scenery effects are styled in `src/effects.scss`.
 
@@ -101,7 +101,7 @@ contains the supplied animation rectangles. `npm run art` regenerates the
 placeholder PNGs and rewrites `public/assets/arcade/SWAP-LIST.md`, which is the hand-off
 document for the art team and ships with the build at `/game/assets/arcade/SWAP-LIST.md`.
 
-- Overwrite the PNG at the same path, same grid, same frame order. No code changes.
+- Overwrite the WebP image at the same path, same grid, same frame order. No code changes.
 - The declared size or any exact 2x / 3x / 4x of it is accepted, same multiple on both axes.
 - `npm run art` never overwrites art it did not generate — a SHA ledger in
   `scripts/.placeholders.json` tracks its own output, so replaced files are left alone.
@@ -143,7 +143,7 @@ File: https://www.figma.com/design/gbObfnTUNTQ8iNDaM9u7rA/Game-UI
 | 290:21, 290:34, 290:77, 290:100, 290:124, 290:146, 290:167 | Wide island panel used for quiz and results |
 | 297:24 | Action button icon set |
 
-PNG and SVG assets in `public/assets/` are original Figma exports downloaded for permanent hosting. The full action button set from node 297:24 lives in `public/assets/icons/`, downscaled to 128px for its 26px on-screen size; the sound control uses `icon-sound-on`/`icon-sound-off` and the rest of the set is available for later screens. Passion One is bundled with its SIL Open Font License. Gameplay panels, responsive layouts, and question content extend the supplied scenes.
+WebP and SVG assets in `public/assets/` are original Figma exports (raster images converted to WebP) downloaded for permanent hosting. The full action button set from node 297:24 lives in `public/assets/icons/`, downscaled to 128px for its 26px on-screen size; only the icons the screens use are kept (`icon-home`, `icon-medal-gold`, `icon-pause`, `icon-sound-on`, `icon-sound-off`, `icon-star`). Passion One is bundled with its SIL Open Font License. Gameplay panels, responsive layouts, and question content extend the supplied scenes.
 
 ## Verification
 

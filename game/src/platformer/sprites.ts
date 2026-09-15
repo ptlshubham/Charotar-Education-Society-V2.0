@@ -58,7 +58,7 @@ export const PALETTE = {
   green: '#4e9642',
 } as const;
 
-// The ten terrain cells, in the order every tiles-*.png must follow. The layout
+// The ten terrain cells, in the order every tiles-*.webp must follow. The layout
 // is the contract; only the pixels change between themes.
 export const TILE_FRAMES = [
   'ground-top',
@@ -75,7 +75,7 @@ export const TILE_FRAMES = [
 
 const tileSlot = (theme: string, surface: string, hazard: string): SpriteSlot => ({
   slot: `tiles-${theme}`,
-  file: `assets/arcade/${theme}/tiles.png`,
+  file: `assets/arcade/${theme}/tiles.webp`,
   frameW: 16,
   frameH: 16,
   cols: 5,
@@ -93,7 +93,7 @@ const tileSlot = (theme: string, surface: string, hazard: string): SpriteSlot =>
 const CORE_SPRITES: readonly SpriteSlot[] = [
   {
     slot: 'player',
-    file: 'assets/arcade/jungle/player.png',
+    file: 'assets/arcade/jungle/player.webp',
     source: { w: 2032, h: 774, fit: 'actor' },
     frameW: 24,
     frameH: 32,
@@ -111,7 +111,7 @@ const CORE_SPRITES: readonly SpriteSlot[] = [
   },
   {
     slot: 'walker',
-    file: 'assets/arcade/jungle/walker.png',
+    file: 'assets/arcade/jungle/walker.webp',
     source: { w: 2172, h: 724, fit: 'actor' },
     frameW: 20,
     frameH: 20,
@@ -128,7 +128,7 @@ const CORE_SPRITES: readonly SpriteSlot[] = [
   },
   {
     slot: 'flyer',
-    file: 'assets/arcade/jungle/flyer.png',
+    file: 'assets/arcade/jungle/flyer.webp',
     source: { w: 2172, h: 724, fit: 'actor' },
     frameW: 20,
     frameH: 20,
@@ -145,7 +145,7 @@ const CORE_SPRITES: readonly SpriteSlot[] = [
   },
   {
     slot: 'coin',
-    file: 'assets/arcade/jungle/coin.png',
+    file: 'assets/arcade/jungle/coin.webp',
     source: { w: 2172, h: 724, fit: 'coin' },
     frameW: 16,
     frameH: 16,
@@ -160,22 +160,23 @@ const CORE_SPRITES: readonly SpriteSlot[] = [
   },
   { ...tileSlot('jungle', 'Mossy earth and stone', 'water'), source: { w: 1983, h: 793, fit: 'tile' } },
   { ...tileSlot('castle', 'Cut castle stone', 'moat water'), source: { w: 1280, h: 512, fit: 'tile' } },
-  { ...tileSlot('canopy', 'Rich earth under thick moss', 'river water'), source: { w: 1983, h: 793, fit: 'tile' } },
+  // Canopy's terrain is the jungle sheet; sharing the URL means one download.
+  { ...tileSlot('canopy', 'Rich earth under thick moss', 'river water'), file: 'assets/arcade/jungle/tiles.webp', source: { w: 1983, h: 793, fit: 'tile' } },
 ];
 
 export const SPRITES: readonly SpriteSlot[] = [
   ...CORE_SPRITES,
   ...IMPORTED_SPRITES,
   ...CORE_SPRITES.filter(s => ['player', 'walker', 'flyer', 'coin'].includes(s.slot)).map(s => ({
-    ...s, slot: `legacy-${s.slot}`, file: `assets/arcade/shared/${s.slot}.png`, source: undefined,
+    ...s, slot: `legacy-${s.slot}`, file: `assets/arcade/shared/${s.slot}.webp`, source: undefined,
   })),
   {
-    slot: 'jungle-props', file: 'assets/arcade/jungle/props.png', frameW: 64, frameH: 64, cols: 4, rows: 2,
+    slot: 'jungle-props', file: 'assets/arcade/jungle/props.webp', frameW: 64, frameH: 64, cols: 4, rows: 2,
     frames: ['pipe', 'sign', 'goal', 'tree', 'bush', 'temple', 'crate', 'bridge'], pixelArt: true,
     source: { w: 1774, h: 887, fit: 'prop' }, notes: ['Each prop is sampled separately; scenery never changes collision geometry.'],
   },
   {
-    slot: 'jungle-items', file: 'assets/arcade/jungle/items.png', frameW: 32, frameH: 32, cols: 4, rows: 2,
+    slot: 'jungle-items', file: 'assets/arcade/jungle/items.webp', frameW: 32, frameH: 32, cols: 4, rows: 2,
     frames: ['heart', 'star', 'mushroom', 'flower', 'plant', 'rocks', 'vine', 'portrait'], pixelArt: true,
     source: { w: 1774, h: 887, fit: 'prop' }, notes: ['Heart and portrait are HUD art; supplementary items do not imply power-up mechanics.'],
   },
@@ -184,13 +185,13 @@ export const SPRITES: readonly SpriteSlot[] = [
     { name: 'plant', w: 2120, h: 742, frameW: 24, frameH: 32, frames: ['inside', 'emerging', 'open', 'descending', 'hurt', 'defeated', 'effect'] },
     { name: 'parrot', w: 2079, h: 756, frameW: 24, frameH: 24, frames: ['fly-1', 'fly-2', 'fly-3', 'fly-4', 'hurt', 'defeated', 'effect'] },
   ].map(s => ({
-    slot: `jungle-${s.name}`, file: `assets/arcade/jungle/${s.name}.png`, frameW: s.frameW, frameH: s.frameH,
+    slot: `jungle-${s.name}`, file: `assets/arcade/jungle/${s.name}.webp`, frameW: s.frameW, frameH: s.frameH,
     cols: 7, rows: 1, frames: s.frames, pixelArt: true,
     source: { w: s.w, h: s.h, fit: 'actor' as const },
     notes: ['Four action frames, hurt, defeated, and a separate defeat effect. Original atlas is assembled at load.'],
   })),
   {
-    slot: 'jungle-rewards', file: 'assets/arcade/jungle/rewards.png', frameW: 32, frameH: 32, cols: 4, rows: 1,
+    slot: 'jungle-rewards', file: 'assets/arcade/jungle/rewards.webp', frameW: 32, frameH: 32, cols: 4, rows: 1,
     frames: ['gem', 'mushroom', 'star', 'sign'], pixelArt: true,
     source: { w: 2172, h: 724, fit: 'prop' }, notes: ['Gem: 50 points. Mushroom: restores one heart and grants 25 points. Star: one power charge.'],
   },
@@ -201,42 +202,42 @@ export const SPRITES: readonly SpriteSlot[] = [
     { name: 'plant', w: 2051, h: 316, frameW: 24, frameH: 32, frames: ['inside', 'emerging', 'open', 'descending', 'hurt', 'defeated', 'effect'], fit: 'actor' },
     { name: 'coin', w: 1212, h: 336, frameW: 16, frameH: 16, frames: ['spin-0', 'spin-1', 'spin-2', 'spin-3'], fit: 'coin' },
   ].map(s => ({
-    slot: `castle-${s.name}`, file: `assets/arcade/castle/${s.name}.png`, frameW: s.frameW, frameH: s.frameH,
+    slot: `castle-${s.name}`, file: `assets/arcade/castle/${s.name}.webp`, frameW: s.frameW, frameH: s.frameH,
     cols: s.frames.length, rows: 1, frames: s.frames, pixelArt: true,
     source: { w: s.w, h: s.h, fit: s.fit as 'actor' | 'coin' },
     notes: ['Castle World art. Drawn facing RIGHT; original atlas is assembled at load.'],
   })),
   {
-    slot: 'castle-rewards', file: 'assets/arcade/castle/rewards.png', frameW: 32, frameH: 32, cols: 4, rows: 1,
+    slot: 'castle-rewards', file: 'assets/arcade/castle/rewards.webp', frameW: 32, frameH: 32, cols: 4, rows: 1,
     frames: ['gem', 'mushroom', 'star', 'sign'], pixelArt: true,
     source: { w: 1536, h: 384, fit: 'prop' }, notes: ['Same pickups and order as jungle-rewards.'],
   },
   {
-    slot: 'castle-props', file: 'assets/arcade/castle/props.png', frameW: 64, frameH: 64, cols: 4, rows: 4,
+    slot: 'castle-props', file: 'assets/arcade/castle/props.webp', frameW: 64, frameH: 64, cols: 4, rows: 4,
     frames: ['pillar', 'sign', 'goal', 'tower', 'bush', 'arch', 'crate', 'bridge',
       'lamp', 'banner', 'broken-pillar', 'fountain', 'cart', 'tall-pillar', 'ledge', 'rubble'], pixelArt: true,
     source: { w: 1536, h: 1536, fit: 'prop' }, notes: ['Frames 0-7 follow the jungle-props order; 8-15 are castle scenery.'],
   },
 ];
 
-export const JUNGLE_BACKDROP = 'arcade/jungle/backdrop.png';
+export const JUNGLE_BACKDROP = 'arcade/jungle/backdrop.webp';
 
 // Existing repo art the arcade draws. Replacing any of these also changes the
 // quiz, so SWAP-LIST.md calls them out as off-limits.
 export const REUSED: readonly ReusedSlot[] = [
-  { slot: 'backdrop-jungle', file: 'assets/scenes/scene-discovery.png', w: 1535, h: 1024, use: 'Level 1 parallax backdrop' },
-  { slot: 'backdrop-desert', file: 'assets/scenes/scene-science.png', w: 1536, h: 1024, use: 'Level 2 parallax backdrop' },
-  { slot: 'backdrop-volcano', file: 'assets/scenes/scene-challenges.png', w: 1536, h: 1024, use: 'Level 3 parallax backdrop' },
-  { slot: 'goal-flag', file: 'assets/props/flag.png', w: 664, h: 972, use: 'The in-world goal, drawn 40 x 58 on the G tile' },
-  { slot: 'hud-life', file: 'assets/icons/icon-star.png', w: 128, h: 128, use: 'One 20x20 star per remaining life' },
-  { slot: 'hud-coin', file: 'assets/icons/icon-medal-gold.png', w: 128, h: 128, use: '20x20 disc beside the coin counter' },
-  { slot: 'level-token-jungle', file: 'assets/islands/island-discovery.png', w: 1536, h: 1024, use: 'Level-select card art' },
-  { slot: 'level-token-desert', file: 'assets/islands/island-science.png', w: 1536, h: 1024, use: 'Level-select card art' },
-  { slot: 'level-token-volcano', file: 'assets/islands/island-maths.png', w: 1536, h: 1024, use: 'Level-select card art' },
-  { slot: 'panel-jungle', file: 'assets/panels/panel-discovery.png', w: 1672, h: 941, use: 'Pause / cleared / game-over dialog surface' },
-  { slot: 'panel-desert', file: 'assets/panels/panel-science.png', w: 1672, h: 941, use: 'Pause / cleared / game-over dialog surface' },
-  { slot: 'panel-volcano', file: 'assets/panels/panel-challenges.png', w: 1672, h: 941, use: 'Pause / cleared / game-over dialog surface' },
-  { slot: 'result-trophy', file: 'assets/props/trophy.png', w: 1357, h: 1159, use: 'Level-complete dialog' },
+  { slot: 'backdrop-jungle', file: 'assets/scenes/scene-discovery.webp', w: 1535, h: 1024, use: 'Level 1 parallax backdrop' },
+  { slot: 'backdrop-desert', file: 'assets/scenes/scene-science.webp', w: 1536, h: 1024, use: 'Level 2 parallax backdrop' },
+  { slot: 'backdrop-volcano', file: 'assets/scenes/scene-challenges.webp', w: 1536, h: 1024, use: 'Level 3 parallax backdrop' },
+  { slot: 'goal-flag', file: 'assets/props/flag.webp', w: 664, h: 972, use: 'The in-world goal, drawn 40 x 58 on the G tile' },
+  { slot: 'hud-life', file: 'assets/icons/icon-star.webp', w: 128, h: 128, use: 'One 20x20 star per remaining life' },
+  { slot: 'hud-coin', file: 'assets/icons/icon-medal-gold.webp', w: 128, h: 128, use: '20x20 disc beside the coin counter' },
+  { slot: 'level-token-jungle', file: 'assets/islands/island-discovery.webp', w: 1536, h: 1024, use: 'Level-select card art' },
+  { slot: 'level-token-desert', file: 'assets/islands/island-science.webp', w: 1536, h: 1024, use: 'Level-select card art' },
+  { slot: 'level-token-volcano', file: 'assets/islands/island-maths.webp', w: 1536, h: 1024, use: 'Level-select card art' },
+  { slot: 'panel-jungle', file: 'assets/panels/panel-discovery.webp', w: 1672, h: 941, use: 'Pause / cleared / game-over dialog surface' },
+  { slot: 'panel-desert', file: 'assets/panels/panel-science.webp', w: 1672, h: 941, use: 'Pause / cleared / game-over dialog surface' },
+  { slot: 'panel-volcano', file: 'assets/panels/panel-challenges.webp', w: 1672, h: 941, use: 'Pause / cleared / game-over dialog surface' },
+  { slot: 'result-trophy', file: 'assets/props/trophy.webp', w: 1357, h: 1159, use: 'Level-complete dialog' },
 ];
 
 export type Sheets = Record<string, HTMLImageElement | HTMLCanvasElement>;
@@ -283,6 +284,19 @@ export const frameRect = (s: SpriteSlot, index: number, k: number): readonly [nu
 
 const CANVAS_REUSED: readonly string[] = ['goal-flag'];
 
+// Chromium rejects img.decode() when many large images decode at once, even
+// though the file is fine. Fall back to the load event and only fail when the
+// browser could not produce any pixels.
+export const loadImage = (src: string): Promise<HTMLImageElement> => {
+  const img = new Image();
+  img.src = src;
+  return img.decode().catch(() => new Promise<void>((done, fail) => {
+    const settle = (): void => { if (img.naturalWidth) done(); else fail(new Error(`cannot decode ${src}`)); };
+    if (img.complete) settle();
+    else { img.onload = settle; img.onerror = settle; }
+  })).then(() => img);
+};
+
 export const loadSheets = async (): Promise<{ sheets: Sheets; report: AssetReport }> => {
   const sheets: Sheets = {};
   const issues: AssetIssue[] = [];
@@ -291,7 +305,7 @@ export const loadSheets = async (): Promise<{ sheets: Sheets; report: AssetRepor
   const pending = new Map<string, Promise<HTMLImageElement>>();
   const load = (file: string): Promise<HTMLImageElement> => {
     let p = pending.get(file);
-    if (!p) { const img = new Image(); img.src = file; p = img.decode().then(() => { images[file] = img; return img; }); pending.set(file, p); }
+    if (!p) { p = loadImage(file).then(img => { images[file] = img; return img; }); pending.set(file, p); }
     return p;
   };
   await Promise.all(SPRITES.map(async s => {
@@ -324,11 +338,8 @@ export const loadSheets = async (): Promise<{ sheets: Sheets; report: AssetRepor
   await Promise.all(CANVAS_REUSED.map(async name => {
     const r = REUSED.find(x => x.slot === name);
     if (!r) return;
-    const img = new Image();
-    img.src = r.file;
     try {
-      await img.decode();
-      sheets[r.slot] = img;
+      sheets[r.slot] = await loadImage(r.file);
     } catch {
       issues.push({ slot: r.slot, file: r.file, expected: `${r.w}x${r.h}`, found: 'file missing or not decodable' });
     }

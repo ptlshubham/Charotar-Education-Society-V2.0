@@ -51,7 +51,7 @@
 .castle-art .arcade-key-text { color: #45315b; }
 @media (max-width: 700px) { .castle-art .arcade-bar h1 { justify-content: center; } }
 
-.arcade-menu { position: relative; min-height: 100svh; overflow: hidden; padding: 110px 24px 48px; background: url('../../public/assets/props/ocean.png') center / cover; text-align: center; }
+.arcade-menu { position: relative; min-height: 100svh; overflow: hidden; padding: 110px 24px 48px; background: url('../../public/assets/props/ocean.webp') center / cover; text-align: center; }
 .arcade-menu-controls { position: absolute; z-index: 5; top: 42px; right: 5.55%; display: flex; gap: 10px; }
 .arcade-menu-head { position: relative; max-width: 720px; margin: 0 auto 36px; color: #fff6dd; text-shadow: 1px 2px 2px #241c69; }
 .arcade-menu-head .eyebrow { color: #ffe9b6; font-size: 10px; }

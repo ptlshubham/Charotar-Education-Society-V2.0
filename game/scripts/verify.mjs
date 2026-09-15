@@ -69,7 +69,7 @@ for (const [index, level] of levels.entries()) {
 
 const root = fileURLToPath(new URL('../dist/browser/', import.meta.url));
 const screenshots = fileURLToPath(new URL('../screenshots/', import.meta.url));
-const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.svg': 'image/svg+xml', '.ttf': 'font/ttf', '.md': 'text/markdown' };
+const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.ttf': 'font/ttf', '.md': 'text/markdown' };
 const server = createServer(async (req, res) => {
   try {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname).replace(/^\/game\//, '/');

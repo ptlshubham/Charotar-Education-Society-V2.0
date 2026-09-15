@@ -21,7 +21,7 @@ const server = createServer(async (req, res) => {
     }
     const file = resolve(root, 'dist/browser', '.' + (path === '/' ? '/index.html' : path));
     if (!file.startsWith(resolve(root, 'dist/browser') + sep)) throw Error('Invalid path');
-    res.setHeader('Content-Type', ({ '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.svg': 'image/svg+xml' })[extname(file)] || 'application/octet-stream');
+    res.setHeader('Content-Type', ({ '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.webp': 'image/webp', '.svg': 'image/svg+xml' })[extname(file)] || 'application/octet-stream');
     res.end(await readFile(file));
   } catch { res.writeHead(404).end(); }
 });

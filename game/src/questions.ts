@@ -21,7 +21,7 @@ const q = (prompt: string, options: string[], answer: number, explanation: strin
 export const zones: readonly Zone[] = [
   {
     id: 'knowledge', name: 'General Knowledge', subtitle: 'A little curiosity goes a long way.',
-    image: 'islands/island-knowledge.png', icon: 'props/book.png', badge: 'Curious Explorer',
+    image: 'islands/island-knowledge.webp', icon: 'props/book.webp', badge: 'Curious Explorer',
     questions: [
       q('Which city is the capital of India?', ['Mumbai', 'New Delhi', 'Jaipur', 'Kolkata'], 1, 'New Delhi is the capital of India.'),
       q('How many colours are traditionally named in a rainbow?', ['Five', 'Six', 'Seven', 'Eight'], 2, 'The seven colours are red, orange, yellow, green, blue, indigo, and violet.'),
@@ -33,7 +33,7 @@ export const zones: readonly Zone[] = [
   },
   {
     id: 'science', name: 'Science Zone', subtitle: 'Big discoveries start with small questions.',
-    image: 'islands/island-science.png', icon: 'props/microscope.png', badge: 'Science Adventurer',
+    image: 'islands/island-science.webp', icon: 'props/microscope.webp', badge: 'Science Adventurer',
     questions: [
       q('Which gas do plants absorb during photosynthesis?', ['Oxygen', 'Carbon dioxide', 'Helium', 'Hydrogen'], 1, 'Plants use carbon dioxide, water, and sunlight to make their food.'),
       q('Which planet is known as the Red Planet?', ['Venus', 'Jupiter', 'Mars', 'Mercury'], 2, 'Iron minerals on the surface of Mars give it a reddish colour.'),
@@ -45,7 +45,7 @@ export const zones: readonly Zone[] = [
   },
   {
     id: 'world', name: 'Global News', subtitle: 'Know your world. Think like a global citizen.',
-    image: 'islands/island-world.png', icon: 'props/globe.png', badge: 'World Citizen',
+    image: 'islands/island-world.webp', icon: 'props/globe.webp', badge: 'World Citizen',
     questions: [
       q('What should you do before sharing a surprising news story?', ['Share immediately', 'Check reliable sources', 'Read only the headline', 'Count the likes'], 1, 'Check the source, date, and other reliable reports before sharing a story.'),
       q('Which organisation is commonly abbreviated as UN?', ['United Nations', 'Universal Nature', 'Union Network', 'United Neighbours'], 0, 'The United Nations brings countries together to cooperate on global issues.'),
@@ -57,7 +57,7 @@ export const zones: readonly Zone[] = [
   },
   {
     id: 'brain', name: 'Brain Zone', subtitle: 'Give your problem-solving powers a workout.',
-    image: 'islands/island-brain.png', badge: 'Puzzle Pathfinder',
+    image: 'islands/island-brain.webp', badge: 'Puzzle Pathfinder',
     questions: [
       q('What comes next: 2, 4, 8, 16, …?', ['18', '24', '30', '32'], 3, 'Each number is doubled, so 16 × 2 = 32.'),
       q('Which one does not belong?', ['Square', 'Triangle', 'Circle', 'Banana'], 3, 'A banana is a fruit; the other three are geometric shapes.'),
@@ -69,7 +69,7 @@ export const zones: readonly Zone[] = [
   },
   {
     id: 'challenges', name: 'Challenges', subtitle: 'Brave the volcano and conquer a number challenge.',
-    image: 'islands/island-maths.png', badge: 'Number Ninja',
+    image: 'islands/island-maths.webp', badge: 'Number Ninja',
     questions: [
       q('What is 7 × 8?', ['48', '54', '56', '64'], 2, 'Seven groups of eight make 56.'),
       q('What is half of 50?', ['20', '25', '30', '15'], 1, '50 divided into two equal parts gives 25 in each part.'),
@@ -81,7 +81,7 @@ export const zones: readonly Zone[] = [
   },
   {
     id: 'discovery', name: 'Discovery Zone', subtitle: 'Explore the wonders of the natural world.',
-    image: 'islands/island-discovery.png', badge: 'Nature Navigator',
+    image: 'islands/island-discovery.webp', badge: 'Nature Navigator',
     questions: [
       q('What does a caterpillar become after its pupa stage?', ['A frog', 'A butterfly or moth', 'A beetle', 'A spider'], 1, 'Caterpillars are the larval stage of butterflies and moths.'),
       q('Which resource is renewable?', ['Coal', 'Oil', 'Sunlight', 'Natural gas'], 2, 'Sunlight is naturally replenished, unlike fossil fuels.'),
@@ -93,7 +93,7 @@ export const zones: readonly Zone[] = [
   },
   {
     id: 'tech', name: 'Tech Zone', subtitle: 'Unlock the ideas behind the digital world.',
-    image: 'islands/island-tech.png', icon: 'props/computer.png', badge: 'Digital Trailblazer',
+    image: 'islands/island-tech.webp', icon: 'props/computer.webp', badge: 'Digital Trailblazer',
     questions: [
       q('Which password is the strongest example?', ['123456', 'password', 'yourname', 'River!Cloud7!Mango'], 3, 'Long, unique passwords are harder to guess. Never use a public example as your actual password.'),
       q('What is an algorithm?', ['A computer screen', 'A set of steps to solve a problem', 'An internet cable', 'A type of battery'], 1, 'An algorithm is a clear sequence of instructions for completing a task.'),

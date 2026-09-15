@@ -68,11 +68,17 @@ const encodePng = (w, h, rgba) => {
   ]);
 };
 
-// Reads width/height straight out of the IHDR without decoding the image.
-const pngSize = file => {
+// Reads width/height straight out of the PNG IHDR or WebP VP8/VP8L/VP8X header
+// without decoding the image.
+const imageSize = file => {
   const b = readFileSync(file);
-  if (b.length < 24 || b.readUInt32BE(0) !== 0x89504e47) return null;
-  return { w: b.readUInt32BE(16), h: b.readUInt32BE(20) };
+  if (b.length >= 24 && b.readUInt32BE(0) === 0x89504e47) return { w: b.readUInt32BE(16), h: b.readUInt32BE(20) };
+  if (b.length < 30 || b.toString('latin1', 0, 4) !== 'RIFF' || b.toString('latin1', 8, 12) !== 'WEBP') return null;
+  const kind = b.toString('latin1', 12, 16);
+  if (kind === 'VP8X') return { w: 1 + b.readUIntLE(24, 3), h: 1 + b.readUIntLE(27, 3) };
+  if (kind === 'VP8L') { const bits = b.readUInt32LE(21); return { w: 1 + (bits & 0x3fff), h: 1 + ((bits >> 14) & 0x3fff) }; }
+  if (kind === 'VP8 ') return { w: b.readUInt16LE(26) & 0x3fff, h: b.readUInt16LE(28) & 0x3fff };
+  return null;
 };
 
 // ---------------------------------------------------------------------------
@@ -302,7 +308,7 @@ const swapList = () => {
   L.push('');
   L.push('## How to hand off final art');
   L.push('');
-  L.push('1. Overwrite the PNG at the exact path below. Do not rename it, do not add a suffix.');
+  L.push('1. Overwrite the WebP image at the exact path below. Do not rename it, do not add a suffix.');
   L.push('2. Keep the grid: the same number of columns and rows, in the same frame order.');
   L.push('3. Frame size may be the listed size OR an exact 2x, 3x or 4x of it — the same');
   L.push('   multiple on BOTH axes. The exact authored-atlas size listed for a slot is also accepted.');
@@ -397,15 +403,15 @@ const check = () => {
   for (const s of SPRITES) {
     const file = resolve(ROOT, 'public', s.file);
     if (!existsSync(file)) { problems.push(`${s.slot}: missing ${s.file}`); continue; }
-    const size = pngSize(file);
-    if (!size) { problems.push(`${s.slot}: ${s.file} is not a PNG`); continue; }
+    const size = imageSize(file);
+    if (!size) { problems.push(`${s.slot}: ${s.file} is not a PNG or WebP image`); continue; }
     const k = scaleOf(s, size.w, size.h);
     if (s.source?.frames) {
       if (s.source.frames.length !== s.frames.length) problems.push(`${s.slot}: source region count does not match runtime frames`);
       for (const [index, cell] of s.source.frames.entries()) {
         const sourceFile = cell.file ? resolve(ROOT, 'public', cell.file) : file;
         if (!existsSync(sourceFile)) { problems.push(`${s.slot} frame ${index}: missing ${cell.file}`); continue; }
-        const sourceSize = pngSize(sourceFile), [x, y, w, h] = cell.rect;
+        const sourceSize = imageSize(sourceFile), [x, y, w, h] = cell.rect;
         if (!sourceSize || x < 0 || y < 0 || w <= 0 || h <= 0 || x + w > sourceSize.w || y + h > sourceSize.h) {
           problems.push(`${s.slot} frame ${index}: region ${cell.rect} exceeds ${cell.file ?? s.file}`);
         }

@@ -6,8 +6,8 @@ import { fileURLToPath } from 'node:url';
 import { resolve, extname, sep } from 'node:path';
 import { chromium } from 'playwright';
 import { zones } from '../src/questions.ts';
-import { levels, countCoins, PHYS, jumpApexPx, jumpRangePx } from '../src/platformer/levels.ts';
-import { createWorld, step, parseSolution } from '../src/platformer/engine.ts';
+import { levels, countCoins, PHYS, RENDER_SCALE, VIEW_W, VIEW_H, jumpApexPx, jumpRangePx } from '../src/platformer/levels.ts';
+import { createWorld, step, parseSolution, NO_INPUT, teleport, drainEvents } from '../src/platformer/engine.ts';
 
 // Step 0, before anything is served or rendered: the committed sprite sheets and
 // SWAP-LIST.md must match sprites.ts, and the engine must satisfy the envelope
@@ -33,6 +33,38 @@ for (const [index, level] of levels.entries()) {
   assert.ok(world.tick <= level.tickBudget, `${level.id}: cleared in ${world.tick} ticks, budget is ${level.tickBudget}`);
   // The recorded run is death-free, so a physics change that makes it lossy is a regression.
   assert.equal(world.lives, PHYS.startLives, `${level.id}: the recorded solution loses no lives`);
+}
+
+// All worlds share the heart, power and timer rules. Power is edge-triggered;
+// holding it cannot consume every charge. Contact grants a recovery window.
+for (const [index, level] of levels.entries()) {
+  const world = createWorld(index);
+  step(world, { ...NO_INPUT, power: true });
+  for (let i = 0; i < 20; i++) step(world, { ...NO_INPUT, power: true });
+  assert.equal(world.stars, 1, `${level.id}: held power uses one charge`);
+  step(world, NO_INPUT); step(world, { ...NO_INPUT, power: true });
+  assert.equal(world.stars, 0, `${level.id}: a new press uses the second charge`);
+  step(world, NO_INPUT); step(world, { ...NO_INPUT, power: true });
+  assert.equal(world.stars, 0, `${level.id}: charges cannot become negative`);
+  world.timeTicks = 1; step(world, NO_INPUT);
+  assert.equal(world.lives, 2, `${level.id}: timeout costs one life`);
+  assert.equal(world.health, 3, `${level.id}: respawn restores hearts`);
+}
+{
+  const world = createWorld(0), beetle = world.enemies.find(e => e.kind === 'beetle');
+  teleport(world, beetle.x - 24, beetle.y - 10);
+  step(world, { ...NO_INPUT, power: true });
+  assert.equal(beetle.health, 1, 'Armoured enemies survive one pulse');
+  assert.ok(beetle.stunned > 0, 'First pulse stuns an armoured enemy');
+  step(world, NO_INPUT); step(world, { ...NO_INPUT, power: true });
+  assert.ok(beetle.dead > 0, 'Second pulse defeats an armoured enemy');
+  const contact = createWorld(0), walker = contact.enemies.find(e => e.kind === 'walker');
+  teleport(contact, walker.x, walker.y + walker.h - contact.player.h);
+  step(contact, NO_INPUT);
+  assert.equal(contact.health, 2, 'Enemy contact costs a heart');
+  for (let i = 0; i < 20; i++) step(contact, NO_INPUT);
+  assert.equal(contact.health, 2, 'Recovery window prevents repeated contact damage');
+  assert.equal(contact.lives, 3, 'One contact does not cost a life');
 }
 
 const root = fileURLToPath(new URL('../dist/browser/', import.meta.url));
@@ -87,7 +119,11 @@ try {
   for (const zone of zones) {
     await page.getByRole('button', { name: `Explore ${zone.name}`, exact: true }).click();
     await page.getByRole('heading', { name: zone.name, exact: true }).waitFor();
-    await page.waitForFunction(() => [...document.images].every(img => img.complete && img.naturalWidth > 0));
+    await page.waitForFunction(() => [...document.images].every(img => img.complete && img.naturalWidth > 0)).catch(async error => {
+      console.error('Unloaded island images:', await page.evaluate(() => [...document.images].filter(i => !i.complete || !i.naturalWidth).map(i => ({ src: i.src, loading: i.loading, visible: !!i.getClientRects().length }))));
+      console.error('Browser errors:', errors);
+      throw error;
+    });
     await page.screenshot({ path: resolve(screenshots, `island-${zone.id}-desktop.png`), fullPage: true, animations: 'disabled' });
     await page.reload({ waitUntil: 'networkidle' });
     await page.getByRole('heading', { name: zone.name, exact: true }).waitFor();
@@ -211,7 +247,7 @@ try {
   assert.equal(await arcadePage.evaluate(() => window.__cesArcade.version), 1, 'Harness version is the one this file speaks');
   assert.equal(await arcadePage.evaluate(() => window.__cesArcade.ready()), true, 'Arcade reports ready');
   assert.deepEqual(await arcadePage.evaluate(() => window.__cesArcade.assetReport().issues), [], 'Every sprite sheet is a declared size');
-  assert.deepEqual(await arcadePage.locator('canvas').evaluate(el => [el.width, el.height]), [512, 288], 'Canvas backing store is the virtual resolution');
+  assert.deepEqual(await arcadePage.locator('canvas').evaluate(el => [el.width, el.height]), [VIEW_W * RENDER_SCALE, VIEW_H * RENDER_SCALE], 'Canvas backing store supersamples the virtual resolution');
   assert.equal((await state()).coinTotal, countCoins(levels[0]), 'Level 1 coin total matches its grid');
   assert.equal((await arcade.request.get(`${base}/game/assets/arcade/SWAP-LIST.md`)).status(), 200, 'SWAP-LIST.md ships with the build');
 
@@ -227,7 +263,7 @@ try {
   // Dropped into the lava pit at column 40: one hurt, one life gone, not a loop.
   const hazard = await arcadePage.evaluate(() => {
     const a = window.__cesArcade;
-    a.pause(); a.reset(0, [40 * 16, 240]); a.drainEvents(); a.run(30);
+    a.pause(); a.reset(0, [16 * 16, 250]); a.drainEvents(); a.run(30);
     return { types: a.drainEvents().map(event => event.type), lives: a.state().lives };
   });
   assert.equal(hazard.types.filter(type => type === 'hurt').length, 1, `The pit hurts exactly once, got ${hazard.types.join(',')}`);
@@ -237,22 +273,22 @@ try {
   await arcadePage.waitForFunction(() => {
     const s = window.__cesArcade.state();
     const coins = document.querySelector('.hud-coins');
-    return Boolean(coins) && coins.textContent.includes(String(s.coins)) && document.querySelectorAll('.hud-life').length === s.lives;
+    return Boolean(coins) && coins.textContent.includes(String(s.coins)) && document.querySelectorAll('.hud-life').length === s.health;
   });
-  assert.equal(await arcadePage.locator('.hud-life').count(), PHYS.startLives - 1, 'One life icon per remaining life after the lava hit');
+  assert.equal(await arcadePage.locator('.hud-life').count(), 3, 'Respawn restores three heart icons');
 
   // Landing on the walker at column 22. Guards the regression where a stomp was
   // also resolved as a hit and quietly cost a life.
   const stomp = await arcadePage.evaluate(() => {
     const a = window.__cesArcade;
-    a.pause(); a.reset(0, [354, 214]); a.drainEvents(); a.run(20);
+    a.pause(); a.reset(0, [368, 130]); a.drainEvents(); a.run(20);
     return { types: a.drainEvents().map(event => event.type), lives: a.state().lives };
   });
   assert.ok(stomp.types.includes('stomp'), `Dropping onto a walker stomps it, got ${stomp.types.join(',')}`);
   assert.ok(!stomp.types.includes('hurt'), 'A stomp is never also a hit');
   assert.equal(stomp.lives, PHYS.startLives, 'A stomp costs no life');
 
-  for (const [key, field] of [['ArrowLeft', 'left'], ['ArrowRight', 'right'], ['ArrowUp', 'jump'], ['KeyA', 'left'], ['KeyD', 'right'], ['KeyW', 'jump'], ['Space', 'jump']]) {
+  for (const [key, field] of [['ArrowLeft', 'left'], ['ArrowRight', 'right'], ['ArrowUp', 'jump'], ['KeyA', 'left'], ['KeyD', 'right'], ['KeyW', 'jump'], ['Space', 'jump'], ['KeyX', 'power'], ['KeyK', 'power']]) {
     await arcadePage.keyboard.down(key);
     assert.equal((await mask())[field], true, `${key} holds ${field}`);
     await arcadePage.keyboard.up(key);
@@ -260,7 +296,7 @@ try {
     // is never dropped, so the latch outlives the keyup by design. One tick
     // consumes it; only then should the mask read clear.
     await arcadePage.evaluate(() => window.__cesArcade.run(1));
-    assert.equal((await mask())[field], false, `Releasing ${key} clears ${field}`);
+    assert.equal(Boolean((await mask())[field]), false, `Releasing ${key} clears ${field}`);
   }
   assert.equal(await arcadePage.evaluate(() => scrollY), 0, 'Space jumps without scrolling the page');
 
@@ -295,7 +331,7 @@ try {
   assert.deepEqual(await replay(), traced, 'The same input script replays identically after a reload');
 
   const overlaps = (a, b) => a.x < b.x + b.width && b.x < a.x + a.width && a.y < b.y + b.height && b.y < a.y + a.height;
-  const pad = [['Move left', 'left'], ['Move right', 'right'], ['Jump', 'jump']];
+  const pad = [['Move left', 'left'], ['Move right', 'right'], ['Star power', 'power'], ['Jump', 'jump']];
   for (const [label, width, height] of [['desktop', 1440, 900], ['landscape', 844, 390], ['390', 390, 844], ['320', 320, 844]]) {
     await arcadePage.setViewportSize({ width, height });
     // animations: 'disabled' does nothing to a rAF canvas loop — pause() plus an
@@ -332,13 +368,13 @@ try {
     await arcadePage.mouse.up();
     // One tick consumes the jump latch; see the keyboard block above.
     await arcadePage.evaluate(() => window.__cesArcade.run(1));
-    assert.equal((await mask())[field], false, `Releasing ${name} clears ${field}`);
+    assert.equal(Boolean((await mask())[field]), false, `Releasing ${name} clears ${field}`);
   }
   await arcade.close();
 
   assert.deepEqual(errors, [], 'No browser errors or failed assets');
   console.log('PASS: animated scenery, interactive props, reduced motion, opt-in sound, per-island panel artwork, arcade platformer (physics envelope, recorded level replay, determinism, hazards, stomps, keyboard and touch input, HUD mirror, canvas aspect at four viewports), seven island scenes, deep links, correct/incorrect rounds, unique questions, score locking, badges, persistence, quit confirmation, root/subpath hosting, mobile layouts, and storage recovery.');
-  console.log('PASS (arcade): sprite sheets current, jump envelope, level replay, lazy-loaded route, asset report, 512x288 canvas painted and 16:9 at four viewports, tick accounting, hitch cap, lava hazard, stomp without damage, HUD mirroring, keyboard and touch input, and mobile layouts.');
+  console.log('PASS (arcade): sprite sheets current, jump envelope, level replay, lazy-loaded route, asset report, 1536x864 canvas painted and 16:9 at four viewports, tick accounting, hitch cap, lava hazard, stomp without damage, HUD mirroring, keyboard and touch input, and mobile layouts.');
 } finally {
   await browser?.close();
   await new Promise(resolve => server.close(resolve));

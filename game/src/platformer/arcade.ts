@@ -8,9 +8,10 @@ import {
   type GameEvent, type GameEventType, type Input, type Snapshot, type Status, type World,
 } from './engine';
 import { draw } from './render';
-import { levels, PHYS, TICK_HZ, type Level } from './levels';
+import { isRich, levels, PHYS, RENDER_SCALE, TICK_HZ, VIEW_H, VIEW_W, type Level } from './levels';
 import { loadSheets, SPRITES, JUNGLE_BACKDROP, type AssetIssue, type AssetReport, type Sheets } from './sprites';
 import { atlasIcon } from './atlas';
+import { ARCADE_STYLES } from './themes';
 
 export interface ArcadeHarness {
   version: 1;
@@ -34,6 +35,7 @@ declare global {
 type Screen = 'menu' | 'play';
 type Dialog = 'none' | 'pause' | 'clear' | 'over';
 type Key = 'left' | 'right' | 'jump' | 'power';
+interface HudArt { heart: string; coin: string; portrait: string; star: string }
 interface Hud { coins: number; coinTotal: number; lives: number; score: number; levelName: string; health: number; stars: number; gems: number; seconds: number }
 
 const STORAGE_KEY = 'ces-arcade-v1';
@@ -84,10 +86,12 @@ export class ArcadeComponent implements OnDestroy {
   // True while a level's backdrop decodes, so play never opens on a flat canvas.
   readonly entering = signal(false);
   readonly level = computed(() => levels[this.levelIndex()]);
+  readonly themeStyles = computed(() => ARCADE_STYLES[this.level().theme]);
   readonly lastLevel = computed(() => this.levelIndex() === levels.length - 1);
-  readonly lifeSlots = computed(() => Array.from({ length: this.jungle() ? this.hud().health : this.hud().lives }, (_, i) => i));
-  readonly jungle = computed(() => this.level().theme === 'jungle');
-  readonly jungleArt = signal({ heart: '', coin: '', portrait: '', star: '' });
+  readonly lifeSlots = computed(() => Array.from({ length: isRich(this.level().theme) ? this.hud().health : this.hud().lives }, (_, i) => i));
+  // HUD icons cut from each rich theme's atlas once the sheets load.
+  readonly themeArt = signal<Partial<Record<Level['theme'], HudArt>>>({});
+  readonly hudArt = computed(() => this.themeArt()[this.level().theme]);
 
   private world: World = createWorld(0);
   private sheets: Sheets = {};
@@ -126,17 +130,21 @@ export class ArcadeComponent implements OnDestroy {
       this.sheets = sheets;
       this.report = report;
       this.assetIssues.set(report.issues);
-      const items = SPRITES.find(s => s.slot === 'jungle-items')!;
-      const coin = SPRITES.find(s => s.slot === 'coin')!;
-      const rewards = SPRITES.find(s => s.slot === 'jungle-rewards')!;
-      if (sheets[items.slot] && sheets[coin.slot]) {
-        this.jungleArt.set({
-          heart: atlasIcon(sheets, items, 0, report.scale[items.slot]),
-          portrait: atlasIcon(sheets, items, 7, report.scale[items.slot]),
-          coin: atlasIcon(sheets, coin, 0, report.scale[coin.slot]),
-          star: sheets[rewards.slot] ? atlasIcon(sheets, rewards, 2, report.scale[rewards.slot]) : '',
-        });
+      const icon = (slot: string, index: number): string => {
+        const s = SPRITES.find(x => x.slot === slot)!;
+        return sheets[slot] ? atlasIcon(sheets, s, index, report.scale[slot]) : '';
+      };
+      const themeArt: Partial<Record<Level['theme'], HudArt>> = {};
+      for (const level of levels) {
+        const jungle = level.theme === 'jungle' || level.theme === 'canopy';
+        themeArt[level.theme] = {
+          heart: icon('jungle-items', 0),
+          portrait: icon(jungle ? 'jungle-items' : `${level.theme}-player`, jungle ? 7 : 0),
+          coin: icon(jungle ? 'coin' : `${level.theme}-coin`, 0),
+          star: icon(jungle ? 'jungle-rewards' : `${level.theme}-rewards`, 2),
+        };
       }
+      this.themeArt.set(themeArt);
       this.ready.set(true);
     });
     window.__cesArcade = {
@@ -448,6 +456,12 @@ export class ArcadeComponent implements OnDestroy {
 
   private attach(): void {
     const canvas = document.getElementById('arcade-canvas');
+    if (canvas instanceof HTMLCanvasElement) {
+      // Supersample: backing store is 3× the 512×288 game viewport so high-res
+      // backdrops stay sharp (render.ts scales all drawing by RENDER_SCALE).
+      canvas.width = VIEW_W * RENDER_SCALE;
+      canvas.height = VIEW_H * RENDER_SCALE;
+    }
     this.ctx = canvas instanceof HTMLCanvasElement ? canvas.getContext('2d') : null;
     if (this.ctx) this.ctx.imageSmoothingEnabled = false;
   }

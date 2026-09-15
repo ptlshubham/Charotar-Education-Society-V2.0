@@ -7,6 +7,13 @@ export const TICK_HZ = 60;
 export const TILE = 16;
 export const VIEW_W = 512;
 export const VIEW_H = 288;
+/**
+ * Supersample factor: the canvas backing store is VIEW_W×VIEW_H × this, so the
+ * game world (still simulated in 512×288 units) is rendered at a higher
+ * resolution. Keeps high-res backdrops sharp while pixel-art tiles stay crisp at
+ * this integer scale. Must be a whole number.
+ */
+export const RENDER_SCALE = 3;
 export const ROWS = 18;
 export const EPS = 0.001;
 
@@ -100,6 +107,17 @@ export interface Level {
   readonly solution: string;
 }
 
+/**
+ * Themes that play the full ruleset: three hearts per life, star power, a level
+ * timer and multi-frame enemy defeats. Every other theme keeps the classic
+ * one-hit rules. Each needs its own `<theme>-*` sheets in sprites.ts.
+ */
+export const RICH_THEMES: readonly Level['theme'][] = ['jungle', 'castle', 'desert', 'ice', 'volcano', 'village', 'canopy'];
+export const isRich = (theme: Level['theme']): boolean => RICH_THEMES.includes(theme);
+
+/** Themes whose flyers hover in place instead of sweeping side to side. */
+export const HOVER_FLYERS: readonly Level['theme'][] = ['jungle'];
+
 // Authored rows are top-padded to exactly ROWS, so a level file carries only
 // the rows that have something in them. Authored row n becomes world row
 // n + (ROWS - rows.length).
@@ -151,7 +169,7 @@ export const validateLevel = (level: Level): void => {
       if (ch === 'f') {
         const homeX = c * TILE + (TILE - ENEMY_W) / 2;
         const homeY = (r + 1) * TILE - ENEMY_H;
-        const horizontal = level.theme === 'jungle' ? 0 : PHYS.flyerAmpX;
+        const horizontal = HOVER_FLYERS.includes(level.theme) ? 0 : PHYS.flyerAmpX;
         const c0 = Math.floor((homeX - horizontal) / TILE);
         const c1 = Math.floor((homeX + horizontal + ENEMY_W - EPS) / TILE);
         const r0 = Math.floor((homeY - PHYS.flyerAmp) / TILE);
@@ -239,15 +257,15 @@ const jungleRows = (): string[] => {
   rect(31, 12, 4, 1); rect(28, 10, 3, 1);
   rect(29, 13, 2, 1, 'H'); rect(29, 14, 2, 1, 'I');
   put(3, 13, 'P'); put(10, 13, 'm'); put(16, 13, 'b');
-  put(7, 10, 'B?B'); put(7, 9, 'ooo'); put(19, 7, 'f');
+  put(7, 11, 'B?B'); put(7, 10, 'ooo'); put(19, 7, 'f');
   put(21, 12, '^'); put(23, 11, 'w'); put(28, 9, 'ooo'); put(33, 11, 'p');
   put(27, 13, 'B'); put(25, 13, 'g'); put(37, 13, 'c');
-  put(40, 10, 'B?B'); put(40, 9, 'oso'); put(46, 13, 'w');
+  put(40, 11, 'B?B'); put(40, 10, 'oso'); put(46, 13, 'w');
   rect(50, 14, 5, 1, '='); rect(50, 15, 5, 3, '~'); rect(55, 14, 15, 4);
   put(52, 13, 'b'); put(58, 13, 'm'); put(63, 13, 'p'); put(66, 13, 's');
   rect(59, 12, 3, 1); put(60, 11, 'g'); put(67, 9, 'f');
   rect(70, 17, 3, 1, '~'); rect(73, 14, 23, 4);
-  put(76, 10, 'B?B'); put(76, 9, 'ooo'); put(81, 13, 'b'); put(85, 13, 'm');
+  put(76, 11, 'B?B'); put(76, 10, 'ooo'); put(81, 13, 'b'); put(85, 13, 'm');
   rect(88, 13, 3, 1); rect(91, 12, 5, 2); put(89, 12, 'g'); put(94, 11, 'G');
   return grid.map(row => row.join(''));
 };
@@ -263,7 +281,7 @@ export const jungle: Level = {
   tickBudget: 3600,
   // Recorded with the in-game recorder (window.__cesArcade.recordStart/Stop).
   // Re-record after any change to PHYS or to this level's geometry.
-  solution: '>105}8>148}10>67}8>42}10>37}8>42}10>92}10>33}10>182}2',
+  solution: '>40}4>56}4>8.8>4<8^4}16>4}4>8.8}8>32}4>24}12>36}4>104}8>28}4>52}16>48}4>8}4>48}4>12}4>36',
   rows: jungleRows(),
 };
 
@@ -345,6 +363,28 @@ export const ice: Level = {
   ],
 };
 
+// Castle World: gatehouse, spike-moat bridge, tower yard, great hall, water moat,
+// courtyard, spike pit and the keep. Built the same way as jungleRows.
+const castleRows = (): string[] => {
+  const grid = Array.from({ length: ROWS }, () => Array<string>(104).fill('.'));
+  const rect = (x: number, y: number, width: number, height: number, ch = '#'): void => {
+    for (let r = y; r < y + height; r++) for (let c = x; c < x + width; c++) grid[r][c] = ch;
+  };
+  const put = (x: number, y: number, text: string): void => { [...text].forEach((ch, i) => grid[y][x + i] = ch); };
+  rect(0, 14, 14, 4); put(3, 13, 'P'); put(6, 11, 'B?B'); put(6, 10, 'ooo'); put(11, 13, 'g');
+  rect(14, 14, 6, 1, '='); rect(14, 17, 6, 1, '^'); put(17, 13, 'w');
+  rect(20, 14, 18, 4); rect(23, 13, 2, 1); rect(25, 12, 2, 2); put(25, 11, 'w');
+  rect(30, 12, 2, 1, 'H'); rect(30, 13, 2, 1, 'I'); rect(33, 11, 4, 1); put(33, 10, 'ooo');
+  put(28, 8, 'f'); put(36, 13, 'c');
+  rect(38, 14, 18, 4); put(42, 11, 'B?B'); put(42, 10, 'oso'); put(48, 13, 'w'); put(50, 9, 'f'); put(53, 13, 'B');
+  rect(56, 14, 5, 1, '='); rect(56, 15, 5, 3, '~');
+  rect(61, 14, 16, 4); put(63, 13, 'm'); put(68, 13, 'p'); rect(71, 12, 3, 1); put(72, 11, 'g'); put(74, 13, 'w');
+  rect(77, 17, 3, 1, '^');
+  rect(80, 14, 24, 4); put(84, 11, 'B?B'); put(84, 10, 'ooo'); put(89, 13, 'w'); put(91, 9, 'f'); put(92, 13, 'm');
+  rect(95, 13, 3, 1); rect(98, 12, 6, 2); put(96, 12, 'g'); put(101, 11, 'G');
+  return grid.map(row => row.join(''));
+};
+
 export const castle: Level = {
   id: 'castle',
   name: 'Castle Climb',
@@ -353,22 +393,9 @@ export const castle: Level = {
   token: 'islands/island-brain.png',
   zoneClass: 'zone-brain',
   panel: 'panels/panel-brain.png',
-  tickBudget: 5600,
-  solution: '>171}8>112}8>82}8>43}8>76}8>191}8>267}8>23}8>82}8>43}8>137}8>34}8>336}8>141',
-  rows: [
-    '....................................................................................................................................................................................................................................................................',
-    '....................................................................................................................................................................................................................................................................',
-    '....................................................................................................................................................................................................................................................................',
-    '....................................................................................................................................................................................................................................................................',
-    '....................................................................................................................................................................................................................................................................',
-    '....................................................................................................................................................................................................................................................................',
-    '.....................B?B...................................................f.............................................B?B.........................................................................f.............B?B..............................................',
-    '..........................................................oo.................................................................................................oo.....................................................................................................',
-    '........................................................######.............................................................................................######...................................................................................................',
-    '...P.......o..o.......o..........w...........o............................................w...........o........o..o.......o.........c..........^^.........................w...........o.............................o..........w...........o........o..o......G.....',
-    '############################################...######################################################...#############################################################################...##################################################...#######################',
-    '############################################~~~######################################################~~~#############################################################################~~~##################################################~~~#######################',
-  ],
+  tickBudget: 3600,
+  solution: '>32}4>28}16>44}4>24}16>12}8>12}4>44}4>40}4>40}4>16}4>44}8>20}8>16}8>16}8>12}4>32}4>60}4>16}4>28}4>16}4>36}8>40',
+  rows: castleRows(),
 };
 
 export const canopy: Level = {
@@ -423,6 +450,31 @@ export const village: Level = {
   ],
 };
 
-export const levels: readonly Level[] = [jungle, desert, volcano, ice, castle, canopy, village];
+// Add the supplied creatures to optional raised routes, leaving every existing
+// ground-level jump envelope and recorded route intact.
+const completeWorld = (level: Level): Level => {
+  if (level.theme === 'jungle') return level;
+  const grid = expandRows(level).map(row => [...row]);
+  let pickup = 0, platform = 0;
+  grid.forEach((row, r) => row.forEach((ch, c) => {
+    if (ch === 'o' && r >= 15) {
+      pickup++;
+      if (pickup % 6 === 2) row[c] = 's';
+      else if (pickup % 6 === 4) row[c] = 'm';
+      else if (pickup % 6 === 0) row[c] = 'g';
+    }
+    if (ch === '#' && r >= 12 && r <= 14 && c > 1 && row[c - 1] !== '#' && row[c + 3] === '#'
+      && grid[r - 1][c + 1] === '.' && grid[r - 2][c + 1] === '.') {
+      platform++;
+      grid[r - 1][c + 1] = platform % 2 || level.theme === 'village' ? 'b' : 'p';
+    }
+  }));
+  if (level.theme === 'castle') {
+    outer: for (const row of grid) for (let c = 0; c < row.length; c++) if (row[c] === 'w') { row[c] = 'b'; break outer; }
+  }
+  return { ...level, rows: grid.map(row => row.join('')) };
+};
+
+export const levels: readonly Level[] = [jungle, desert, volcano, ice, castle, canopy, village].map(completeWorld);
 
 export const levelIndexById = (id: string): number => levels.findIndex(l => l.id === id);

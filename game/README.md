@@ -96,8 +96,8 @@ one rule, so there is nothing to hand-pick. Re-record the level's `solution` aft
 
 ### Replacing the placeholder art
 
-Every sprite is a named slot in `src/platformer/sprites.ts` — the only file in the repo that
-holds a sprite path, sheet size, frame size or frame order. `npm run art` regenerates the
+Every sprite is a named slot in `src/platformer/sprites.ts` or `world-art.ts`; `world-regions.ts`
+contains the supplied animation rectangles. `npm run art` regenerates the
 placeholder PNGs and rewrites `public/assets/arcade/SWAP-LIST.md`, which is the hand-off
 document for the art team and ships with the build at `/game/assets/arcade/SWAP-LIST.md`.
 
@@ -113,9 +113,10 @@ document for the art team and ships with the build at `/game/assets/arcade/SWAP-
 
 ### Not implemented, deliberately
 
-Slopes, one-way and moving platforms, wall-jump, crouch, swimming, invulnerability frames,
-knockback, particles, screen shake, swept collision. Two enemy types are one `if/else`, not
-an entity system.
+Slopes, one-way and moving platforms, wall-jump, crouch, swimming, knockback,
+screen shake and swept collision are not implemented. All seven worlds support
+three hearts per life, a recovery window, a timer, collectible power stars,
+health mushrooms, bonus gems/flowers and animated enemy states.
 
 ## Design sources
 
@@ -123,7 +124,7 @@ an entity system.
 
 The jungle map now uses generated safari-explorer animation, a snail, a macaw, gold coins, mossy terrain, a waterfall backdrop, and jungle props. Preview the full asset set at `assets/arcade/jungle/preview.html`; prompts and provenance are in `public/assets/arcade/jungle/ART.md`.
 
-Original PNGs remain intact. `sprites.ts` declares the source dimensions and frame order, and `atlas.ts` trims transparent actor margins into cached 4x sheets at load time. Each theme has its own folder under `assets/arcade/`: `jungle`, `desert`, `volcano`, `ice`, `castle`, `canopy`, and `village`. Other maps use `assets/arcade/shared/` for their original shared characters and coins. Pipe, bridge, and supplementary item art are supplied for future map work; no new power-up or pipe mechanics are implied. The placeholder generator preserves authored art.
+Original exports remain intact in their source folders. `atlas.ts` removes black matte, trims margins and assembles cached 4x sheets at load time. Desert, Ice, Volcano, Castle and Village now use the supplied theme-specific actors, enemies, pickups, blocks and scenery. Village uses its supplied background layers; Canopy shares the jungle art family. Pipes and pillars are solid obstacles, bridges are walkable, and mushrooms, gems/flowers and stars are active pickups. See `public/assets/arcade/README.md` for the folder map, shared assets and replacement instructions. The placeholder generator preserves authored art.
 
 File: https://www.figma.com/design/gbObfnTUNTQ8iNDaM9u7rA/Game-UI
 

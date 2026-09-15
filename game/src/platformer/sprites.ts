@@ -10,6 +10,14 @@
 // loadSheets(), which the browser alone ever calls.
 
 import { assembleAtlas } from './atlas.ts';
+import { IMPORTED_SPRITES } from './world-art.ts';
+
+export interface AtlasFrame {
+  readonly file?: string;
+  readonly rect: readonly [number, number, number, number];
+  readonly crop?: readonly [number, number, number, number];
+  readonly fit?: 'fill' | 'contain';
+}
 
 export interface SpriteSlot {
   readonly slot: string;
@@ -21,7 +29,12 @@ export interface SpriteSlot {
   readonly frames: readonly string[];
   readonly pixelArt: boolean;
   readonly notes: readonly string[];
-  readonly source?: { readonly w: number; readonly h: number; readonly fit: 'actor' | 'coin' | 'tile' | 'prop' };
+  readonly source?: {
+    readonly w: number; readonly h: number; readonly fit: 'actor' | 'coin' | 'tile' | 'prop';
+    readonly grid?: readonly [number, number]; readonly frameMap?: readonly number[];
+    readonly keyBlack?: boolean; readonly flipX?: boolean; readonly frames?: readonly AtlasFrame[];
+    readonly topInset?: number;
+  };
 }
 
 export interface ReusedSlot {
@@ -146,16 +159,13 @@ const CORE_SPRITES: readonly SpriteSlot[] = [
     ],
   },
   { ...tileSlot('jungle', 'Mossy earth and stone', 'water'), source: { w: 1983, h: 793, fit: 'tile' } },
-  tileSlot('desert', 'Sandstone', 'quicksand'),
-  tileSlot('volcano', 'Charred basalt', 'lava'),
-  tileSlot('ice', 'Packed snow over blue ice', 'freezing water'),
-  tileSlot('castle', 'Cut castle stone', 'moat water'),
-  tileSlot('canopy', 'Rich earth under thick moss', 'river water'),
-  tileSlot('village', 'Village cobble and timber', 'river water'),
+  { ...tileSlot('castle', 'Cut castle stone', 'moat water'), source: { w: 1280, h: 512, fit: 'tile' } },
+  { ...tileSlot('canopy', 'Rich earth under thick moss', 'river water'), source: { w: 1983, h: 793, fit: 'tile' } },
 ];
 
 export const SPRITES: readonly SpriteSlot[] = [
   ...CORE_SPRITES,
+  ...IMPORTED_SPRITES,
   ...CORE_SPRITES.filter(s => ['player', 'walker', 'flyer', 'coin'].includes(s.slot)).map(s => ({
     ...s, slot: `legacy-${s.slot}`, file: `assets/arcade/shared/${s.slot}.png`, source: undefined,
   })),
@@ -183,6 +193,29 @@ export const SPRITES: readonly SpriteSlot[] = [
     slot: 'jungle-rewards', file: 'assets/arcade/jungle/rewards.png', frameW: 32, frameH: 32, cols: 4, rows: 1,
     frames: ['gem', 'mushroom', 'star', 'sign'], pixelArt: true,
     source: { w: 2172, h: 724, fit: 'prop' }, notes: ['Gem: 50 points. Mushroom: restores one heart and grants 25 points. Star: one power charge.'],
+  },
+  // Castle World: the same contract as the jungle sheets, frame for frame.
+  ...[
+    { name: 'walker', w: 1044, h: 235, frameW: 20, frameH: 20, frames: ['walk-a', 'walk-b', 'squashed'], fit: 'actor' },
+    { name: 'flyer', w: 2289, h: 267, frameW: 24, frameH: 24, frames: ['fly-1', 'fly-2', 'fly-3', 'fly-4', 'hurt', 'defeated', 'effect'], fit: 'actor' },
+    { name: 'plant', w: 2051, h: 316, frameW: 24, frameH: 32, frames: ['inside', 'emerging', 'open', 'descending', 'hurt', 'defeated', 'effect'], fit: 'actor' },
+    { name: 'coin', w: 1212, h: 336, frameW: 16, frameH: 16, frames: ['spin-0', 'spin-1', 'spin-2', 'spin-3'], fit: 'coin' },
+  ].map(s => ({
+    slot: `castle-${s.name}`, file: `assets/arcade/castle/${s.name}.png`, frameW: s.frameW, frameH: s.frameH,
+    cols: s.frames.length, rows: 1, frames: s.frames, pixelArt: true,
+    source: { w: s.w, h: s.h, fit: s.fit as 'actor' | 'coin' },
+    notes: ['Castle World art. Drawn facing RIGHT; original atlas is assembled at load.'],
+  })),
+  {
+    slot: 'castle-rewards', file: 'assets/arcade/castle/rewards.png', frameW: 32, frameH: 32, cols: 4, rows: 1,
+    frames: ['gem', 'mushroom', 'star', 'sign'], pixelArt: true,
+    source: { w: 1536, h: 384, fit: 'prop' }, notes: ['Same pickups and order as jungle-rewards.'],
+  },
+  {
+    slot: 'castle-props', file: 'assets/arcade/castle/props.png', frameW: 64, frameH: 64, cols: 4, rows: 4,
+    frames: ['pillar', 'sign', 'goal', 'tower', 'bush', 'arch', 'crate', 'bridge',
+      'lamp', 'banner', 'broken-pillar', 'fountain', 'cart', 'tall-pillar', 'ledge', 'rubble'], pixelArt: true,
+    source: { w: 1536, h: 1536, fit: 'prop' }, notes: ['Frames 0-7 follow the jungle-props order; 8-15 are castle scenery.'],
   },
 ];
 
@@ -254,11 +287,18 @@ export const loadSheets = async (): Promise<{ sheets: Sheets; report: AssetRepor
   const sheets: Sheets = {};
   const issues: AssetIssue[] = [];
   const scale: Record<string, number> = {};
+  const images: Record<string, HTMLImageElement> = {};
+  const pending = new Map<string, Promise<HTMLImageElement>>();
+  const load = (file: string): Promise<HTMLImageElement> => {
+    let p = pending.get(file);
+    if (!p) { const img = new Image(); img.src = file; p = img.decode().then(() => { images[file] = img; return img; }); pending.set(file, p); }
+    return p;
+  };
   await Promise.all(SPRITES.map(async s => {
-    const img = new Image();
-    img.src = s.file;
+    let img: HTMLImageElement;
     try {
-      await img.decode();
+      img = await load(s.file);
+      await Promise.all((s.source?.frames ?? []).filter(f => f.file).map(f => load(f.file!)));
     } catch {
       issues.push({ slot: s.slot, file: s.file, expected: expectedSizes(s), found: 'file missing or not decodable' });
       return;
@@ -273,8 +313,12 @@ export const loadSheets = async (): Promise<{ sheets: Sheets; report: AssetRepor
       });
       return;
     }
-    sheets[s.slot] = s.source && img.naturalWidth === s.source.w && img.naturalHeight === s.source.h
-      ? assembleAtlas(img, s) : img;
+    try {
+      sheets[s.slot] = s.source && img.naturalWidth === s.source.w && img.naturalHeight === s.source.h
+        ? assembleAtlas(img, s, images) : img;
+    } catch (error) {
+      issues.push({ slot: s.slot, file: s.file, expected: 'valid atlas regions', found: String(error) }); return;
+    }
     scale[s.slot] = k;
   }));
   await Promise.all(CANVAS_REUSED.map(async name => {

@@ -11,8 +11,8 @@
 // by enough to put question blocks out of reach.
 
 import {
-  ENEMY_H, ENEMY_W, EPS, HAZARD, type Level, PHYS, PLAYER_H, PLAYER_W, ROWS, SOLID, TILE, VIEW_W,
-  countCoins, expandRows, levels, validateLevel,
+  ENEMY_H, ENEMY_W, EPS, HAZARD, HOVER_FLYERS, type Level, PHYS, PLAYER_H, PLAYER_W, ROWS, SOLID, TILE, VIEW_W,
+  countCoins, expandRows, isRich, levels, validateLevel,
 } from './levels.ts';
 
 export interface Input { left: boolean; right: boolean; jump: boolean; power?: boolean }
@@ -140,7 +140,7 @@ const hurt = (w: World): void => {
 };
 
 const contactHurt = (w: World): void => {
-  if (w.level.theme !== 'jungle') { hurt(w); return; }
+  if (!isRich(w.level.theme)) { hurt(w); return; }
   if (w.invulnerable) return;
   w.health--;
   if (w.health <= 0) { hurt(w); return; }
@@ -197,7 +197,7 @@ export const createWorld = (levelIndex: number, lives: number = PHYS.startLives,
     },
     enemies, camX: 0, tick: 0,
     lives, coins: 0, coinTotal: countCoins(level), score,
-    health: 3, stars: level.theme === 'jungle' ? 2 : 0, gems: 0, timeTicks: 300 * 60, invulnerable: 0, powerTick: -1000,
+    health: 3, stars: isRich(level.theme) ? 2 : 0, gems: 0, timeTicks: 300 * 60, invulnerable: 0, powerTick: -1000,
     spawnX, spawnY,
     bumpTick: 0, bumpCell: null,
     status: 'play', events: [], prevInput: { ...NO_INPUT },
@@ -252,7 +252,7 @@ export const step = (w: World, input: Input): void => {
   w.tick++;
   const p = w.player;
   if (w.invulnerable) w.invulnerable--;
-  if (w.level.theme === 'jungle') {
+  if (isRich(w.level.theme)) {
     if (--w.timeTicks <= 0) { hurt(w); w.prevInput = { ...input }; return; }
     if (input.power && !w.prevInput.power && w.stars > 0) {
       w.stars--; w.powerTick = w.tick; emit(w, 'power');
@@ -337,7 +337,7 @@ export const step = (w: World, input: Input): void => {
       // Flyers ignore terrain entirely; validateLevel guarantees their swept box
       // is clear, so the path is pure position, never velocity.
       e.face = Math.floor(e.t / (PHYS.flyerPeriod / 2)) % 2 ? -1 : 1;
-      e.x = e.homeX + (w.level.theme === 'jungle' ? 0 : Math.sin(e.t * 2 * Math.PI / PHYS.flyerPeriod) * PHYS.flyerAmpX);
+      e.x = e.homeX + (HOVER_FLYERS.includes(w.level.theme) ? 0 : Math.sin(e.t * 2 * Math.PI / PHYS.flyerPeriod) * PHYS.flyerAmpX);
       e.y = e.homeY + Math.sin(e.t * 2 * Math.PI / (PHYS.flyerPeriod / 2)) * PHYS.flyerAmp;
     }
   }
@@ -358,7 +358,7 @@ export const step = (w: World, input: Input): void => {
 
   // One pass, at the end: squashed enemies linger for the squash frame, and a
   // walker knocked off a ledge is dropped instead of falling forever.
-  w.enemies = w.enemies.filter(e => (e.dead === 0 || w.tick - e.dead <= (w.level.theme === 'jungle' && e.kind !== 'walker' ? 40 : PHYS.squashTicks))
+  w.enemies = w.enemies.filter(e => (e.dead === 0 || w.tick - e.dead <= (isRich(w.level.theme) && e.kind !== 'walker' ? 40 : PHYS.squashTicks))
     && e.y <= ROWS * TILE + PHYS.pitMargin);
 
   w.camX = clamp(p.x + p.w / 2 - VIEW_W / 2, 0, Math.max(0, w.widthPx - VIEW_W));

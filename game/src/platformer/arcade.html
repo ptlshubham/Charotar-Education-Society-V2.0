@@ -1,4 +1,4 @@
-<main [class]="'arcade-shell ' + level().zoneClass" [class.jungle-art]="jungle()">
+<main [class]="'arcade-shell world-art ' + level().zoneClass" [style]="themeStyles()">
   @if (screen() === 'menu') {
     <section class="arcade-menu" aria-labelledby="arcade-menu-title">
       <button class="pixel-button back-button" (click)="exit()"><img src="assets/props/back.svg" alt="" width="16" height="16"> Exit <span class="sr-only">to Learning Quest</span></button>
@@ -14,14 +14,15 @@
       </div>
       <div class="arcade-cards">
         @for (item of levels; track item.id) {
-          <button class="arcade-card" (click)="play($index)" [disabled]="entering()" [attr.aria-label]="'Play ' + item.name + (cleared().includes(item.id) ? ', already cleared' : '')">
+          <button class="arcade-card" (click)="play($index)" [disabled]="!ready() || entering()" [attr.aria-label]="'Play ' + item.name + (cleared().includes(item.id) ? ', already cleared' : '')">
             <img class="arcade-card-art" [src]="'assets/' + item.token" alt="" width="506" height="338">
             <span class="arcade-card-name">{{ item.name }}</span>
             <span class="arcade-card-state" [class.is-cleared]="cleared().includes(item.id)">{{ cleared().includes(item.id) ? 'Cleared' : 'Not cleared yet' }}</span>
           </button>
         }
       </div>
-      <p class="arcade-menu-note">Arrow keys or A / D to move, Space or W to jump, Escape to pause. On a touch screen, use the pad below the stage.</p>
+      <p class="arcade-menu-note">Arrow keys or A / D to move, Space or W to jump, X or K for star power, Escape to pause. Collect mushrooms to restore hearts. On a touch screen, use the pad below the stage.</p>
+      @if (!ready()) { <p class="arcade-menu-note" role="status">Preparing your worlds…</p> }
       @if (assetIssues().length) {
         <ul class="arcade-issues" aria-label="Artwork problems">
           @for (issue of assetIssues(); track issue.slot) {
@@ -33,13 +34,16 @@
   } @else {
     <section class="arcade-play" aria-labelledby="arcade-play-title">
       <header class="arcade-bar">
-        <h1 id="arcade-play-title" tabindex="-1" data-screen-heading>@if (jungle() && jungleArt().portrait) { <img class="arcade-portrait" [src]="jungleArt().portrait" alt="" width="44" height="44"> }{{ hud().levelName }}</h1>
+        <h1 id="arcade-play-title" tabindex="-1" data-screen-heading>{{ hud().levelName }} <small>WORLD {{ levelIndex() + 1 }}-1</small></h1>
         <div class="arcade-hud">
-          <span class="arcade-chip arcade-lives" [attr.aria-label]="hud().lives + ' lives left'">
-            @for (slot of lifeSlots(); track slot) { <img class="hud-life" [src]="jungle() && jungleArt().heart ? jungleArt().heart : 'assets/icons/icon-star.png'" alt="" width="20" height="20"> }
+          <span class="arcade-chip" [attr.aria-label]="hud().lives + ' lives left'"><img class="arcade-portrait" [src]="hudArt()?.portrait" alt="" width="32" height="32"> × {{ hud().lives }}</span>
+          <span class="arcade-chip arcade-lives" [attr.aria-label]="hud().health + ' hearts remaining'">
+            @for (slot of lifeSlots(); track slot) { <img class="hud-life" [src]="hudArt()?.heart || 'assets/icons/icon-star.png'" alt="" width="20" height="20"> }
           </span>
-          <span class="arcade-chip"><img [src]="jungle() && jungleArt().coin ? jungleArt().coin : 'assets/icons/icon-medal-gold.png'" alt="" width="20" height="20"> <span class="hud-coins">{{ hud().coins }}</span> / {{ hud().coinTotal }} <span class="sr-only">coins</span></span>
+          <span class="arcade-chip"><img [src]="hudArt()?.coin || 'assets/icons/icon-medal-gold.png'" alt="" width="20" height="20"> <span class="hud-coins">{{ hud().coins }}</span> / {{ hud().coinTotal }} <span class="sr-only">coins</span></span>
           <span class="arcade-chip arcade-score">{{ hud().score }} <span class="sr-only">points</span></span>
+          <span class="arcade-chip" [attr.aria-label]="hud().stars + ' star power charges'"><img [src]="hudArt()?.star" alt="" width="24" height="24"> × {{ hud().stars }}</span>
+          <span class="arcade-chip arcade-time" [class.time-low]="hud().seconds <= 30" [attr.aria-label]="hud().seconds + ' seconds remaining'"><span aria-hidden="true">◷</span> {{ hud().seconds }}</span>
         </div>
         <div class="arcade-controls">
           <button class="control-button" aria-label="Pause the game" (click)="togglePause()"><img src="assets/icons/icon-pause.png" alt="" width="26" height="26"></button>
@@ -47,13 +51,14 @@
           <button class="control-button" aria-label="Exit to Learning Quest" (click)="exit()"><img src="assets/icons/icon-home.png" alt="" width="26" height="26"></button>
         </div>
       </header>
-      <canvas id="arcade-canvas" class="arcade-canvas" width="512" height="288" aria-label="Platformer stage"></canvas>
+      <canvas id="arcade-canvas" class="arcade-canvas" width="1536" height="864" aria-label="Platformer stage"></canvas>
       <div class="arcade-pad">
         <div class="arcade-pad-group">
           <button class="arcade-key arcade-key-left" aria-label="Move left" (pointerdown)="press('left', $event)" (pointerup)="release('left', $event)" (pointercancel)="release('left', $event)" (contextmenu)="$event.preventDefault()"></button>
           <button class="arcade-key arcade-key-right" aria-label="Move right" (pointerdown)="press('right', $event)" (pointerup)="release('right', $event)" (pointercancel)="release('right', $event)" (contextmenu)="$event.preventDefault()"></button>
         </div>
         <div class="arcade-pad-group">
+          <button class="arcade-key arcade-key-power" aria-label="Star power" [disabled]="hud().stars === 0" (pointerdown)="press('power', $event)" (pointerup)="release('power', $event)" (pointercancel)="release('power', $event)" (contextmenu)="$event.preventDefault()"><img [src]="hudArt()?.star" alt="" width="30" height="30"><span class="arcade-key-text">X / K</span></button>
           <button class="arcade-key arcade-key-jump" aria-label="Jump" (pointerdown)="press('jump', $event)" (pointerup)="release('jump', $event)" (pointercancel)="release('jump', $event)" (contextmenu)="$event.preventDefault()"><span class="arcade-key-text">Jump</span></button>
         </div>
       </div>

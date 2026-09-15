@@ -86,7 +86,7 @@
       </div>
       <header class="zone-header">
         <button class="pixel-button back-button" (click)="back(leaveDialog)"><img src="assets/props/back.svg" alt="" width="16" height="16"> Back</button>
-        <img class="zone-title" [src]="'assets/title-' + activeZone().id + '.png'" [alt]="activeZone().name" width="363" height="120">
+        <img class="zone-title" [src]="'assets/titles/title-' + activeZone().id + '.png'" [alt]="activeZone().name" width="363" height="120">
         <div class="scene-controls">
           <button class="control-button control-home" (click)="navigate('welcome')" aria-label="Go to the welcome screen"><img src="assets/controls/control-home.png" alt="" width="26" height="26"></button>
           <button class="control-button control-xp" (click)="achievements.showModal()" [attr.aria-label]="'View badges — ' + total() + ' XP earned'"><img src="assets/controls/control-xp.png" alt="" width="28" height="28"></button>
@@ -96,7 +96,7 @@
       </header>
       @if (screen() === 'island') {
         <div class="zone-panel island-intro">
-          <img class="zone-panel-art" [src]="'assets/panel-' + activeZone().id + '.png'" alt="" width="866" height="484">
+          <img class="zone-panel-art" [src]="'assets/panels/panel-' + activeZone().id + '.png'" alt="" width="866" height="484">
           <div class="zone-panel-body">
             <p class="eyebrow">YOUR NEXT DISCOVERY AWAITS</p>
             <h1 tabindex="-1" data-screen-heading>{{ activeZone().name }}</h1>
@@ -113,7 +113,7 @@
         </div>
       } @else if (screen() === 'quiz') {
         <div class="zone-panel quiz-panel">
-          <img class="zone-panel-art" [src]="'assets/panel-' + activeZone().id + '.png'" alt="" width="866" height="484">
+          <img class="zone-panel-art" [src]="'assets/panels/panel-' + activeZone().id + '.png'" alt="" width="866" height="484">
           <div class="zone-panel-body">
             <div class="quiz-meta"><span>{{ activeZone().name }}</span><strong>{{ score() }} XP</strong></div>
             @if (selected() !== null && selected() === question().answer) { <span class="xp-pop" aria-hidden="true">+20 XP</span> }
@@ -142,7 +142,7 @@
         </div>
       } @else {
         <div class="zone-panel result-panel">
-          <img class="zone-panel-art" [src]="'assets/panel-' + activeZone().id + '.png'" alt="" width="866" height="484">
+          <img class="zone-panel-art" [src]="'assets/panels/panel-' + activeZone().id + '.png'" alt="" width="866" height="484">
           <div class="zone-panel-body">
             <div class="celebration" aria-hidden="true">
               @for (particle of particles; track $index) {
@@ -168,7 +168,7 @@
 </main>
 <dialog #leaveDialog [class]="'leave-confirm zone-' + activeZone().id" aria-labelledby="leave-title">
   <div class="zone-panel">
-    <img class="zone-panel-art" [src]="'assets/panel-' + activeZone().id + '.png'" alt="" width="866" height="484">
+    <img class="zone-panel-art" [src]="'assets/panels/panel-' + activeZone().id + '.png'" alt="" width="866" height="484">
     <div class="zone-panel-body">
       <p class="eyebrow">HOLD ON, EXPLORER</p>
       <h2 id="leave-title">Leave this round?</h2>

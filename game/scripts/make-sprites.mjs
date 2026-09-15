@@ -400,6 +400,17 @@ const check = () => {
     const size = pngSize(file);
     if (!size) { problems.push(`${s.slot}: ${s.file} is not a PNG`); continue; }
     const k = scaleOf(s, size.w, size.h);
+    if (s.source?.frames) {
+      if (s.source.frames.length !== s.frames.length) problems.push(`${s.slot}: source region count does not match runtime frames`);
+      for (const [index, cell] of s.source.frames.entries()) {
+        const sourceFile = cell.file ? resolve(ROOT, 'public', cell.file) : file;
+        if (!existsSync(sourceFile)) { problems.push(`${s.slot} frame ${index}: missing ${cell.file}`); continue; }
+        const sourceSize = pngSize(sourceFile), [x, y, w, h] = cell.rect;
+        if (!sourceSize || x < 0 || y < 0 || w <= 0 || h <= 0 || x + w > sourceSize.w || y + h > sourceSize.h) {
+          problems.push(`${s.slot} frame ${index}: region ${cell.rect} exceeds ${cell.file ?? s.file}`);
+        }
+      }
+    }
     if (!k) {
       problems.push(`${s.slot}: ${s.file}\n    expected ${expectedSizes(s)}  (${s.cols} x ${s.rows} frames of ${s.frameW} x ${s.frameH})\n    found    ${size.w}x${size.h}`);
     }

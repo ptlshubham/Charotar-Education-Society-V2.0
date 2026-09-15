@@ -6,7 +6,7 @@
 // literal asset path or source rectangle in this file, which is what lets the art
 // team swap a sheet without a code change.
 
-import { ROWS, SOLID, TILE, VIEW_H, VIEW_W } from './levels';
+import { isRich, RENDER_SCALE, ROWS, SOLID, TILE, VIEW_H, VIEW_W } from './levels';
 import { type AssetReport, frameRect, PALETTE, type Sheets, SPRITES, type SpriteSlot } from './sprites';
 import { plantFrame, type Enemy, type World } from './engine';
 
@@ -84,7 +84,7 @@ const playerFrame = (w: World): number => {
 // The squash frame is only ever reachable through e.dead, so it is selected the
 // same way for both kinds — the art team has no other cue that it exists.
 const enemyFrame = (e: Enemy, w: World): number => {
-  if (w.level.theme !== 'jungle' || e.kind === 'walker') return e.dead ? 2 : (e.t >> 3) % 2;
+  if (!isRich(w.level.theme) || e.kind === 'walker') return e.dead ? 2 : (e.t >> 3) % 2;
   if (e.dead) return w.tick - e.dead < 22 ? 5 : 6;
   if (e.stunned) return 4;
   return e.kind === 'plant' ? plantFrame(e) : (e.t >> 3) % 4;
@@ -94,14 +94,36 @@ export const draw = (
   ctx: CanvasRenderingContext2D, w: World, sheets: Sheets, report: AssetReport,
   backdrop: HTMLImageElement | null, parallax: boolean,
 ): void => {
-  const jungle = w.level.theme === 'jungle';
-  const art = (name: string): string => jungle ? name : `legacy-${name}`;
+  const theme = w.level.theme === 'canopy' ? 'jungle' : w.level.theme;
+  const jungle = theme === 'jungle';
+  const rich = isRich(theme);
+  // Canopy shares the jungle family; every other world owns its actor sheets.
+  const art = (name: string): string => jungle ? name : rich ? `${theme}-${name}` : `legacy-${name}`;
   // 1 — backdrop. The painted scenes do not tile, so every odd copy is mirrored,
   // which makes any image seamless regardless of what the art team supplies.
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.setTransform(RENDER_SCALE, 0, 0, RENDER_SCALE, 0, 0);
   ctx.imageSmoothingEnabled = true;
   const bw = backdrop ? Math.round(VIEW_H * backdrop.width / backdrop.height) : 0;
-  if (bw > 0 && backdrop) {
+  if (theme === 'village' && sheets['village-layers'] && !missing(report, 'village-layers')) {
+    // These exports are wide strips. Preserve their proportions and extend
+    // only the bottom edge behind the nearer layer, instead of stretching sky
+    // clouds and mountain peaks to the height of the whole screen.
+    ctx.fillStyle = '#329cf6'; ctx.fillRect(0, 0, VIEW_W, VIEW_H);
+    const layers = slotOf('village-layers'), scale = report.scale[layers.slot];
+    for (const [frame, y, width, height, speed] of [[4,0,1024,134,.04],[0,90,1280,140,.1],[1,118,1265,145,.18],[2,184,640,79,.3],[3,253,512,39,.4]]) {
+      const off = parallax ? (w.camX * speed) % (width * 2) : 0;
+      for (let i = -1; i * width - off < VIEW_W; i++) {
+        ctx.save(); ctx.translate(i * width - off + (i % 2 ? width : 0), 0);
+        if (i % 2) ctx.scale(-1, 1);
+        prop(ctx, sheets, report, layers.slot, frame, 0, y, width, height);
+        if (y + height < VIEW_H) {
+          const [sx, sy, sw, sh] = frameRect(layers, frame, scale);
+          ctx.drawImage(sheets[layers.slot], sx, sy + sh - 2, sw, 2, 0, y + height, width, VIEW_H - y - height);
+        }
+        ctx.restore();
+      }
+    }
+  } else if (bw > 0 && backdrop) {
     const off = parallax ? (w.camX * 0.25) % (bw * 2) : 0;
     for (let i = -1; i * bw - off < VIEW_W; i++) {
       const dx = i * bw - off;
@@ -121,7 +143,7 @@ export const draw = (
 
   // 2 — terrain. World space from here on; the camera is a whole-pixel translate
   // so pixel-art cells never land on a half pixel.
-  ctx.setTransform(1, 0, 0, 1, -Math.round(w.camX), 0);
+  ctx.setTransform(RENDER_SCALE, 0, 0, RENDER_SCALE, -Math.round(w.camX) * RENDER_SCALE, 0);
   ctx.imageSmoothingEnabled = false;
   const tiles = slotOf(`tiles-${w.level.theme}`);
   const coin = slotOf(art('coin'));
@@ -130,26 +152,32 @@ export const draw = (
   const c0 = Math.floor(w.camX / TILE);
   const c1 = Math.ceil((w.camX + VIEW_W) / TILE);
   if (jungle) jungleScenery(ctx, w, sheets, report, c0, c1);
+  if (theme === 'castle') castleScenery(ctx, w, sheets, report, c0, c1);
+  if (rich && !jungle && theme !== 'castle') worldScenery(ctx, w, sheets, report, c0, c1);
+  const props = `${theme}-props`;
   for (let c = c0; c <= c1; c++) {
     if (c < 0 || c >= w.cols) continue;
     for (let r = 0; r < ROWS; r++) {
       const ch = w.tiles[r][c];
       if (ch === '.') continue;
       const x = c * TILE;
-      if (jungle && 'gms'.includes(ch)) {
+      if (rich && 'gms'.includes(ch)) {
         const bob = parallax ? Math.round(Math.sin(w.tick / 12 + c) * 1.5) : 0;
-        prop(ctx, sheets, report, 'jungle-rewards', 'gms'.indexOf(ch), x, r * TILE + bob, TILE, TILE);
+        prop(ctx, sheets, report, `${theme}-rewards`, 'gms'.indexOf(ch), x, r * TILE + bob, TILE, TILE);
         continue;
       }
-      if (jungle && ch === '=') {
-        const s = slotOf('jungle-props');
+      if (rich && ch === '=') {
+        const s = slotOf(props);
         const [sx, sy] = frameRect(s, 7, report.scale[s.slot]);
         const k = report.scale[s.slot];
-        if (sheets[s.slot]) ctx.drawImage(sheets[s.slot], sx + 7 * k, sy + 35 * k, 50 * k, 15 * k, x, r * TILE, TILE, TILE / 2);
+        // Source crop of the bridge frame, in 64x64 frame units: jungle keeps only its
+        // plank deck; the castle span keeps its corbels so it reads as stonework.
+        const [cx, cy, cw, chh, dh] = jungle ? [7, 35, 50, 15, TILE / 2] : theme === 'castle' ? [1, 19.5, 62, 25, 10] : [1, 18, 62, 30, TILE];
+        if (sheets[s.slot]) ctx.drawImage(sheets[s.slot], sx + cx * k, sy + cy * k, cw * k, chh * k, x, r * TILE, TILE, dh);
         continue;
       }
-      if (jungle && (ch === 'H' || ch === 'I')) {
-        if (ch === 'H' && w.tiles[r][c - 1] !== 'H') prop(ctx, sheets, report, 'jungle-props', 0, x - 2, r * TILE - 2, TILE * 2 + 4, TILE * 2 + 4);
+      if (rich && (ch === 'H' || ch === 'I')) {
+        if (ch === 'H' && w.tiles[r][c - 1] !== 'H') prop(ctx, sheets, report, props, 0, x - 2, r * TILE - 2, TILE * 2 + 4, TILE * 2 + 4);
         continue;
       }
       if (ch === 'o') {
@@ -164,7 +192,7 @@ export const draw = (
         && w.bumpCell[0] === c && w.bumpCell[1] === r && w.tick - w.bumpTick < BUMP_TICKS;
       const y = r * TILE - (bumped ? BUMP_LIFT : 0);
       if (tileGone) checker(ctx, x, y, TILE, TILE);
-      else if (jungle && ch === 'B' && c % 2 === 0) prop(ctx, sheets, report, 'jungle-props', 6, x, y, TILE, TILE);
+      else if (rich && ch === 'B' && c % 2 === 0) prop(ctx, sheets, report, props, 6, x, y, TILE, TILE);
       else blit(ctx, sheets[tiles.slot], tiles, index, report.scale[tiles.slot], x, y, TILE, TILE, false);
     }
   }
@@ -178,6 +206,7 @@ export const draw = (
       for (let r = 0; r < ROWS; r++) {
         if (w.tiles[r][c] !== 'G') continue;
         if (jungle) prop(ctx, sheets, report, 'jungle-props', 2, c * TILE + (TILE - GOAL_W) / 2, (r + 1) * TILE - GOAL_H, GOAL_W, GOAL_H);
+        else if (rich) standing(ctx, sheets, report, props, 2, c * TILE + TILE / 2, (r + 1) * TILE, GOAL_H);
         else ctx.drawImage(flag, c * TILE + (TILE - GOAL_W) / 2, (r + 1) * TILE - GOAL_H, GOAL_W, GOAL_H);
       }
     }
@@ -186,17 +215,17 @@ export const draw = (
   // 4 — enemies, then the player on top.
   ctx.imageSmoothingEnabled = false;
   for (const e of w.enemies) {
-    const name = jungle && e.kind !== 'walker' ? `jungle-${e.kind === 'flyer' ? 'parrot' : e.kind}` : art(e.kind);
+      const name = jungle && e.kind !== 'walker' ? `jungle-${e.kind === 'flyer' ? 'parrot' : e.kind}` : art(e.kind);
     actor(ctx, sheets, report, name, enemyFrame(e, w), e.x, e.y, e.w, e.h, e.kind === 'flyer', e.face);
   }
   const p = w.player;
-  if (jungle && w.tick - w.powerTick < 20) {
+  if (rich && w.tick - w.powerTick < 20) {
     ctx.save(); ctx.strokeStyle = '#ffe594'; ctx.lineWidth = 2;
     ctx.globalAlpha = 1 - (w.tick - w.powerTick) / 20;
     ctx.beginPath(); ctx.arc(p.x + p.w / 2, p.y + p.h / 2, (w.tick - w.powerTick) * 4, 0, Math.PI * 2); ctx.stroke(); ctx.restore();
   }
   ctx.save();
-  if (jungle && w.invulnerable && (w.tick >> 3) % 2) ctx.globalAlpha = .45;
+  if (rich && w.invulnerable && (w.tick >> 3) % 2) ctx.globalAlpha = .45;
   actor(ctx, sheets, report, art('player'), playerFrame(w), p.x, p.y, p.w, p.h, false, p.face);
   ctx.restore();
 };
@@ -205,6 +234,55 @@ const prop = (ctx: CanvasRenderingContext2D, sheets: Sheets, report: AssetReport
   name: string, frame: number, x: number, y: number, width: number, height: number): void => {
   if (!sheets[name] || missing(report, name)) return;
   blit(ctx, sheets[name], slotOf(name), frame, report.scale[name], x, y, width, height, false);
+};
+
+// A prop letterboxed inside its square frame, scaled so its art is `height` tall
+// with the art's lowest pixel (`bottom`, in frame units) on groundY.
+const standing = (ctx: CanvasRenderingContext2D, sheets: Sheets, report: AssetReport, name: string, frame: number,
+  cx: number, groundY: number, height: number, artH = 63, bottom = 63.5): void => {
+  const s = slotOf(name);
+  const box = height * s.frameH / artH;
+  prop(ctx, sheets, report, name, frame, cx - box / 2, groundY - bottom * box / s.frameH, box, box);
+};
+
+// Castle grounds: distant towers and arches, then banners, lamps and ruins at the
+// wall foot. Placement is by column so the scenery is identical on every run.
+const worldScenery = (ctx: CanvasRenderingContext2D, w: World, sheets: Sheets, report: AssetReport, first: number, last: number): void => {
+  const props = `${w.level.theme}-props`;
+  for (let c = Math.max(0, first - 8); c <= Math.min(w.cols - 1, last + 8); c++) {
+    for (let r = 14; r < ROWS; r++) {
+      if (w.tiles[r][c] !== '#' || w.tiles[r - 1][c] !== '.') continue;
+      const x = c * TILE + TILE / 2, y = r * TILE;
+      if (c % 29 === 5) standing(ctx, sheets, report, props, 3, x, y, 105);
+      if (c % 37 === 21) {
+        ctx.save(); ctx.globalAlpha = .8;
+        standing(ctx, sheets, report, props, 5, x, y, 76);
+        ctx.restore();
+      }
+      if (c % 23 === 15) standing(ctx, sheets, report, props, 10, x, y, 50);
+      if (c % 17 === 11) standing(ctx, sheets, report, props, 8, x, y, 36);
+      if (c % 9 === 7) standing(ctx, sheets, report, props, 4, x, y, 20);
+      if (c === 1) standing(ctx, sheets, report, props, 1, x + 4, y, 42);
+    }
+  }
+};
+
+const castleScenery = (ctx: CanvasRenderingContext2D, w: World, sheets: Sheets, report: AssetReport, first: number, last: number): void => {
+  const props = 'castle-props';
+  for (let c = Math.max(0, first - 8); c <= Math.min(w.cols - 1, last + 8); c++) {
+    for (let r = 0; r < ROWS; r++) {
+      if (w.tiles[r][c] !== '#' || (r && w.tiles[r - 1][c] !== '.')) continue;
+      const x = c * TILE + TILE / 2, y = r * TILE;
+      if (r < 14) continue;
+      if (c % 31 === 5) { ctx.save(); ctx.globalAlpha = .85; standing(ctx, sheets, report, props, 3, x, y, 118); ctx.restore(); }
+      if (c % 37 === 21) { ctx.save(); ctx.globalAlpha = .8; standing(ctx, sheets, report, props, 5, x, y, 72, 62.5, 63.3); ctx.restore(); }
+      if (c % 13 === 9) standing(ctx, sheets, report, props, 9, x, y, 46);
+      if (c % 19 === 15) standing(ctx, sheets, report, props, 8, x, y, 40);
+      if (c % 23 === 12) standing(ctx, sheets, report, props, 10, x, y, 30);
+      if (c % 9 === 7) standing(ctx, sheets, report, props, 4, x, y + 2, 18, 53, 58.5);
+      if (c === 1) standing(ctx, sheets, report, 'castle-rewards', 3, x + 4, y, 34, 31, 31.5);
+    }
+  }
 };
 
 // Background decorations are placed behind the walkable terrain. Decorative

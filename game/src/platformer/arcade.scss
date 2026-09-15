@@ -3,6 +3,34 @@
 
 .arcade-shell { max-width: 2400px; margin: auto; background: var(--ink); }
 
+.world-art .arcade-play { background: radial-gradient(ellipse at top, var(--arcade-ink), var(--arcade-deep) 72%); }
+.world-art .arcade-bar h1 { color: var(--arcade-light); font-size: 26px; }
+.world-art .arcade-bar h1 small { display: block; margin-top: 6px; font: 700 11px/1.3 Arial, sans-serif; letter-spacing: 2px; color: var(--arcade-accent); }
+.world-art .arcade-chip { color: var(--arcade-light); background: var(--arcade-deep); border: 1px solid var(--arcade-border); border-radius: 10px; box-shadow: 0 2px 0 #0004; }
+.world-art .arcade-chip img { width: 26px; height: 26px; }
+.world-art .arcade-chip .arcade-portrait { width: 32px; height: 32px; }
+.world-art .arcade-canvas { border-color: var(--arcade-border); box-shadow: 0 8px 32px #0006; }
+.world-art .arcade-key { border: 3px solid var(--arcade-light); border-radius: 50%; background: var(--arcade-deep); box-shadow: 0 0 0 3px #0007, 0 5px 12px #0004; width: 66px; height: 66px; }
+.world-art .arcade-key::before { background: var(--arcade-light); width: 29px; height: 29px; clip-path: polygon(0 35%, 55% 35%, 55% 0, 100% 50%, 55% 100%, 55% 65%, 0 65%); }
+.world-art .arcade-key-left::before { transform: rotate(180deg); }
+.world-art .arcade-key-right::before { transform: none; }
+.world-art .arcade-key-jump::before { transform: rotate(-90deg); }
+.world-art .arcade-key-jump .arcade-key-text { position: absolute; bottom: 3px; font-size: 12px; }
+.world-art .arcade-key-text { color: var(--arcade-light); font-size: 12px; }
+.world-art .arcade-key-power { align-content: center; }
+.world-art .arcade-key-power::before { display: none; }
+.world-art .arcade-key:disabled { opacity: .45; }
+.world-art .arcade-controls .control-button { background: var(--arcade-surface); border-color: var(--arcade-border); border-radius: 10px; }
+.world-art .arcade-hud { flex-wrap: wrap; justify-content: center; gap: 6px; }
+.world-art .arcade-time { min-width: 65px; font-variant-numeric: tabular-nums; }
+.world-art .time-low { color: #ffe2be; border-color: #ff9855; }
+@media (max-width: 700px) {
+  .world-art .arcade-chip { min-height: 34px; padding: 3px 6px; gap: 4px; }
+  .world-art .arcade-chip img { width: 20px; height: 20px; }
+  .world-art .arcade-score { font-size: 16px; }
+  .world-art .arcade-key { width: 56px; height: 56px; }
+}
+
 .jungle-art .arcade-play { background: radial-gradient(ellipse at top, #1c6245, #08291e 72%); }
 .jungle-art .arcade-bar h1 { display: flex; align-items: center; gap: 10px; color: #fff4cf; }
 .arcade-portrait { width: 44px; height: 44px; object-fit: contain; }
@@ -13,6 +41,15 @@
 .jungle-art .arcade-key-text { color: #24523b; }
 .jungle-art .arcade-key::before { filter: hue-rotate(155deg) saturate(.55) brightness(.6); }
 @media (max-width: 700px) { .jungle-art .arcade-bar h1 { justify-content: center; } }
+
+.castle-art .arcade-play { background: radial-gradient(ellipse at top, #4a3570, #1d1530 72%); }
+.castle-art .arcade-bar h1 { display: flex; align-items: center; gap: 10px; color: #f7eafe; }
+.castle-art .arcade-chip { color: #f7eafe; background: #2a1f3dd9; border: 1px solid #7e619d; border-radius: 10px; box-shadow: 0 2px 0 #140e20; }
+.castle-art .arcade-chip img { width: 26px; height: 26px; }
+.castle-art .arcade-canvas { border-color: #7e619d; box-shadow: 0 8px 32px #120b1ea6; }
+.castle-art .arcade-key, .castle-art .arcade-controls .control-button { background: #e4d3f1; border-color: #45315b; box-shadow: 3px 3px #292035; }
+.castle-art .arcade-key-text { color: #45315b; }
+@media (max-width: 700px) { .castle-art .arcade-bar h1 { justify-content: center; } }
 
 .arcade-menu { position: relative; min-height: 100svh; overflow: hidden; padding: 110px 24px 48px; background: url('../../public/assets/props/ocean.png') center / cover; text-align: center; }
 .arcade-menu-controls { position: absolute; z-index: 5; top: 42px; right: 5.55%; display: flex; gap: 10px; }
@@ -45,7 +82,7 @@
 
 // A width-constrained canvas keeps the 16:9 bitmap sharp; height-capping it with
 // max-height lets the browser stretch the aspect ratio instead.
-.arcade-canvas { display: block; width: min(100%, 1536px, calc((100svh - 168px) * 16 / 9)); aspect-ratio: 16 / 9; height: auto; background: #0d0d24; border: 1px solid var(--line); box-shadow: 0 0 30px #ffd70033; image-rendering: pixelated; }
+.arcade-canvas { display: block; width: min(100%, 1536px, calc((100svh - 168px) * 16 / 9)); aspect-ratio: 16 / 9; height: auto; background: #0d0d24; border: 1px solid var(--line); box-shadow: 0 0 30px #ffd70033; image-rendering: auto; }
 
 // Always below the canvas and always in flow, so the pad can never cover the stage.
 .arcade-pad { width: min(100%, 1536px); display: flex; align-items: center; justify-content: space-between; gap: 16px; }

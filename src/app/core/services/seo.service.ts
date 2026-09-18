@@ -85,7 +85,7 @@ export class SeoService {
   private payload$?: Observable<SeoPayload>;
 
   /** TEMPORARY: set back to true to re-enable the live SEO endpoint. */
-  private readonly seoApiEnabled: boolean = false;
+  private readonly seoApiEnabled: boolean = true;
 
   private load(): Observable<SeoPayload> {
     if (!this.seoApiEnabled) {

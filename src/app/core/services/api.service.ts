@@ -58,7 +58,7 @@ export class ApiService {
   public static GetTrademarkDataURL: string = ApiService.HOST_URL + '/admin/GetTrademarkData';
 
   // Public Website SEO URL (per-page meta tags + sitewide defaults)
-  public static GetPublicSeoURL: string = ApiService.HOST_URL + '/superAdmin/website-control/seo/public/all';
+  public static GetPublicSeoURL: string = ApiService.HOST_URL + '/seo/public/all';
 
   // Public Website Video Guide (Tutorials) URLs
   public static GetPublicVideosURL: string = ApiService.HOST_URL + '/superAdmin/help-center/video-guide/public/videos';

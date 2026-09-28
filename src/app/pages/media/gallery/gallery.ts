@@ -3,16 +3,14 @@ import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { PageHero } from '../../../shared/page-hero/page-hero';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { catchError, of } from 'rxjs';
+import { catchError, of, switchMap } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
+import { InstituteService } from '../../../core/services/institute.service';
 import { GalleryImage } from '../../../shared/models/models';
 import { Paginator } from '../../../shared/pagination/paginator';
 import { Pagination } from '../../../shared/pagination/pagination';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
 import { environment } from '../../../../environments/environment';
-
-/** CES society — the gallery's owning institute (matches blogs/answer-keys). */
-const GALLERY_INSTITUTE_ID = 1;
 
 interface Photo {
   id: number;
@@ -40,6 +38,7 @@ interface Video {
 })
 export class Gallery {
   private readonly resources = inject(ResourcesService);
+  private readonly institute = inject(InstituteService);
   private readonly sanitizer = inject(DomSanitizer);
 
   readonly banner = 'assets/images/hero/gallery.jpeg';
@@ -69,9 +68,10 @@ export class Gallery {
   readonly skeleton: readonly number[] = [220, 300, 180, 260, 200, 320, 240, 190, 280];
 
   constructor() {
-    this.resources
-      .getGalleryImages(GALLERY_INSTITUTE_ID)
+    this.institute
+      .resolve()
       .pipe(
+        switchMap((id) => this.resources.getGalleryImages(id)),
         catchError(() => {
           this.failed.set(true);
           return of<GalleryImage[]>([]);

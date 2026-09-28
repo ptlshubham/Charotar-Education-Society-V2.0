@@ -28,6 +28,9 @@ export class ApiService {
   public static Upload80GTaxImageURL: string = ApiService.HOST_URL + '/admin/Upload80GTaxImage';
   // e-Gate Pass — institute dropdown + request submission.
   public static GetInstitutesURL: string = ApiService.HOST_URL + '/admin/GetAllInstituteDetails';
+  // Resolve which institute this site is, by its public URL → [{ id, name, url }].
+  // The legacy site called this on boot and cached the id (see InstituteService).
+  public static GetInstituteDetailByUrlURL: string = ApiService.HOST_URL + '/admin/GetInstituteDetailByURL/';
   // Live site presence — visitors currently online. The GET doubles as the heartbeat
   // (each poll marks this client active) and returns the count. Not yet built on the
   // backend; the header badge stays hidden until this endpoint responds.
@@ -55,7 +58,7 @@ export class ApiService {
   public static GetTrademarkDataURL: string = ApiService.HOST_URL + '/admin/GetTrademarkData';
 
   // Public Website SEO URL (per-page meta tags + sitewide defaults)
-  public static GetPublicSeoURL: string = ApiService.HOST_URL + '/superAdmin/website-control/seo/public/all';
+  public static GetPublicSeoURL: string = ApiService.HOST_URL + '/seo/public/all';
 
   // Public Website Video Guide (Tutorials) URLs
   public static GetPublicVideosURL: string = ApiService.HOST_URL + '/superAdmin/help-center/video-guide/public/videos';

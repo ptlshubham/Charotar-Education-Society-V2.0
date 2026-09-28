@@ -1,6 +1,6 @@
 <!-- ─── Hero ─── -->
 <app-page-hero crumb="Tenders" title="Tenders &amp;" accent="Notifications"
-  blurb="Transparent opportunities, fair process, stronger future." image="/assets/images/hero/home.jpeg" />
+  blurb="Transparent opportunities, fair process, stronger future." image="/assets/images/hero/tenders-hub.jpeg" />
 
 <!-- Assurance bar -->
 <div class="site-container relative z-10 mt-8">
@@ -35,7 +35,8 @@
         <button type="button" id="t-cat" (click)="catOpen.set(!catOpen()); depOpen.set(false); statusOpen.set(false)"
           class="flex h-11 w-full appearance-none items-center justify-between rounded-md border border-gray-300 bg-white pl-3.5 pr-3 text-[13px] text-primary outline-none focus:border-primary cursor-pointer">
           <span class="truncate pr-2">{{ category }}</span>
-          <span class="pointer-events-none text-primary transition-transform duration-200" [class.rotate-180]="catOpen()" aria-hidden="true">
+          <span class="pointer-events-none text-primary transition-transform duration-200"
+            [class.rotate-180]="catOpen()" aria-hidden="true">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round">
               <path d="m6 9 6 6 6-6" />
@@ -63,7 +64,8 @@
         <button type="button" id="t-dep" (click)="depOpen.set(!depOpen()); catOpen.set(false); statusOpen.set(false)"
           class="flex h-11 w-full appearance-none items-center justify-between rounded-md border border-gray-300 bg-white pl-3.5 pr-3 text-[13px] text-primary outline-none focus:border-primary cursor-pointer">
           <span class="truncate pr-2">{{ department }}</span>
-          <span class="pointer-events-none text-primary transition-transform duration-200" [class.rotate-180]="depOpen()" aria-hidden="true">
+          <span class="pointer-events-none text-primary transition-transform duration-200"
+            [class.rotate-180]="depOpen()" aria-hidden="true">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round">
               <path d="m6 9 6 6 6-6" />
@@ -92,7 +94,8 @@
           (click)="statusOpen.set(!statusOpen()); catOpen.set(false); depOpen.set(false)"
           class="flex h-11 w-full appearance-none items-center justify-between rounded-md border border-gray-300 bg-white pl-3.5 pr-3 text-[13px] text-primary outline-none focus:border-primary cursor-pointer">
           <span class="truncate pr-2">{{ status }}</span>
-          <span class="pointer-events-none text-primary transition-transform duration-200" [class.rotate-180]="statusOpen()" aria-hidden="true">
+          <span class="pointer-events-none text-primary transition-transform duration-200"
+            [class.rotate-180]="statusOpen()" aria-hidden="true">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round">
               <path d="m6 9 6 6 6-6" />

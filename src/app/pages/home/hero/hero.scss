@@ -1,11 +1,13 @@
-/* Full-bleed home hero slider (Swiper element). Navigation and pagination are
-   custom overlay controls in the template, so no built-in Swiper UI is styled. */
+/* Full-width home banner slider (Swiper element). Navigation and pagination are
+   custom overlay controls in the template; slide height comes from each banner's
+   aspect ratio, so no built-in Swiper UI or fixed height is styled here. */
 .hero-swiper {
   display: block;
   width: 100%;
-  height: 100%;
+}
 
-  swiper-slide {
-    height: 100%;
-  }
+/* Before Swiper mounts, keep only the first banner visible so the (as-yet
+   unstyled) slides don't stack. Swiper takes over once swiperReady flips true. */
+.pre-hide {
+  display: none;
 }

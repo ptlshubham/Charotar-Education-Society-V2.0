@@ -4,14 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PageHero } from '../../../shared/page-hero/page-hero';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { catchError, of } from 'rxjs';
+import { catchError, of, switchMap } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
+import { InstituteService } from '../../../core/services/institute.service';
 import { BlogPost } from '../../../shared/models/models';
 import { MediaUrlPipe } from '../../../shared/media-url.pipe';
 import { SafeHtmlPipe } from '../../../shared/safe-html.pipe';
-
-/** The society's own institute id (id 1 in the CES DB); blogs are stored per institute. */
-const BLOG_INSTITUTE_ID = 1;
 
 interface Brief {
   id: string;
@@ -30,6 +28,7 @@ interface Brief {
 export class BlogDetail {
   private readonly route = inject(ActivatedRoute);
   private readonly resources = inject(ResourcesService);
+  private readonly institute = inject(InstituteService);
 
   readonly loading = signal(true);
   readonly failed = signal(false);
@@ -59,9 +58,10 @@ export class BlogDetail {
     // React to prev/next navigation (component is reused across :slug changes).
     this.route.paramMap.pipe(takeUntilDestroyed()).subscribe((pm) => this.currentId.set(pm.get('slug') ?? ''));
 
-    this.resources
-      .getBlogs(BLOG_INSTITUTE_ID)
+    this.institute
+      .resolve()
       .pipe(
+        switchMap((id) => this.resources.getBlogs(id)),
         catchError(() => {
           this.failed.set(true);
           return of<BlogPost[]>([]);

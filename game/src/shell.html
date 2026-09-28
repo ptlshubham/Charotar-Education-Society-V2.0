@@ -1,0 +1,10 @@
+@if (route() === 'arcade') {
+  <!-- <arcade-root /> appears here and nowhere else: a component referenced outside a @defer block is not lazy-loaded, and the arcade has to stay out of the initial bundle for the 500kB budget. -->
+  @defer (on immediate) {
+    <arcade-root />
+  } @placeholder {
+    <p class="arcade-placeholder" style="margin: 0; padding: 48px; color: var(--cream); text-align: center;">Loading the arcade…</p>
+  }
+} @else {
+  <game-root />
+}

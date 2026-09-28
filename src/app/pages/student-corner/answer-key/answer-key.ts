@@ -3,8 +3,9 @@ import { formatDate } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PageHero } from '../../../shared/page-hero/page-hero';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { catchError, of } from 'rxjs';
+import { catchError, of, switchMap } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
+import { InstituteService } from '../../../core/services/institute.service';
 import { AnswerKeyEntry } from '../../../shared/models/models';
 import { Paginator } from '../../../shared/pagination/paginator';
 import { Pagination } from '../../../shared/pagination/pagination';
@@ -13,9 +14,6 @@ import { SortHeader } from '../../../shared/sorting/sort-header';
 import { MediaUrlPipe } from '../../../shared/media-url.pipe';
 import { SafeHtmlPipe } from '../../../shared/safe-html.pipe';
 import { CustomSelect } from '../../../shared/custom-select/custom-select';
-
-/** The society's own institute id (id 1 in the CES DB); answer keys are stored per institute. */
-const ANSWERKEY_INSTITUTE_ID = 1;
 
 interface Paper {
   date: string;
@@ -41,6 +39,7 @@ interface Paper {
 })
 export class AnswerKey {
   private readonly resources = inject(ResourcesService);
+  private readonly institute = inject(InstituteService);
 
   readonly tab = signal<'general' | 'competitive'>('general');
 
@@ -53,9 +52,10 @@ export class AnswerKey {
   private readonly all = signal<readonly Paper[]>([]);
 
   constructor() {
-    this.resources
-      .getAnswerKeys(ANSWERKEY_INSTITUTE_ID)
+    this.institute
+      .resolve()
       .pipe(
+        switchMap((id) => this.resources.getAnswerKeys(id)),
         catchError(() => {
           this.failed.set(true);
           return of<AnswerKeyEntry[]>([]);

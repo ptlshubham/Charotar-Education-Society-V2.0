@@ -1,0 +1,117 @@
+<main [class]="'arcade-shell world-art ' + level().zoneClass" [style]="themeStyles()">
+  @if (screen() === 'menu') {
+    <section class="arcade-menu" aria-labelledby="arcade-menu-title">
+      <button class="pixel-button back-button" (click)="exit()"><img src="assets/props/back.svg" alt="" width="16" height="16"> Exit <span class="sr-only">to Learning Quest</span></button>
+      <div class="arcade-menu-controls">
+        <button class="control-button" [attr.aria-label]="soundEnabled() ? 'Turn sound off' : 'Turn sound on'" (click)="toggleSound()"><img [src]="soundEnabled() ? 'assets/icons/icon-sound-on.webp' : 'assets/icons/icon-sound-off.webp'" alt="" width="26" height="26"></button>
+        <button class="control-button" aria-label="Exit to Learning Quest" (click)="exit()"><img src="assets/icons/icon-home.webp" alt="" width="26" height="26"></button>
+      </div>
+      <div class="arcade-menu-head">
+        <p class="eyebrow">CHAROTAR EDUCATION SOCIETY PRESENTS</p>
+        <h1 id="arcade-menu-title" tabindex="-1" data-screen-heading>CES <span>Arcade</span></h1>
+        <p class="arcade-menu-tagline">Run, jump, stomp. Collect every coin and reach the flag.</p>
+        <p class="arcade-menu-best">Best run <strong>{{ best() }}</strong> points</p>
+      </div>
+      <div class="arcade-cards">
+        @for (item of levels; track item.id) {
+          <button class="arcade-card" (click)="play($index)" [disabled]="!ready() || entering()" [attr.aria-label]="'Play ' + item.name + (cleared().includes(item.id) ? ', already cleared' : '')">
+            <img class="arcade-card-art" [src]="'assets/' + item.token" alt="" width="506" height="338">
+            <span class="arcade-card-name">{{ item.name }}</span>
+            <span class="arcade-card-state" [class.is-cleared]="cleared().includes(item.id)">{{ cleared().includes(item.id) ? 'Cleared' : 'Not cleared yet' }}</span>
+          </button>
+        }
+      </div>
+      <p class="arcade-menu-note">Arrow keys or A / D to move, Space or W to jump, X or K for star power, Escape to pause. Collect mushrooms to restore hearts. On a touch screen, use the pad below the stage.</p>
+      @if (!ready()) { <p class="arcade-menu-note" role="status">Preparing your worlds…</p> }
+      @if (assetIssues().length) {
+        <ul class="arcade-issues" aria-label="Artwork problems">
+          @for (issue of assetIssues(); track issue.slot) {
+            <li><strong>{{ issue.slot }}</strong> — {{ issue.file }} is {{ issue.found }}, expected {{ issue.expected }}</li>
+          }
+        </ul>
+      }
+    </section>
+  } @else {
+    <section class="arcade-play" aria-labelledby="arcade-play-title">
+      <header class="arcade-bar">
+        <h1 id="arcade-play-title" tabindex="-1" data-screen-heading>{{ hud().levelName }} <small>WORLD {{ levelIndex() + 1 }}-1</small></h1>
+        <div class="arcade-hud">
+          <span class="arcade-chip" [attr.aria-label]="hud().lives + ' lives left'"><img class="arcade-portrait" [src]="hudArt()?.portrait" alt="" width="32" height="32"> × {{ hud().lives }}</span>
+          <span class="arcade-chip arcade-lives" [attr.aria-label]="hud().health + ' hearts remaining'">
+            @for (slot of lifeSlots(); track slot) { <img class="hud-life" [src]="hudArt()?.heart || 'assets/icons/icon-star.webp'" alt="" width="20" height="20"> }
+          </span>
+          <span class="arcade-chip"><img [src]="hudArt()?.coin || 'assets/icons/icon-medal-gold.webp'" alt="" width="20" height="20"> <span class="hud-coins">{{ hud().coins }}</span> / {{ hud().coinTotal }} <span class="sr-only">coins</span></span>
+          <span class="arcade-chip arcade-score">{{ hud().score }} <span class="sr-only">points</span></span>
+          <span class="arcade-chip" [attr.aria-label]="hud().stars + ' star power charges'"><img [src]="hudArt()?.star" alt="" width="24" height="24"> × {{ hud().stars }}</span>
+          <span class="arcade-chip arcade-time" [class.time-low]="hud().seconds <= 30" [attr.aria-label]="hud().seconds + ' seconds remaining'"><span aria-hidden="true">◷</span> {{ hud().seconds }}</span>
+        </div>
+        <div class="arcade-controls">
+          <button class="control-button" aria-label="Pause the game" (click)="togglePause()"><img src="assets/icons/icon-pause.webp" alt="" width="26" height="26"></button>
+          <button class="control-button" [attr.aria-label]="soundEnabled() ? 'Turn sound off' : 'Turn sound on'" (click)="toggleSound()"><img [src]="soundEnabled() ? 'assets/icons/icon-sound-on.webp' : 'assets/icons/icon-sound-off.webp'" alt="" width="26" height="26"></button>
+          <button class="control-button" aria-label="Exit to Learning Quest" (click)="exit()"><img src="assets/icons/icon-home.webp" alt="" width="26" height="26"></button>
+        </div>
+      </header>
+      <canvas id="arcade-canvas" class="arcade-canvas" width="1536" height="864" aria-label="Platformer stage"></canvas>
+      <div class="arcade-pad">
+        <div class="arcade-pad-group">
+          <button class="arcade-key arcade-key-left" aria-label="Move left" (pointerdown)="press('left', $event)" (pointerup)="release('left', $event)" (pointercancel)="release('left', $event)" (contextmenu)="$event.preventDefault()"></button>
+          <button class="arcade-key arcade-key-right" aria-label="Move right" (pointerdown)="press('right', $event)" (pointerup)="release('right', $event)" (pointercancel)="release('right', $event)" (contextmenu)="$event.preventDefault()"></button>
+        </div>
+        <div class="arcade-pad-group">
+          <button class="arcade-key arcade-key-power" aria-label="Star power" [disabled]="hud().stars === 0" (pointerdown)="press('power', $event)" (pointerup)="release('power', $event)" (pointercancel)="release('power', $event)" (contextmenu)="$event.preventDefault()"><img [src]="hudArt()?.star" alt="" width="30" height="30"><span class="arcade-key-text">X / K</span></button>
+          <button class="arcade-key arcade-key-jump" aria-label="Jump" (pointerdown)="press('jump', $event)" (pointerup)="release('jump', $event)" (pointercancel)="release('jump', $event)" (contextmenu)="$event.preventDefault()"><span class="arcade-key-text">Jump</span></button>
+        </div>
+      </div>
+    </section>
+  }
+  @if (!storageAvailable()) { <p class="storage-notice" role="status">Scores are available for this visit. Browser storage is unavailable, so they may not be saved after you leave.</p> }
+</main>
+<dialog id="arcade-pause" [class]="'leave-confirm ' + level().zoneClass" aria-labelledby="arcade-pause-title" (close)="dialogClosed()">
+  <div class="zone-panel">
+    <img class="zone-panel-art" [src]="'assets/' + level().panel" alt="" width="866" height="484">
+    <div class="zone-panel-body">
+      <p class="eyebrow">TAKE A BREATH</p>
+      <h2 id="arcade-pause-title">Paused</h2>
+      <p>{{ hud().levelName }} · {{ hud().coins }} of {{ hud().coinTotal }} coins · {{ hud().score }} points</p>
+      <div class="zone-menu">
+        <button class="pixel-button primary" (click)="dismiss()">Resume</button>
+        <button class="pixel-button" (click)="restartLevel()">Restart level</button>
+        <button class="pixel-button" (click)="quitToMenu()">Quit to levels</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+<dialog id="arcade-clear" [class]="'leave-confirm ' + level().zoneClass" aria-labelledby="arcade-clear-title" (cancel)="$event.preventDefault()" (close)="dialogClosed()">
+  <div class="zone-panel">
+    <img class="zone-panel-art" [src]="'assets/' + level().panel" alt="" width="866" height="484">
+    <div class="zone-panel-body">
+      <img class="result-trophy" src="assets/props/trophy.webp" alt="" width="111" height="95">
+      <p class="eyebrow">LEVEL COMPLETE</p>
+      <h2 id="arcade-clear-title">You reached the flag!</h2>
+      <p>{{ hud().coins }} of {{ hud().coinTotal }} coins · {{ hud().score }} points · {{ hud().lives }} lives left</p>
+      <div class="zone-menu">
+        @if (lastLevel()) {
+          <button class="pixel-button primary" (click)="quitToMenu()">Back to levels</button>
+        } @else {
+          <button class="pixel-button primary" (click)="nextLevel()">Next level</button>
+        }
+        <button class="pixel-button" (click)="restartLevel()">Replay</button>
+        @if (!lastLevel()) { <button class="pixel-button" (click)="quitToMenu()">Levels</button> }
+      </div>
+    </div>
+  </div>
+</dialog>
+<dialog id="arcade-over" [class]="'leave-confirm ' + level().zoneClass" aria-labelledby="arcade-over-title" (cancel)="$event.preventDefault()" (close)="dialogClosed()">
+  <div class="zone-panel">
+    <img class="zone-panel-art" [src]="'assets/' + level().panel" alt="" width="866" height="484">
+    <div class="zone-panel-body">
+      <p class="eyebrow">OUT OF LIVES</p>
+      <h2 id="arcade-over-title">Game over, explorer</h2>
+      <p>You scored {{ hud().score }} points. Your best run is {{ best() }}.</p>
+      <div class="zone-menu">
+        <button class="pixel-button primary" (click)="retryLevel()">Retry level</button>
+        <button class="pixel-button" (click)="quitToMenu()">Levels</button>
+      </div>
+    </div>
+  </div>
+</dialog>

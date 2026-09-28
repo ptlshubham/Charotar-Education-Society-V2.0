@@ -4,7 +4,7 @@ import { AlumniBenefits } from '../alumni-benefits/alumni-benefits';
 import { AlumniForm } from '../alumni-form/alumni-form';
 
 @Component({
-  selector: 'app-index',
+  selector: 'app-alumni-index',
   imports: [AlumniHero, AlumniBenefits, AlumniForm],
   templateUrl: './index.html',
   changeDetection: ChangeDetectionStrategy.Eager,

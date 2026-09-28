@@ -47,6 +47,11 @@
                 "glob": ".htaccess",
                 "input": "public",
                 "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "game/dist/browser",
+                "output": "/game"
               }
             ],
             "styles": [

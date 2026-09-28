@@ -109,7 +109,7 @@
             State <span class="text-logo">*</span>
           </label>
           <app-custom-select formControlName="state" [options]="states().map((state) => state.name)"
-            placeholder="Select state" [disabled]="!states().length"
+            placeholder="Select state"
             (valueChange)="onStateChange($event)"
             [invalid]="f['state'].touched && f['state'].invalid" />
           @if (f['state'].touched && f['state'].invalid) {
@@ -123,7 +123,7 @@
             City <span class="text-logo">*</span>
           </label>
           <app-custom-select formControlName="city" [options]="cities()"
-            placeholder="Select city" [disabled]="!cities().length"
+            placeholder="Select city"
             [invalid]="f['city'].touched && f['city'].invalid" />
           @if (f['city'].touched && f['city'].invalid) {
             <p class="mt-1 text-[12px] text-red-500">Please select your city.</p>

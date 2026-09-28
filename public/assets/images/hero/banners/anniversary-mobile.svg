@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" width="1080" height="1350" role="img" aria-label="Charotar Education Society — 110 Years, A Legacy Since 1916">
+  <defs>
+    <linearGradient id="am-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22397a"/>
+      <stop offset="0.55" stop-color="#1b3268"/>
+      <stop offset="1" stop-color="#152650"/>
+    </linearGradient>
+  </defs>
+  <rect width="1080" height="1350" fill="url(#am-bg)"/>
+  <!-- top photo placeholder -->
+  <rect x="0" y="0" width="1080" height="560" fill="#0f1c3a"/>
+  <text x="540" y="300" text-anchor="middle" font-family="system-ui,'Segoe UI',Arial,sans-serif" font-size="34" font-weight="600" fill="#5f7099">[ campus photo ]</text>
+  <g font-family="system-ui,'Segoe UI',Arial,sans-serif" text-anchor="middle">
+    <text x="540" y="760" font-size="190" font-weight="800" fill="#f5a623" letter-spacing="4">110</text>
+    <text x="540" y="825" font-size="46" font-weight="700" fill="#ffffff" letter-spacing="8">YEARS ANNIVERSARY</text>
+    <text x="540" y="905" font-size="40" font-weight="700" fill="#ffffff">A Legacy <tspan fill="#f5a623">Since 1916</tspan></text>
+    <text x="540" y="990" font-size="48" font-weight="700" fill="#f5a623">Established 16th April 1916</text>
+    <text x="540" y="1060" font-size="34" font-weight="500" fill="#e8ecf6">Charotar Education Society, Anand</text>
+    <text x="540" y="1110" font-size="34" font-weight="500" fill="#e8ecf6">shaping generations since 1916.</text>
+    <text x="540" y="1200" font-size="30" font-weight="600" fill="#f5a623">Celebrating another milestone.</text>
+  </g>
+  <text x="540" y="1310" text-anchor="middle" font-family="system-ui,Arial,sans-serif" font-size="22" fill="#5f7099">placeholder  1080 × 1350</text>
+</svg>

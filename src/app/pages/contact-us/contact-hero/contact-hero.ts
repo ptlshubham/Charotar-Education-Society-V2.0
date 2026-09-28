@@ -10,5 +10,5 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
   styleUrl: './contact-hero.scss',
 })
 export class ContactHero {
-  readonly heroImage = PLACEHOLDER.about.hero;
+  readonly heroImage = '/assets/images/hero/contact-us.jpeg';
 }

@@ -7,7 +7,7 @@ import { LeadershipValues } from '../leadership-values/leadership-values';
 import { AdmissionsCta } from '../../../shared/admissions-cta/admissions-cta';
 
 @Component({
-  selector: 'app-index',
+  selector: 'app-management-index',
   imports: [
     LeadershipHero,
     KeyLeaders,

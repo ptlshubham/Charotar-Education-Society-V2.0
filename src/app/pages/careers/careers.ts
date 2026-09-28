@@ -45,7 +45,7 @@ interface Notice {
   styleUrl: './careers.scss',
 })
 export class Careers {
-  readonly banner = PLACEHOLDER.about.hero;
+  readonly banner = '/assets/images/hero/careers.jpeg';
 
   /** Date the advertisement table was last refreshed on the legacy site. */
   readonly updatedOn = '24-06-2026';

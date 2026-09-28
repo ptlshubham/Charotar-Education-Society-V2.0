@@ -1,8 +1,9 @@
 import { Injectable, PLATFORM_ID, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { Observable, forkJoin, of } from 'rxjs';
+import { Observable, forkJoin, of, switchMap } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ResourcesService } from './resources.service';
+import { InstituteService } from './institute.service';
 import {
   AnswerKeyEntry,
   BlogPost,
@@ -14,9 +15,6 @@ import {
 } from '../../shared/models/models';
 import { ACADEMIC_INSTITUTES, CAMPUSES } from '../../shared/academic-institutes';
 
-/** The society's own institute id — blogs and answer keys are stored per institute. */
-const SOCIETY_ID = 1;
-
 /**
  * Builds the "live" half of the universal search: it fetches the backend-driven
  * content once (lazily, browser-only) and turns each row into a {@link SearchItem}.
@@ -26,6 +24,7 @@ const SOCIETY_ID = 1;
 @Injectable({ providedIn: 'root' })
 export class SearchService {
   private readonly resources = inject(ResourcesService);
+  private readonly institute = inject(InstituteService);
   private readonly platformId = inject(PLATFORM_ID);
 
   /**
@@ -44,14 +43,21 @@ export class SearchService {
     const safe = <T>(source: Observable<T[]>): Observable<T[]> =>
       source.pipe(catchError(() => of<T[]>([])));
 
-    forkJoin({
-      navratri: safe(this.resources.getNavratriList()),
-      blogs: safe(this.resources.getBlogs(SOCIETY_ID)),
-      magazines: safe(this.resources.getMagazines()),
-      podcasts: safe(this.resources.getPodcastList()),
-      answerKeys: safe(this.resources.getAnswerKeys(SOCIETY_ID)),
-      patents: safe(this.resources.getPatentData()),
-    }).subscribe((feeds) => this.dynamicIndex.set([...ACADEMIC_INSTITUTES, ...CAMPUSES, ...this.build(feeds)]));
+    this.institute
+      .resolve()
+      .pipe(
+        switchMap((id) =>
+          forkJoin({
+            navratri: safe(this.resources.getNavratriList()),
+            blogs: safe(this.resources.getBlogs(id)),
+            magazines: safe(this.resources.getMagazines()),
+            podcasts: safe(this.resources.getPodcastList()),
+            answerKeys: safe(this.resources.getAnswerKeys(id)),
+            patents: safe(this.resources.getPatentData()),
+          }),
+        ),
+      )
+      .subscribe((feeds) => this.dynamicIndex.set([...ACADEMIC_INSTITUTES, ...CAMPUSES, ...this.build(feeds)]));
   }
 
   private build(feeds: {

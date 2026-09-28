@@ -4,7 +4,7 @@ import { ContactInfo } from '../contact-info/contact-info';
 import { ContactForm } from '../contact-form/contact-form';
 
 @Component({
-  selector: 'app-index',
+  selector: 'app-contact-index',
   imports: [ContactHero, ContactInfo, ContactForm],
   templateUrl: './index.html',
   changeDetection: ChangeDetectionStrategy.Eager,

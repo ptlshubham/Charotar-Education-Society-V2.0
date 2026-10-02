@@ -11,14 +11,16 @@
   </div>
 
   <!-- Tabs -->
-  <div role="tablist" aria-label="Programme type" class="grid w-full grid-cols-3 gap-2 sm:flex sm:justify-center sm:gap-4">
+  <div role="tablist" aria-label="Programme type"
+    class="grid w-full grid-cols-3 gap-2 sm:flex sm:justify-center sm:gap-4">
     @for (tab of tabs; track tab.id) {
     <button type="button" role="tab" [attr.aria-selected]="active() === tab.id" (click)="select(tab.id)"
       class="flex items-center justify-center gap-1.5 rounded-lg border px-1 py-2.5 text-[11.5px] font-semibold transition-colors sm:gap-2.5 sm:px-5 sm:py-3 sm:text-[14px]"
       [class]="active() === tab.id
           ? 'border-primary bg-primary text-white shadow-md'
           : 'border-gray-200 bg-gray-50/50 text-primary hover:border-primary hover:bg-white'">
-      <span class="material-symbols-outlined !text-[18px] sm:!text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">{{ tab.icon }}</span>
+      <span class="material-symbols-outlined !text-[18px] sm:!text-[23px] [font-variation-settings:'wght'_300]"
+        aria-hidden="true">{{ tab.icon }}</span>
       <span class="truncate">{{ tab.label }}</span>
     </button>
     }

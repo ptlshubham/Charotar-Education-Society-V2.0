@@ -43,6 +43,9 @@ export class ManagementMembers {
   /** Which member card has its designation expanded, by name. */
   private readonly expanded = signal<ReadonlySet<string>>(new Set());
 
+  /** Whether all members are shown on mobile. */
+  readonly showAllMobile = signal(false);
+
   isExpanded(name: string): boolean {
     return this.expanded().has(name);
   }

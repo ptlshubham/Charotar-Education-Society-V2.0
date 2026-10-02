@@ -1,28 +1,29 @@
 <!-- ─── Hero ─── -->
-<app-page-hero crumb="Rahatokarsh Fund" title="Make a" accent="Difference"
-  tagline="Support education. Empower futures."
+<app-page-hero crumb="Rahatokarsh Fund" title="Make a" accent="Difference" tagline="Support education. Empower futures."
   blurb="Your contribution to Rahatokarsh Fund helps deserving students continue their education and build brighter tomorrows."
   image="/assets/images/hero/rahatokarsh-fund-objective.jpeg" />
 
 <!-- ─── Objective ─── -->
-<section class="mx-auto max-w-[1200px] px-4 py-10 sm:px-6 lg:px-12 xl:px-20">
+<section class="mx-auto max-w-[1200px] px-4 py-15 sm:px-6 lg:px-12 xl:px-20">
 
   <!-- Language tabs -->
   <div role="tablist" aria-label="Language" class="flex gap-1">
     @for (lang of ['english', 'gujarati']; track lang) {
-      <button type="button" role="tab" [attr.aria-selected]="active() === lang" (click)="select($any(lang))"
-        class="flex items-center gap-2 rounded-t-lg px-8 py-3 text-[14px] border border-gray-300 font-semibold transition-colors"
-        [class]="active() === lang ? 'bg-primary text-white' : 'bg-white text-primary hover:border hover:border-primary '">
-        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">language</span>
-        {{ lang === 'english' ? 'English' : 'Gujarati' }}
-      </button>
+    <button type="button" role="tab" [attr.aria-selected]="active() === lang" (click)="select($any(lang))"
+      class="flex items-center gap-2 rounded-t-lg px-8 py-3 text-[14px] border border-gray-300 font-semibold transition-colors"
+      [class]="active() === lang ? 'bg-primary text-white' : 'bg-white text-primary hover:border hover:border-primary '">
+      <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]"
+        aria-hidden="true">language</span>
+      {{ lang === 'english' ? 'English' : 'Gujarati' }}
+    </button>
     }
   </div>
 
   <div class="rounded-b-xl rounded-tr-xl border border-gray-200 bg-white p-6 lg:p-8">
 
     <div class="flex items-start gap-4">
-      <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary text-white" aria-hidden="true">
+      <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary text-white"
+        aria-hidden="true">
         <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]">favorite</span>
       </span>
       <div>
@@ -35,48 +36,52 @@
 
     <div class="animate-dropdown mt-6 space-y-4">
       @if (active() === 'english') {
-        @for (para of english; track para; let i = $index) {
-          <p class="text-[13.5px] leading-relaxed text-muted lg:!block" [class.hidden]="!expanded() && i >= 3">
-            {{ para }}
-            @if ((!expanded() && i === 2) || (expanded() && i === english.length - 1)) {
-              <button type="button" class="ml-1 inline text-[13px] font-semibold text-primary underline underline-offset-2 lg:hidden"
-                (click)="expanded.set(!expanded())">
-                {{ expanded() ? 'Read Less' : 'Read More' }}
-              </button>
-            }
-          </p>
+      @for (para of english; track para; let i = $index) {
+      <p class="text-[13.5px] leading-relaxed text-muted lg:!block" [class.hidden]="!expanded() && i >= 3">
+        {{ para }}
+        @if ((!expanded() && i === 2) || (expanded() && i === english.length - 1)) {
+        <button type="button"
+          class="ml-1 inline text-[13px] font-semibold text-primary underline underline-offset-2 lg:hidden"
+          (click)="expanded.set(!expanded())">
+          {{ expanded() ? 'Read Less' : 'Read More' }}
+        </button>
         }
+      </p>
+      }
       } @else {
-        @for (block of gujarati; track block.text; let i = $index) {
-          @if (block.kind === 'h') {
-            <h3 class="pt-2 text-[15px] font-bold text-primary lg:!block" [class.hidden]="!expanded() && i >= 3">{{ block.text }}</h3>
-          } @else {
-            <p class="text-[13.5px] leading-relaxed text-muted lg:!block" [class.hidden]="!expanded() && i >= 3">
-              {{ block.text }}
-              @if ((!expanded() && i === 2) || (expanded() && i === gujarati.length - 1)) {
-                <button type="button" class="ml-1 inline text-[13px] font-semibold text-primary  lg:hidden"
-                  (click)="expanded.set(!expanded())">
-                  {{ expanded() ? 'Read Less' : 'Read More' }}
-                </button>
-              }
-            </p>
-          }
+      @for (block of gujarati; track block.text; let i = $index) {
+      @if (block.kind === 'h') {
+      <h3 class="pt-2 text-[15px] font-bold text-primary lg:!block" [class.hidden]="!expanded() && i >= 3">{{ block.text
+        }}</h3>
+      } @else {
+      <p class="text-[13.5px] leading-relaxed text-muted lg:!block" [class.hidden]="!expanded() && i >= 3">
+        {{ block.text }}
+        @if ((!expanded() && i === 2) || (expanded() && i === gujarati.length - 1)) {
+        <button type="button" class="ml-1 inline text-[13px] font-semibold text-primary  lg:hidden"
+          (click)="expanded.set(!expanded())">
+          {{ expanded() ? 'Read Less' : 'Read More' }}
+        </button>
         }
+      </p>
+      }
+      }
       }
     </div>
 
     <!-- Bank details -->
     <div class="mt-7 grid gap-6 rounded-lg bg-[#F7F9FC] p-5 lg:grid-cols-[1.6fr_1fr]">
       <div class="flex gap-4">
-        <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/8 text-primary" aria-hidden="true">
-          <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]">account_balance</span>
+        <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/8 text-primary"
+          aria-hidden="true">
+          <span
+            class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]">account_balance</span>
         </span>
         <dl class="space-y-1 text-[13px]">
           @for (row of bank; track row.label) {
-            <div class="flex gap-1.5">
-              <dt class="font-semibold text-primary">{{ row.label }} :</dt>
-              <dd class="text-muted">{{ row.value }}</dd>
-            </div>
+          <div class="flex gap-1.5">
+            <dt class="font-semibold text-primary">{{ row.label }} :</dt>
+            <dd class="text-muted">{{ row.value }}</dd>
+          </div>
           }
         </dl>
       </div>
@@ -93,7 +98,8 @@
     <div class="mt-7 text-center">
       <a routerLink="/donation"
         class="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3.5 text-[13px] font-semibold tracking-wide text-white uppercase no-underline transition-colors hover:bg-primary-dark">
-        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">favorite</span>
+        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]"
+          aria-hidden="true">favorite</span>
         Micro Donation
       </a>
     </div>

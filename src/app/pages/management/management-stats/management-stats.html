@@ -1,15 +1,15 @@
-<section class="site-container">
+<!-- <section class="site-container">
   <ul class="grid list-none grid-cols-2 gap-y-6 rounded-xl bg-primary px-6 py-6 sm:grid-cols-3 lg:grid-cols-6">
     @for (stat of stats; track stat.label; let i = $index) {
-      <li [appReveal]="i * 80" class="flex items-center justify-center gap-3">
-        <svg class="shrink-0 text-secondary" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          @for (d of stat.path; track d) { <path [attr.d]="d" /> }
-        </svg>
-        <div>
-          <p class="text-[19px] leading-tight font-bold text-white">{{ stat.value }}</p>
-          <p class="text-[12px] text-white/70">{{ stat.label }}</p>
-        </div>
-      </li>
+    <li [appReveal]="i * 80" class="flex items-center justify-center gap-3">
+      <span class="material-symbols-outlined shrink-0 text-[18px] [font-variation-settings:'wght'_300] text-secondary"
+        aria-hidden="true">{{
+        stat.icon }}</span>
+      <div>
+        <p class="text-[19px] leading-tight font-bold text-white">{{ stat.value }}</p>
+        <p class="text-[12px] text-white/70">{{ stat.label }}</p>
+      </div>
+    </li>
     }
   </ul>
-</section>
+</section> -->

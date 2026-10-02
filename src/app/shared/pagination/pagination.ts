@@ -15,7 +15,7 @@ import { Paginator } from './paginator';
   template: `
     @if (pager.total() > 0) {
       <div class="flex flex-wrap items-center gap-4"
-        [class]="variant === 'compact' ? 'justify-center pt-6' : 'justify-between border-t border-gray-100 px-5 py-4'">
+        [class]="variant === 'compact' ? 'justify-center pt-6' : 'justify-center sm:justify-between border-t border-gray-100 px-5 py-4'">
 
         @if (variant !== 'compact') {
           <p class="text-[12.5px] text-muted">

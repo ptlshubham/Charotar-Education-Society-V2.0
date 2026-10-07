@@ -1,31 +1,82 @@
-<section class="site-container py-14">
-
-  <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
-    <h2 class="text-[24px] font-bold text-primary sm:text-[30px]">Explore Academic Opportunities</h2>
-    <a routerLink="/academic/school"
-      class="inline-flex shrink-0 items-center gap-1.5 text-[14px] font-semibold text-accent no-underline hover:text-primary">
-      View All Programs
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-    </a>
+<section class="py-14 sm:py-[80px] bg-white">
+  <!-- HEADER -->
+  <div class="text-center mb-[36px] flex flex-col items-center">
+    <div class="flex items-center justify-center mb-2">
+      <span class="text-[15px] text-secondary font-medium uppercase tracking-[2px]">POPULAR COURSES</span>
+    </div>
+    <h2 class="text-[26px] lg:text-[36px] xl:text-[40px] font-bold text-primary tracking-tight leading-[1.1]">
+      Find Your Perfect Program.
+    </h2>
+    <span class="mt-3 block h-1 w-16 rounded-full bg-secondary" aria-hidden="true"></span>
   </div>
 
-  <ul class="grid list-none grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-    @for (o of opportunities; track o.title) {
-      <li>
-        <a [routerLink]="o.link"
-          class="flex h-full items-start gap-3.5 rounded-xl border border-gray-200 bg-white p-5 no-underline transition-all hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-[0_10px_28px_rgba(32,49,84,0.10)]">
-          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              @for (d of o.path; track d) { <path [attr.d]="d" /> }
-            </svg>
-          </span>
-          <div>
-            <h3 class="text-[15px] font-bold text-primary">{{ o.title }}</h3>
-            <p class="mt-1 text-[12.5px] leading-snug text-muted">{{ o.sub }}</p>
-          </div>
-        </a>
-      </li>
+  <!-- FILTER TABS -->
+  <div class="flex flex-nowrap md:flex-wrap justify-start md:justify-center overflow-x-auto gap-3 mb-[40px] pb-2 hide-scrollbar px-2" role="tablist">
+    @for (tab of tabs; track tab.label) {
+      <button 
+        role="tab" 
+        [attr.aria-selected]="activeTab === tab.label"
+        (click)="setTab(tab.label)"
+        class="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 h-[42px] rounded-[10px] text-[14px] font-medium transition-all duration-200 border cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+        [ngClass]="activeTab === tab.label 
+          ? 'bg-primary text-white border-primary' 
+          : 'bg-white text-primary border-gray-200 hover:border-primary hover:bg-gray-50'">
+        <span class="material-symbols-outlined !text-[16px] [font-variation-settings:'wght'_400]" aria-hidden="true">{{ tab.icon }}</span>
+        {{ tab.label }}
+      </button>
     }
-  </ul>
+  </div>
 
+  <!-- COURSE CARDS GRID -->
+  <div class="flex flex-wrap justify-center gap-6 max-w-[1200px] mx-auto px-6 mb-[40px]">
+    @for (course of filteredCourses; track activeTab + course.id) {
+      <!-- TODO: Replace "#" with actual course route when available -->
+      <a [href]="course.link"
+         class="relative flex flex-col bg-white rounded-[12px] border border-[#E8EBF0] shadow-[0_2px_8px_rgba(16,24,40,0.06)] outline-none focus-visible:ring-2 focus-visible:ring-secondary no-underline w-full min-[480px]:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] xl:w-[270px] overflow-hidden">
+        
+        <!-- Image with fallback -->
+        <div class="relative w-full h-[140px] bg-[#1a2b4c]">
+          <img [src]="course.image" [alt]="course.name" loading="lazy" class="w-full h-full object-cover"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <!-- Fallback (shows only if image fails) -->
+          <div class="absolute inset-0 hidden flex-col items-center justify-center bg-gradient-to-br from-primary to-blue-800 text-white" aria-hidden="true">
+            <span class="material-symbols-outlined !text-[36px]">{{ course.icon }}</span>
+          </div>
+          <!-- Gradient overlay -->
+          <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-primary/80 to-transparent pointer-events-none"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="flex flex-col flex-1 p-4">
+          <!-- Course Name -->
+          <h3 class="text-[17px] font-semibold text-primary leading-[1.4] line-clamp-2 mb-1.5">
+            {{ course.name }}
+          </h3>
+
+          <div class="h-[1px] w-full bg-[#E5E7EB] mt-auto mb-3"></div>
+
+          <!-- Meta Row -->
+          <div class="flex items-center justify-between text-[13px] sm:text-[14px] font-medium text-slate-500">
+            <div class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined !text-[16px]">schedule</span>
+              <span>{{ course.duration }}</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined !text-[16px]">school</span>
+              <span class="capitalize">{{ course.level.toLowerCase() }}</span>
+            </div>
+          </div>
+        </div>
+      </a>
+    }
+  </div>
+
+  <!-- FOOTER BUTTON -->
+  <div class="flex justify-center">
+    <!-- Links to the original programs page -->
+    <a routerLink="/academic/school"
+       class="inline-flex items-center justify-center rounded-[10px] bg-primary px-8 py-3.5 text-[15px] font-semibold text-white no-underline transition-colors duration-300 hover:bg-secondary hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary">
+      View All Courses &rarr;
+    </a>
+  </div>
 </section>

@@ -1,1 +1,10 @@
 /* Intentionally empty — styled with Tailwind utilities only. */
+
+@media (min-width: 1024px) {
+  .no-scrollbar-lg {
+    scrollbar-width: none;
+  }
+  .no-scrollbar-lg::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -62,15 +62,12 @@ export class Announcements {
     this.assistant.open(text);
   }
 
-  /** Tag colours are deliberate: examination amber, result red, admission green. */
   tagClass(tag: Announcement['tag']): string {
     switch (tag) {
       case 'Examination':
-        return 'bg-secondary/15 text-secondary-dark';
       case 'Result':
-        return 'bg-red-50 text-red-600';
       case 'Admission':
-        return 'bg-accent/10 text-accent';
+        return 'bg-secondary/15 text-secondary-dark';
     }
   }
 }

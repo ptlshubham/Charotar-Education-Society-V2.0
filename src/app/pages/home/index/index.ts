@@ -11,10 +11,13 @@ import { Impact } from '../impact/impact';
 import { NewsEvents } from '../news-events/news-events';
 import { Announcements } from '../announcements/announcements';
 import { FutureCta } from '../future-cta/future-cta';
+import { AdmissionsCta } from '../../../shared/admissions-cta/admissions-cta';
+import { Categories } from '../categories/categories';
 
 @Component({
   selector: 'app-home-index',
   imports: [
+    Categories,
     Hero,
     Stats,
     Institutes,
@@ -27,6 +30,7 @@ import { FutureCta } from '../future-cta/future-cta';
     NewsEvents,
     Announcements,
     FutureCta,
+    AdmissionsCta,
   ],
   templateUrl: './index.html',
   changeDetection: ChangeDetectionStrategy.Eager,

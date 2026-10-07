@@ -1,1 +1,25 @@
-/* Intentionally empty — styled with Tailwind utilities only. */
+/* Testimonial card sizing */
+.testimonial-card {
+  /* Default desktop: 3 cards minus 2 gaps (2*20px = 40px) */
+  width: calc((100% - 40px) / 3);
+}
+
+@media (max-width: 1024px) {
+  .testimonial-card {
+    /* Tablet: 2 cards minus 1 gap (20px) */
+    width: calc((100% - 20px) / 2);
+  }
+}
+
+@media (max-width: 768px) {
+  .testimonial-card {
+    /* Mobile: 1 card */
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track {
+    transition: none !important;
+  }
+}

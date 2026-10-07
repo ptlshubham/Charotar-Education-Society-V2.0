@@ -1,59 +1,97 @@
-<section class="site-container py-14">
-
-  <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
-    <div>
-      <h2 class="text-[24px] font-bold text-primary sm:text-[30px]">One Society. 31+ Places to Learn.</h2>
-      <p class="mt-3 max-w-2xl text-[14px] leading-relaxed text-muted">
-        From schools and colleges to professional institutes and hostels, CES brings diverse learning
-        opportunities together under one legacy.
+<section class="flex flex-col lg:flex-row relative w-full mb-16 lg:mb-24">
+  <!-- Left Side: Solid Blue Block -->
+  <div class="w-full lg:w-[45%] bg-primary px-6 py-12 sm:px-10 lg:px-16 lg:py-16 xl:px-24 flex flex-col justify-center rounded-none">
+    <div class="max-w-md xl:max-w-lg mx-auto lg:ml-auto lg:mr-8 xl:mr-12 z-10 relative">
+      <span class="text-secondary text-[12px] sm:text-[14px] font-bold tracking-wider uppercase mb-4 block">CES INSTITUTES</span>
+      <h2 class="text-white text-[28px] sm:text-[36px] xl:text-[42px] font-semibold leading-tight mb-6">
+        One Society.<br />
+        <span class="text-secondary">31+ Places</span> to Learn.
+      </h2>
+      <p class="text-white/80 text-[15px] sm:text-[16px] leading-relaxed mb-10">
+        From schools and colleges to professional institutes and hostels, CES brings diverse learning opportunities together under one legacy.
       </p>
+      
+      <a routerLink="/academic/school"
+        class="inline-flex items-center gap-2 rounded-lg bg-secondary px-7 py-3.5 text-[15px] font-semibold text-primary no-underline hover:bg-secondary/90 transition-colors w-fit shadow-md">
+        View All Institutes
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Right Side: Cards & Background -->
+  <div class="w-full lg:w-[55%] bg-white px-6 py-10 sm:px-10 lg:px-8 lg:py-12 xl:py-16 relative">
+    
+    <!-- Decorative Background Vector -->
+    <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden hidden sm:block">
+      <svg class="absolute top-1/2 -right-[20%] w-[600px] h-[600px] lg:-right-[15%] xl:-right-[10%] lg:w-[800px] lg:h-[800px] -translate-y-1/2 text-[#e5e7eb] opacity-70" 
+           viewBox="0 0 200 200" 
+           fill="none" 
+           stroke="currentColor" 
+           stroke-linecap="round" 
+           stroke-linejoin="round"
+           stroke-width="12"
+           aria-hidden="true">
+        <defs>
+          <!-- Human figure with head and arms pointing inwards towards the heart -->
+          <g id="figure">
+            <circle cx="100" cy="12" r="10" />
+            <path d="M 67.7 55.5 Q 100 15 132.3 55.5" />
+          </g>
+        </defs>
+
+        <g transform="translate(0, 5)">
+          <!-- Central Heart -->
+          <path d="M 100 115 C 100 115 65 90 65 70 C 65 55 80 45 100 60 C 120 45 135 55 135 70 C 135 90 100 115 100 115 Z" />
+          
+          <!-- 5 Figures surrounding the heart -->
+          <use href="#figure" />
+          <use href="#figure" transform="rotate(72 100 100)" />
+          <use href="#figure" transform="rotate(144 100 100)" />
+          <use href="#figure" transform="rotate(216 100 100)" />
+          <use href="#figure" transform="rotate(288 100 100)" />
+        </g>
+      </svg>
     </div>
 
-    <a routerLink="/academic/school"
-      class="inline-flex shrink-0 items-center gap-1.5 text-[14px] font-semibold text-accent no-underline hover:text-primary">
-      View All Institutes
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-    </a>
-  </div>
-
-  <div class="relative">
-    <button type="button" (click)="slide(-1)" aria-label="Previous institutes"
-      class="absolute top-1/2 -left-4 z-10 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-primary shadow-md transition-colors hover:bg-primary hover:text-white lg:flex">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6" /></svg>
-    </button>
-
-    <button type="button" (click)="slide(1)" aria-label="Next institutes"
-      class="absolute top-1/2 -right-4 z-10 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-primary shadow-md transition-colors hover:bg-primary hover:text-white lg:flex">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>
-    </button>
-
-    <swiper-container init="false" #swiperEl class="block">
+    <!-- Cards Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 relative z-10 lg:-ml-24 xl:-ml-32 max-w-2xl mx-auto lg:mx-0">
       @for (institute of institutes; track institute.title) {
-        <swiper-slide class="w-[262px] sm:w-[288px]">
-          <div class="group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-[0_6px_24px_rgba(32,49,84,0.06)] transition-shadow hover:shadow-[0_14px_36px_rgba(32,49,84,0.12)]">
-
-            <div class="relative h-[168px] overflow-hidden bg-primary-light">
-              @if (institute.image) {
-                <img [src]="institute.image" [alt]="institute.title" loading="lazy"
-                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+        <div class="bg-white rounded-none p-5 sm:p-6 shadow-sm flex flex-col h-full border border-gray-100/50 relative overflow-hidden group">
+          
+          <div class="flex items-center gap-4 mb-4">
+            <div class="flex items-center justify-center w-12 h-12 rounded-xl shrink-0 transition-transform group-hover:scale-105" [class]="institute.colorClass">
+              @switch (institute.title) {
+                @case ('Schools') {
+                  <span class="material-symbols-outlined" style="font-variation-settings: 'wght' 300; font-size: 24px !important;">school</span>
+                }
+                @case ('Colleges') {
+                  <span class="material-symbols-outlined" style="font-variation-settings: 'wght' 300; font-size: 24px !important;">account_balance</span>
+                }
+                @case ('Professional Institutes') {
+                  <span class="material-symbols-outlined" style="font-variation-settings: 'wght' 300; font-size: 24px !important;">work</span>
+                }
+                @case ('Hostels') {
+                  <span class="material-symbols-outlined" style="font-variation-settings: 'wght' 300; font-size: 24px !important;">bed</span>
+                }
               }
             </div>
-
-            <div class="flex flex-1 flex-col p-5">
-              <h3 class="text-[16px] font-bold text-primary">{{ institute.title }}</h3>
-              <p class="mt-2 flex-1 text-[13px] leading-relaxed text-muted">{{ institute.desc }}</p>
-
-              <a [routerLink]="institute.link"
-                class="mt-4 inline-flex w-fit items-center gap-1.5 text-[13px] font-semibold text-accent no-underline hover:text-primary">
-                Explore
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-              </a>
+            <div>
+              <h3 class="text-[18px] font-bold text-primary m-0">{{ institute.title }}</h3>
+              <div class="h-[3px] w-10 mt-1.5 rounded-full" [class]="institute.underlineClass"></div>
             </div>
-
           </div>
-        </swiper-slide>
+          
+          <p class="text-[14px] sm:text-[15px] leading-relaxed text-muted mb-4 flex-1 min-h-[44px] sm:min-h-[48px]">{{ institute.desc }}</p>
+          
+          <a [routerLink]="institute.link"
+            class="inline-flex w-fit items-center gap-1.5 text-[15px] font-bold text-primary no-underline hover:text-accent mt-auto group/link">
+            Explore
+            <svg class="transition-transform group-hover/link:translate-x-1 text-primary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </a>
+        </div>
       }
-    </swiper-container>
-  </div>
+    </div>
 
+  </div>
 </section>

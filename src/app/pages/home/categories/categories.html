@@ -1,0 +1,57 @@
+<section class="bg-[#F7F8FA] py-8 lg:py-12" aria-labelledby="institutes-title">
+  <div
+    class="site-container flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16 max-w-[1600px] mx-auto">
+
+    <!-- LEFT CONTENT -->
+    <div class="w-full lg:w-[45%] text-center lg:text-left flex flex-col justify-center">
+      <p class="text-secondary font-semibold tracking-[2px] uppercase text-[12px] sm:text-sm mb-4">OUR INSTITUTES</p>
+      <h2 id="institutes-title" class="text-[28px] sm:text-[36px] lg:text-[44px] font-semibold leading-[1.1] mb-6">
+        <span class="block text-primary">Many Institutes.</span>
+        <span class="block text-secondary">One Legacy.</span>
+      </h2>
+      <p class="text-gray-600 text-[16px] lg:text-[18px] leading-[1.7] max-w-[440px] mx-auto lg:mx-0">
+        From schools and colleges to professional institutes, every institute of Charotar Education Society, Anand
+        carries forward the vision of quality education, since 1916.
+      </p>
+    </div>
+
+    <!-- RIGHT: VERTICAL AUTO-SCROLLING CARDS -->
+    <div class="w-full lg:w-[55%] relative">
+      <div class="scrolling-viewport">
+        <div class="scrolling-inner">
+          <div class="scrolling-track">
+            @for (inst of institutes(); track inst.id) {
+            <a [href]="inst.website || inst.link || inst.url || '#'" target="_blank" rel="noopener noreferrer"
+              class="institute-card group block">
+              <div class="flex items-center justify-between h-full w-full">
+                <img [src]="inst.logo" [alt]="inst.name" loading="lazy"
+                  class="h-[80px] lg:h-[110px] w-auto object-contain" />
+                <h3
+                  class="text-[15px] lg:text-[18px] font-semibold text-primary leading-[1.3] max-w-[50%] text-right uppercase">
+                  {{ inst.name }}
+                </h3>
+              </div>
+            </a>
+            }
+          </div>
+          <div class="scrolling-track" aria-hidden="true">
+            @for (inst of institutes(); track inst.id) {
+            <a [href]="inst.website || inst.link || inst.url || '#'" target="_blank" rel="noopener noreferrer"
+              class="institute-card group block" tabindex="-1">
+              <div class="flex items-center justify-between h-full w-full">
+                <img [src]="inst.logo" [alt]="inst.name" loading="lazy"
+                  class="h-[80px] lg:h-[110px] w-auto object-contain" />
+                <h3
+                  class="text-[15px] lg:text-[18px] font-semibold text-primary leading-[1.3] max-w-[50%] text-right uppercase">
+                  {{ inst.name }}
+                </h3>
+              </div>
+            </a>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

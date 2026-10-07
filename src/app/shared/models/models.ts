@@ -56,7 +56,12 @@ export interface BeneficiaryStudent {
 
 /** An institute, as returned by GET /admin/GetAllInstituteDetails. */
 export interface Institute {
+  id?: number;
   name: string;
+  logo?: string;
+  link?: string;
+  website?: string;
+  url?: string;
 }
 
 /** A yearly Navratri celebration, as returned by GET /admin/GetAllNavratriDetails. */

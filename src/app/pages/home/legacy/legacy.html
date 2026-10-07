@@ -1,3 +1,43 @@
+<!-- ─── Legacy timeline (own clean section) ─── -->
+<section class="pb-24 lg:pb-32">
+  <div class="site-container">
+    <div class="text-center">
+      <h2 class="text-[24px] font-bold text-primary sm:text-[30px]">A Legacy That Lives On</h2>
+      <span class="mx-auto mt-3 block h-1 w-16 rounded-full bg-secondary" aria-hidden="true"></span>
+    </div>
+
+    <ol
+      class="mt-12 grid list-none grid-cols-1 gap-8 sm:grid-cols-3 sm:justify-center lg:grid-cols-5 lg:gap-4 relative z-0">
+      @for (m of milestones; track m.year; let last = $last) {
+      <li class="relative flex flex-col items-center text-center">
+        @if (!last) {
+        <span class="absolute top-6 left-1/2 hidden h-[1px] w-full bg-gray-200 lg:block -z-10"
+          aria-hidden="true"></span>
+        }
+
+        <div
+          class="relative z-10 mb-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#EEF0F5] text-primary"
+          aria-hidden="true">
+          <span class="material-symbols-outlined !text-[20px]" style="font-variation-settings: 'wght' 300;">
+            @switch (m.year) {
+              @case ('1916') { flag }
+              @case ('1950s') { menu_book }
+              @case ('1970s') { workspace_premium }
+              @case ('2000s') { trending_up }
+              @case ('Today') { group }
+            }
+          </span>
+        </div>
+
+        <p class="text-[20px] font-bold text-primary">{{ m.year }}</p>
+        <p class="mt-1 text-[16px] font-bold text-secondary">{{ m.title }}</p>
+        <p class="mt-2 text-[14px] leading-[1.6] text-[#5B6472] line-clamp-3 sm:max-w-[220px] mx-auto">{{ m.desc }}</p>
+      </li>
+      }
+    </ol>
+  </div>
+</section>
+
 <!-- ─── Visionary tribute (parchment) ─── -->
 <section class="bg-[#F3EBDA] bg-[url('/assets/images/home/parchment.jpg')] bg-cover bg-center">
   <div class="flex flex-col lg:flex-row lg:items-center">
@@ -48,30 +88,5 @@
       </a>
     </div>
 
-  </div>
-</section>
-
-<!-- ─── Legacy timeline (own clean section) ─── -->
-<section class="bg-[#F7F8FA] py-14 lg:py-16">
-  <div class="site-container">
-    <div class="text-center">
-      <h2 class="text-[24px] font-bold text-primary sm:text-[30px]">A Legacy That Lives On</h2>
-      <span class="mx-auto mt-3 block h-1 w-16 rounded-full bg-accent" aria-hidden="true"></span>
-    </div>
-
-    <ol class="mt-12 grid list-none grid-cols-2 gap-8 sm:grid-cols-5 sm:gap-2">
-      @for (m of milestones; track m.year; let last = $last) {
-      <li class="relative text-center">
-        @if (!last) {
-        <span class="absolute top-[6px] left-1/2 hidden h-0.5 w-full bg-secondary/40 sm:block"
-          aria-hidden="true"></span>
-        }
-        <span class="relative z-10 mx-auto mb-4 block h-3.5 w-3.5 rounded-full ring-4 ring-[#F7F8FA]"
-          [class]="last ? 'bg-accent' : 'bg-secondary'" aria-hidden="true"></span>
-        <p class="text-[16px] font-bold text-primary">{{ m.year }}</p>
-        <p class="mt-1.5 text-[12px] leading-snug text-muted">{{ m.label }}</p>
-      </li>
-      }
-    </ol>
   </div>
 </section>

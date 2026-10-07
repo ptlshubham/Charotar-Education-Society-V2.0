@@ -1,0 +1,68 @@
+:host {
+  --scroll-duration: 60s;
+}
+
+.scrolling-viewport {
+  height: 260px;
+  overflow: hidden;
+  position: relative;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+
+  @media (min-width: 1024px) {
+    height: 360px;
+  }
+}
+
+.scrolling-inner {
+  animation: scroll-vertical var(--scroll-duration) linear infinite;
+
+  &:hover {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    overflow-y: auto;
+    height: 100%;
+  }
+}
+
+.scrolling-track {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+@keyframes scroll-vertical {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.institute-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 6px 16px;
+  height: 100px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 92%;
+  max-width: 650px;
+  margin-left: auto;
+
+  @media (min-width: 1024px) {
+    padding: 8px 24px;
+    height: 130px;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  }
+}

@@ -18,11 +18,8 @@ interface Bearer {
   styleUrl: './former-bearers.scss',
 })
 export class FormerBearers {
-  readonly open = signal(false);
-
-  toggle(): void {
-    this.open.update((v) => !v);
-  }
+  readonly chairmenOpen = signal(false);
+  readonly secretariesOpen = signal(false);
 
   readonly chairmen: readonly Bearer[] = [
     { no: 1, name: 'શ્રી ગોપાલદાસ બાઈદાસ દેસાઈ', years: '1916 થી 1925' },

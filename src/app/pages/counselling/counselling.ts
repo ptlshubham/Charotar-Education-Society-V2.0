@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, computed } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PageHero } from '../../shared/page-hero/page-hero';
+import { CustomSelect } from '../../shared/custom-select/custom-select';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { catchError, of } from 'rxjs';
 import { ResourcesService } from '../../core/services/resources.service';
@@ -9,7 +10,7 @@ import { PLACEHOLDER } from '../../shared/placeholder-images';
 
 @Component({
   selector: 'app-counselling',
-  imports: [ReactiveFormsModule, PageHero],
+  imports: [ReactiveFormsModule, PageHero, CustomSelect],
   templateUrl: './counselling.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './counselling.scss',
@@ -88,6 +89,7 @@ export class Counselling {
   readonly WHATSAPP = 'https://wa.me/919426009495';
 
   readonly institutes = signal<readonly Institute[]>([]);
+  readonly instituteNames = computed(() => this.institutes().map(i => i.name));
   readonly submitted = signal(false);
   readonly submitting = signal(false);
   readonly success = signal(false);

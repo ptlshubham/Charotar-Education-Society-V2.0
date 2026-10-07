@@ -3,7 +3,7 @@
   title="Be the reason someone's tomorrow is brighter." tagline="Support the Rahatokarsh Fund"
   blurb="Your contribution helps deserving students continue their education and build a better future."
   [image]="heroImage">
-  <div class="mt-7 flex flex-wrap items-center gap-4">
+  <div class="mt-7 flex flex-wrap items-center gap-4 mb-6">
     <a href="#donate-form"
       class="inline-flex items-center gap-2 rounded-md bg-accent px-6 py-3 text-[14px] font-semibold text-white no-underline transition-colors hover:brightness-110">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -24,7 +24,7 @@
 </app-page-hero>
 
 <!-- ─── Stat strip ─── -->
- 
+
 <!-- <section class="site-container pt-6">
   <div class="rounded-xl border border-gray-200 bg-white p-6">
     <h2 class="text-center text-[17px] font-bold text-primary">Your Support. Their Future. Our Legacy.</h2>
@@ -81,7 +81,7 @@
 -->
 
 <!-- ─── Donate ─── -->
-<section id="donate-form" class="site-container pt-8">
+<section id="donate-form" class="site-container py-15">
   <h2 class="text-center text-[22px] font-bold text-primary sm:text-[26px]">Make a Difference Today</h2>
   <span class="mx-auto mt-3 block h-1 w-14 rounded-full bg-secondary/85" aria-hidden="true"></span>
 
@@ -235,10 +235,10 @@
     <!-- Donate Fund information -->
     <aside>
       <div class="mt-4 flex items-center justify-center gap-3 text-center sm:mt-4">
-       <h3 class="text-[19px] font-bold text-primary">About Donate Fund</h3>
-        </div>
+        <h3 class="text-[19px] font-bold text-primary">About Donate Fund</h3>
+      </div>
       <div class="flex min-h-[280px] items-center justify-center bg-white px-4" aria-hidden="true">
-        
+
         <!-- <svg class="h-64 w-full max-w-[300px] text-primary" viewBox="0 0 315 371" fill="none" role="img" aria-labelledby="donate-art-title donate-art-description">
           <title id="donate-art-title">Hands supporting a rupee heart</title>
           <desc id="donate-art-description">Two open hands hold an orange heart containing the Indian rupee symbol.</desc>
@@ -259,14 +259,18 @@
           <h3 class="text-[19px] font-bold text-primary">Donate Fund</h3>
         </div> -->
         <p class="mt-4 text-[14px] leading-relaxed text-muted">
-          Your generous contribution helps us provide financial assistance to deserving and needy students, enabling them to pursue their education and achieve their dreams.
+          Your generous contribution helps us provide financial assistance to deserving and needy students, enabling
+          them to pursue their education and achieve their dreams.
         </p>
         <ul class="mt-4 list-none space-y-3">
           @for (point of fundPoints; track point) {
-            <li class="flex items-start gap-3 text-[13.5px] leading-snug text-muted">
-              <svg class="mt-0.5 shrink-0 text-primary" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zm-1-6-4-4 1.4-1.4L11 13.2l4.6-4.6L17 10z" /></svg>
-              <span>{{ point }}</span>
-            </li>
+          <li class="flex items-start gap-3 text-[13.5px] leading-snug text-muted">
+            <svg class="mt-0.5 shrink-0 text-primary" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"
+              aria-hidden="true">
+              <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zm-1-6-4-4 1.4-1.4L11 13.2l4.6-4.6L17 10z" />
+            </svg>
+            <span>{{ point }}</span>
+          </li>
           }
         </ul>
       </div>
@@ -274,9 +278,11 @@
       <!-- Progress -->
       <div class="mt-6 grid items-center gap-6 rounded-xl bg-primary p-6 lg:grid-cols-[1.1fr_1.6fr]">
         <div class="flex items-center gap-4">
-          <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white text-logo" aria-hidden="true">
+          <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white text-logo"
+            aria-hidden="true">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z" />
+              <path
+                d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z" />
             </svg>
           </span>
           <div>
@@ -293,10 +299,11 @@
             <span>₹2.5k Goal</span>
           </div>
 
-          <div class="mt-2 h-3 w-full overflow-hidden rounded-full bg-white/20"
-            role="progressbar" [attr.aria-valuenow]="progress()" aria-valuemin="0" aria-valuemax="100"
+          <div class="mt-2 h-3 w-full overflow-hidden rounded-full bg-white/20" role="progressbar"
+            [attr.aria-valuenow]="progress()" aria-valuemin="0" aria-valuemax="100"
             [attr.aria-label]="'Fundraising progress: ' + progress() + '%'">
-            <div class="h-full rounded-full bg-secondary transition-all duration-500" [style.width.%]="progress()"></div>
+            <div class="h-full rounded-full bg-secondary transition-all duration-500" [style.width.%]="progress()">
+            </div>
           </div>
 
           <p class="mt-1.5 text-right text-[12px] font-semibold text-white/80">{{ progress() }}%</p>

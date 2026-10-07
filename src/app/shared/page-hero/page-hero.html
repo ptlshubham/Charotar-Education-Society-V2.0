@@ -70,23 +70,5 @@
     </div>
   </div>
 
-  <!-- Breadcrumb pill, aligned with the content, straddling the hero's bottom edge. -->
-  <div class="absolute inset-x-0 bottom-0 z-20 translate-y-1/2">
-    <div class="site-container">
-      <nav aria-label="Breadcrumb"
-        class="inline-flex max-w-full flex-wrap items-center gap-2.5 rounded-xl border border-white/10 bg-primary-dark px-5 py-3 text-[13px] shadow-xl">
-      <a routerLink="/home" class="text-white/75 no-underline hover:text-white">Home</a>
-      @for (c of trail; track $index) {
-      <span class="text-secondary" aria-hidden="true">&rsaquo;</span>
-      @if (c.link) {
-      <a [routerLink]="c.link" class="text-white/75 no-underline hover:text-white">{{ c.label }}</a>
-      } @else {
-      <span class="text-white/75">{{ c.label }}</span>
-      }
-      }
-      <span class="text-secondary" aria-hidden="true">&rsaquo;</span>
-      <span aria-current="page" class="font-semibold text-white">{{ crumb }}</span>
-      </nav>
-    </div>
-  </div>
+
 </section>

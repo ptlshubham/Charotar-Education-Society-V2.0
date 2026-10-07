@@ -1,23 +1,22 @@
-<section class="site-container pt-5">
-  <div class="rounded-xl border border-gray-200 bg-white p-6 lg:p-8">
+<section class="site-container pt-16">
+  <div class="py-4">
 
-    <h2 class="text-center text-[22px] font-bold text-primary sm:text-[26px]">Our Journey of 110+ Years</h2>
+    <h2 class="text-center text-[26px] font-bold text-primary sm:text-[32px] leading-tight">Our Journey of 110+ Years</h2>
+    <span class="mx-auto mt-3 block h-1 w-16 rounded-full bg-secondary" aria-hidden="true"></span>
 
-    <ol class="relative mt-8 grid list-none gap-8 sm:grid-cols-3 lg:grid-cols-6 lg:gap-4">
+    <ol class="relative mt-8 grid list-none grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-6 lg:gap-4">
       <!-- Connector, desktop only: sits behind the nodes at their centre line. -->
       <span class="pointer-events-none absolute top-7 right-[8%] left-[8%] hidden h-px bg-gray-200 lg:block" aria-hidden="true"></span>
 
       @for (milestone of milestones; track milestone.year) {
         <li class="relative text-center">
           <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary text-secondary" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              @for (d of milestone.path; track d) { <path [attr.d]="d" /> }
-            </svg>
+            <span class="material-symbols-outlined !text-[24px] [font-variation-settings:'wght'_300]">{{ milestone.icon }}</span>
           </span>
 
           <p class="mt-4 text-[17px] font-bold text-primary">{{ milestone.year }}</p>
           <p class="mt-0.5 text-[13px] font-semibold text-secondary">{{ milestone.title }}</p>
-          <p class="mt-2 text-[12px] leading-relaxed text-muted">{{ milestone.body }}</p>
+          <p class="mt-2 text-[12px] leading-tight text-muted">{{ milestone.body }}</p>
         </li>
       }
     </ol>

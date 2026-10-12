@@ -1,6 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Hero } from '../hero/hero';
-import { Stats } from '../stats/stats';
 import { Institutes } from '../institutes/institutes';
 import { Legacy } from '../legacy/legacy';
 import { Academics } from '../academics/academics';
@@ -9,8 +8,6 @@ import { Milestones } from '../milestones/milestones';
 import { Leadership } from '../leadership/leadership';
 import { Impact } from '../impact/impact';
 import { NewsEvents } from '../news-events/news-events';
-import { Announcements } from '../announcements/announcements';
-import { FutureCta } from '../future-cta/future-cta';
 import { AdmissionsCta } from '../../../shared/admissions-cta/admissions-cta';
 import { Categories } from '../categories/categories';
 
@@ -19,7 +16,6 @@ import { Categories } from '../categories/categories';
   imports: [
     Categories,
     Hero,
-    Stats,
     Institutes,
     Legacy,
     Academics,
@@ -28,8 +24,6 @@ import { Categories } from '../categories/categories';
     Leadership,
     Impact,
     NewsEvents,
-    Announcements,
-    FutureCta,
     AdmissionsCta,
   ],
   templateUrl: './index.html',

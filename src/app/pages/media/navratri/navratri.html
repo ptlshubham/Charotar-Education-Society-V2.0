@@ -14,22 +14,10 @@
   </div>
 </app-page-hero>
 
-<section class="site-container pb-8">
+<section class="site-container pt-2 pb-8">
 
-  <!-- Quick links — lifted over the hero's bottom edge, as in the reference. -->
-  <ul
-    class="relative -mx-4 -mt-14 grid grid-cols-2 list-none gap-3 rounded-t-[32px] bg-white px-4 pt-8 sm:-mx-6 sm:px-6 lg:-mx-12 xl:-mx-20 lg:-mt-16 lg:grid-cols-6 lg:px-12 xl:px-20 lg:pt-9">
-    @for (link of quickLinks; track link.label) {
-    <li>
-      <a href="#"
-        class="flex h-full flex-col items-center gap-2.5 rounded-xl border border-gray-200 bg-white px-3 py-4 text-center no-underline transition-colors hover:border-primary">
-        <span class="material-symbols-outlined text-primary !text-[23px] [font-variation-settings:'wght'_300]"
-          aria-hidden="true">{{ link.icon }}</span>
-        <span class="text-[11.5px] leading-snug font-semibold text-primary">{{ link.label }}</span>
-      </a>
-    </li>
-    }
-  </ul>
+  <!-- Live stream — renders only while super admin has a live link active. -->
+  <app-live-navratri />
 
   <!-- Intro + video -->
   <div class="mt-6 grid gap-6 rounded-xl border border-gray-200 bg-white p-6 lg:grid-cols-2 lg:items-center lg:p-8">
@@ -141,43 +129,6 @@
     }
   </ul>
   }
-
-  <!-- Glimpses -->
-  <div class="mt-12 rounded-xl  bg-white p-6">
-    <p class="text-center text-[11.5px] font-bold tracking-[0.15em] text-primary uppercase">Glimpses of Navratri</p>
-
-    <ul
-      class="mt-4 flex list-none gap-2 overflow-x-auto px-1 pb-1 lg:flex-wrap lg:justify-center lg:overflow-visible lg:px-0 lg:pb-0">
-      @for (f of filters; track f) {
-        <li class="shrink-0">
-          <button type="button" (click)="select(f)"
-            class="rounded-md border px-4 py-2 text-[12px] font-semibold transition-colors"
-            [class]="filter() === f ? 'border-primary bg-primary text-white' : 'border-gray-200 bg-white text-primary hover:border-primary'">
-            {{ f }}
-          </button>
-        </li>
-      }
-    </ul>
-
-    <ul
-      class="animate-dropdown mt-5 grid auto-cols-[80%] grid-flow-col grid-rows-2 list-none gap-4 overflow-x-auto snap-x snap-mandatory lg:auto-cols-auto lg:grid-flow-row lg:grid-cols-4 lg:grid-rows-none lg:overflow-visible">
-      @for (g of visible(); track g.src) {
-      <li class="overflow-hidden rounded-lg snap-start">
-        <img [src]="g.src" [alt]="'Navratri ' + g.tag" loading="lazy"
-          class="aspect-[4/3] w-full bg-primary-light object-cover transition-transform duration-300 hover:scale-105" />
-      </li>
-      } @empty {
-      <li class="col-span-full py-8 text-center text-[13px] text-muted">No photos in this category yet.</li>
-      }
-    </ul>
-
-    <div class="mt-6 text-center">
-      <a routerLink="/glory/gallery"
-        class="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-[13px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
-        View Full Gallery
-      </a>
-    </div>
-  </div>
 
   <!-- Highlights -->
   <p class="mt-10 text-center text-[11.5px] font-bold tracking-[0.15em] text-primary uppercase">Navratri Highlights</p>

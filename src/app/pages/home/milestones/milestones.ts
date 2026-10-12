@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
 
 @Component({
   selector: 'app-milestones',
-  imports: [RouterLink],
   templateUrl: './milestones.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './milestones.scss',

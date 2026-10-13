@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { PageHero } from '../../../shared/page-hero/page-hero';
@@ -6,13 +6,11 @@ import { catchError, of } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
 import { NavratriEntry } from '../../../shared/models/models';
 import { MediaUrlPipe } from '../../../shared/media-url.pipe';
-import { PLACEHOLDER } from '../../../shared/placeholder-images';
-
-type Glimpse = 'All' | 'Pandal' | 'Garba' | 'Cultural Programs' | 'Aarti' | 'Devotees';
+import { LiveNavratri } from './live-navratri/live-navratri';
 
 @Component({
   selector: 'app-navratri',
-  imports: [RouterLink, MediaUrlPipe, PageHero],
+  imports: [RouterLink, MediaUrlPipe, PageHero, LiveNavratri],
   templateUrl: './navratri.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './navratri.scss',
@@ -52,15 +50,6 @@ export class Navratri {
     return text.length > max ? text.slice(0, max).trimEnd() + '…' : text;
   }
 
-  readonly quickLinks: ReadonlyArray<{ label: string; icon: string }> = [
-    { label: 'Navratri 2026 Schedule', icon: 'calendar_month' },
-    { label: 'Darshan & Pandal Information', icon: 'home' },
-    { label: 'Cultural Programs & Events', icon: 'group' },
-    { label: 'Gallery', icon: 'photo_library' },
-    { label: 'Seva & Volunteers', icon: 'favorite' },
-    { label: 'Important Guidelines', icon: 'info' },
-  ];
-
   readonly stats: ReadonlyArray<{ value: string; label: string; icon: string }> = [
     { value: '100K+', label: 'Devotees Every Year', icon: 'group' },
     { value: '9 Days', label: 'of Celebration', icon: 'calendar_month' },
@@ -69,24 +58,6 @@ export class Navratri {
     { value: '500+', label: 'Volunteers', icon: 'favorite' },
     { value: '100%', label: 'Safe & Secure', icon: 'verified_user' },
   ];
-
-  readonly filters: readonly Glimpse[] = ['All', 'Pandal', 'Garba', 'Cultural Programs', 'Aarti', 'Devotees'];
-  readonly filter = signal<Glimpse>('All');
-
-  select(f: Glimpse): void {
-    this.filter.set(f);
-  }
-
-  readonly glimpses: ReadonlyArray<{ src: string; tag: Exclude<Glimpse, 'All'> }> =
-    PLACEHOLDER.media.navratri.map((src, i) => ({
-      src,
-      tag: (['Pandal', 'Garba', 'Devotees', 'Aarti', 'Cultural Programs', 'Aarti', 'Garba', 'Devotees'] as const)[i],
-    }));
-
-  readonly visible = computed(() => {
-    const f = this.filter();
-    return f === 'All' ? this.glimpses : this.glimpses.filter((g) => g.tag === f);
-  });
 
   readonly highlights: ReadonlyArray<{ title: string; body: string; icon: string }> = [
     { title: 'Divine Darshan', body: 'Beautifully decorated pandal with daily darshan of Maa Amba.', icon: 'home' },

@@ -41,6 +41,8 @@ export class ApiService {
   // Navratri — yearly celebrations + per-year gallery images.
   public static GetNavratriListURL: string = ApiService.HOST_URL + '/admin/GetAllNavratriDetails';
   public static GetNavratriImagesURL: string = ApiService.HOST_URL + '/admin/GetNavratriImagesById/';
+  // Navratri live stream — per-day YouTube/Facebook links; the active one is "live now".
+  public static GetNavratriLiveLinksURL: string = ApiService.HOST_URL + '/admin/GetAllNavYTLinksDetails';
   // Podcast — CES "NextUp" episodes (YouTube links); page renders only active ones.
   public static GetPodcastListURL: string = ApiService.HOST_URL + '/admin/GetAllPodcastDetails';
   // Blog — posts for an institute (the society itself, by convention). Append the id.

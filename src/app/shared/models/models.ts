@@ -83,6 +83,21 @@ export interface NavratriImage {
   path?: string;
 }
 
+/**
+ * A Navratri live-stream link (one per day) from GET /admin/GetAllNavYTLinksDetails.
+ * Super admin activates at most one at a time; `isactive` arrives as 0/1.
+ */
+export interface NavratriLiveLink {
+  id: number;
+  year: number;
+  day: number;
+  /** YouTube watch / live / youtu.be / embed URL. */
+  link: string;
+  /** Facebook Live event URL. */
+  fblink: string;
+  isactive: number | boolean;
+}
+
 /** A CES podcast episode from GET /admin/GetAllPodcastDetails. */
 export interface PodcastEntry {
   link: string;

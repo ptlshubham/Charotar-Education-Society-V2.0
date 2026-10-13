@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { RouterLink } from '@angular/router';
 
 export interface HeroStat {
   value: string;
@@ -24,7 +23,6 @@ export interface Crumb {
  */
 @Component({
   selector: 'app-page-hero',
-  imports: [RouterLink],
   templateUrl: './page-hero.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './page-hero.scss',

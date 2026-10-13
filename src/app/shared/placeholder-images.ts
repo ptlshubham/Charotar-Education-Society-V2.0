@@ -129,12 +129,6 @@ export const PLACEHOLDER = {
       scene('ces-g-10', 600, 450), scene('ces-g-11', 600, 400), scene('ces-g-12', 600, 430),
     ],
     navratriBanner: scene('ces-navratri-banner', 1200, 700),
-    navratri: [
-      scene('ces-nav-1', 500, 380), scene('ces-nav-2', 500, 380),
-      scene('ces-nav-3', 500, 380), scene('ces-nav-4', 500, 380),
-      scene('ces-nav-5', 500, 380), scene('ces-nav-6', 500, 380),
-      scene('ces-nav-7', 500, 380), scene('ces-nav-8', 500, 380),
-    ],
     podcastBanner: scene('ces-podcast-banner', 1200, 600),
     episodes: [scene('ces-ep-1', 800, 500), scene('ces-ep-2', 800, 500)],
   },

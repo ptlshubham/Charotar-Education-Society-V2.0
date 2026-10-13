@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { ApiService } from './api.service';
 import { SKIP_ERROR_REDIRECT } from '../interceptors/error.interceptor';
-import { AnswerKeyEntry, BeneficiaryStudent, BlogPost, Copyright, CounsellingPayload, DonationPayload, Donor, GalleryImage, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NavratriImage, Patent, PodcastEntry, Trademark } from '../../shared/models/models';
+import { AnswerKeyEntry, BeneficiaryStudent, BlogPost, Copyright, CounsellingPayload, DonationPayload, Donor, GalleryImage, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NavratriImage, NavratriLiveLink, Patent, PodcastEntry, Trademark } from '../../shared/models/models';
 
 
 @Injectable({
@@ -97,6 +97,12 @@ export class ResourcesService {
 
     getNavratriImages(id: number | string) {
         return this.http.get<NavratriImage[]>(ApiService.GetNavratriImagesURL + id, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    getNavratriLiveLinks() {
+        return this.http.get<NavratriLiveLink[]>(ApiService.GetNavratriLiveLinksURL, {
             context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
         });
     }

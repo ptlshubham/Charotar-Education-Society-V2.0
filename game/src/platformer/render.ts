@@ -49,7 +49,7 @@ const blit = (
 };
 
 // Sprite frames overhang their hitbox, so the anchor is derived from the slot's
-// frame size against the body's size — never from a hardcoded pixel offset.
+// frame size against the body's size - never from a hardcoded pixel offset.
 const actor = (
   ctx: CanvasRenderingContext2D, sheets: Sheets, report: AssetReport, name: string, frame: number,
   bx: number, by: number, bw: number, bh: number, centred: boolean, face: 1 | -1,
@@ -82,7 +82,7 @@ const playerFrame = (w: World): number => {
 };
 
 // The squash frame is only ever reachable through e.dead, so it is selected the
-// same way for both kinds — the art team has no other cue that it exists.
+// same way for both kinds - the art team has no other cue that it exists.
 const enemyFrame = (e: Enemy, w: World): number => {
   if (!isRich(w.level.theme) || e.kind === 'walker') return e.dead ? 2 : (e.t >> 3) % 2;
   if (e.dead) return w.tick - e.dead < 22 ? 5 : 6;
@@ -99,7 +99,7 @@ export const draw = (
   const rich = isRich(theme);
   // Canopy shares the jungle family; every other world owns its actor sheets.
   const art = (name: string): string => jungle ? name : rich ? `${theme}-${name}` : `legacy-${name}`;
-  // 1 — backdrop. The painted scenes do not tile, so every odd copy is mirrored,
+  // 1 - backdrop. The painted scenes do not tile, so every odd copy is mirrored,
   // which makes any image seamless regardless of what the art team supplies.
   ctx.setTransform(RENDER_SCALE, 0, 0, RENDER_SCALE, 0, 0);
   ctx.imageSmoothingEnabled = true;
@@ -141,7 +141,7 @@ export const draw = (
     ctx.fillRect(0, 0, VIEW_W, VIEW_H);
   }
 
-  // 2 — terrain. World space from here on; the camera is a whole-pixel translate
+  // 2 - terrain. World space from here on; the camera is a whole-pixel translate
   // so pixel-art cells never land on a half pixel.
   ctx.setTransform(RENDER_SCALE, 0, 0, RENDER_SCALE, -Math.round(w.camX) * RENDER_SCALE, 0);
   ctx.imageSmoothingEnabled = false;
@@ -197,7 +197,7 @@ export const draw = (
     }
   }
 
-  // 3 — goal flag. Reused repo art rather than a sheet, so it may simply be absent.
+  // 3 - goal flag. Reused repo art rather than a sheet, so it may simply be absent.
   const flag = sheets['goal-flag'];
   if (flag) {
     ctx.imageSmoothingEnabled = true;
@@ -212,7 +212,7 @@ export const draw = (
     }
   }
 
-  // 4 — enemies, then the player on top.
+  // 4 - enemies, then the player on top.
   ctx.imageSmoothingEnabled = false;
   for (const e of w.enemies) {
       const name = jungle && e.kind !== 'walker' ? `jungle-${e.kind === 'flyer' ? 'parrot' : e.kind}` : art(e.kind);

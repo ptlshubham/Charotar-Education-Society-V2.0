@@ -20,11 +20,11 @@ execFileSync('node', ['scripts/make-sprites.mjs', '--check'], { stdio: 'inherit'
 assert.ok(Math.abs(jumpApexPx() - 45) < 1e-9, `Jump apex is 45px, got ${jumpApexPx()}`);
 assert.ok(Math.abs(jumpRangePx() - 61.6) < 1e-9, `Jump range is 61.6px, got ${jumpRangePx()}`);
 
-// Levels replay headlessly — same engine, no browser, no rAF.
+// Levels replay headlessly - same engine, no browser, no rAF.
 for (const [index, level] of levels.entries()) {
   const world = createWorld(index);
   assert.equal(world.coinTotal, countCoins(level), `${level.id}: coinTotal matches the grid`);
-  assert.ok(level.solution.length > 0, `${level.id}: ships no recorded solution — run the in-game recorder`);
+  assert.ok(level.solution.length > 0, `${level.id}: ships no recorded solution - run the in-game recorder`);
   for (const input of parseSolution(level.solution)) {
     step(world, input);
     if (world.status !== 'play') break;
@@ -215,12 +215,12 @@ try {
   // CES Arcade. Its own context: `page` above owns one localStorage whose write
   // order the quiz assertions depend on, and `errors` is bound to `page` alone.
   //
-  // DOM contract with arcade.ts — the only page structure this harness knows:
+  // DOM contract with arcade.ts - the only page structure this harness knows:
   //   one <canvas>, a 512x288 backing store
   //   .hud-coins   text contains the coin count
   //   .hud-life    one element per remaining life
   //   buttons labelled 'Move left' / 'Move right' / 'Jump'
-  // Harness contract — window.__cesArcade:
+  // Harness contract - window.__cesArcade:
   //   version, ready(), assetReport(), state(), input(), drainEvents(),
   //   pause(), run(ticks), advance(ms) -> ticks stepped, render(), reset(level, [x, y]?)
   // ---------------------------------------------------------------------------
@@ -334,7 +334,7 @@ try {
   const pad = [['Move left', 'left'], ['Move right', 'right'], ['Star power', 'power'], ['Jump', 'jump']];
   for (const [label, width, height] of [['desktop', 1440, 900], ['landscape', 844, 390], ['390', 390, 844], ['320', 320, 844]]) {
     await arcadePage.setViewportSize({ width, height });
-    // animations: 'disabled' does nothing to a rAF canvas loop — pause() plus an
+    // animations: 'disabled' does nothing to a rAF canvas loop - pause() plus an
     // explicit render() is the only way to screenshot a stable frame.
     await arcadePage.evaluate(() => { const a = window.__cesArcade; a.pause(); a.reset(0); a.run(120); a.render(); });
     const canvas = await arcadePage.locator('canvas').boundingBox();

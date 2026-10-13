@@ -51,7 +51,7 @@
         <button class="pixel-button back-button" (click)="back()"><img src="assets/props/back.svg" alt="" width="16" height="16"> Back</button>
         <div class="scene-controls controls-left"><button class="control-button control-sound" [attr.aria-label]="soundEnabled() ? 'Turn sound off' : 'Turn sound on'" (click)="toggleSound()"><img [src]="soundEnabled() ? 'assets/icons/icon-sound-on.webp' : 'assets/icons/icon-sound-off.webp'" alt="" width="26" height="26"></button></div>
         <div class="map-heading"><h1 id="map-title" tabindex="-1" data-screen-heading>Choose your next adventure</h1><p>Pick an island. Discover something new.</p></div>
-        <button class="score-chip" (click)="achievements.showModal()"><img src="assets/props/trophy.webp" alt="" width="32" height="30">{{ total() }} XP <span class="sr-only">— view badges</span></button>
+        <button class="score-chip" (click)="achievements.showModal()"><img src="assets/props/trophy.webp" alt="" width="32" height="30">{{ total() }} XP <span class="sr-only">- view badges</span></button>
       </header>
       <div class="island-map">
         <div class="traveller" aria-hidden="true"><img class="captain" src="assets/props/avatar.webp" alt="" width="44" height="44"><img src="assets/props/ship.webp" alt="" width="168" height="112"></div>
@@ -89,7 +89,7 @@
         <img class="zone-title" [src]="'assets/titles/title-' + activeZone().id + '.webp'" [alt]="activeZone().name" width="363" height="120">
         <div class="scene-controls">
           <button class="control-button control-home" (click)="navigate('welcome')" aria-label="Go to the welcome screen"><img src="assets/controls/control-home.webp" alt="" width="26" height="26"></button>
-          <button class="control-button control-xp" (click)="achievements.showModal()" [attr.aria-label]="'View badges — ' + total() + ' XP earned'"><img src="assets/controls/control-xp.webp" alt="" width="28" height="28"></button>
+          <button class="control-button control-xp" (click)="achievements.showModal()" [attr.aria-label]="'View badges - ' + total() + ' XP earned'"><img src="assets/controls/control-xp.webp" alt="" width="28" height="28"></button>
           <button class="control-button control-sound" [attr.aria-label]="soundEnabled() ? 'Turn sound off' : 'Turn sound on'" (click)="toggleSound()"><img [src]="soundEnabled() ? 'assets/icons/icon-sound-on.webp' : 'assets/icons/icon-sound-off.webp'" alt="" width="26" height="26"></button>
           <button class="control-button control-close" (click)="back(leaveDialog)" aria-label="Leave this island"><img src="assets/controls/control-close.webp" alt="" width="26" height="26"></button>
         </div>
@@ -155,7 +155,7 @@
             <div class="result-score">{{ score() }} <span>/ 100 XP</span></div>
             <p>You answered {{ score() / config.pointsPerAnswer }} of {{ questions().length }} questions correctly.</p>
             @if (score() >= 60) { <p class="badge-earned">Badge earned: {{ activeZone().badge }}</p> }
-            @else { <p class="badge-earned">Try again — 3 correct answers earn your island badge.</p> }
+            @else { <p class="badge-earned">Try again - 3 correct answers earn your island badge.</p> }
             <p class="small-note">Island best: {{ progress().best[activeZone().id] }} XP · Total best: {{ total() }} XP</p>
             <div class="result-actions"><button class="pixel-button primary" (click)="navigate('map')">Explore more islands</button><button class="pixel-button" (click)="startRound()">Play again</button></div>
           </div>

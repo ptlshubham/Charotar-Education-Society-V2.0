@@ -26,7 +26,7 @@
       @if (assetIssues().length) {
         <ul class="arcade-issues" aria-label="Artwork problems">
           @for (issue of assetIssues(); track issue.slot) {
-            <li><strong>{{ issue.slot }}</strong> — {{ issue.file }} is {{ issue.found }}, expected {{ issue.expected }}</li>
+            <li><strong>{{ issue.slot }}</strong> - {{ issue.file }} is {{ issue.found }}, expected {{ issue.expected }}</li>
           }
         </ul>
       }

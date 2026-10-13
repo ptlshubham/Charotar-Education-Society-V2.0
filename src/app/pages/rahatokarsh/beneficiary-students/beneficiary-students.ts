@@ -69,7 +69,7 @@ export class BeneficiaryStudents {
       { value: rows.length.toLocaleString('en-IN'), label: 'Total Students', icon: STAT_ICONS.students },
       { value: String(institutes), label: 'Institutes', icon: STAT_ICONS.institutes },
       { value: avgRefund + '%', label: 'Average Refund', icon: STAT_ICONS.support },
-      { value: years.at(-1) ?? '—', label: 'Latest Year', icon: STAT_ICONS.year },
+      { value: years.at(-1) ?? '-', label: 'Latest Year', icon: STAT_ICONS.year },
     ];
   });
 

@@ -89,7 +89,7 @@ export class SeoService {
 
   private load(): Observable<SeoPayload> {
     if (!this.seoApiEnabled) {
-      // SEO endpoint temporarily disabled — fall back to index.html's static meta.
+      // SEO endpoint temporarily disabled - fall back to index.html's static meta.
       this.payload$ ??= of<SeoPayload>({ pages: [], defaults: EMPTY_DEFAULTS }).pipe(
         shareReplay({ bufferSize: 1, refCount: false }),
       );

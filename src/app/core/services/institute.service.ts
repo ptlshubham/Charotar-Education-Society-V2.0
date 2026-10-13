@@ -27,7 +27,7 @@ export class InstituteService {
   private readonly http = inject(HttpClient);
   private readonly platformId = inject(PLATFORM_ID);
 
-  /** CES society — used for SSR/prerender and as a fallback until the lookup resolves. */
+  /** CES society - used for SSR/prerender and as a fallback until the lookup resolves. */
   private static readonly DEFAULT_ID = 1;
   /** Domain the backend maps to this institute (kept static, like the legacy site). */
   private static readonly SITE_URL = 'www.cesociety.in';
@@ -69,7 +69,7 @@ export class InstituteService {
           try {
             localStorage.setItem(InstituteService.STORAGE_KEY, String(id));
           } catch {
-            /* storage may be unavailable (private mode) — the in-memory signal still holds it */
+            /* storage may be unavailable (private mode) - the in-memory signal still holds it */
           }
         }),
         catchError(() => of(InstituteService.DEFAULT_ID)),

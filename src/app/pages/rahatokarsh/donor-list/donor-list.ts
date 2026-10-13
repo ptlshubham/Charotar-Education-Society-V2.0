@@ -37,7 +37,7 @@ export class DonorList {
         takeUntilDestroyed(),
       )
       .subscribe((rows) => {
-        // Normalise amount to a real number — some legacy rows send it as a
+        // Normalise amount to a real number - some legacy rows send it as a
         // string/null, which DecimalPipe (| number) rejects with NG02100.
         this.all.set(
           (Array.isArray(rows) ? rows : []).map((r) => ({ ...r, amount: Number(r.amount) || 0 })),
@@ -48,9 +48,9 @@ export class DonorList {
 
   // Totals are derived from the fetched rows, not hard-coded.
   /** Formats a DB date, tolerating null/empty/unparseable values (some legacy
-   *  rows carry blank or malformed dates — DatePipe would throw NG02100). */
+   *  rows carry blank or malformed dates - DatePipe would throw NG02100). */
   displayDate(value: string): string {
-    if (!value) return '—';
+    if (!value) return '-';
     const d = new Date(value);
     return isNaN(d.getTime()) ? value : formatDate(d, 'mediumDate', 'en-US');
   }

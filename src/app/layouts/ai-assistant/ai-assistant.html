@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <!-- Body — data-lenis-prevent stops the app's smooth-scroll (Lenis) from stealing the
+  <!-- Body - data-lenis-prevent stops the app's smooth-scroll (Lenis) from stealing the
        wheel here, otherwise the page scrolls instead of the thread. -->
   <div #scrollBody data-lenis-prevent class="ai-scroll flex-1 overflow-y-auto overscroll-contain px-4 py-5">
     @if (!hasConversation()) {
@@ -134,7 +134,7 @@
 </div>
 }
 
-<!-- ═══ Landing greeting — one proactive nudge per session, sitting above the
+<!-- ═══ Landing greeting - one proactive nudge per session, sitting above the
      launcher. Retires as soon as it's dismissed or the panel is opened. ═══ -->
 @if (greetingVisible() && (!open() || minimized())) {
 <div
@@ -162,7 +162,7 @@
 </div>
 }
 
-<!-- ═══ Launcher — hidden while the panel is open (the panel has its own close) ═══ -->
+<!-- ═══ Launcher - hidden while the panel is open (the panel has its own close) ═══ -->
 @if (!open() || minimized()) {
 <button type="button" (click)="toggle()" aria-label="Open AI assistant" aria-expanded="false"
   class="fixed bottom-[84px] right-6 z-[85] w-[50px] h-[50px] rounded-full flex items-center justify-center shadow-lg cursor-pointer transition-transform hover:scale-105 bg-primary ring-2 ring-white/60">

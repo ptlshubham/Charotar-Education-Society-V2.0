@@ -3,7 +3,7 @@
  *
  * Every entry here is a placeholder awaiting real CES photography. Replace the
  * URL with a local path under `public/assets/images/…` and nothing else needs to
- * change — the components read from this file only.
+ * change - the components read from this file only.
  *
  * To swap in a real photo, write the path as a plain string and DROP the
  * `scene()` wrapper entirely:
@@ -11,14 +11,14 @@
  *   scene('ces-campus', 1600, 900)      ->  '/assets/images/hero/home.jpeg'
  *
  * `scene()` only builds picsum.photos URLs; passing it a file path just makes a
- * broken remote URL. Its width/height tell picsum what to generate — a real file
+ * broken remote URL. Its width/height tell picsum what to generate - a real file
  * already carries its own dimensions, so there is nothing to pass.
  *
  * See PLACEHOLDER-IMAGES.md at the repo root for the full inventory and the
  * recommended dimensions for each slot.
  */
 
-/** Deterministic scene photos — same seed always returns the same picture. */
+/** Deterministic scene photos - same seed always returns the same picture. */
 const scene = (seed: string, w: number, h: number) =>
   `https://picsum.photos/seed/${seed}/${w}/${h}`;
 
@@ -43,7 +43,7 @@ export const PLACEHOLDER = {
     others: '/assets/images/home/inst-others.jpg',
   },
 
-  // Named real person (Shri Virusbhai Patel) — stays a neutral avatar until the
+  // Named real person (Shri Virusbhai Patel) - stays a neutral avatar until the
   // real portrait is supplied; a stock face here would misrepresent him.
   chairman: portrait(68),
 

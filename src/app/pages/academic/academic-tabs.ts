@@ -10,7 +10,7 @@ export interface AcademicTab {
 
 /**
  * Unified filter-tab bar for every page in the academic module (schools,
- * colleges, hostels, others). Presentation only — the parent owns the active
+ * colleges, hostels, others). Presentation only - the parent owns the active
  * signal and reacts to `tabChange`.
  */
 @Component({

@@ -50,7 +50,7 @@ export class SocialActivities {
   );
 
   /**
-   * Category split is inferred from each programme's nature — health camps under
+   * Category split is inferred from each programme's nature - health camps under
    * `camp`, partnerships and standing programmes under `initiative`. Change the
    * `category` field if CES classifies them differently.
    */

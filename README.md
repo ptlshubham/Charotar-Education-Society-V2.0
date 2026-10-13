@@ -104,7 +104,7 @@ src/
 │   │   ├── models/models.ts       # Shared interfaces (ApiResponse, etc.)
 │   │   └── routes/routes.ts       # APP_ROUTES constants
 │   │
-│   ├── environments/              # (legacy location — use src/environments/ instead)
+│   ├── environments/              # (legacy location - use src/environments/ instead)
 │   │
 │   ├── app.ts                     # Root component
 │   ├── app.config.ts              # Bootstrap providers (router, http, interceptors)
@@ -142,7 +142,7 @@ ng g pipe shared/pipes/my-pipe
 ng g interface core/interfaces/my-model
 ```
 
-> **Naming convention:** Angular 21 generates `my-page.ts` (no `.component` suffix) by default. Keep this style — do **not** rename to `my-page.component.ts`.
+> **Naming convention:** Angular 21 generates `my-page.ts` (no `.component` suffix) by default. Keep this style - do **not** rename to `my-page.component.ts`.
 
 ---
 
@@ -161,7 +161,7 @@ ng g interface core/interfaces/my-model
    }
    ```
 
-3. Done — the page is lazy-loaded automatically.
+3. Done - the page is lazy-loaded automatically.
 
 ---
 

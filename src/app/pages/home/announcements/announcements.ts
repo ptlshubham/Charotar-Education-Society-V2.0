@@ -34,7 +34,7 @@ export class Announcements {
     {
       tag: 'Admission',
       date: '21-Jul-2026',
-      text: 'Admissions Open for Academic Year 2026-27 — apply now and be a part of the CES family.',
+      text: 'Admissions Open for Academic Year 2026-27 - apply now and be a part of the CES family.',
     },
   ];
 

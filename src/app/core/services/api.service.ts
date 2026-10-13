@@ -17,7 +17,7 @@ export class ApiService {
       'Content-Type': 'application/json'
     })
   }
-  // Rahatokarsh Fund — public lists. Endpoints carried over from the legacy CES
+  // Rahatokarsh Fund - public lists. Endpoints carried over from the legacy CES
   // backend; adjust the paths if the new backend exposes them differently.
   public static GetDonorListURL: string = ApiService.HOST_URL + '/admin/GetAllDonnerList';
   public static GetMicroDonorListURL: string = ApiService.HOST_URL + '/admin/GetRahatokarshDonationList';
@@ -26,35 +26,35 @@ export class ApiService {
   public static SaveRahatokarshDonationURL: string = ApiService.HOST_URL + '/admin/SaveRahatokarshDonation';
   // Upload a donor's PAN card image for an 80G tax-benefit claim.
   public static Upload80GTaxImageURL: string = ApiService.HOST_URL + '/admin/Upload80GTaxImage';
-  // e-Gate Pass — institute dropdown + request submission.
+  // e-Gate Pass - institute dropdown + request submission.
   public static GetInstitutesURL: string = ApiService.HOST_URL + '/admin/GetAllInstituteDetails';
   // Resolve which institute this site is, by its public URL → [{ id, name, url }].
   // The legacy site called this on boot and cached the id (see InstituteService).
   public static GetInstituteDetailByUrlURL: string = ApiService.HOST_URL + '/admin/GetInstituteDetailByURL/';
-  // Live site presence — visitors currently online. The GET doubles as the heartbeat
+  // Live site presence - visitors currently online. The GET doubles as the heartbeat
   // (each poll marks this client active) and returns the count. Not yet built on the
   // backend; the header badge stays hidden until this endpoint responds.
   public static GetOnlineVisitorsURL: string = ApiService.HOST_URL + '/visitors/online';
   public static SaveGatePassURL: string = ApiService.HOST_URL + '/admin/SaveGatePassUserList';
-  // Counselling — book an appointment (institute dropdown reuses GetInstitutesURL).
+  // Counselling - book an appointment (institute dropdown reuses GetInstitutesURL).
   public static SaveCounselingURL: string = ApiService.HOST_URL + '/admin/SaveCounselingDetails';
-  // Navratri — yearly celebrations + per-year gallery images.
+  // Navratri - yearly celebrations + per-year gallery images.
   public static GetNavratriListURL: string = ApiService.HOST_URL + '/admin/GetAllNavratriDetails';
   public static GetNavratriImagesURL: string = ApiService.HOST_URL + '/admin/GetNavratriImagesById/';
-  // Navratri live stream — per-day YouTube/Facebook links; the active one is "live now".
+  // Navratri live stream - per-day YouTube/Facebook links; the active one is "live now".
   public static GetNavratriLiveLinksURL: string = ApiService.HOST_URL + '/admin/GetAllNavYTLinksDetails';
-  // Podcast — CES "NextUp" episodes (YouTube links); page renders only active ones.
+  // Podcast - CES "NextUp" episodes (YouTube links); page renders only active ones.
   public static GetPodcastListURL: string = ApiService.HOST_URL + '/admin/GetAllPodcastDetails';
-  // Blog — posts for an institute (the society itself, by convention). Append the id.
+  // Blog - posts for an institute (the society itself, by convention). Append the id.
   public static GetBlogsURL: string = ApiService.HOST_URL + '/admin/GetBlogsDetailsById/';
-  // Answer keys — exam-cell notices for an institute. Append the id.
+  // Answer keys - exam-cell notices for an institute. Append the id.
   public static GetAnswerkeyURL: string = ApiService.HOST_URL + '/admin/GetAllAnswerkey/';
-  // Magazine — the society-wide Balmitra magazine archive (no id).
+  // Magazine - the society-wide Balmitra magazine archive (no id).
   public static GetMagazineURL: string = ApiService.HOST_URL + '/admin/GetMagazineList';
-  // Gallery — POST { institute_id }; returns a mixed banner/image list, the
+  // Gallery - POST { institute_id }; returns a mixed banner/image list, the
   // gallery keeps purpose === 'image'.
   public static GetGalleryImagesURL: string = ApiService.HOST_URL + '/admin/GetImagesByIdDetails';
-  // IP Cell — patent (Utility/Design), copyright and trademark registers.
+  // IP Cell - patent (Utility/Design), copyright and trademark registers.
   public static GetPatentDataURL: string = ApiService.HOST_URL + '/admin/GetPatentData';
   public static GetCopyrightDataURL: string = ApiService.HOST_URL + '/admin/GetCopyrightData';
   public static GetTrademarkDataURL: string = ApiService.HOST_URL + '/admin/GetTrademarkData';
@@ -84,7 +84,7 @@ export class ApiService {
   public static SubmitFeatureRequestURL: string = ApiService.HOST_URL + '/superAdmin/help-center/feature-request/public/submit';
   public static VoteFeatureRequestURL: string = ApiService.HOST_URL + '/superAdmin/help-center/feature-request/public/'; // + :id/vote
 
-  // Public Website Pricing URL — the same active, non-private plan list the portal's
+  // Public Website Pricing URL - the same active, non-private plan list the portal's
   // purchase flow reads. Unauthenticated by design.
   public static GetPublicPlansURL: string = ApiService.HOST_URL + '/superAdmin/subscription-plan/getSubscriptionPlans';
 
@@ -97,7 +97,7 @@ export class ApiService {
   // Public Website Schedule Demo URL
   public static SubmitScheduleDemoURL: string = ApiService.HOST_URL + '/superAdmin/website-control/schedule-demo/public/submit';
 
-  // Ceadx AI assistant — answers only from indexed website content.
+  // Ceadx AI assistant - answers only from indexed website content.
   public static AssistantChatURL: string = ApiService.HOST_URL + '/api/public/v1/assistant/chat';
 }
 

@@ -23,7 +23,7 @@ export class Donation {
   private readonly razorpay = inject(RazorpayService);
   private readonly zone = inject(NgZone);
 
-  /** Razorpay LIVE key, carried over from the legacy site — charges real money. */
+  /** Razorpay LIVE key, carried over from the legacy site - charges real money. */
   private static readonly RAZORPAY_KEY = 'rzp_live_leOKtvTfzPgxqJ';
 
   readonly heroImage = '/assets/images/hero/donate-now.jpeg';
@@ -233,7 +233,7 @@ export class Donation {
           actions: [{ label: 'Close', primary: true }],
         });
       },
-      // Money is already taken — never lose the payment id; show it to the donor.
+      // Money is already taken - never lose the payment id; show it to the donor.
       error: () => {
         this.submitting.set(false);
         this.showMessage(

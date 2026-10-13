@@ -9,7 +9,7 @@ interface Member {
   photo: string;
 }
 
-/** Real portraits live in public/assets/images/directors — spaces are URL-encoded. */
+/** Real portraits live in public/assets/images/directors - spaces are URL-encoded. */
 const DIR = '/assets/images/directors';
 
 @Component({
@@ -20,7 +20,7 @@ const DIR = '/assets/images/directors';
   styleUrl: './management-members.scss',
 })
 export class ManagementMembers {
-  // Designations carried over verbatim from the legacy site's management page —
+  // Designations carried over verbatim from the legacy site's management page -
   // the earlier port had flattened every member to "Managing Committee Member".
   readonly members: readonly Member[] = [
     { name: 'Shri Vijay Patel', role: 'Chairman, Anand District Cricket Association · Ex. President, Anand Nagar Palika', photo: `${DIR}/Vijaybhai.png` },

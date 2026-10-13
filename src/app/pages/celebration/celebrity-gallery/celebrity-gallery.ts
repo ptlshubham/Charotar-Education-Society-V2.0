@@ -11,7 +11,7 @@ import { Pagination } from '../../../shared/pagination/pagination';
   styleUrl: './celebrity-gallery.scss',
 })
 export class CelebrityGallery {
-  /** Shatakotsav — the Centenary Celebration photo set (ported from the legacy site). */
+  /** Shatakotsav - the Centenary Celebration photo set (ported from the legacy site). */
   readonly images: readonly string[] = Array.from(
     { length: 47 },
     (_, i) => `/assets/images/celebration/shatakotsav/${String(i + 1).padStart(2, '0')}.jpg`,
@@ -37,7 +37,7 @@ export class CelebrityGallery {
     const i = this.lightboxIndex();
     if (i === null) return null;
     const src = this.images[i];
-    return src ? { src, caption: `Centenary Celebration — Photo ${i + 1}` } : null;
+    return src ? { src, caption: `Centenary Celebration - Photo ${i + 1}` } : null;
   });
 
   readonly lightboxPosition = computed(() => {

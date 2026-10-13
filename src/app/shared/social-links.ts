@@ -1,7 +1,7 @@
 export interface SocialLink {
   label: string;
   href: string;
-  /** Filled 24×24 brand glyph — drawn by a single <path> at each call site. */
+  /** Filled 24×24 brand glyph - drawn by a single <path> at each call site. */
   path: string;
 }
 

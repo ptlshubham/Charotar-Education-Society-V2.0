@@ -94,8 +94,8 @@
                   <td class="px-5 py-3 min-w-[260px] max-w-[520px]">
                     <div class="text-[13px] leading-relaxed font-semibold text-primary [&_a]:text-accent [&_a]:underline [&_p]:m-0" [innerHTML]="paper.message | safeHtml"></div>
                   </td>
-                  <td class="px-5 py-3 text-[13px] text-muted">{{ paper.standard || '—' }}</td>
-                  <td class="px-5 py-3 text-[13px] text-muted">{{ paper.subject || '—' }}</td>
+                  <td class="px-5 py-3 text-[13px] text-muted">{{ paper.standard || '-' }}</td>
+                  <td class="px-5 py-3 text-[13px] text-muted">{{ paper.subject || '-' }}</td>
                   <td class="px-5 py-3 text-center">
                     @if (paper.file) {
                       <span class="inline-flex items-center gap-1.5 text-[12px] text-muted">
@@ -105,7 +105,7 @@
                         PDF
                       </span>
                     } @else {
-                      <span class="text-[12px] text-muted">—</span>
+                      <span class="text-[12px] text-muted">-</span>
                     }
                   </td>
                   <td class="px-5 py-3 text-center">
@@ -118,7 +118,7 @@
                         </svg>
                       </a>
                     } @else {
-                      <span class="text-[12px] text-muted">—</span>
+                      <span class="text-[12px] text-muted">-</span>
                     }
                   </td>
                 </tr>

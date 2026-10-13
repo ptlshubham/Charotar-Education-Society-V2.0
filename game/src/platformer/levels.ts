@@ -177,7 +177,7 @@ export const validateLevel = (level: Level): void => {
         for (let rr = r0; rr <= r1; rr++) {
           for (let cc = c0; cc <= c1; cc++) {
             if (solidCell(grid, cc, rr)) {
-              throw new Error(where(`flyer at col ${c} row ${r} sweeps into solid at col ${cc} row ${rr} — move it clear of cols ${c0}-${c1}, rows ${r0}-${r1}`));
+              throw new Error(where(`flyer at col ${c} row ${r} sweeps into solid at col ${cc} row ${rr} - move it clear of cols ${c0}-${c1}, rows ${r0}-${r1}`));
             }
           }
         }
@@ -229,7 +229,7 @@ export const countCoins = (level: Level): number => {
 };
 
 // ---------------------------------------------------------------------------
-// Level 1 — Jungle Run. 120 columns, 12 authored rows (world rows 6..17).
+// Level 1 - Jungle Run. 120 columns, 12 authored rows (world rows 6..17).
 //
 // World row 16 is the ground surface (top y = 256), so the player stands at
 // y = 234 with their head at 234. A jump lifts the head 45px to y = 189.

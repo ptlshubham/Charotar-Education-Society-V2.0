@@ -38,7 +38,7 @@ export class Sitemap {
   /**
    * Single source of truth for the site's public URLs, shared with
    * scripts/generate-site-files.mjs so this page, sitemap.xml and llms.txt can
-   * never disagree. Every path must resolve — a sitemap linking to routes that
+   * never disagree. Every path must resolve - a sitemap linking to routes that
    * do not exist sends visitors and crawlers into the 404 page.
    */
   readonly groups: readonly SitemapGroup[] = [

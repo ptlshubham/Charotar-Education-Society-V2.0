@@ -52,7 +52,7 @@ export class Hero {
     {
       desktop: '/assets/images/hero/banners/anniversary-desktop.svg',
       mobile: '/assets/images/hero/banners/anniversary-mobile.svg',
-      alt: 'Charotar Education Society — 110 Years, a legacy since 1916',
+      alt: 'Charotar Education Society - 110 Years, a legacy since 1916',
       link: '/celebration',
     },
     {
@@ -63,13 +63,13 @@ export class Hero {
     },
   ];
 
-  /** Slides actually rendered — fallback first, replaced by the server list (browser). */
+  /** Slides actually rendered - fallback first, replaced by the server list (browser). */
   readonly banners = signal<readonly Banner[]>(this.fallbackBanners);
 
   /** Current slide, mirrored from Swiper so the custom dots can highlight. */
   readonly activeIndex = signal(0);
 
-  /** False until Swiper is being initialised — keeps extra slides hidden (no stack flash). */
+  /** False until Swiper is being initialised - keeps extra slides hidden (no stack flash). */
   readonly swiperReady = signal(false);
 
   private readonly swiperEl = viewChild<ElementRef<SwiperEl>>('swiperEl');

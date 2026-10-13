@@ -33,7 +33,7 @@ export type IconKey = keyof typeof ICONS;
 
 /**
  * Feather-style 24×24 stroke paths, drawn by a single <svg> in the template.
- * Keys are reused across menu items on purpose — a shared visual vocabulary
+ * Keys are reused across menu items on purpose - a shared visual vocabulary
  * beats a bespoke glyph per link.
  */
 export const ICONS = {
@@ -110,14 +110,14 @@ export class Header implements AfterViewInit {
    */
   readonly lastUpdated = signal('');
 
-  /** True on devices whose primary pointer can hover (desktop) — set in the browser. */
+  /** True on devices whose primary pointer can hover (desktop) - set in the browser. */
   private hoverCapable = false;
 
   private readonly destroyRef = inject(DestroyRef);
   private readonly searchSvc = inject(SearchService);
   private readonly resources = inject(ResourcesService);
 
-  /** Visitors currently online — null while unknown / until the backend endpoint exists. */
+  /** Visitors currently online - null while unknown / until the backend endpoint exists. */
   readonly onlineVisitors = signal<number | null>(null);
 
   /** Which mobile accordion sections are expanded, keyed by label. */
@@ -125,13 +125,13 @@ export class Header implements AfterViewInit {
 
   /**
    * Which top-level desktop dropdown is open (by label), or null. Hover opens it;
-   * clicking the same tab toggles it shut — a CSS-only hover/focus menu would stay
+   * clicking the same tab toggles it shut - a CSS-only hover/focus menu would stay
    * stuck open after a click (focus-within) with no way to click it closed.
    */
   readonly openMenu = signal<string | null>(null);
   readonly openSubmenu = signal<string | null>(null);
 
-  /** Full nav tree — mirrors the live cesociety.in menu, including its third level. */
+  /** Full nav tree - mirrors the live cesociety.in menu, including its third level. */
   readonly navLinks: ReadonlyArray<NavItem> = [
     {
       label: 'Home',
@@ -257,11 +257,11 @@ export class Header implements AfterViewInit {
   /**
    * Rotating promo banners shown top-right of the brand bar. Auto-plays when there
    * is more than one slide (a single entry just shows statically). Replace or extend
-   * these as campaigns change — drop artwork in /assets/images/header/ads/ (220×64,
+   * these as campaigns change - drop artwork in /assets/images/header/ads/ (220×64,
    * or any 3.4:1 image) and add an entry here; `link` is optional.
    */
   readonly ads: ReadonlyArray<{ image: string; alt: string; link?: string }> = [
-    { image: '/assets/images/header/ads/navratri.jpeg', alt: 'Admissions Open 2025–26 — Apply Now', link: '/navratri/2026' },
+    { image: '/assets/images/header/ads/navratri.jpeg', alt: 'Admissions Open 2025–26 - Apply Now', link: '/navratri/2026' },
     { image: '/assets/images/header/ads/heritage.png', alt: 'Educating Since 1916' },
   ];
 
@@ -342,7 +342,7 @@ export class Header implements AfterViewInit {
     return out.filter(item => (seen.has(item.link) ? false : (seen.add(item.link), true)));
   }
 
-  /** Up to 8 best matches — every query term must appear in title/category/keywords. */
+  /** Up to 8 best matches - every query term must appear in title/category/keywords. */
   readonly searchResults = computed<SearchItem[]>(() => {
     const q = this.searchQuery().trim().toLowerCase();
     if (!q) return [];
@@ -390,7 +390,7 @@ export class Header implements AfterViewInit {
     this.searchOpen.set(false);
   }
 
-  /** Icon paths for a result — dynamic items carry the icon key as a plain string. */
+  /** Icon paths for a result - dynamic items carry the icon key as a plain string. */
   iconFor(key?: string): readonly string[] {
     return (this.icons as Record<string, readonly string[]>)[key ?? 'file'] ?? this.icons.file;
   }
@@ -529,7 +529,7 @@ export class Header implements AfterViewInit {
     document.addEventListener('click', onDocClick);
     this.destroyRef.onDestroy(() => document.removeEventListener('click', onDocClick));
 
-    // Live visitor presence — poll the count; the GET also acts as this client's
+    // Live visitor presence - poll the count; the GET also acts as this client's
     // heartbeat. Stays null (badge hidden) until the backend endpoint responds.
     const pollVisitors = () => {
       // this.resources.getOnlineVisitors().subscribe({
@@ -541,7 +541,7 @@ export class Header implements AfterViewInit {
     const visitorTimer = setInterval(pollVisitors, 20000);
     this.destroyRef.onDestroy(() => clearInterval(visitorTimer));
 
-    // Rotating ad banner — Swiper's custom elements need `customElements`, absent
+    // Rotating ad banner - Swiper's custom elements need `customElements`, absent
     // during SSR, so this runs browser-only. A single ad stays static (no autoplay).
     if (this.ads.length > 1 && this.adSwiperRef) {
       const { register } = await import('swiper/element/bundle');

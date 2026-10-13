@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Charotar Education Society — prerendered Angular deployed as static files
+# Charotar Education Society - prerendered Angular deployed as static files
 # Deployed to apex + any dev/test/stage subdomain, so no host is hardcoded.
 #
 # NOTE: the previous site used hash routing (https://cesociety.in/#/about).
@@ -13,7 +13,7 @@ DirectoryIndex index.html
 AddDefaultCharset UTF-8
 
 # ---------------------------------------------------------------------------
-# 1. Redirects — force HTTPS and canonicalize the host (strip leading www.)
+# 1. Redirects - force HTTPS and canonicalize the host (strip leading www.)
 # ---------------------------------------------------------------------------
 <IfModule mod_rewrite.c>
 	RewriteEngine On
@@ -43,7 +43,7 @@ AddDefaultCharset UTF-8
 </IfModule>
 
 # ---------------------------------------------------------------------------
-# 1b. MIME types — guarantee modern image formats are served with the correct
+# 1b. MIME types - guarantee modern image formats are served with the correct
 # Content-Type. Some shared hosts don't know webp/avif and fall back to
 # application/octet-stream, which together with the nosniff header below stops
 # the browser rendering the image (photos appear broken in production only).
@@ -56,7 +56,7 @@ AddDefaultCharset UTF-8
 </IfModule>
 
 # ---------------------------------------------------------------------------
-# 2. Compression — Brotli when available, gzip/deflate as fallback
+# 2. Compression - Brotli when available, gzip/deflate as fallback
 # ---------------------------------------------------------------------------
 <IfModule mod_brotli.c>
 	AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/css text/xml \
@@ -70,7 +70,7 @@ AddDefaultCharset UTF-8
 </IfModule>
 
 # ---------------------------------------------------------------------------
-# 3. Caching — hashed build assets are immutable; HTML must always revalidate
+# 3. Caching - hashed build assets are immutable; HTML must always revalidate
 # ---------------------------------------------------------------------------
 <IfModule mod_expires.c>
 	ExpiresActive On

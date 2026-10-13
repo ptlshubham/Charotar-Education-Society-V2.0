@@ -9,7 +9,7 @@ import { Signal, computed, signal } from '@angular/core';
  * Then render `pager.paged()` and drop <app-pagination [pager]="pager" /> below
  * the list. Call `pager.reset()` whenever the filters change.
  *
- * Not an Angular service — signal()/computed() need no injection context, so it
+ * Not an Angular service - signal()/computed() need no injection context, so it
  * can be `new`-ed straight into a component field.
  */
 export class Paginator<T> {

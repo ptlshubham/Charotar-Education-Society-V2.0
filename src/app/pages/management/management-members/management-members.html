@@ -19,7 +19,7 @@
            readers regardless of the visual reveal. -->
     <li [appReveal]="(i % 5) * 90" (click)="toggle(member.name)" (keydown.enter)="toggle(member.name)"
       (keydown.space)="$event.preventDefault(); toggle(member.name)" role="button" tabindex="0"
-      [attr.aria-expanded]="isExpanded(member.name)" [attr.aria-label]="member.name + ' — ' + member.role"
+      [attr.aria-expanded]="isExpanded(member.name)" [attr.aria-label]="member.name + ' - ' + member.role"
       [class.max-sm:hidden]="!showAllMobile() && i >= 6"
       class="group cursor-pointer rounded-xl border border-gray-200 bg-white p-3 text-center transition-all duration-200 hover:border-secondary focus-visible:border-secondary focus-visible:outline-none">
       <img [src]="member.photo" [alt]="member.name" loading="lazy"

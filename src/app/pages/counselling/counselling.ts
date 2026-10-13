@@ -44,7 +44,7 @@ export class Counselling {
     'Supports academic and personal growth',
   ];
 
-  /** Topics students can raise — carried over from the legacy counselling page. */
+  /** Topics students can raise - carried over from the legacy counselling page. */
   readonly talkAbout: readonly string[] = [
     'Exam stress & performance anxiety',
     'Career confusion – “What should I do after this?”',
@@ -53,13 +53,13 @@ export class Counselling {
     'Puberty, peer adjustment or bullying issues',
     'Loss and grief',
     'Depression, anxiety, eating disorder',
-    'Or just… anything on your mind — no problem is “too small.”',
+    'Or just… anything on your mind - no problem is “too small.”',
   ];
 
   readonly counsellorInfo = {
     name: 'Dr. Jigar (Jignesh) Jani',
     role: 'Counselling Psychologist',
-    bio: 'Dr. Jigar (Jignesh) Jani and his team offer a private, flexible and non-judgmental space to help you navigate life’s challenges — from exam stress and career confusion to anxiety and low mood.',
+    bio: 'Dr. Jigar (Jignesh) Jani and his team offer a private, flexible and non-judgmental space to help you navigate life’s challenges - from exam stress and career confusion to anxiety and low mood.',
     facts: [
       'Counselling Psychologist',
       'Leads the CES Campus Counselling Program',

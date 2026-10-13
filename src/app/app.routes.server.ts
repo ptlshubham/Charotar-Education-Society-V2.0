@@ -26,7 +26,7 @@ export const serverRoutes: ServerRoute[] = [
   },
   {
     // Same reasoning: posts published after a deploy would have no prerendered
-    // HTML file. Trade-off: articles get no crawler-visible meta — switch to
+    // HTML file. Trade-off: articles get no crawler-visible meta - switch to
     // RenderMode.Server once the site runs under Node to fix social previews.
     path: 'blog/:slug',
     renderMode: RenderMode.Client,

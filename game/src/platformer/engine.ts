@@ -71,7 +71,7 @@ const boxHitsSolid = (w: World, x: number, y: number, bw: number, bh: number): b
 };
 
 // Axis-separated AABB, X fully resolved before Y, no sweeping and no substepping
-// — at these speeds nothing outruns a tile. The EPS on every far edge is what
+// - at these speeds nothing outruns a tile. The EPS on every far edge is what
 // stops a body that lands exactly on a tile boundary from snagging on the seam.
 const moveBody = (w: World, b: Body): MoveResult => {
   let hitWall = false;
@@ -210,7 +210,7 @@ export const createWorld = (levelIndex: number, lives: number = PHYS.startLives,
   return w;
 };
 
-// True when the tick ended here — a death or the goal — and step() must bail.
+// True when the tick ended here - a death or the goal - and step() must bail.
 const applyTriggers = (w: World): boolean => {
   const p = w.player;
   const c1 = Math.min(w.cols - 1, Math.floor((p.x + p.w - EPS) / TILE));
@@ -307,7 +307,7 @@ export const step = (w: World, input: Input): void => {
   }
 
   // A hurt or a goal ends this tick's entity work, but the camera still has to
-  // follow the respawn and prevInput still has to advance — leaving it stale
+  // follow the respawn and prevInput still has to advance - leaving it stale
   // swallows the rising edge of a genuine jump press on the very next tick.
   if (applyTriggers(w)) {
     w.camX = clamp(p.x + p.w / 2 - VIEW_W / 2, 0, Math.max(0, w.widthPx - VIEW_W));

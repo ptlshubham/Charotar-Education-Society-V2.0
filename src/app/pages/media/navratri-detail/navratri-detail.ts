@@ -90,7 +90,7 @@ export class NavratriDetail {
   readonly lightboxItems = computed(() =>
     this.images().map((img, i) => ({
       src: this.resolve(img.original ?? img.image ?? img.path ?? img.thumb ?? ''),
-      caption: `Navratri ${this.year} — Photo ${i + 1}`,
+      caption: `Navratri ${this.year} - Photo ${i + 1}`,
     })),
   );
 

@@ -1,5 +1,5 @@
 // The CES Arcade shell: screens, HUD, dialogs, input and the fixed-step driver.
-// The simulation itself lives in engine.ts and the pixels in render.ts — this
+// The simulation itself lives in engine.ts and the pixels in render.ts - this
 // file owns everything the browser touches so those two stay deterministic.
 
 import { ChangeDetectionStrategy, Component, HostListener, OnDestroy, computed, signal } from '@angular/core';
@@ -376,7 +376,7 @@ export class ArcadeComponent implements OnDestroy {
     if (this.ctx) draw(this.ctx, this.world, this.sheets, this.report, this.backdrop, this.parallax);
   }
 
-  // Writes the hud signal only on a real change — a write per frame would queue
+  // Writes the hud signal only on a real change - a write per frame would queue
   // 60 change-detection passes a second in this zoneless app.
   private mirror(): void {
     const w = this.world;
@@ -512,7 +512,7 @@ export class ArcadeComponent implements OnDestroy {
     else void this.audio?.suspend().catch(() => {});
   }
 
-  // Muting never touches the simulation — the events have already been applied.
+  // Muting never touches the simulation - the events have already been applied.
   private beep(type: GameEventType): void {
     const notes = BEEPS[type];
     if (!notes || !this.soundEnabled() || document.hidden) return;

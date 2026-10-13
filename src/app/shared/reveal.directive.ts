@@ -7,8 +7,8 @@ import { Directive, ElementRef, Input, afterNextRender, inject } from '@angular/
  *   <li [appReveal]="120">…</li>   <!-- 120ms stagger delay -->
  *
  * Progressive enhancement by design: the hidden state is applied in
- * `afterNextRender`, which runs only in the browser. Under SSR/prerender — and
- * with JavaScript disabled — the element is simply visible, never hidden. It
+ * `afterNextRender`, which runs only in the browser. Under SSR/prerender - and
+ * with JavaScript disabled - the element is simply visible, never hidden. It
  * also opts out entirely when the user prefers reduced motion.
  *
  * Apply it only to content that starts below the fold; on above-the-fold

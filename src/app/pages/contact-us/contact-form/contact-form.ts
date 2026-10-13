@@ -19,7 +19,7 @@ export class ContactForm {
   submitting = false;
   errorMsg = '';
 
-  /** Google Maps embed for the Anand campus — a keyless place-query embed. */
+  /** Google Maps embed for the Anand campus - a keyless place-query embed. */
   readonly mapEmbed: SafeResourceUrl;
 
   constructor(

@@ -17,7 +17,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
  * A styled single-select that always opens DOWNWARD as a capped, scrollable
- * panel — unlike a native <select>, whose popup the browser may float over the
+ * panel - unlike a native <select>, whose popup the browser may float over the
  * header when the field sits low in the viewport.
  *
  * Implements ControlValueAccessor, so it drops into reactive forms with

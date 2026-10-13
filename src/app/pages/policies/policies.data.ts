@@ -1,6 +1,6 @@
 /**
  * Content for the five policy pages. They share one layout, so only the copy
- * differs — see `policy-page/policy-page.ts`, which selects by `route.data.policy`.
+ * differs - see `policy-page/policy-page.ts`, which selects by `route.data.policy`.
  */
 
 export interface PolicySection {

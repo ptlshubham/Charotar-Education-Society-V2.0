@@ -1,15 +1,15 @@
 /**
- * Generates the two root discovery files from src/app/shared/site-links.json — the
+ * Generates the two root discovery files from src/app/shared/site-links.json - the
  * same list the HTML sitemap page renders, so none of the three can drift apart:
  *
  *   public/sitemap.xml  crawlers          (sitemaps.org schema)
  *   public/llms.txt     LLMs / AI agents  (llmstxt.org convention)
  *
  * Only the groups' `links` are emitted. A group's own `path` is a display label on
- * the sitemap page and is deliberately excluded — a group path may be a redirect
+ * the sitemap page and is deliberately excluded - a group path may be a redirect
  * or a bare shell route, so it does not belong in either file.
  *
- * Prerendered output is not usable as the source here — routes like /home/blog/:slug
+ * Prerendered output is not usable as the source here - routes like /home/blog/:slug
  * are RenderMode.Client (see app.routes.server.ts) and so have no build-time HTML
  * file, but they are still real, indexable URLs.
  *
@@ -70,5 +70,5 @@ writeFileSync(
   ].join('\n')
 );
 
-console.log(`sitemap.xml — ${paths.length} URLs at ${baseUrl}`);
-console.log(`llms.txt    — ${main.length} sections, ${optional.flatMap((g) => g.links).length} optional links`);
+console.log(`sitemap.xml - ${paths.length} URLs at ${baseUrl}`);
+console.log(`llms.txt    - ${main.length} sections, ${optional.flatMap((g) => g.links).length} optional links`);

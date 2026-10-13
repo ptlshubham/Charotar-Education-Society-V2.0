@@ -52,7 +52,7 @@ export class Ipcell {
       title: 'CES IP Cell Committee',
       file: 'pdf/1776246039546.pdf',
       download: 'CES-IP-Cell-Committee.pdf',
-      desc: 'Details of the CES IP Cell Committee — members and their roles in managing, reviewing and supporting IP activities.',
+      desc: 'Details of the CES IP Cell Committee - members and their roles in managing, reviewing and supporting IP activities.',
     },
     {
       title: 'CES NOC Form',
@@ -117,7 +117,7 @@ export class Ipcell {
 
   /** Formats a DB date, tolerating null/empty/unparseable values. */
   fmtDate(value: string): string {
-    if (!value) return '—';
+    if (!value) return '-';
     const d = new Date(value);
     return isNaN(d.getTime()) ? value : formatDate(d, 'mediumDate', 'en-US');
   }

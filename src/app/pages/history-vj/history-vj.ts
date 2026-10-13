@@ -59,7 +59,7 @@ export class HistoryVj {
     'He was also pioneer in spreading the wings of quality school education in Ashi, Radhu, Nayaka, Ajarpura, Pij and Bharoda town of Charotar region.',
   ];
 
-  /** "So, Vitthalbhai J Patel was…" — one card each. */
+  /** "So, Vitthalbhai J Patel was…" - one card each. */
   readonly traits: ReadonlyArray<{ text: string; icon: string }> = [
     { text: 'Teacher, Hostel warden, Principal, volunteer, secretary and member of governing body at Charotar Education Society during the course of 35 years of service to this prestigious organization.', icon: 'group' },
     { text: 'A staunch follower of Gandhian Philosophy, an activist, a freedom fighter and a member of Quit India movement.', icon: 'flag' },
@@ -72,7 +72,7 @@ export class HistoryVj {
     { text: 'An ardent scholar and a complete believer of humanity.', icon: 'menu_book' },
   ];
 
-  // ── Tribute publication PDF viewer ("નમન… — ભૂતપૂર્વ શિષ્યગણની ગુરુવંદના") ──
+  // ── Tribute publication PDF viewer ("નમન… - ભૂતપૂર્વ શિષ્યગણની ગુરુવંદના") ──
   private readonly sanitizer = inject(DomSanitizer);
 
   /** Same tribute PDF the old site served from the backend under /pdf. */
@@ -86,7 +86,7 @@ export class HistoryVj {
   private objectUrl: string | null = null;
 
   /**
-   * Fetch the PDF and view it via a blob URL — a direct cross-origin PDF iframe is
+   * Fetch the PDF and view it via a blob URL - a direct cross-origin PDF iframe is
    * blocked by X-Frame-Options, but a same-origin blob renders natively. Falls back
    * to "Open in New Tab" if the fetch is blocked.
    */

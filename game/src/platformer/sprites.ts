@@ -5,7 +5,7 @@
 // (scripts/make-sprites.mjs), the runtime loader below, render.ts, and the
 // generated SWAP-LIST.md the art team works from.
 //
-// Erasable TypeScript only — the Node scripts import this under type stripping,
+// Erasable TypeScript only - the Node scripts import this under type stripping,
 // so there is no top-level DOM access here. `Image` is referenced only inside
 // loadSheets(), which the browser alone ever calls.
 
@@ -84,7 +84,7 @@ const tileSlot = (theme: string, surface: string, hazard: string): SpriteSlot =>
   pixelArt: true,
   notes: [
     `${surface} terrain; cells 6-7 are ${hazard}.`,
-    'Cells 0-4 and 6-7 must be opaque edge to edge — they tile against each other.',
+    'Cells 0-4 and 6-7 must be opaque edge to edge - they tile against each other.',
     'Cells 5, 8 and 9 sit on transparency and are drawn over the backdrop.',
     'Cell 0 is used wherever the cell above is empty, cell 1 everywhere else.',
   ],
@@ -103,7 +103,7 @@ const CORE_SPRITES: readonly SpriteSlot[] = [
     pixelArt: true,
     notes: [
       'Anchor is the bottom-centre of the frame.',
-      'Collision box is 12 x 22 — art may overhang 6px each side and 10px above the head.',
+      'Collision box is 12 x 22 - art may overhang 6px each side and 10px above the head.',
       'Feet must sit on the last row of the frame or the character floats.',
       'Drawn facing RIGHT; the engine mirrors horizontally for left.',
       'run-a/b/c cycle every 8 ticks while moving; rise while ascending, fall while descending.',

@@ -26,7 +26,7 @@ export class CentenaryIntro {
     'This centenary celebration was not just a journey of events, but a movement of unity, service and pride that brought together students, staff, alumni, well-wishers and the entire community.',
   ];
 
-  /** TODO: awaiting the official Gujarati copy from CES — see PLACEHOLDER-IMAGES.md. */
+  /** TODO: awaiting the official Gujarati copy from CES - see PLACEHOLDER-IMAGES.md. */
   readonly gujarati: readonly string[] = [];
 
   readonly guinness: readonly string[] = [

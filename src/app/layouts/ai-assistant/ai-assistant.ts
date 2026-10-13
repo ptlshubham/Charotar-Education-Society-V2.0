@@ -34,7 +34,7 @@ interface Topic {
 }
 
 /**
- * Only for when the request itself fails — a network drop or a 5xx. An off-topic
+ * Only for when the request itself fails - a network drop or a 5xx. An off-topic
  * question is a successful response carrying the backend's own fallback text, so it
  * never reaches this.
  */
@@ -42,7 +42,7 @@ const ERROR_REPLY =
   "Sorry, I couldn't reach our assistant just now. Please try again in a moment, or contact our support team.";
 
 /**
- * Floating AI assistant — the launcher button and its chat panel live together so the
+ * Floating AI assistant - the launcher button and its chat panel live together so the
  * layout only needs <app-ai-assistant />.
  *
  * Answers come from the backend, which only replies from indexed website content and
@@ -100,7 +100,7 @@ export class AiAssistant implements OnDestroy {
       if (req.prompt) this.ask(req.prompt);
     });
 
-    // afterNextRender keeps this out of SSR entirely — no timers or storage there,
+    // afterNextRender keeps this out of SSR entirely - no timers or storage there,
     // and the bubble is a client-side affordance anyway.
     afterNextRender(() => {
       if (this.alreadyGreeted()) return;
@@ -119,7 +119,7 @@ export class AiAssistant implements OnDestroy {
           this.clearConsentPoll();
           this.scheduleGreeting();
         } else if (Date.now() - waitingSince > AiAssistant.CONSENT_WAIT_LIMIT_MS) {
-          // Banner ignored — stop burning timers; no greeting this session.
+          // Banner ignored - stop burning timers; no greeting this session.
           this.clearConsentPoll();
         }
       }, AiAssistant.CONSENT_POLL_MS);
@@ -151,7 +151,7 @@ export class AiAssistant implements OnDestroy {
     try {
       return !!localStorage.getItem(AiAssistant.CONSENT_KEY);
     } catch {
-      // Storage blocked — the banner can't persist either, so don't wait on it.
+      // Storage blocked - the banner can't persist either, so don't wait on it.
       return true;
     }
   }
@@ -174,7 +174,7 @@ export class AiAssistant implements OnDestroy {
     try {
       return sessionStorage.getItem(AiAssistant.GREETED_KEY) === '1';
     } catch {
-      // Private mode / storage disabled — greet anyway rather than fail.
+      // Private mode / storage disabled - greet anyway rather than fail.
       return false;
     }
   }
@@ -184,7 +184,7 @@ export class AiAssistant implements OnDestroy {
     try {
       sessionStorage.setItem(AiAssistant.GREETED_KEY, '1');
     } catch {
-      // Nothing to do — worst case the bubble greets again next load.
+      // Nothing to do - worst case the bubble greets again next load.
     }
   }
 
@@ -205,7 +205,7 @@ export class AiAssistant implements OnDestroy {
   ];
 
   toggle(): void {
-    // Any deliberate open retires the greeting — it has done its job.
+    // Any deliberate open retires the greeting - it has done its job.
     if (this.greetingVisible()) this.dismissGreeting();
 
     if (this.open() && this.minimized()) {
@@ -225,7 +225,7 @@ export class AiAssistant implements OnDestroy {
     this.minimized.set(true);
   }
 
-  /** Start over — clears the thread back to the greeting. */
+  /** Start over - clears the thread back to the greeting. */
   reset(): void {
     this.messages.set([]);
     this.draft = '';
@@ -242,7 +242,7 @@ export class AiAssistant implements OnDestroy {
   ask(text: string): void {
     if (this.thinking()) return;
 
-    // Snapshot the thread before adding this turn — the backend wants the prior
+    // Snapshot the thread before adding this turn - the backend wants the prior
     // conversation, not the question it is about to be asked.
     const history = this.messages();
     this.messages.update((list) => [...list, { role: 'user', text }]);

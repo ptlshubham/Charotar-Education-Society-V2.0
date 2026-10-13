@@ -19,7 +19,7 @@ export interface Crumb {
  * Site-wide navy page banner: breadcrumb, optional gold eyebrow, title with an
  * optional gold accent line, tagline, blurb, inline stats, and a photo on the
  * right that the navy sweeps diagonally into. Used by every page hero except the
- * homepage — edit here to restyle them all at once.
+ * homepage - edit here to restyle them all at once.
  */
 @Component({
   selector: 'app-page-hero',

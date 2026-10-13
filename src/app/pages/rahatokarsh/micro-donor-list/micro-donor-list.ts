@@ -36,7 +36,7 @@ export class MicroDonorList {
         takeUntilDestroyed(),
       )
       .subscribe((rows) => {
-        // Normalise amount to a real number — DecimalPipe rejects string/null.
+        // Normalise amount to a real number - DecimalPipe rejects string/null.
         this.all.set(
           (Array.isArray(rows) ? rows : []).map((r) => ({ ...r, amount: Number(r.amount) || 0 })),
         );
@@ -46,7 +46,7 @@ export class MicroDonorList {
 
   /** Formats a DB date, tolerating null/empty/unparseable values. */
   displayDate(value: string): string {
-    if (!value) return '—';
+    if (!value) return '-';
     const d = new Date(value);
     return isNaN(d.getTime()) ? value : formatDate(d, 'mediumDate', 'en-US');
   }

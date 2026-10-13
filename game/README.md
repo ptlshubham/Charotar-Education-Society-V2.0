@@ -63,11 +63,11 @@ island card and dialog panel. Clearing a level carries your lives and score into
 dialog offers **Next level** until the last, then **Back to levels**. Cleared levels and
 your best run total are saved to `localStorage` under `ces-arcade-v1`.
 
-- **Controls** — Arrow keys or A/D to move, Space / W / Up to jump, Escape to pause. On a
+- **Controls** - Arrow keys or A/D to move, Space / W / Up to jump, Escape to pause. On a
   touch screen the pad below the stage does the same; it never overlaps the play area.
-- **Rules** — run, jump, stomp enemies, collect coins, bump question blocks, touch the
+- **Rules** - run, jump, stomp enemies, collect coins, bump question blocks, touch the
   checkpoint, reach the CES flag. Spikes and lava cost a life; three lives per run.
-- **Rendering** — a fixed 512 x 288 virtual resolution upscaled with `image-rendering:
+- **Rendering** - a fixed 512 x 288 virtual resolution upscaled with `image-rendering:
   pixelated`, 16 px tiles, 18 rows. Levels are exactly one screen tall, so the camera is a
   horizontal clamp only.
 - **Physics is discrete Euler** (`vy += g` then `y += vy`), so the jump envelope is a finite
@@ -77,7 +77,7 @@ your best run total are saved to `localStorage` under `ces-arcade-v1`.
 - **`validateLevel()` throws at load** if a question block is out of jump reach, a flyer's
   swept box clips terrain, a spawn sits inside a solid, or a row is ragged. These are the
   failures that otherwise ship as "the game is broken and nobody knows why".
-- **Determinism** — nothing in `engine.ts`, `levels.ts` or `render.ts` reads a clock or a
+- **Determinism** - nothing in `engine.ts`, `levels.ts` or `render.ts` reads a clock or a
   random number; `npm run art:check` greps for them and fails the build. Each level ships a
   recorded input script (`solution`) that `npm test` replays headlessly, asserting the level
   still clears within budget without losing a life. Re-record after any physics change.
@@ -103,7 +103,7 @@ document for the art team and ships with the build at `/game/assets/arcade/SWAP-
 
 - Overwrite the WebP image at the same path, same grid, same frame order. No code changes.
 - The declared size or any exact 2x / 3x / 4x of it is accepted, same multiple on both axes.
-- `npm run art` never overwrites art it did not generate — a SHA ledger in
+- `npm run art` never overwrites art it did not generate - a SHA ledger in
   `scripts/.placeholders.json` tracks its own output, so replaced files are left alone.
   `npm run art -- --force` overrides that and names every file it is about to destroy.
 - `npm run art:check` (step 0 of `npm test`) fails by slot name with the size it expected, so

@@ -19,7 +19,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   // Never redirect during SSR/prerender. The build runs with no backend
   // reachable, so the SEO metadata fetch fails with status 0 on every route; if
   // that redirected, `ng build` would silently emit an /error/error500 stub in
-  // place of all ~50 prerendered pages. Metadata is decorative — the page must
+  // place of all ~50 prerendered pages. Metadata is decorative - the page must
   // still render. In the browser the behaviour is unchanged.
   const isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   const redirectOnFailure = isBrowser && !req.context.get(SKIP_ERROR_REDIRECT);

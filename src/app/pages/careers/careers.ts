@@ -109,7 +109,7 @@ export class Careers {
       ],
     },
     {
-      title: 'Charotar Education Society, Anand — Shri D N Institute of Paramedical Science, (Self Finance) Mogri',
+      title: 'Charotar Education Society, Anand - Shri D N Institute of Paramedical Science, (Self Finance) Mogri',
       images: ['/assets/images/careers/a.jpg'],
       closed: true,
       advertisement: [], instructions: [], requirement: [], result: [],

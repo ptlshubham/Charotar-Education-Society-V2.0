@@ -12,7 +12,7 @@ export interface PaginatedResponse<T = any> {
   limit: number;
 }
 
-/** One searchable destination — a static page or a backend entity — for the universal search. */
+/** One searchable destination - a static page or a backend entity - for the universal search. */
 export interface SearchItem {
   title: string;
   category: string;
@@ -39,7 +39,7 @@ export interface MicroDonor {
   name: string;
   city: string;
   amount: number;
-  /** Razorpay payment reference — present on every micro donation (all are online). */
+  /** Razorpay payment reference - present on every micro donation (all are online). */
   paymentId?: string;
 }
 
@@ -48,7 +48,7 @@ export interface BeneficiaryStudent {
   studentName: string;
   instituteName: string;
   course: string;
-  /** Fee-refund percentage as the backend sends it — already formatted, e.g. "50%". */
+  /** Fee-refund percentage as the backend sends it - already formatted, e.g. "50%". */
   refundAmount: string | number;
   /** Academic/financial year the support was granted, e.g. "2025-26". */
   year: string;
@@ -71,7 +71,7 @@ export interface NavratriEntry {
   year: number | string;
   /** Rich theme description (HTML). */
   themedetails: string;
-  /** Relative cover image path — resolve with the `mediaUrl` pipe. */
+  /** Relative cover image path - resolve with the `mediaUrl` pipe. */
   coverimage: string;
 }
 
@@ -129,7 +129,7 @@ export interface MagazineIssue {
   files: string;
 }
 
-/** Counselling appointment request — POST /admin/SaveCounselingDetails. */
+/** Counselling appointment request - POST /admin/SaveCounselingDetails. */
 export interface CounsellingPayload {
   name: string;
   division: string;
@@ -174,7 +174,7 @@ export interface Trademark {
 }
 
 /**
- * Body for POST /admin/SaveGatePassUserList — field names match the legacy
+ * Body for POST /admin/SaveGatePassUserList - field names match the legacy
  * backend contract. `role` is 'Visitor' or 'Office'; `institute` is sent only
  * for staff passes.
  */
@@ -188,7 +188,7 @@ export interface GatePassPayload {
 }
 
 /**
- * Body for POST /admin/SaveRahatokarshDonation — field names match the legacy
+ * Body for POST /admin/SaveRahatokarshDonation - field names match the legacy
  * backend contract exactly. Sent after Razorpay confirms the payment.
  */
 export interface DonationPayload {
@@ -209,7 +209,7 @@ export interface DonationPayload {
 /**
  * A gallery/banner image from POST /admin/GetImagesByIdDetails ({ institute_id }).
  * The response mixes hero banners and gallery photos; the gallery page keeps only
- * `purpose === 'image'`. `image` is a relative media path — resolve with MediaUrlPipe.
+ * `purpose === 'image'`. `image` is a relative media path - resolve with MediaUrlPipe.
  */
 export interface GalleryImage {
   id?: number;

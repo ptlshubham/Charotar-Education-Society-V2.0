@@ -5,7 +5,7 @@
 //   npm run art:check    verify every sheet's size, the swap list and determinism
 //
 // Dev-only: never referenced from `npm run build`. The PNGs are committed, so
-// the app fetches nothing at runtime. No npm dependency — the PNG encoder below
+// the app fetches nothing at runtime. No npm dependency - the PNG encoder below
 // is built on node:zlib.
 
 import { createHash } from 'node:crypto';
@@ -121,7 +121,7 @@ const P = Object.fromEntries(Object.entries(PALETTE).map(([k, v]) => [k, hex(v)]
 const CLEAR = [0, 0, 0, 0];
 
 // ---------------------------------------------------------------------------
-// Placeholder art. Deliberately simple, on-palette and readable at 1x — it has
+// Placeholder art. Deliberately simple, on-palette and readable at 1x - it has
 // to survive a demo without being mistaken for finished art.
 // ---------------------------------------------------------------------------
 const drawPlayer = c => {
@@ -301,16 +301,16 @@ const manifestHash = () => sha(JSON.stringify(SPRITES)).slice(0, 16);
 
 const swapList = () => {
   const L = [];
-  L.push('# CES Arcade — Art Swap List');
+  L.push('# CES Arcade - Art Swap List');
   L.push('');
-  L.push('GENERATED FILE — do not edit by hand. Run `npm run art` to regenerate.');
+  L.push('GENERATED FILE - do not edit by hand. Run `npm run art` to regenerate.');
   L.push(`manifest-hash: ${manifestHash()}`);
   L.push('');
   L.push('## How to hand off final art');
   L.push('');
   L.push('1. Overwrite the WebP image at the exact path below. Do not rename it, do not add a suffix.');
   L.push('2. Keep the grid: the same number of columns and rows, in the same frame order.');
-  L.push('3. Frame size may be the listed size OR an exact 2x, 3x or 4x of it — the same');
+  L.push('3. Frame size may be the listed size OR an exact 2x, 3x or 4x of it - the same');
   L.push('   multiple on BOTH axes. The exact authored-atlas size listed for a slot is also accepted.');
   L.push('4. Transparent background. No padding between frames, no gaps, no bleed.');
   L.push('   Authored atlases retain their original pixels; the browser trims transparent margins and assembles frames once at load. Terrain cells fill their full square.');
@@ -323,10 +323,10 @@ const swapList = () => {
   L.push('Each theme owns its folder. Files under `shared/` serve the other maps until their own artwork is approved.');
   L.push('Authored atlases and legacy sheets are always preserved by the placeholder generator.');
   L.push('');
-  L.push(`## Sprite manifest — ${SPRITES.length} files`);
+  L.push(`## Sprite manifest - ${SPRITES.length} files`);
   L.push('');
   for (const s of SPRITES) {
-    L.push(`### ${s.slot} — ${s.file}`);
+    L.push(`### ${s.slot} - ${s.file}`);
     L.push('');
     L.push('| | |');
     L.push('|---|---|');
@@ -343,7 +343,7 @@ const swapList = () => {
   L.push('');
   L.push(Object.entries(PALETTE).map(([k, v]) => `${v} ${k}`).join(' · '));
   L.push('');
-  L.push('## Shared with the quiz — DO NOT replace these');
+  L.push('## Shared with the quiz - DO NOT replace these');
   L.push('');
   L.push('Replacing any file below also changes the Learning Quest quiz. If new art is');
   L.push('needed here, raise it as a separate change.');
@@ -421,8 +421,8 @@ const check = () => {
       problems.push(`${s.slot}: ${s.file}\n    expected ${expectedSizes(s)}  (${s.cols} x ${s.rows} frames of ${s.frameW} x ${s.frameH})\n    found    ${size.w}x${size.h}`);
     }
   }
-  if (!existsSync(SWAP)) problems.push('SWAP-LIST.md is missing — run `npm run art`');
-  else if (readFileSync(SWAP, 'utf8') !== swapList()) problems.push('SWAP-LIST.md is stale — run `npm run art`');
+  if (!existsSync(SWAP)) problems.push('SWAP-LIST.md is missing - run `npm run art`');
+  else if (readFileSync(SWAP, 'utf8') !== swapList()) problems.push('SWAP-LIST.md is stale - run `npm run art`');
 
   // The simulation must never read a clock or a random number, or replay tests
   // and the recorded level solutions stop meaning anything.
@@ -431,7 +431,7 @@ const check = () => {
     if (!existsSync(p)) continue;
     const src = readFileSync(p, 'utf8');
     for (const banned of ['Math.random', 'Date.now', 'performance.now', 'new Date(']) {
-      if (src.includes(banned)) problems.push(`${f} contains ${banned} — the simulation must stay deterministic`);
+      if (src.includes(banned)) problems.push(`${f} contains ${banned} - the simulation must stay deterministic`);
     }
   }
 
@@ -440,7 +440,7 @@ const check = () => {
     for (const p of problems) console.error('  ' + p);
     process.exit(1);
   }
-  console.log(`Art check OK — ${SPRITES.length} sheets, ${REUSED.length} reused assets, swap list current.`);
+  console.log(`Art check OK - ${SPRITES.length} sheets, ${REUSED.length} reused assets, swap list current.`);
 };
 
 const args = process.argv.slice(2);

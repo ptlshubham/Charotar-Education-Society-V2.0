@@ -3,7 +3,7 @@ import { SearchItem } from './models/models';
 /**
  * Flat, searchable list of every CES institute shown on the Academic pages, so the
  * universal search finds an institute by name and links to its page. Mirrors the
- * arrays in pages/academic/{school,colleges,hostels,others} — keep this in sync
+ * arrays in pages/academic/{school,colleges,hostels,others} - keep this in sync
  * when institutes are added or renamed. (That content is static, not backend.)
  */
 function inst(name: string, category: string, link: string, icon: string): SearchItem {
@@ -75,7 +75,7 @@ export const ACADEMIC_INSTITUTES: readonly SearchItem[] = [
   ...OTHERS.map((n) => inst(n, 'Others', '/academic/others', 'grid')),
 ];
 
-/** The three CES campuses — each opens /more/campus with its tab pre-selected. */
+/** The three CES campuses - each opens /more/campus with its tab pre-selected. */
 export const CAMPUSES: readonly SearchItem[] = ['anand', 'khetiwadi', 'mogri'].map((key) => ({
   title: `${key[0].toUpperCase()}${key.slice(1)} Campus`,
   category: 'Campus',

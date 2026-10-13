@@ -2,14 +2,14 @@
 
 @theme {
   /* ─── CES brand palette ─── */
-  --color-primary: #203154;        /* navy — brand primary */
+  --color-primary: #203154;        /* navy - brand primary */
   --color-primary-dark: #182742;
   --color-primary-light: #2c4370;
 
-  --color-secondary: #f5a623;      /* gold — brand secondary */
+  --color-secondary: #f5a623;      /* gold - brand secondary */
   --color-secondary-dark: #d98e0b;
 
-  --color-logo: #ed1c24;           /* CES logo red — use sparingly, for logo/brand marks */
+  --color-logo: #ed1c24;           /* CES logo red - use sparingly, for logo/brand marks */
 
   /* CES logo red, used for active indicators, nav underlines and link hovers. */
   --color-accent: #ed1c24;
@@ -77,7 +77,7 @@
    vertical-padding utility (py, pt or pb) inline per section.
 
    To change left/right spacing or the max content width site-wide,
-   edit ONLY this rule — no need to touch individual pages.
+   edit ONLY this rule - no need to touch individual pages.
    Must sit AFTER the @theme block so its @apply can resolve the
    spacing and breakpoint tokens. */
 @utility site-container {

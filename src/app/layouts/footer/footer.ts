@@ -42,7 +42,7 @@ export class Footer {
   private static readonly DASHBOARD_URL = 'https://dashboard.cesociety.in';
 
   /**
-   * Every `route` here must resolve — a footer link to a dead route sends the
+   * Every `route` here must resolve - a footer link to a dead route sends the
    * visitor to the 404 page on every single page of the site. The legacy site's
    * Delivery Shipping, Pricing Structure, Self Assessment and Non-Teaching
    * Assessment links were dropped for exactly that reason: those pages do not

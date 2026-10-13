@@ -28,7 +28,7 @@ export class LiveNavratri {
 
   readonly live = signal<NavratriLiveLink | null>(null);
 
-  /** Built once per link — a fresh SafeResourceUrl on every check would reload the iframe. */
+  /** Built once per link - a fresh SafeResourceUrl on every check would reload the iframe. */
   readonly embedUrl = computed<SafeResourceUrl | null>(() => {
     const id = videoId(this.live()?.link ?? '');
     return id ? this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${id}`) : null;
@@ -48,7 +48,7 @@ export class LiveNavratri {
       .subscribe((list) => {
         const active = (Array.isArray(list) ? list : [])
           .filter((l) => isActive(l.isactive))
-          // Latest year, then latest day — in case more than one is left active.
+          // Latest year, then latest day - in case more than one is left active.
           .sort((a, b) => Number(b.year) - Number(a.year) || Number(b.day) - Number(a.day));
         this.live.set(active[0] ?? null);
       });

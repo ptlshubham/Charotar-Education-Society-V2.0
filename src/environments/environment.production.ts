@@ -4,7 +4,7 @@
 // Frontend: https://cesociety.in
 //
 // NOTE: the API was supplied as http://api.cesociety.in. It is set to https
-// here on purpose — the site is served over HTTPS, and browsers block an
+// here on purpose - the site is served over HTTPS, and browsers block an
 // HTTPS page calling an HTTP endpoint as mixed active content. That failure
 // is invisible at build time (prerendering runs under Node, which does not
 // enforce it) but kills every runtime fetch, including the live SEO payload

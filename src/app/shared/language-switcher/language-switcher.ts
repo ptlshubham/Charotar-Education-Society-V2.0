@@ -80,7 +80,7 @@ export class LanguageSwitcher {
     this.open.set(false);
   }
 
-  /** Load Google's translate element once, hidden — it applies the cookie on load. */
+  /** Load Google's translate element once, hidden - it applies the cookie on load. */
   private injectGoogleTranslate(): void {
     if (!isPlatformBrowser(this.platformId)) return;
     if (document.getElementById('google-translate-script')) return;

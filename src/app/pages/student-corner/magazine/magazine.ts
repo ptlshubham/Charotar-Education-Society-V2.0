@@ -12,7 +12,7 @@ import { environment } from '../../../../environments/environment';
 import { PageHero } from '../../../shared/page-hero/page-hero';
 import { CustomSelect } from '../../../shared/custom-select/custom-select';
 
-/** Generic cover used for every magazine — the backend stores only the PDF, no cover. */
+/** Generic cover used for every magazine - the backend stores only the PDF, no cover. */
 const MAGAZINE_COVER = '/assets/images/magazine-cover.jpg';
 
 interface Issue {

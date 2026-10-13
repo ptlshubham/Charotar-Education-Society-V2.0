@@ -19,7 +19,7 @@ export class ResourcesService {
 
 
 
-    // Rahatokarsh Fund lists — the legacy endpoints return bare arrays.
+    // Rahatokarsh Fund lists - the legacy endpoints return bare arrays.
     // SKIP_ERROR_REDIRECT so a failure shows an inline message instead of
     // bouncing the whole page to the error screen.
     getDonorList() {
@@ -41,7 +41,7 @@ export class ResourcesService {
     }
 
     // Persist a donation once Razorpay confirms payment. SKIP_ERROR_REDIRECT so a
-    // save failure surfaces inline — the money is already taken, we must never
+    // save failure surfaces inline - the money is already taken, we must never
     // silently bounce the donor to the error page and lose the payment id.
     saveDonation(payload: DonationPayload) {
         return this.http.post(ApiService.SaveRahatokarshDonationURL, payload, {
@@ -51,23 +51,23 @@ export class ResourcesService {
 
     // Upload a PAN card image (multipart) for an 80G claim; returns the stored
     // reference to send back in the donation payload's `taxImage`. Let HttpClient
-    // set the multipart Content-Type/boundary — do not set it manually.
+    // set the multipart Content-Type/boundary - do not set it manually.
     uploadTaxImage(form: FormData) {
         return this.http.post<string>(ApiService.Upload80GTaxImageURL, form, {
             context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
         });
     }
 
-    // e-Gate Pass — institute dropdown (staff tab) and request submission.
+    // e-Gate Pass - institute dropdown (staff tab) and request submission.
     getInstitutes() {
         return this.http.get<Institute[]>(ApiService.GetInstitutesURL, {
             context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
         });
     }
 
-    // Live visitor presence — how many people are currently on the site. The response
+    // Live visitor presence - how many people are currently on the site. The response
     // shape is parsed loosely by the caller (number, or { online } / { count } etc.).
-    // SKIP_ERROR_REDIRECT so a missing endpoint never bounces the page — the header
+    // SKIP_ERROR_REDIRECT so a missing endpoint never bounces the page - the header
     // simply keeps the badge hidden.
     getOnlineVisitors() {
         return this.http.get<unknown>(ApiService.GetOnlineVisitorsURL, {
@@ -81,14 +81,14 @@ export class ResourcesService {
         });
     }
 
-    // Counselling — book an appointment. Institute list reuses getInstitutes().
+    // Counselling - book an appointment. Institute list reuses getInstitutes().
     saveCounseling(payload: CounsellingPayload) {
         return this.http.post(ApiService.SaveCounselingURL, payload, {
             context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
         });
     }
 
-    // Navratri — the yearly celebration list and a year's gallery images.
+    // Navratri - the yearly celebration list and a year's gallery images.
     getNavratriList() {
         return this.http.get<NavratriEntry[]>(ApiService.GetNavratriListURL, {
             context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
@@ -107,35 +107,35 @@ export class ResourcesService {
         });
     }
 
-    // Podcast — CES "NextUp" episodes; the page keeps only the active ones.
+    // Podcast - CES "NextUp" episodes; the page keeps only the active ones.
     getPodcastList() {
         return this.http.get<PodcastEntry[]>(ApiService.GetPodcastListURL, {
             context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
         });
     }
 
-    // Blog — posts for an institute (defaults to the society itself).
+    // Blog - posts for an institute (defaults to the society itself).
     getBlogs(instituteId: number | string) {
         return this.http.get<BlogPost[]>(ApiService.GetBlogsURL + instituteId, {
             context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
         });
     }
 
-    // Answer keys — exam-cell notices for an institute (defaults to the society).
+    // Answer keys - exam-cell notices for an institute (defaults to the society).
     getAnswerKeys(instituteId: number | string) {
         return this.http.get<AnswerKeyEntry[]>(ApiService.GetAnswerkeyURL + instituteId, {
             context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
         });
     }
 
-    // Magazine — the society-wide Balmitra magazine archive.
+    // Magazine - the society-wide Balmitra magazine archive.
     getMagazines() {
         return this.http.get<MagazineIssue[]>(ApiService.GetMagazineURL, {
             context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
         });
     }
 
-    // Gallery — banner/image list for an institute (defaults to the society). The
+    // Gallery - banner/image list for an institute (defaults to the society). The
     // legacy backend takes { institute_id } and returns a mixed list; the gallery
     // page keeps only purpose === 'image'.
     getGalleryImages(instituteId: number | string) {
@@ -146,7 +146,7 @@ export class ResourcesService {
         );
     }
 
-    // Home hero banners — the same mixed image list as the gallery (one endpoint),
+    // Home hero banners - the same mixed image list as the gallery (one endpoint),
     // kept to purpose 'slider'/'banner' and newest-first (highest id). The legacy
     // admin site loaded these exactly this way. SKIP_ERROR_REDIRECT so a failure
     // leaves the hero on its built-in fallback banners instead of bouncing the page.
@@ -269,7 +269,7 @@ export class ResourcesService {
         return this.http.post(ApiService.VoteFeatureRequestURL + id + '/vote', {});
     }
 
-    // Public Website Pricing — active, non-private subscription plans.
+    // Public Website Pricing - active, non-private subscription plans.
     getPublicPlans() {
         return this.http.get(ApiService.GetPublicPlansURL);
     }

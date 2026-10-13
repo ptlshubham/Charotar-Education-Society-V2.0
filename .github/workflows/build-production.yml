@@ -1,0 +1,56 @@
+# Build website — every push to `production` builds and prerenders the site exactly as a release would
+# (`npm run build`: regenerates sitemap.xml / llms.txt, then `ng build --configuration=production`).
+# A failing build or prerender shows up here instead of on deploy day.
+#
+# Nothing is uploaded anywhere: cesociety.in still serves the old site. The ready-to-host files
+# (dist/charotar-education-society-v2/browser — static, for the Apache/LiteSpeed docroot incl. .htaccess)
+# are kept for 30 days as the run's "website-<commit>" artifact.
+
+name: Build website
+
+on:
+  push:
+    branches: [production]
+  workflow_dispatch:
+
+concurrency:
+  group: build-website-production
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build + prerender
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      # prerendering fetches page SEO from https://api.cesociety.in at build time
+      - run: npm run build
+
+      - name: Check the build output
+        run: |
+          out=dist/charotar-education-society-v2/browser
+          test -f "$out/index.html"
+          test -f "$out/.htaccess"
+          test -f "$out/sitemap.xml"
+          pages=$(find "$out" -name index.html | wc -l)
+          echo "prerendered pages: $pages"
+          [ "$pages" -gt 1 ] || { echo "::error::only $pages index.html — prerendering produced no route pages"; exit 1; }
+          echo "### Website · ${GITHUB_SHA::7} · $pages prerendered pages · $(du -sh "$out" | cut -f1)" >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: website-${{ github.sha }}
+          path: dist/charotar-education-society-v2/browser/
+          include-hidden-files: true
+          retention-days: 30

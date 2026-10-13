@@ -32,6 +32,12 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client,
   },
   {
+    // Legacy alias that only redirects to /blog/:slug — nothing to prerender, and
+    // under `**` the build fails for a parameterised route with no getPrerenderParams.
+    path: 'home/blog/:slug',
+    renderMode: RenderMode.Client,
+  },
+  {
     path: '**',
     renderMode: RenderMode.Prerender,
   },

@@ -1,7 +1,4 @@
-/* The CES badge fill, as used on the launcher.
-   Lives here because the icon (ai-icon.svg) is filled white, so it only reads
-   against this gradient - on the plain white/tinted circles it used to sit on, it
-   was white-on-white and effectively invisible. */
+/* Navy disc behind the small Dyuno avatars (panel header, replies, greeting). */
 .ai-badge {
   background: #203154;
 }
@@ -28,14 +25,23 @@
   100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Expanding ring on the launcher while the greeting is up, to draw the eye to it */
-.ai-launcher-ping {
-  animation: ai-launcher-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+/* Launcher is the bare mascot (transparent frames) - no badge circle behind it.
+   drop-shadow follows the figure's outline, so it still lifts off the page. */
+.ai-launcher-avatar {
+  filter: drop-shadow(0 8px 12px rgba(11, 40, 39, 0.28));
 }
 
-@keyframes ai-launcher-ping {
-  0%        { opacity: 0.7; transform: scale(1); }
-  70%, 100% { opacity: 0;   transform: scale(1.6); }
+/* Dyuno walks in from off the right edge on first load while the walk frames cycle.
+   Duration is bound from the component (walkInMs) so the two always finish together. */
+.ai-launcher-walk-in {
+  animation-name: ai-launcher-walk-in;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+
+@keyframes ai-launcher-walk-in {
+  from { transform: translateX(110px); }
+  to   { transform: translateX(0); }
 }
 
 /* Slim scrollbar so the thread doesn't get the chunky default one */
@@ -81,9 +87,8 @@
     animation: none;
   }
 
-  /* The ping is pure attention-grabbing motion - drop it entirely rather than
-     leaving a static ring sitting on the launcher. */
-  .ai-launcher-ping {
-    display: none;
+  /* The component also skips the walk and waves here; this is a backstop. */
+  .ai-launcher-walk-in {
+    animation: none;
   }
 }

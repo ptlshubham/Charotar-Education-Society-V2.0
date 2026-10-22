@@ -2,15 +2,17 @@
 @if (open() && !minimized()) {
 <div
   class="ai-panel fixed z-[90] bottom-6 right-6 w-[calc(100vw-3rem)] sm:w-[380px] h-[65vh] max-h-[calc(100vh-3rem)] flex flex-col rounded-[16px] bg-white overflow-hidden shadow-[0_30px_70px_-20px_rgba(11,40,39,0.35)] ring-1 ring-primary/[0.06]"
-  role="dialog" aria-label="Sarthi assistant">
+  role="dialog" aria-label="Dyuno assistant">
 
   <!-- Header -->
   <div class="flex items-center gap-3 px-4 py-3.5 bg-primary">
-    <span class="ai-badge flex items-center justify-center w-10 h-10 rounded-full shrink-0">
-      <img src="/assets/icons/ai-icon.svg" alt="Sarthi assistant" aria-hidden="true" class="w-6 h-6" />
+    <!-- Head-and-shoulders crop on a white disc - the full-body mascot is too small to read here -->
+    <span class="flex w-10 h-10 rounded-full shrink-0 overflow-hidden bg-white ring-2 ring-white/25">
+      <img src="/assets/icons/dyuno/dyuno-avatar.webp" alt="Dyuno assistant" aria-hidden="true" width="40" height="40"
+        class="w-full h-full object-cover" />
     </span>
     <div class="min-w-0 flex-1">
-      <p class="text-white text-[15px] font-semibold leading-tight">Sarthi</p>
+      <p class="text-white text-[15px] font-semibold leading-tight">Dyuno</p>
       <p class="text-white/80 text-[11px]">Charotar Education Society</p>
     </div>
     <div class="flex items-center gap-0.5 shrink-0">
@@ -46,7 +48,7 @@
     @if (!hasConversation()) {
     <!-- Greeting -->
     <div class="text-center">
-      <p class="text-primary text-[17px] font-semibold">Hi! I'm Sarthi 👋</p>
+      <p class="text-primary text-[17px] font-semibold">Hi! I'm Dyuno 👋</p>
       <p class="text-primary text-[17px] font-semibold">How can I assist you today?</p>
       <p class="mt-2.5 text-[12px] leading-[18px] text-muted">
         Ask me about admissions, institutes, examinations, results, scholarships and more.
@@ -73,7 +75,7 @@
       } @else {
       <div class="flex items-start gap-2 max-w-[85%]">
         <span class="ai-badge flex items-center justify-center w-7 h-7 rounded-full shrink-0 mt-0.5">
-          <img src="/assets/icons/ai-icon.svg" alt="Sarthi assistant" aria-hidden="true" class="w-4 h-4" />
+          <img src="/assets/icons/dyuno/dyuno-wave.webp" alt="Dyuno assistant" aria-hidden="true" class="w-4 h-4" />
         </span>
         <div class="rounded-[12px] rounded-tl-[4px] bg-[#f4f7f6] px-3.5 py-2.5">
           <p class="text-primary text-[13px] leading-[19px]">{{ m.text }}</p>
@@ -85,7 +87,7 @@
       @if (thinking()) {
       <div class="flex items-center gap-2">
         <span class="ai-badge flex items-center justify-center w-7 h-7 rounded-full shrink-0">
-          <img src="/assets/icons/ai-icon.svg" alt="Sarthi assistant" aria-hidden="true" class="w-4 h-4" />
+          <img src="/assets/icons/dyuno/dyuno-wave.webp" alt="Dyuno assistant" aria-hidden="true" class="w-4 h-4" />
         </span>
         <span class="ai-typing flex items-center gap-1 rounded-[12px] bg-[#f4f7f6] px-3.5 py-3">
           <span class="w-1.5 h-1.5 rounded-full bg-muted/60"></span>
@@ -128,7 +130,7 @@
       </button>
     </form>
     <p class="mt-2 text-center text-[10px] leading-[14px] text-muted/70">
-      Sarthi can make mistakes.<br />Please verify important information.
+      Dyuno can make mistakes.<br />Please verify important information.
     </p>
   </div>
 </div>
@@ -138,14 +140,14 @@
      launcher. Retires as soon as it's dismissed or the panel is opened. ═══ -->
 @if (greetingVisible() && (!open() || minimized())) {
 <div
-  class="ai-greeting fixed bottom-[146px] right-6 z-[86] w-[250px] rounded-[12px] bg-white p-3 pr-7 shadow-[0_18px_40px_-12px_rgba(11,40,39,0.3)] ring-1 ring-primary/[0.06]"
+  class="ai-greeting fixed bottom-[168px] right-6 z-[86] w-[250px] rounded-[12px] bg-white p-3 pr-7 shadow-[0_18px_40px_-12px_rgba(11,40,39,0.3)] ring-1 ring-primary/[0.06]"
   role="status" aria-live="polite">
   <button type="button" (click)="openFromGreeting()" class="flex items-start gap-2.5 text-left w-full cursor-pointer">
     <span class="ai-badge flex items-center justify-center w-7 h-7 rounded-full shrink-0">
-      <img src="/assets/icons/ai-icon.svg" alt="Sarthi assistant" aria-hidden="true" class="w-4 h-4" />
+      <img src="/assets/icons/dyuno/dyuno-wave.webp" alt="Dyuno assistant" aria-hidden="true" class="w-4 h-4" />
     </span>
     <span class="min-w-0">
-      <span class="block text-primary text-[12px] font-semibold leading-tight">Sarthi</span>
+      <span class="block text-primary text-[12px] font-semibold leading-tight">Dyuno</span>
       <span class="block text-[12px] leading-[17px] text-muted mt-0.5">{{ greeting }}</span>
     </span>
   </button>
@@ -157,18 +159,25 @@
     </svg>
   </button>
   <!-- Tail pointing down at the launcher -->
-  <span class="absolute -bottom-1 right-6 w-3 h-3 rotate-45 bg-white ring-1 ring-primary/[0.06]"
+  <span class="absolute -bottom-1 right-5 w-3 h-3 rotate-45 bg-white ring-1 ring-primary/[0.06]"
     style="clip-path: polygon(100% 0, 100% 100%, 0 100%);" aria-hidden="true"></span>
 </div>
 }
 
-<!-- ═══ Launcher - hidden while the panel is open (the panel has its own close) ═══ -->
+<!-- ═══ Launcher - hidden while the panel is open (the panel has its own close) ═══
+     right-[15px], not right-6: Dyuno's body sits ~51% across his canvas, so this lines
+     him up over the back-to-top button's centre (24px + 52px/2 = 50px from the edge).
+     Every frame is stacked and only the current one is visible, so swaps never flash. -->
 @if (!open() || minimized()) {
-<button type="button" (click)="toggle()" aria-label="Open AI assistant" aria-expanded="false"
-  class="fixed bottom-[84px] right-6 z-[85] w-[50px] h-[50px] rounded-full flex items-center justify-center shadow-lg cursor-pointer transition-transform hover:scale-105 bg-primary ring-2 ring-white/60">
-  <img src="/assets/icons/ai-icon.svg" alt="Sarthi assistant" aria-hidden="true" class="w-8 h-8" />
-  @if (greetingVisible()) {
-  <span class="ai-launcher-ping absolute inset-0 rounded-full ring-2 ring-[#7FA6FF]" aria-hidden="true"></span>
-  }
+<button type="button" (click)="toggle()" (mouseenter)="waveDyuno()" aria-label="Open AI assistant" aria-expanded="false"
+  [class.invisible]="!dyunoReady()"
+  class="fixed bottom-[84px] right-[15px] z-[85] w-[72px] h-[72px] rounded-full cursor-pointer transition-transform hover:scale-105">
+  <span class="ai-launcher-avatar relative block w-full h-full" [class.ai-launcher-walk-in]="dyunoWalkingIn()"
+    [style.animation-duration.ms]="walkInMs">
+    @for (f of dyunoFrames; track f) {
+    <img [src]="'/assets/icons/dyuno/dyuno-' + f + '.webp'" alt="" aria-hidden="true" width="72" height="72"
+      class="absolute inset-0 w-full h-full" [class.invisible]="dyunoFrame() !== f" />
+    }
+  </span>
 </button>
 }

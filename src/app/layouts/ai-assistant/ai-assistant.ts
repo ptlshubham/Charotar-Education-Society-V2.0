@@ -41,6 +41,37 @@ interface Topic {
 const ERROR_REPLY =
   "Sorry, I couldn't reach our assistant just now. Please try again in a moment, or contact our support team.";
 
+/** Dyuno mascot frames - /assets/icons/dyuno/dyuno-<frame>.webp, all on one canvas so they swap in place. */
+type DyunoFrame = 'stand' | 'wave' | `walk-${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8}`;
+
+/** One beat of a mascot animation: show `frame` for `ms`. */
+type DyunoStep = readonly [frame: DyunoFrame, ms: number];
+
+/**
+ * One walk cycle = two steps: near foot lands, rolls, pushes off, legs pass (1-4), then
+ * the far foot does the same (5-8). The files are already numbered in walking order.
+ */
+const WALK_CYCLE: readonly DyunoFrame[] = ['walk-1', 'walk-2', 'walk-3', 'walk-4', 'walk-5', 'walk-6', 'walk-7', 'walk-8'];
+/** 2 cycles = 4 steps of ~27px over the 110px slide-in - about one stride each, so feet don't skate. */
+const WALK_STEP_MS = 110;
+const WALK_CYCLES = 2;
+const WALK_IN: readonly DyunoStep[] = Array.from({ length: WALK_CYCLES }).flatMap(() =>
+  WALK_CYCLE.map((f): DyunoStep => [f, WALK_STEP_MS]),
+);
+
+/** Hand up-down-up, hold, then back to rest - at launcher size this reads as a wave. */
+const WAVE: readonly DyunoStep[] = [
+  ['wave', 380],
+  ['stand', 160],
+  ['wave', 380],
+  ['stand', 160],
+  ['wave', 900],
+  ['stand', 0],
+];
+
+/** How often an idle Dyuno waves to catch the eye. */
+const IDLE_WAVE_MS = 8000;
+
 /**
  * Floating AI assistant - the launcher button and its chat panel live together so the
  * layout only needs <app-ai-assistant />.
@@ -89,8 +120,23 @@ export class AiAssistant implements OnDestroy {
   private greetingTimer?: number;
   private consentPoll?: number;
 
+  // ─── Dyuno launcher animation ───
+
+  readonly dyunoFrames: readonly DyunoFrame[] = ['stand', 'wave', ...WALK_CYCLE];
+  readonly dyunoFrame = signal<DyunoFrame>('stand');
+  /** Hidden until the browser takes over, so SSR doesn't paint him before he walks in. */
+  readonly dyunoReady = signal(false);
+  readonly dyunoWalkingIn = signal(false);
+  /** Drives the CSS slide-in so it lasts exactly as long as the walk frames. */
+  readonly walkInMs = WALK_IN.length * WALK_STEP_MS;
+
+  private dyunoTimer?: number;
+  private dyunoIdle?: number;
+  private dyunoBusy = false;
+  private reducedMotion = false;
+
   constructor() {
-    // The inline Sarthi card on the home page hands its question over here.
+    // The inline Dyuno card on the home page hands its question over here.
     effect(() => {
       const req = this.bridge.request();
       if (!req || !isPlatformBrowser(this.platformId)) return;
@@ -99,6 +145,9 @@ export class AiAssistant implements OnDestroy {
       this.minimized.set(false);
       if (req.prompt) this.ask(req.prompt);
     });
+
+    // Dyuno walks in from the right edge, waves, then waves now and then while idle.
+    afterNextRender(() => this.startDyuno());
 
     // afterNextRender keeps this out of SSR entirely - no timers or storage there,
     // and the bubble is a client-side affordance anyway.
@@ -129,12 +178,60 @@ export class AiAssistant implements OnDestroy {
   ngOnDestroy(): void {
     if (this.greetingTimer) clearTimeout(this.greetingTimer);
     this.clearConsentPoll();
+    clearTimeout(this.dyunoTimer);
+    clearInterval(this.dyunoIdle);
+  }
+
+  private startDyuno(): void {
+    this.reducedMotion = !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (this.reducedMotion) {
+      // No walking or waving - just a friendly static hello.
+      this.dyunoFrame.set('wave');
+      this.dyunoReady.set(true);
+      return;
+    }
+
+    this.dyunoReady.set(true);
+    this.dyunoWalkingIn.set(true);
+    this.dyunoBusy = true;
+    this.playDyuno(WALK_IN, () => {
+      this.dyunoWalkingIn.set(false);
+      this.playDyuno([['stand', 300], ...WAVE], () => (this.dyunoBusy = false));
+    });
+
+    this.dyunoIdle = window.setInterval(() => {
+      if (document.visibilityState === 'visible') this.waveDyuno();
+    }, IDLE_WAVE_MS);
+  }
+
+  /** Waves once - on hover, when the greeting pops up, and on the idle timer. */
+  waveDyuno(): void {
+    if (this.reducedMotion || this.dyunoBusy || !this.dyunoReady()) return;
+    if (this.open() && !this.minimized()) return;   // launcher isn't on screen
+    this.dyunoBusy = true;
+    this.playDyuno(WAVE, () => (this.dyunoBusy = false));
+  }
+
+  /** Shows each step's frame for its duration, then calls `done`. */
+  private playDyuno(steps: readonly DyunoStep[], done: () => void): void {
+    clearTimeout(this.dyunoTimer);
+    let i = 0;
+    const next = () => {
+      if (i >= steps.length) return done();
+      const [frame, ms] = steps[i++];
+      this.dyunoFrame.set(frame);
+      this.dyunoTimer = window.setTimeout(next, ms);
+    };
+    next();
   }
 
   private scheduleGreeting(): void {
     this.greetingTimer = window.setTimeout(() => {
       // Don't interrupt someone who already opened the panel themselves.
-      if (!this.open()) this.greetingVisible.set(true);
+      if (!this.open()) {
+        this.greetingVisible.set(true);
+        this.waveDyuno();
+      }
     }, AiAssistant.GREETING_DELAY_MS);
   }
 

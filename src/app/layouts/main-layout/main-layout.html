@@ -1,6 +1,10 @@
 <app-header />
 <main class="page-content">
   <router-outlet />
+  <!-- Admin-entered FAQs for this page (SEO Management → AI Search & Assistants).
+       ngSkipHydration: the browser re-renders it from the live SEO data, so FAQs edited
+       since the last deploy never trip a hydration mismatch. -->
+  <app-page-faq ngSkipHydration />
 </main>
 
 <app-footer />

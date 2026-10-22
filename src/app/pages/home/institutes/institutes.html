@@ -24,34 +24,10 @@
     
     <!-- Decorative Background Vector -->
     <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden hidden sm:block">
-      <svg class="absolute top-1/2 -right-[20%] w-[600px] h-[600px] lg:-right-[15%] xl:-right-[10%] lg:w-[800px] lg:h-[800px] -translate-y-1/2 text-[#e5e7eb] opacity-70" 
-           viewBox="0 0 200 200" 
-           fill="none" 
-           stroke="currentColor" 
-           stroke-linecap="round" 
-           stroke-linejoin="round"
-           stroke-width="12"
-           aria-hidden="true">
-        <defs>
-          <!-- Human figure with head and arms pointing inwards towards the heart -->
-          <g id="figure">
-            <circle cx="100" cy="12" r="10" />
-            <path d="M 67.7 55.5 Q 100 15 132.3 55.5" />
-          </g>
-        </defs>
-
-        <g transform="translate(0, 5)">
-          <!-- Central Heart -->
-          <path d="M 100 115 C 100 115 65 90 65 70 C 65 55 80 45 100 60 C 120 45 135 55 135 70 C 135 90 100 115 100 115 Z" />
-          
-          <!-- 5 Figures surrounding the heart -->
-          <use href="#figure" />
-          <use href="#figure" transform="rotate(72 100 100)" />
-          <use href="#figure" transform="rotate(144 100 100)" />
-          <use href="#figure" transform="rotate(216 100 100)" />
-          <use href="#figure" transform="rotate(288 100 100)" />
-        </g>
-      </svg>
+      <!-- CES emblem watermark - sized from the panel's height and capped to its width, so the
+           whole emblem always stays inside; object-contain keeps its 497x443 aspect ratio. -->
+      <img src="/assets/logo/ces-bg.svg" alt="" aria-hidden="true" width="497" height="443" loading="lazy" decoding="async"
+        class="absolute top-1/2 right-6 h-[90%] w-auto max-w-[calc(100%-3rem)] -translate-y-1/2 object-contain object-right opacity-15" />
     </div>
 
     <!-- Cards Grid -->

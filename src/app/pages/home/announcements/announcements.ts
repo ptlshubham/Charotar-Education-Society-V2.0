@@ -40,13 +40,14 @@ export class Announcements {
 
   /** Mirrors the chips inside the floating assistant so both entry points agree. */
   readonly topics: ReadonlyArray<{ label: string; prompt: string }> = [
+    { label: 'Explain a concept', prompt: "Explain Newton's three laws of motion in simple words with examples." },
+    { label: 'Solve step by step', prompt: 'Solve step by step: x^2 - 5x + 6 = 0' },
+    { label: 'Exam preparation', prompt: 'How should I prepare for my board exams in the last two months?' },
+    { label: 'Study timetable', prompt: 'Help me make a weekly study timetable for school.' },
+    { label: 'Career guidance', prompt: 'What career options do I have after 12th Science?' },
     { label: 'Admissions', prompt: 'How does the admission process work?' },
     { label: 'Institutes', prompt: 'Which institutes are part of Charotar Education Society?' },
-    { label: 'Examinations', prompt: 'Tell me about the examination schedule and notifications.' },
-    { label: 'Results', prompt: 'Where can I check my results?' },
-    { label: 'Placements', prompt: 'What placement support do you offer?' },
-    { label: 'Scholarships', prompt: 'Which scholarships are available to students?' },
-    { label: 'Events', prompt: 'What events are coming up at CES?' },
+    { label: 'Hostels', prompt: 'What hostel facilities does CES have?' },
     { label: 'Fees & Scholarships', prompt: 'What are the fees and scholarship options?' },
     { label: 'Other Queries', prompt: 'How do I get in touch with the institution?' },
   ];

@@ -14,6 +14,7 @@ import { ScrollToTop } from '../scroll-to-top/scroll-to-top';
 import { AiAssistant } from '../ai-assistant/ai-assistant';
 import { SubscribeSuccessModal } from '../../shared/subscribe-success-modal/subscribe-success-modal';
 import { SuccessDialog } from '../../shared/success-dialog/success-dialog';
+import { PageFaq } from '../../shared/page-faq/page-faq';
 import { LenisService } from '../../core/services/lenis.service';
 
 @Component({
@@ -27,6 +28,7 @@ import { LenisService } from '../../core/services/lenis.service';
     AiAssistant,
     SubscribeSuccessModal,
     SuccessDialog,
+    PageFaq,
   ],
   templateUrl: './main-layout.html',
   changeDetection: ChangeDetectionStrategy.Eager,

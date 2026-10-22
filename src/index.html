@@ -108,14 +108,18 @@
     content="A charitable education institute in Anand, Gujarat serving generations since 1916 - schools, colleges and hostels offering affordable, high-quality education and holistic development." />
   <meta name="twitter:image" content="https://cesociety.in/android-chrome-512x512.png">
 
-  <!-- ─── Structured data ─── -->
+  <!-- ─── Structured data ───
+       The organisation, for search engines and AI assistants. Every page's own JSON-LD
+       (SeoService → script#seo-page-jsonld) points back here through the @id. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
+    "@id": "https://cesociety.in/#organization",
     "name": "Charotar Education Society",
-    "alternateName": ["CES", "Cesociety"],
-    "foundingDate": "1916",
+    "alternateName": ["CES", "Cesociety", "CES Anand"],
+    "foundingDate": "1916-04-16",
+    "founder": { "@type": "Person", "name": "Shri Motibhai Amin" },
     "url": "https://cesociety.in/",
     "logo": "https://cesociety.in/android-chrome-512x512.png",
     "image": "https://cesociety.in/android-chrome-512x512.png",

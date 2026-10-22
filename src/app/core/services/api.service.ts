@@ -97,7 +97,10 @@ export class ApiService {
   // Public Website Schedule Demo URL
   public static SubmitScheduleDemoURL: string = ApiService.HOST_URL + '/superAdmin/website-control/schedule-demo/public/submit';
 
-  // Ceadx AI assistant - answers only from indexed website content.
+  // Dyuno study assistant - study questions on any subject, plus CES questions from curated facts.
   public static AssistantChatURL: string = ApiService.HOST_URL + '/api/public/v1/assistant/chat';
+
+  // Dyuno "Share this chat" links - POST creates one, GET /:id reads it back.
+  public static AssistantShareURL: string = ApiService.HOST_URL + '/api/public/v1/assistant/share';
 }
 

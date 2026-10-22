@@ -13,6 +13,11 @@ import { Directive, ElementRef, Input, afterNextRender, inject } from '@angular/
  *
  * Apply it only to content that starts below the fold; on above-the-fold
  * elements the paint-then-hide would flash.
+ *
+ * While waiting to scroll in, the element also carries `.reveal-pending`, so a
+ * component can choreograph children off it (e.g. draw a line once its parent
+ * shows). Style the hidden state under `.reveal-pending` only - it is never added
+ * under SSR or reduced motion, so those children must default to their final state.
  */
 @Directive({
   selector: '[appReveal]',
@@ -34,11 +39,13 @@ export class Reveal {
       el.style.transition = 'opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)';
       el.style.transitionDelay = `${delay}ms`;
       el.style.willChange = 'opacity, transform';
+      el.classList.add('reveal-pending');
 
       const io = new IntersectionObserver(
         (entries, obs) => {
           for (const entry of entries) {
             if (!entry.isIntersecting) continue;
+            el.classList.remove('reveal-pending');
             el.style.opacity = '1';
             el.style.transform = 'none';
             el.addEventListener('transitionend', () => (el.style.willChange = ''), { once: true });

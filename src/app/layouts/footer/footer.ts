@@ -33,10 +33,6 @@ export class Footer {
     'https://www.google.com/maps/dir/?api=1&destination=' +
     encodeURIComponent('D. N. High School Campus, Station Road, Anand 388001 Gujarat');
 
-  /** Smooth-scrolls back to the top (SSR-safe: Lenis is browser-only). */
-  scrollToTop(): void {
-    this.lenis.scrollTo(0, { duration: 1 });
-  }
 
   /** Same host in every environment on the legacy site, so it lives here rather than environment.ts. */
   private static readonly DASHBOARD_URL = 'https://dashboard.cesociety.in';

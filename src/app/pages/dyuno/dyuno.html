@@ -1,0 +1,270 @@
+<div class="flex h-dvh bg-white">
+
+  <!-- ═══ History sidebar - always shown on desktop, a slide-in drawer below lg ═══ -->
+  @if (sidebarOpen()) {
+  <div class="fixed inset-0 z-30 bg-black/30 lg:hidden" (click)="sidebarOpen.set(false)" aria-hidden="true"></div>
+  }
+  <aside aria-label="Chat history"
+    class="fixed inset-y-0 left-0 z-40 flex w-[280px] max-w-[85vw] shrink-0 flex-col border-r border-primary/[0.08] bg-[#F7F8FA] transition-transform duration-200 lg:static lg:visible lg:translate-x-0"
+    [class]="sidebarOpen() ? 'translate-x-0' : '-translate-x-full invisible'">
+
+    <div class="flex h-14 shrink-0 items-center gap-2 px-3 sm:h-16">
+      <button type="button" (click)="newChat()"
+        class="flex h-10 flex-1 items-center gap-2 rounded-xl border border-primary/15 bg-white px-3 text-[14px] font-medium text-primary transition-colors hover:border-primary/30 hover:bg-primary/[0.03]">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+          <path d="M18.4 2.6a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4Z" />
+        </svg>
+        New chat
+      </button>
+      <button type="button" (click)="sidebarOpen.set(false)" aria-label="Close history"
+        class="flex h-10 w-10 items-center justify-center rounded-full text-primary hover:bg-primary/[0.06] lg:hidden">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 6 6 18M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <nav class="dyuno-scroll flex-1 overflow-y-auto px-3 pb-3">
+      @for (group of groups(); track group.label) {
+      <p class="mb-1 mt-4 px-2 text-[11px] font-semibold uppercase tracking-wider text-muted">{{ group.label }}</p>
+      <ul class="list-none">
+        @for (c of group.chats; track c.id) {
+        <li class="group relative">
+          <button type="button" (click)="openChat(c.id)" [attr.aria-current]="c.id === activeId() ? 'true' : null"
+            class="block w-full truncate rounded-lg py-2 pl-3 pr-9 text-left text-[13.5px] transition-colors"
+            [class]="c.id === activeId() ? 'bg-white font-medium text-primary shadow-sm ring-1 ring-primary/10' : 'text-primary/80 hover:bg-white/70'">
+            {{ c.title }}
+          </button>
+          <button type="button" (click)="deleteChat(c.id)" [attr.aria-label]="'Delete chat: ' + c.title"
+            title="Delete chat"
+            class="absolute right-1.5 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-md text-muted opacity-0 transition hover:bg-[#fde8e8] hover:text-[#c0392b] focus:opacity-100 group-hover:opacity-100 max-lg:opacity-100">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+            </svg>
+          </button>
+        </li>
+        }
+      </ul>
+      } @empty {
+      <p class="mt-6 px-2 text-[13px] leading-relaxed text-muted">
+        No chats yet. Your conversations will appear here.
+      </p>
+      }
+    </nav>
+
+    <div class="shrink-0 border-t border-primary/[0.08] px-4 py-3">
+      <p class="text-[11.5px] leading-snug text-muted">Chats are saved on this device only, for 30 days.</p>
+      @if (hasHistory()) {
+      <button type="button" (click)="clearHistory()" class="mt-1.5 text-[12.5px] font-medium transition-colors"
+        [class]="confirmClear() ? 'text-[#c0392b]' : 'text-primary/70 hover:text-[#c0392b]'">
+        {{ confirmClear() ? 'Click again to delete all chats' : 'Clear all history' }}
+      </button>
+      }
+    </div>
+  </aside>
+
+  <!-- ═══ Conversation column ═══ -->
+  <div class="flex min-w-0 flex-1 flex-col">
+
+    <!-- ═══ Top bar ═══ -->
+    <header class="flex h-14 shrink-0 items-center gap-3 border-b border-primary/[0.08] px-3 sm:h-16 sm:px-5">
+      <button type="button" (click)="sidebarOpen.set(true)" aria-label="Chat history" title="Chat history"
+        class="flex h-9 w-9 items-center justify-center rounded-full text-primary transition-colors hover:bg-primary/[0.06] lg:hidden">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 6h16M4 12h16M4 18h10" />
+        </svg>
+      </button>
+      <div class="flex min-w-0 flex-1 items-center gap-2.5">
+        <span class="flex h-9 w-9 shrink-0 overflow-hidden rounded-full bg-white ring-2 ring-primary/10">
+          <img src="/assets/icons/dyuno/dyuno-avatar.webp" alt="" aria-hidden="true" width="36" height="36"
+            class="h-full w-full object-cover" />
+        </span>
+        <div class="min-w-0">
+          <h1 class="text-[15px] font-semibold leading-tight text-primary">Dyuno</h1>
+          <p class="truncate text-[11.5px] text-muted">Study assistant · Charotar Education Society</p>
+        </div>
+      </div>
+      @if (hasConversation()) {
+      <button type="button" (click)="share()" [disabled]="thinking()" title="Share this chat"
+        aria-label="Share this chat"
+        class="flex h-9 items-center gap-1.5 rounded-full border border-primary/15 px-3 text-[13.5px] font-medium text-primary transition-colors hover:bg-primary hover:text-white disabled:pointer-events-none disabled:opacity-40">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+          <path d="m16 6-4-4-4 4M12 2v13" />
+        </svg>
+        <span class="hidden sm:inline">Share</span>
+      </button>
+      <span class="h-6 w-px bg-primary/10" aria-hidden="true"></span>
+      }
+      <a [routerLink]="returnTo" title="Back to the website"
+        class="flex h-9 items-center gap-1.5 rounded-full px-2.5 text-[14px] font-medium text-primary no-underline transition-colors hover:bg-primary/[0.06]">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M19 12H5M11 18l-6-6 6-6" />
+        </svg>
+        <span class="hidden sm:inline">Back</span>
+      </a>
+      <!-- Desktop has New chat at the top of the sidebar -->
+      <button type="button" (click)="newChat()" [disabled]="!hasConversation()" title="New chat"
+        class="flex h-9 items-center gap-1.5 rounded-full border border-primary/15 px-3 text-[13.5px] font-medium text-primary transition-colors hover:bg-primary hover:text-white disabled:pointer-events-none disabled:opacity-40 lg:hidden">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+          <path d="M18.4 2.6a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4Z" />
+        </svg>
+        <span class="hidden sm:inline">New chat</span>
+      </button>
+    </header>
+
+    <!-- ═══ Thread ═══ -->
+    <main #thread class="dyuno-scroll flex-1 overflow-y-auto">
+      <div class="mx-auto w-full max-w-3xl px-4 sm:px-6"
+        [class]="hasConversation() ? 'py-8' : 'flex min-h-full flex-col justify-center py-8'">
+
+        @if (!hasConversation()) {
+        <!-- Empty state -->
+        <div class="text-center">
+          <img src="/assets/icons/dyuno/dyuno-wave.webp" alt="" aria-hidden="true" width="96" height="96"
+            class="mx-auto h-20 w-20 sm:h-24 sm:w-24" />
+          <h2 class="mt-4 text-[24px] font-semibold text-primary sm:text-[30px]">Hi I'm Dyuno 👋</h2>
+          <p class="mt-1 text-[16px] text-primary/80 sm:text-[18px]">How can I help you study today?</p>
+          <p class="mx-auto mt-3 max-w-md text-[13.5px] leading-relaxed text-muted">
+            Ask any study question - maths, science, commerce, languages, exam prep - or anything about CES.
+          </p>
+        </div>
+
+        <p class="mt-8 text-[11.5px] font-semibold uppercase tracking-wider text-muted">Study help</p>
+        <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          @for (topic of studyTopics; track topic.label) {
+          <button type="button" (click)="runTopic(topic)"
+            class="group rounded-xl border border-primary/10 bg-white px-4 py-3 text-left transition-colors hover:border-primary/30 hover:bg-primary/[0.03]">
+            <span class="block text-[14px] font-semibold text-primary">{{ topic.label }}</span>
+            <span class="mt-0.5 block truncate text-[13px] text-muted">{{ topic.prompt }}</span>
+          </button>
+          }
+        </div>
+
+        <p class="mt-7 text-[11.5px] font-semibold uppercase tracking-wider text-muted">About CES</p>
+        <div class="mt-3 flex flex-wrap gap-2">
+          @for (topic of cesTopics; track topic.label) {
+          <button type="button" (click)="runTopic(topic)"
+            class="rounded-full border border-primary/15 bg-primary/[0.04] px-4 py-2 text-[13px] font-medium text-primary transition-colors hover:border-primary hover:bg-primary hover:text-white">
+            {{ topic.label }}
+          </button>
+          }
+        </div>
+
+        } @else {
+        <!-- Conversation: questions as bubbles, answers as plain text beside Dyuno - the
+           ChatGPT/Claude reading layout. pre-wrap keeps the backend's line breaks. -->
+        <div class="flex flex-col gap-7">
+          @for (m of messages(); track $index; let i = $index) {
+          @if (m.role === 'user') {
+          <div class="ml-auto max-w-[85%] rounded-2xl rounded-br-md bg-primary px-4 py-2.5">
+            <p class="whitespace-pre-wrap break-words text-[15px] leading-[1.6] text-white">{{ m.text }}</p>
+          </div>
+          } @else if (m.notice) {
+          <!-- Abuse notice - amber warning, red once the conversation is closed -->
+          <div role="alert" class="flex items-start gap-3 rounded-xl border px-4 py-3"
+            [class]="m.notice === 'closed' ? 'border-red-200 bg-red-50 text-red-900' : 'border-amber-200 bg-amber-50 text-amber-900'">
+            <svg class="mt-0.5 shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              @if (m.notice === 'closed') {
+              <circle cx="12" cy="12" r="9" />
+              <path d="m5.7 5.7 12.6 12.6" />
+              } @else {
+              <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" />
+              <path d="M12 9v4M12 17h.01" />
+              }
+            </svg>
+            <p class="text-[14px] leading-[1.6]">{{ m.text }}</p>
+          </div>
+          } @else {
+          <div class="flex items-start gap-3">
+            <span class="flex h-8 w-8 shrink-0 overflow-hidden rounded-full bg-white ring-2 ring-primary/10">
+              <img src="/assets/icons/dyuno/dyuno-avatar.webp" alt="" aria-hidden="true" width="32" height="32"
+                class="h-full w-full object-cover" />
+            </span>
+            <div class="min-w-0 flex-1 pt-1">
+              <p class="whitespace-pre-wrap break-words text-[15px] leading-[1.7] text-[#1f2a44]">{{ m.text }}</p>
+              <button type="button" (click)="copy(m.text, i)"
+                class="mt-2 inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-[12px] font-medium text-muted transition-colors hover:bg-primary/[0.06] hover:text-primary">
+                @if (copied() === i) {
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20 6 9 17l-5-5" />
+                </svg>
+                Copied
+                } @else {
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="9" y="9" width="12" height="12" rx="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+                Copy
+                }
+              </button>
+            </div>
+          </div>
+          }
+          }
+
+          @if (thinking()) {
+          <div class="flex items-center gap-3">
+            <span class="flex h-8 w-8 shrink-0 overflow-hidden rounded-full bg-white ring-2 ring-primary/10">
+              <img src="/assets/icons/dyuno/dyuno-avatar.webp" alt="" aria-hidden="true" width="32" height="32"
+                class="h-full w-full object-cover" />
+            </span>
+            <span class="dyuno-typing flex items-center gap-1.5" aria-label="Dyuno is typing">
+              <span class="h-2 w-2 rounded-full bg-muted/60"></span>
+              <span class="h-2 w-2 rounded-full bg-muted/60"></span>
+              <span class="h-2 w-2 rounded-full bg-muted/60"></span>
+            </span>
+          </div>
+          }
+        </div>
+        }
+      </div>
+    </main>
+
+    <!-- ═══ Composer ═══ -->
+    <div class="shrink-0 bg-white px-4 pb-4 pt-2 sm:px-6">
+      @if (closed()) {
+      <!-- Closed after repeated abuse - this conversation takes no more messages -->
+      <div
+        class="mx-auto flex w-full max-w-3xl flex-wrap items-center justify-between gap-3 rounded-2xl border border-red-200 bg-red-50 px-4 py-3">
+        <p class="text-[14px] text-red-900">This chat was closed because of abusive language.</p>
+        <button type="button" (click)="newChat()"
+          class="rounded-full bg-primary px-4 py-2 text-[13.5px] font-semibold text-white transition-opacity hover:opacity-90">
+          Start a new chat
+        </button>
+      </div>
+      } @else {
+      <form (ngSubmit)="send()"
+        class="mx-auto flex w-full max-w-3xl items-end gap-2 rounded-2xl border border-primary/15 bg-white py-2 pl-4 pr-2 shadow-[0_6px_24px_-12px_rgba(32,49,84,0.25)] transition-colors focus-within:border-primary">
+        <textarea #composer name="draft" rows="1" [(ngModel)]="draft" (input)="autoGrow()"
+          (keydown)="onComposerKeydown($event)" maxlength="1000" placeholder="Ask Dyuno a study question..."
+          aria-label="Message Dyuno"
+          class="dyuno-scroll max-h-[200px] flex-1 resize-none bg-transparent py-2 text-[15px] leading-[1.5] text-primary outline-none placeholder:text-muted/60"></textarea>
+        <button type="submit" aria-label="Send message" [disabled]="!draft.trim() || busy()"
+          class="mb-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-secondary text-primary transition-opacity disabled:opacity-40">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7Z" />
+          </svg>
+        </button>
+      </form>
+      }
+      <p class="mx-auto mt-2 max-w-3xl text-center text-[11px] leading-[16px] text-muted/80">
+        Dyuno can make mistakes. Please verify important information.
+      </p>
+    </div>
+
+  </div>
+</div>

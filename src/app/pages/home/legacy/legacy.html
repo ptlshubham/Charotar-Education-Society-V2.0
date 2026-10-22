@@ -1,22 +1,25 @@
 <!-- ─── Legacy timeline (own clean section) ─── -->
 <section class="pb-24 lg:pb-32">
   <div class="site-container">
-    <div class="text-center">
+    <div class="text-center" appReveal>
       <h2 class="text-[24px] font-bold text-primary sm:text-[30px]">A Legacy That Lives On</h2>
-      <span class="mx-auto mt-3 block h-1 w-16 rounded-full bg-secondary" aria-hidden="true"></span>
+      <span class="legacy-underline mx-auto mt-3 block h-1 w-16 rounded-full bg-secondary" aria-hidden="true"></span>
     </div>
 
+    <!-- Steps reveal left to right; each one's icon pops, then its connector draws to the next.
+         Timing lives in legacy.scss, keyed off --delay. -->
     <ol
       class="mt-12 grid list-none grid-cols-1 gap-8 sm:grid-cols-3 sm:justify-center lg:grid-cols-5 lg:gap-4 relative z-0">
-      @for (m of milestones; track m.year; let last = $last) {
-      <li class="relative flex flex-col items-center text-center">
+      @for (m of milestones; track m.year; let i = $index, last = $last) {
+      <li class="group relative flex flex-col items-center text-center" [appReveal]="i * stepGapMs"
+        [style.--delay]="i * stepGapMs + 'ms'">
         @if (!last) {
-        <span class="absolute top-6 left-1/2 hidden h-[1px] w-full bg-gray-200 lg:block -z-10"
+        <span class="legacy-line absolute top-6 left-1/2 hidden h-[1px] w-full bg-gray-200 lg:block -z-10"
           aria-hidden="true"></span>
         }
 
         <div
-          class="relative z-10 mb-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#EEF0F5] text-primary"
+          class="legacy-icon relative z-10 mb-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#EEF0F5] text-primary group-hover:bg-primary group-hover:text-white"
           aria-hidden="true">
           <span class="material-symbols-outlined !text-[20px]" style="font-variation-settings: 'wght' 300;">
             @switch (m.year) {

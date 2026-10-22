@@ -39,6 +39,12 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client,
   },
   {
+    // Dyuno share links are created after the build, so there is nothing to prerender;
+    // shared chats are noindex anyway.
+    path: 'dyuno/share/:id',
+    renderMode: RenderMode.Client,
+  },
+  {
     path: '**',
     renderMode: RenderMode.Prerender,
   },

@@ -21,32 +21,13 @@
         <div class="scrolling-inner">
           <div class="scrolling-track">
             @for (inst of institutes(); track inst.id) {
-            <a [href]="inst.website || inst.link || inst.url || '#'" target="_blank" rel="noopener noreferrer"
-              class="institute-card group block">
-              <div class="flex items-center justify-between h-full w-full">
-                <img [src]="inst.logo" [alt]="inst.name" loading="lazy"
-                  class="h-[80px] lg:h-[110px] w-auto object-contain" />
-                <h3
-                  class="text-[15px] lg:text-[18px] font-semibold text-primary leading-[1.3] max-w-[50%] text-right uppercase">
-                  {{ inst.name }}
-                </h3>
-              </div>
-            </a>
+            <ng-container *ngTemplateOutlet="card; context: { $implicit: inst, copy: false }" />
             }
           </div>
+          <!-- Second copy makes the loop seamless; hidden from screen readers and the tab order. -->
           <div class="scrolling-track" aria-hidden="true">
             @for (inst of institutes(); track inst.id) {
-            <a [href]="inst.website || inst.link || inst.url || '#'" target="_blank" rel="noopener noreferrer"
-              class="institute-card group block" tabindex="-1">
-              <div class="flex items-center justify-between h-full w-full">
-                <img [src]="inst.logo" [alt]="inst.name" loading="lazy"
-                  class="h-[80px] lg:h-[110px] w-auto object-contain" />
-                <h3
-                  class="text-[15px] lg:text-[18px] font-semibold text-primary leading-[1.3] max-w-[50%] text-right uppercase">
-                  {{ inst.name }}
-                </h3>
-              </div>
-            </a>
+            <ng-container *ngTemplateOutlet="card; context: { $implicit: inst, copy: true }" />
             }
           </div>
         </div>
@@ -55,3 +36,32 @@
 
   </div>
 </section>
+
+<!-- One institute card. The whole card is the link (hovering pauses the scroll, so it can be
+     clicked); "Visit Website" is a span, not a nested button, so it just signals that. No href
+     when the institute has no website - the card then isn't a link at all. -->
+<ng-template #card let-inst let-copy="copy">
+  <a [attr.href]="inst.website || null" target="_blank" rel="noopener noreferrer" class="institute-card group block"
+    [attr.tabindex]="copy ? -1 : null"
+    [attr.aria-label]="inst.website ? 'Visit ' + inst.name + ' website (opens in a new tab)' : null">
+    <div class="flex items-center justify-between gap-4 h-full w-full">
+      <img [src]="inst.logo" [alt]="inst.name" loading="lazy"
+        class="h-[80px] lg:h-[110px] w-auto object-contain shrink-0" />
+      <div class="flex flex-col items-end gap-2 max-w-[55%]">
+        <h3 class="text-[15px] lg:text-[18px] font-semibold text-primary leading-[1.3] text-right line-clamp-3">
+          {{ inst.name }}
+        </h3>
+        @if (inst.website) {
+        <span
+          class="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 lg:px-3.5 lg:py-1.5 text-[11px] lg:text-[12px] font-semibold text-white transition-colors group-hover:bg-secondary group-hover:text-primary">
+          Visit Website
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 17 17 7M8 7h9v9" />
+          </svg>
+        </span>
+        }
+      </div>
+    </div>
+  </a>
+</ng-template>

@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { catchError, map, Observable, of, shareReplay, tap } from 'rxjs';
 import { ApiService } from './api.service';
@@ -20,6 +20,16 @@ export interface SeoPage {
   twitterImage: string | null;
   canonicalUrl: string | null;
   robots: string | null;
+  /** 1-3 factual sentences for AI assistants (also written into llms.txt at build). */
+  aiSummary?: string | null;
+  /** Rendered visibly by PageFaq and as FAQPage JSON-LD - the two must always match. */
+  aiFaqs?: SeoFaq[];
+  aiBlocked?: boolean;
+}
+
+export interface SeoFaq {
+  q: string;
+  a: string;
 }
 
 /** Sitewide fallbacks applied whenever a page leaves a field blank. */
@@ -62,6 +72,14 @@ const EMPTY_DEFAULTS: SeoDefaults = {
   siteUrl: null,
 };
 
+/**
+ * JSON-LD node ids. ORGANIZATION_ID must equal the "@id" of the EducationalOrganization block
+ * in src/index.html - it is what ties every page to CES. Fixed rather than built from the
+ * admin's Site URL, which may carry "www." while the site canonicalises to the bare host.
+ */
+const SITE_ID = 'https://cesociety.in/#website';
+const ORGANIZATION_ID = 'https://cesociety.in/#organization';
+
 /** Treats empty/whitespace strings as absent so fallbacks take over. */
 const firstNonEmpty = (...values: (string | null | undefined)[]): string | null => {
   for (const value of values) {
@@ -83,6 +101,12 @@ export class SeoService {
    * payload on the client, so hydration doesn't refetch it.
    */
   private payload$?: Observable<SeoPayload>;
+
+  /**
+   * The admin-entered FAQs and the pageKey they belong to. PageFaq shows them only while
+   * that key is the active route's, so they never linger on a page without an SEO entry.
+   */
+  readonly pageFaqs = signal<{ pageKey: string | null; faqs: SeoFaq[] }>({ pageKey: null, faqs: [] });
 
   /** TEMPORARY: set back to true to re-enable the live SEO endpoint. */
   private readonly seoApiEnabled: boolean = true;
@@ -168,6 +192,76 @@ export class SeoService {
     this.setName('twitter:creator', firstNonEmpty(defaults.twitterHandle));
 
     this.setCanonical(url);
+
+    // FAQs belong to the static page entry; a detail page (override) never inherits them.
+    const faqs = override ? [] : (page?.aiFaqs ?? []).filter(f => firstNonEmpty(f?.q) && firstNonEmpty(f?.a));
+    this.pageFaqs.set({ pageKey: page?.pageKey ?? null, faqs });
+
+    this.setJsonLd(this.pageJsonLd(url, title, firstNonEmpty(page?.aiSummary, description), defaults, faqs));
+  }
+
+  /**
+   * schema.org JSON-LD for this page: a WebPage tied to the site and to the Organization
+   * block in index.html (same @id), plus a FAQPage when the page has FAQs. This is how
+   * AI search (Gemini, Copilot, ChatGPT, Perplexity) tells what a page is and who it is about.
+   */
+  private pageJsonLd(
+    url: string | null,
+    title: string | null,
+    description: string | null,
+    defaults: SeoDefaults,
+    faqs: SeoFaq[],
+  ): object | null {
+    if (!url) return null;
+    const siteName = firstNonEmpty(defaults.siteName);
+    const graph: object[] = [
+      {
+        '@type': 'WebPage',
+        '@id': `${url}#webpage`,
+        url,
+        ...(title && { name: title }),
+        ...(description && { description }),
+        inLanguage: 'en-IN',
+        isPartOf: {
+          '@type': 'WebSite',
+          '@id': SITE_ID,
+          url: SITE_ID.replace('#website', ''),
+          ...(siteName && { name: siteName }),
+        },
+        about: { '@id': ORGANIZATION_ID },
+      },
+    ];
+    if (faqs.length) {
+      graph.push({
+        '@type': 'FAQPage',
+        '@id': `${url}#faq`,
+        mainEntity: faqs.map(f => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      });
+    }
+    return { '@context': 'https://schema.org', '@graph': graph };
+  }
+
+  /** One page-level JSON-LD script, replaced on every navigation. */
+  private setJsonLd(data: object | null): void {
+    const head = this.document.head;
+    if (!head) return;
+    let script = head.querySelector<HTMLScriptElement>('script#seo-page-jsonld');
+    if (!data) {
+      script?.remove();
+      return;
+    }
+    if (!script) {
+      script = this.document.createElement('script');
+      script.id = 'seo-page-jsonld';
+      script.type = 'application/ld+json';
+      head.appendChild(script);
+    }
+    // Admin-entered text: escape "<" so a "</script>" inside an answer cannot end the tag.
+    script.textContent = JSON.stringify(data).replace(/</g, '\\u003c');
   }
 
   /** "%s | ZarklyX" + "Pricing" → "Pricing | ZarklyX". */

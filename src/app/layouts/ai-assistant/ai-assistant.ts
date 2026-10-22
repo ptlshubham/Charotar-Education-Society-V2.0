@@ -4,7 +4,6 @@ import {
   OnDestroy,
   ViewChild,
   afterNextRender,
-  computed,
   effect,
   inject,
   PLATFORM_ID,
@@ -14,32 +13,8 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ResourcesService } from '../../core/services/resources.service';
 import { AssistantBridge } from '../../core/services/assistant-bridge.service';
-
-interface ChatMessage {
-  role: 'user' | 'assistant';
-  text: string;
-}
-
-interface AssistantReply {
-  text: string;
-  grounded: boolean;
-  sources: { url: string; title: string }[];
-}
-
-interface Topic {
-  label: string;
-  prompt: string;
-}
-
-/**
- * Only for when the request itself fails - a network drop or a 5xx. An off-topic
- * question is a successful response carrying the backend's own fallback text, so it
- * never reaches this.
- */
-const ERROR_REPLY =
-  "Sorry, I couldn't reach our assistant just now. Please try again in a moment, or contact our support team.";
+import { CES_TOPICS, ChatTopic, DyunoChat, STUDY_TOPICS } from '../../core/services/dyuno-chat.service';
 
 /** Dyuno mascot frames - /assets/icons/dyuno/dyuno-<frame>.webp, all on one canvas so they swap in place. */
 type DyunoFrame = 'stand' | 'wave' | `walk-${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8}`;
@@ -76,8 +51,9 @@ const IDLE_WAVE_MS = 8000;
  * Floating AI assistant - the launcher button and its chat panel live together so the
  * layout only needs <app-ai-assistant />.
  *
- * Answers come from the backend, which only replies from indexed website content and
- * returns a fallback message for anything else. Nothing here decides what is on-topic.
+ * The conversation itself lives in DyunoChat, shared with the full /dyuno page - the
+ * expand button opens that page with the same thread. Nothing here decides what is
+ * on-topic; the backend does.
  */
 @Component({
   selector: 'app-ai-assistant',
@@ -89,21 +65,27 @@ const IDLE_WAVE_MS = 8000;
 export class AiAssistant implements OnDestroy {
   private platformId = inject(PLATFORM_ID);
   private router = inject(Router);
-  private resources = inject(ResourcesService);
   private bridge = inject(AssistantBridge);
+  private chat = inject(DyunoChat);
 
   @ViewChild('scrollBody') scrollBody?: ElementRef<HTMLElement>;
 
   readonly open = signal(false);
   readonly minimized = signal(false);
-  readonly thinking = signal(false);
-  readonly messages = signal<ChatMessage[]>([]);
+  readonly messages = this.chat.messages;
+  readonly thinking = this.chat.thinking;
+  /** A reply is still coming (maybe in another conversation) - Send waits for it. */
+  readonly busy = this.chat.busy;
+  /** Closed after repeated abuse - the composer becomes a "Start a new chat" button. */
+  readonly closed = this.chat.closed;
+  /** Greeting + shortcuts show until the first message is sent. */
+  readonly hasConversation = this.chat.hasConversation;
   draft = '';
 
   // ─── Landing greeting ───
 
   /** The proactive bubble beside the launcher, shown shortly after landing. */
-  readonly greeting = 'Need a hand? Ask me anything about Charotar Education Society.';
+  readonly greeting = 'Stuck on a topic? Ask me any study question, or anything about Charotar Education Society.';
   readonly greetingVisible = signal(false);
 
   /** Session-scoped so the bubble greets once, not on every page load. */
@@ -144,6 +126,17 @@ export class AiAssistant implements OnDestroy {
       this.open.set(true);
       this.minimized.set(false);
       if (req.prompt) this.ask(req.prompt);
+      else this.scrollToBottom();
+    });
+
+    // Bring back the last conversation (after hydration - there is no storage under SSR).
+    afterNextRender(() => this.chat.restore());
+
+    // Keep the newest message in view as the thread grows or the typing dots appear.
+    effect(() => {
+      this.messages();
+      this.thinking();
+      this.scrollToBottom();
     });
 
     // Dyuno walks in from the right edge, waves, then waves now and then while idle.
@@ -285,21 +278,9 @@ export class AiAssistant implements OnDestroy {
     }
   }
 
-  /** Greeting + shortcuts show until the first message is sent. */
-  readonly hasConversation = computed(() => this.messages().length > 0);
-
   /** Shown as tappable chips until the visitor sends their first message. */
-  readonly topics: readonly Topic[] = [
-    { label: 'Admissions', prompt: 'How does the admission process work?' },
-    { label: 'Institutes', prompt: 'Which institutes are part of Charotar Education Society?' },
-    { label: 'Examinations', prompt: 'Tell me about the examination schedule and notifications.' },
-    { label: 'Results', prompt: 'Where can I check my results?' },
-    { label: 'Placements', prompt: 'What placement support do you offer?' },
-    { label: 'Scholarships', prompt: 'Which scholarships are available to students?' },
-    { label: 'Events', prompt: 'What events are coming up at CES?' },
-    { label: 'Fees & Scholarships', prompt: 'What are the fees and scholarship options?' },
-    { label: 'Other Queries', prompt: 'How do I get in touch with the institution?' },
-  ];
+  readonly studyTopics = STUDY_TOPICS;
+  readonly cesTopics = CES_TOPICS;
 
   toggle(): void {
     // Any deliberate open retires the greeting - it has done its job.
@@ -307,10 +288,13 @@ export class AiAssistant implements OnDestroy {
 
     if (this.open() && this.minimized()) {
       this.minimized.set(false);
+      this.scrollToBottom();
       return;
     }
     this.open.update((v) => !v);
     this.minimized.set(false);
+    // A restored conversation should open at its latest message, not the top.
+    if (this.open()) this.scrollToBottom();
   }
 
   close(): void {
@@ -322,47 +306,36 @@ export class AiAssistant implements OnDestroy {
     this.minimized.set(true);
   }
 
-  /** Start over - clears the thread back to the greeting. */
-  reset(): void {
-    this.messages.set([]);
+  /**
+   * Continue on the full /dyuno page. The thread is shared, so nothing is lost; the
+   * page's Back link returns here, and a half-typed question comes along too.
+   */
+  openFullPage(): void {
+    const state = { returnTo: this.router.url, draft: this.draft };
     this.draft = '';
-    this.thinking.set(false);
+    this.close();
+    this.router.navigate(['/dyuno'], { state });
+  }
+
+  /** New chat - back to the greeting. The previous conversation stays in the history. */
+  newChat(): void {
+    this.chat.newChat();
+    this.draft = '';
   }
 
   send(): void {
     const text = this.draft.trim();
-    if (!text) return;
+    if (!text || this.busy()) return;
     this.draft = '';
     this.ask(text);
   }
 
   ask(text: string): void {
-    if (this.thinking()) return;
-
-    // Snapshot the thread before adding this turn - the backend wants the prior
-    // conversation, not the question it is about to be asked.
-    const history = this.messages();
-    this.messages.update((list) => [...list, { role: 'user', text }]);
-    this.scrollToBottom();
-    this.thinking.set(true);
-
-    this.resources.askAssistant(text, history).subscribe({
-      next: (res: any) => {
-        const reply = res?.data as AssistantReply | undefined;
-        this.pushReply(reply?.text || ERROR_REPLY);
-      },
-      error: () => this.pushReply(ERROR_REPLY),
-    });
-  }
-
-  private pushReply(text: string): void {
-    this.messages.update((list) => [...list, { role: 'assistant', text }]);
-    this.thinking.set(false);
-    this.scrollToBottom();
+    this.chat.ask(text);
   }
 
   /** Topic chips double as navigation when there's a page for it. */
-  runTopic(topic: Topic): void {
+  runTopic(topic: ChatTopic): void {
     if (topic.label === 'Other Queries') {
       this.close();
       this.router.navigate(['/contact']);
@@ -371,11 +344,12 @@ export class AiAssistant implements OnDestroy {
     this.ask(topic.prompt);
   }
 
+  /** Newest message into view - or, with no conversation, the top of the greeting. */
   private scrollToBottom(): void {
     if (!isPlatformBrowser(this.platformId)) return;
     setTimeout(() => {
       const el = this.scrollBody?.nativeElement;
-      if (el) el.scrollTop = el.scrollHeight;
+      if (el) el.scrollTop = this.hasConversation() ? el.scrollHeight : 0;
     }, 30);
   }
 }

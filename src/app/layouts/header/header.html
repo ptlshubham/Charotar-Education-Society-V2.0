@@ -113,9 +113,7 @@
           (click)="toggleDropdown(item.label)" [attr.aria-current]="activeTab(item, first) ? 'true' : null"
           [attr.aria-expanded]="openMenu() === item.label">
           {{ item.label }}
-          @if (!first) {
           <img class="nav-chevron" src="/assets/images/header/icons/nav-chevron.svg" width="16" height="16" alt="" />
-          }
         </button>
         }
         @if (item.children && openMenu() === item.label) {
@@ -343,37 +341,6 @@
         [class.bottom-1/2]="mobileMenuOpen" [class.translate-y-1/2]="mobileMenuOpen"
         [class.-rotate-45]="mobileMenuOpen"></span>
     </button>
-  </div>
-
-  <!-- search -->
-  <div class="px-4 pb-3">
-    <div class="relative" data-search>
-      <form
-        class="flex h-11 items-center overflow-hidden rounded-md border-[0.6px] border-primary/60 focus-within:outline focus-within:outline-2 focus-within:outline-secondary"
-        role="search" (submit)="$event.preventDefault(); onSearchFocus()">
-        <img src="/assets/images/header/icons/search.svg" width="20" height="20" alt="" class="ml-3 shrink-0" />
-        <label for="site-search-mobile" class="sr-only">Search the site</label>
-        <input id="site-search-mobile" type="search" placeholder="Search here" autocomplete="off"
-          [value]="searchQuery()" (input)="onSearchInput($any($event.target).value)" (focus)="onSearchFocus()"
-          (keydown.escape)="$event.preventDefault(); clearSearch()"
-          class="min-w-0 flex-1 border-0 bg-transparent px-3 text-[13px] text-primary outline-none placeholder:text-[#a4adbc]" />
-        <button type="submit" class="h-full shrink-0 bg-primary px-5 text-[13px] font-medium text-white">Search</button>
-      </form>
-      @if (searchOpen()) {
-      <div class="search-results animate-dropdown" data-lenis-prevent>
-        @if (searchQuery().trim()) {
-        @for (item of searchResults(); track item.link) {
-        <a [routerLink]="item.link" [queryParams]="item.queryParams ?? {}" (click)="clearSearch()"><span>{{ item.title
-            }}</span><small>{{ item.category }}</small></a>
-        } @empty { <p>No results for &ldquo;{{ searchQuery() }}&rdquo;</p> }
-        } @else {
-        <p class="suggestions-title">Quick Links</p>
-        @for (item of suggestions; track item.link) { <a [routerLink]="item.link" (click)="clearSearch()">{{ item.title
-          }}</a> }
-        }
-      </div>
-      }
-    </div>
   </div>
 </header>
 

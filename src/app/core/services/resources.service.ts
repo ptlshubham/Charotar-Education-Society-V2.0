@@ -279,11 +279,28 @@ export class ResourcesService {
         return this.http.post(ApiService.SubscribeNewsletterURL, { email, source });
     }
 
-    // Ceadx AI assistant. `history` is prior turns for context; the backend only
-    // reads the most recent few. Off-topic questions come back with grounded:false
-    // and the fallback message already in `text`.
+    // Dyuno study assistant. `history` is prior turns for context; the backend only
+    // reads the most recent few. Off-topic questions come back as a normal reply with
+    // the redirect already in `text`. SKIP_ERROR_REDIRECT so a failure shows in the
+    // chat instead of replacing the page with the error screen.
     askAssistant(message: string, history: { role: 'user' | 'assistant'; text: string }[] = []) {
-        return this.http.post(ApiService.AssistantChatURL, { message, history });
+        return this.http.post(ApiService.AssistantChatURL, { message, history }, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    // Dyuno shared-chat links. Each turn carries the signature the chat endpoint gave its answer;
+    // the backend keeps only the turns that verify. Errors stay with the caller (dialog / page).
+    shareAssistantChat(turns: { question: string; answer: string; sig: string }[]) {
+        return this.http.post(ApiService.AssistantShareURL, { turns }, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    getSharedAssistantChat(id: string) {
+        return this.http.get(`${ApiService.AssistantShareURL}/${encodeURIComponent(id)}`, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
     }
 
     // Public Website Contact form

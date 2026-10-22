@@ -61,7 +61,8 @@
     height: 130px;
   }
 
-  &:hover {
+  // Only cards with a website are links - don't invite a click on the rest.
+  &[href]:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
   }

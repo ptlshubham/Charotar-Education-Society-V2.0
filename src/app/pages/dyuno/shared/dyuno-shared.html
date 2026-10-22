@@ -1,0 +1,108 @@
+<div class="flex h-dvh flex-col bg-white">
+
+  <!-- ═══ Top bar - same frame as /dyuno ═══ -->
+  <header class="flex h-14 shrink-0 items-center gap-3 border-b border-primary/[0.08] px-3 sm:h-16 sm:px-5">
+    <a routerLink="/dyuno" class="flex min-w-0 flex-1 items-center gap-2.5 no-underline">
+      <span class="flex h-9 w-9 shrink-0 overflow-hidden rounded-full bg-white ring-2 ring-primary/10">
+        <img src="/assets/icons/dyuno/dyuno-avatar.webp" alt="" aria-hidden="true" width="36" height="36"
+          class="h-full w-full object-cover" />
+      </span>
+      <span class="min-w-0">
+        <span class="block text-[15px] font-semibold leading-tight text-primary">Dyuno</span>
+        <span class="block truncate text-[11.5px] text-muted">Shared chat · Charotar Education Society</span>
+      </span>
+    </a>
+    <a routerLink="/"
+      class="flex h-9 items-center gap-1.5 rounded-full px-2.5 text-[14px] font-medium text-primary no-underline transition-colors hover:bg-primary/[0.06]">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M19 12H5M11 18l-6-6 6-6" />
+      </svg>
+      <span class="hidden sm:inline">Website</span>
+    </a>
+  </header>
+
+  <main class="flex-1 overflow-y-auto">
+    <div class="mx-auto w-full max-w-3xl px-4 py-8 sm:px-6">
+
+      @switch (state()) {
+      @case ('loading') {
+      <p class="flex items-center justify-center gap-2.5 py-16 text-[14px] text-muted">
+        <span class="h-4 w-4 animate-spin rounded-full border-2 border-primary/20 border-t-primary"
+          aria-hidden="true"></span>
+        Loading chat...
+      </p>
+      }
+
+      @case ('ready') {
+      <h1 class="text-[22px] font-semibold leading-snug text-primary sm:text-[26px]">{{ shared()!.title }}</h1>
+      <p class="mt-1 text-[12.5px] text-muted">Shared on {{ shared()!.createdAt | date: 'd MMM y' }}</p>
+
+      <!-- Same reading layout as /dyuno: questions as bubbles, answers beside Dyuno. -->
+      <div class="mt-8 flex flex-col gap-7">
+        @for (m of shared()!.messages; track $index) {
+        @if (m.role === 'user') {
+        <div class="ml-auto max-w-[85%] rounded-2xl rounded-br-md bg-primary px-4 py-2.5">
+          <p class="whitespace-pre-wrap break-words text-[15px] leading-[1.6] text-white">{{ m.text }}</p>
+        </div>
+        } @else {
+        <div class="flex items-start gap-3">
+          <span class="flex h-8 w-8 shrink-0 overflow-hidden rounded-full bg-white ring-2 ring-primary/10">
+            <img src="/assets/icons/dyuno/dyuno-avatar.webp" alt="" aria-hidden="true" width="32" height="32"
+              class="h-full w-full object-cover" />
+          </span>
+          <p class="min-w-0 flex-1 whitespace-pre-wrap break-words pt-1 text-[15px] leading-[1.7] text-[#1f2a44]">{{
+            m.text }}</p>
+        </div>
+        }
+        }
+      </div>
+
+      <div class="mt-10 rounded-2xl border border-primary/10 bg-[#F7F8FA] px-5 py-5 text-center">
+        <p class="text-[15px] font-semibold text-primary">Have a question of your own?</p>
+        <p class="mt-1 text-[13px] text-muted">Pick up where this chat left off, or start fresh with Dyuno.</p>
+        <div class="mt-4 flex flex-wrap justify-center gap-2">
+          <button type="button" (click)="continueChat()"
+            class="h-10 rounded-full bg-primary px-5 text-[13.5px] font-medium text-white transition-opacity hover:opacity-90">
+            Continue this chat
+          </button>
+          <a routerLink="/dyuno"
+            class="flex h-10 items-center rounded-full border border-primary/15 bg-white px-5 text-[13.5px] font-medium text-primary no-underline transition-colors hover:bg-primary hover:text-white">
+            Ask Dyuno
+          </a>
+        </div>
+      </div>
+      <p class="mt-4 text-center text-[11px] leading-[16px] text-muted/80">
+        Dyuno can make mistakes. Please verify important information.
+      </p>
+      }
+
+      @default {
+      <div class="py-16 text-center">
+        <img src="/assets/icons/dyuno/dyuno-wave.webp" alt="" aria-hidden="true" width="96" height="96"
+          class="mx-auto h-20 w-20" />
+        <h1 class="mt-4 text-[20px] font-semibold text-primary">
+          {{ state() === 'missing' ? "This chat isn't available" : "Couldn't load this chat" }}
+        </h1>
+        <p class="mx-auto mt-2 max-w-sm text-[13.5px] leading-relaxed text-muted">
+          {{ state() === 'missing' ? 'The link may be wrong or incomplete. Check it with the person who shared it.' :
+          'Please check your connection and try again.' }}
+        </p>
+        <div class="mt-6 flex flex-wrap justify-center gap-2">
+          @if (state() === 'error') {
+          <button type="button" (click)="load()"
+            class="h-10 rounded-full border border-primary/15 px-5 text-[13.5px] font-medium text-primary transition-colors hover:bg-primary hover:text-white">
+            Try again
+          </button>
+          }
+          <a routerLink="/dyuno"
+            class="flex h-10 items-center rounded-full bg-primary px-5 text-[13.5px] font-medium text-white no-underline transition-opacity hover:opacity-90">
+            Ask Dyuno
+          </a>
+        </div>
+      </div>
+      }
+      }
+    </div>
+  </main>
+</div>

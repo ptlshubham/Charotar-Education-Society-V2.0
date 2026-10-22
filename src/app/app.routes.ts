@@ -9,6 +9,19 @@ const seo = (seoKey: string) => ({
 
 export const routes: Routes = [
   {
+    // Dyuno's full-page chat (ChatGPT/Claude style) - deliberately outside MainLayout, so
+    // no site header/footer and the whole height goes to the conversation. The floating
+    // panel's expand button opens it with the same thread.
+    path: 'dyuno',
+    ...seo('dyuno'),
+    loadComponent: () => import('./pages/dyuno/dyuno').then(m => m.Dyuno),
+  },
+  {
+    // A "Share this chat" link - the read-only conversation, in the same frame as /dyuno.
+    path: 'dyuno/share/:id',
+    loadComponent: () => import('./pages/dyuno/shared/dyuno-shared').then(m => m.DyunoShared),
+  },
+  {
     path: '',
     loadComponent: () => import('./layouts/main-layout/main-layout').then(m => m.MainLayout),
     children: [

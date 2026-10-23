@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { ApiService } from './api.service';
 import { SKIP_ERROR_REDIRECT } from '../interceptors/error.interceptor';
-import { AnswerKeyEntry, BeneficiaryStudent, BlogPost, Copyright, CounsellingPayload, DonationPayload, Donor, GalleryImage, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NavratriImage, NavratriLiveLink, Patent, PodcastEntry, Trademark } from '../../shared/models/models';
+import { AnswerKeyEntry, BeneficiaryStudent, BlogPost, Copyright, CounsellingPayload, DonationPayload, Donor, GalleryImage, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NavratriImage, NavratriLiveLink, Patent, PodcastEntry, SiteNotification, Trademark } from '../../shared/models/models';
 
 
 @Injectable({
@@ -117,6 +117,13 @@ export class ResourcesService {
     // Blog - posts for an institute (defaults to the society itself).
     getBlogs(instituteId: number | string) {
         return this.http.get<BlogPost[]>(ApiService.GetBlogsURL + instituteId, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    // Notices for an institute - every row, active or not; the ticker picks the live ones.
+    getNotifications(instituteId: number | string) {
+        return this.http.get<SiteNotification[]>(ApiService.GetNotificationsURL + instituteId, {
             context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
         });
     }

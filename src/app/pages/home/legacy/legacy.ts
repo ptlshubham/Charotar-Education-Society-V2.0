@@ -1,16 +1,15 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Reveal } from '../../../shared/reveal.directive';
 
 /**
- * Gap between timeline steps animating in, left to right. Each step gets its delay as
- * --delay too, so legacy.scss can time the icon pop and connector draw off the same beat.
+ * Gap between timeline steps animating in, in order. Each step gets its delay as --delay
+ * too, so legacy.scss can time the icon pop and connector draw off the same beat.
  */
 const STEP_GAP_MS = 250;
 
 @Component({
   selector: 'app-legacy',
-  imports: [RouterLink, Reveal],
+  imports: [RouterLink],
   templateUrl: './legacy.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './legacy.scss',

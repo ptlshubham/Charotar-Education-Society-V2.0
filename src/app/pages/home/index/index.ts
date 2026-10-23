@@ -3,23 +3,23 @@ import { Hero } from '../hero/hero';
 import { Institutes } from '../institutes/institutes';
 import { Legacy } from '../legacy/legacy';
 import { Academics } from '../academics/academics';
-import { MoreThanClassrooms } from '../more-than-classrooms/more-than-classrooms';
 import { Milestones } from '../milestones/milestones';
 import { Leadership } from '../leadership/leadership';
 import { Impact } from '../impact/impact';
 import { NewsEvents } from '../news-events/news-events';
 import { AdmissionsCta } from '../../../shared/admissions-cta/admissions-cta';
 import { Categories } from '../categories/categories';
+import { NoticeTicker } from '../notice-ticker/notice-ticker';
 
 @Component({
   selector: 'app-home-index',
   imports: [
     Categories,
     Hero,
+    NoticeTicker,
     Institutes,
     Legacy,
     Academics,
-    MoreThanClassrooms,
     Milestones,
     Leadership,
     Impact,

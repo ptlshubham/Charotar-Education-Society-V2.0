@@ -1,0 +1,62 @@
+@if (notices().length) {
+<section class="nt bg-primary" aria-label="Latest notices">
+  <div class="site-container flex items-center gap-3 py-2.5 sm:gap-4">
+
+    <!-- Label -->
+    <span
+      class="inline-flex shrink-0 items-center gap-2 rounded-full bg-secondary px-2.5 py-1.5 text-[12px] font-bold tracking-[0.14em] text-primary uppercase sm:px-3.5 sm:text-[13px]">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="m3 11 15-6v14L3 13z" />
+        <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
+      </svg>
+      <span class="hidden sm:inline">Notices</span>
+    </span>
+
+    <!-- Scrolling list: two identical copies, the track moves by one, so the loop never shows a seam.
+         Hover or keyboard focus holds it still. -->
+    <div class="nt-viewport min-w-0 flex-1 overflow-hidden">
+      <div class="nt-track flex w-max" [class.is-paused]="paused()" [style.animation-duration.s]="duration()">
+        @for (c of copies; track c) {
+        <ul #copy class="nt-copy flex shrink-0 items-center" [attr.aria-hidden]="c === 1 ? 'true' : null">
+          @for (n of notices(); track $index) {
+          <li class="flex shrink-0 items-center">
+            @if (n.href) {
+            <a [href]="n.href" (click)="open($event, n)" [attr.target]="n.external ? '_blank' : null"
+              [attr.rel]="n.external ? 'noopener' : null" [attr.tabindex]="c === 1 ? -1 : null"
+              class="inline-flex items-center gap-1.5 whitespace-nowrap text-[14px] font-medium text-white no-underline decoration-secondary underline-offset-4 transition-colors hover:text-secondary hover:underline sm:text-[15px]">
+              {{ n.text }}
+              <svg class="shrink-0 text-secondary" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"
+                aria-hidden="true">
+                <path d="M7 17 17 7M8 7h9v9" />
+              </svg>
+            </a>
+            } @else {
+            <span class="whitespace-nowrap text-[14px] text-white/90 sm:text-[15px]">{{ n.text }}</span>
+            }
+            <span class="mx-7 h-1.5 w-1.5 shrink-0 rotate-45 bg-secondary" aria-hidden="true"></span>
+          </li>
+          }
+        </ul>
+        }
+      </div>
+    </div>
+
+    <!-- Pause / play - moving text must be stoppable -->
+    <button type="button" (click)="paused.set(!paused())" [attr.aria-pressed]="paused()"
+      [attr.aria-label]="paused() ? 'Play notices' : 'Pause notices'" [title]="paused() ? 'Play' : 'Pause'"
+      class="nt-toggle flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white/80 ring-1 ring-white/20 transition-colors hover:bg-white/10 hover:text-white">
+      @if (paused()) {
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M7 4.5v15l13-7.5z" />
+      </svg>
+      } @else {
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M6 4h4v16H6zM14 4h4v16h-4z" />
+      </svg>
+      }
+    </button>
+  </div>
+</section>
+}

@@ -47,6 +47,8 @@ export class ApiService {
   public static GetPodcastListURL: string = ApiService.HOST_URL + '/admin/GetAllPodcastDetails';
   // Blog - posts for an institute (the society itself, by convention). Append the id.
   public static GetBlogsURL: string = ApiService.HOST_URL + '/admin/GetBlogsDetailsById/';
+  // Notices (Website Management → Notification) - the home page ticker. Append the id.
+  public static GetNotificationsURL: string = ApiService.HOST_URL + '/admin/GetNotificationByIdDetails/';
   // Answer keys - exam-cell notices for an institute. Append the id.
   public static GetAnswerkeyURL: string = ApiService.HOST_URL + '/admin/GetAllAnswerkey/';
   // Magazine - the society-wide Balmitra magazine archive (no id).

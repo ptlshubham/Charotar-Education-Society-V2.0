@@ -1,47 +1,4 @@
-<!-- ─── Legacy timeline (own clean section) ─── -->
-<section class="pb-24 lg:pb-32">
-  <div class="site-container">
-    <div class="text-center" appReveal>
-      <h2 class="text-[24px] font-bold text-primary sm:text-[30px]">A Legacy That Lives On</h2>
-      <span class="legacy-underline mx-auto mt-3 block h-1 w-16 rounded-full bg-secondary" aria-hidden="true"></span>
-    </div>
-
-    <!-- Steps reveal left to right; each one's icon pops, then its connector draws to the next.
-         Timing lives in legacy.scss, keyed off --delay. -->
-    <ol
-      class="mt-12 grid list-none grid-cols-1 gap-8 sm:grid-cols-3 sm:justify-center lg:grid-cols-5 lg:gap-4 relative z-0">
-      @for (m of milestones; track m.year; let i = $index, last = $last) {
-      <li class="group relative flex flex-col items-center text-center" [appReveal]="i * stepGapMs"
-        [style.--delay]="i * stepGapMs + 'ms'">
-        @if (!last) {
-        <span class="legacy-line absolute top-6 left-1/2 hidden h-[1px] w-full bg-gray-200 lg:block -z-10"
-          aria-hidden="true"></span>
-        }
-
-        <div
-          class="legacy-icon relative z-10 mb-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#EEF0F5] text-primary group-hover:bg-primary group-hover:text-white"
-          aria-hidden="true">
-          <span class="material-symbols-outlined !text-[20px]" style="font-variation-settings: 'wght' 300;">
-            @switch (m.year) {
-              @case ('1916') { flag }
-              @case ('1950s') { menu_book }
-              @case ('1970s') { workspace_premium }
-              @case ('2000s') { trending_up }
-              @case ('Today') { group }
-            }
-          </span>
-        </div>
-
-        <p class="text-[20px] font-bold text-primary">{{ m.year }}</p>
-        <p class="mt-1 text-[16px] font-bold text-secondary">{{ m.title }}</p>
-        <p class="mt-2 text-[14px] leading-[1.6] text-[#5B6472] line-clamp-3 sm:max-w-[220px] mx-auto">{{ m.desc }}</p>
-      </li>
-      }
-    </ol>
-  </div>
-</section>
-
-<!-- ─── Visionary tribute (parchment) ─── -->
+<!-- ─── Visionary tribute, then the legacy timeline under it - one parchment section ─── -->
 <section class="bg-[#F3EBDA] bg-[url('/assets/images/home/parchment.jpg')] bg-cover bg-center">
   <div class="flex flex-col lg:flex-row lg:items-center">
 

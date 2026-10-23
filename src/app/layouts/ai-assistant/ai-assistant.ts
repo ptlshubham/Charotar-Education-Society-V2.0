@@ -9,6 +9,7 @@ import {
   PLATFORM_ID,
   signal,
   ChangeDetectionStrategy,
+  computed,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -71,8 +72,15 @@ export class AiAssistant implements OnDestroy {
   @ViewChild('scrollBody') scrollBody?: ElementRef<HTMLElement>;
 
   readonly open = signal(false);
+  /** Folded down to its title bar - the conversation stays on screen, just out of the way. */
   readonly minimized = signal(false);
   readonly messages = this.chat.messages;
+  /** Messages already on screen when it was minimized - anything after is new. */
+  private readonly seenCount = signal(0);
+  /** Dyuno replied while minimized - the bar shows a dot until it's opened. */
+  readonly unread = computed(
+    () => this.minimized() && this.messages().length > this.seenCount() && this.messages().at(-1)?.role === 'assistant',
+  );
   readonly thinking = this.chat.thinking;
   /** A reply is still coming (maybe in another conversation) - Send waits for it. */
   readonly busy = this.chat.busy;
@@ -118,13 +126,16 @@ export class AiAssistant implements OnDestroy {
   private reducedMotion = false;
 
   constructor() {
-    // The inline Dyuno card on the home page hands its question over here.
+    // The inline Dyuno card on the home page hands its question over here, and the
+    // full /dyuno page its half-typed one when minimized back to the panel.
     effect(() => {
       const req = this.bridge.request();
       if (!req || !isPlatformBrowser(this.platformId)) return;
+      this.bridge.request.set(null);
       this.dismissGreeting();
       this.open.set(true);
       this.minimized.set(false);
+      if (req.draft) this.draft = req.draft;
       if (req.prompt) this.ask(req.prompt);
       else this.scrollToBottom();
     });
@@ -200,7 +211,7 @@ export class AiAssistant implements OnDestroy {
   /** Waves once - on hover, when the greeting pops up, and on the idle timer. */
   waveDyuno(): void {
     if (this.reducedMotion || this.dyunoBusy || !this.dyunoReady()) return;
-    if (this.open() && !this.minimized()) return;   // launcher isn't on screen
+    if (this.open()) return;   // launcher isn't on screen (the panel or its minimized bar is)
     this.dyunoBusy = true;
     this.playDyuno(WAVE, () => (this.dyunoBusy = false));
   }
@@ -286,11 +297,7 @@ export class AiAssistant implements OnDestroy {
     // Any deliberate open retires the greeting - it has done its job.
     if (this.greetingVisible()) this.dismissGreeting();
 
-    if (this.open() && this.minimized()) {
-      this.minimized.set(false);
-      this.scrollToBottom();
-      return;
-    }
+    if (this.open() && this.minimized()) return this.restore();
     this.open.update((v) => !v);
     this.minimized.set(false);
     // A restored conversation should open at its latest message, not the top.
@@ -302,13 +309,21 @@ export class AiAssistant implements OnDestroy {
     this.minimized.set(false);
   }
 
+  /** Fold down to the title bar. Close (×) is the one that puts Dyuno away. */
   minimize(): void {
+    this.seenCount.set(this.messages().length);
     this.minimized.set(true);
+  }
+
+  /** Open the minimized bar back up at the latest message. */
+  restore(): void {
+    this.minimized.set(false);
+    this.scrollToBottom();
   }
 
   /**
    * Continue on the full /dyuno page. The thread is shared, so nothing is lost; the
-   * page's Back link returns here, and a half-typed question comes along too.
+   * page's Minimize and Close return here, and a half-typed question comes along too.
    */
   openFullPage(): void {
     const state = { returnTo: this.router.url, draft: this.draft };

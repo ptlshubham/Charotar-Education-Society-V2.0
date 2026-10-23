@@ -14,6 +14,12 @@
   100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
+/* Minimized bar - drops into place as the panel folds away */
+.ai-bar {
+  animation: ai-panel-in 0.22s cubic-bezier(0.34, 1.2, 0.5, 1);
+  transform-origin: bottom right;
+}
+
 /* Landing greeting - pops out of the launcher, same easing as the panel */
 .ai-greeting {
   animation: ai-greeting-in 0.28s cubic-bezier(0.34, 1.2, 0.5, 1);
@@ -82,6 +88,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .ai-panel,
+  .ai-bar,
   .ai-greeting,
   .ai-typing span {
     animation: none;

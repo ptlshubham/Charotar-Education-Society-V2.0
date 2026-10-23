@@ -180,9 +180,61 @@
 </div>
 }
 
+<!-- ═══ Minimized - the panel folded down to its title bar, above the back-to-top button.
+     It says when Dyuno is typing or has replied; click to open it again. Close (×) puts
+     Dyuno away altogether (the mascot comes back). ═══ -->
+@if (open() && minimized()) {
+<div
+  class="ai-bar fixed z-[90] bottom-[88px] right-6 w-[calc(100vw-3rem)] max-w-[300px] flex items-center gap-1 rounded-[14px] bg-primary py-2 pl-2.5 pr-2 shadow-[0_18px_40px_-12px_rgba(11,40,39,0.45)]"
+  role="region" aria-label="Dyuno chat, minimized">
+  <button type="button" (click)="restore()" class="flex min-w-0 flex-1 items-center gap-2.5 text-left cursor-pointer">
+    <span class="relative flex w-9 h-9 shrink-0">
+      <span class="flex w-full h-full rounded-full overflow-hidden bg-white ring-2 ring-white/25">
+        <img src="/assets/icons/dyuno/dyuno-avatar.webp" alt="" aria-hidden="true" width="36" height="36"
+          class="w-full h-full object-cover" />
+      </span>
+      @if (unread()) {
+      <span class="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-accent ring-2 ring-primary" aria-hidden="true"></span>
+      }
+    </span>
+    <span class="min-w-0">
+      <span class="block text-white text-[14px] font-semibold leading-tight">Dyuno</span>
+      <span class="flex items-center gap-1.5 text-white/75 text-[11.5px]" aria-live="polite">
+        @if (thinking()) {
+        Typing
+        <span class="ai-typing flex items-center gap-0.5" aria-hidden="true">
+          <span class="w-1 h-1 rounded-full bg-white/80"></span>
+          <span class="w-1 h-1 rounded-full bg-white/80"></span>
+          <span class="w-1 h-1 rounded-full bg-white/80"></span>
+        </span>
+        } @else if (unread()) {
+        <span class="font-semibold text-white">New reply</span> - tap to read
+        } @else {
+        <span class="truncate">Minimized - tap to open</span>
+        }
+      </span>
+    </span>
+  </button>
+  <button type="button" (click)="restore()" title="Open chat" aria-label="Open chat"
+    class="flex items-center justify-center w-8 h-8 rounded-full shrink-0 text-white/90 hover:bg-white/20 transition-colors">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="m18 15-6-6-6 6" />
+    </svg>
+  </button>
+  <button type="button" (click)="close()" title="Close" aria-label="Close"
+    class="flex items-center justify-center w-8 h-8 rounded-full shrink-0 text-white/90 hover:bg-white/20 transition-colors">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M18 6 6 18M6 6l12 12" />
+    </svg>
+  </button>
+</div>
+}
+
 <!-- ═══ Landing greeting - one proactive nudge per session, sitting above the
      launcher. Retires as soon as it's dismissed or the panel is opened. ═══ -->
-@if (greetingVisible() && (!open() || minimized())) {
+@if (greetingVisible() && !open()) {
 <div
   class="ai-greeting fixed bottom-[168px] right-6 z-[86] w-[250px] rounded-[12px] bg-white p-3 pr-7 shadow-[0_18px_40px_-12px_rgba(11,40,39,0.3)] ring-1 ring-primary/[0.06]"
   role="status" aria-live="polite">
@@ -208,11 +260,11 @@
 </div>
 }
 
-<!-- ═══ Launcher - hidden while the panel is open (the panel has its own close) ═══
+<!-- ═══ Launcher - hidden while the panel or its minimized bar is up (both have a close) ═══
      right-[15px], not right-6: Dyuno's body sits ~51% across his canvas, so this lines
      him up over the back-to-top button's centre (24px + 52px/2 = 50px from the edge).
      Every frame is stacked and only the current one is visible, so swaps never flash. -->
-@if (!open() || minimized()) {
+@if (!open()) {
 <button type="button" (click)="toggle()" (mouseenter)="waveDyuno()" aria-label="Open AI assistant" aria-expanded="false"
   [class.invisible]="!dyunoReady()"
   class="fixed bottom-[84px] right-[15px] z-[85] w-[72px] h-[72px] rounded-full cursor-pointer transition-transform hover:scale-105">

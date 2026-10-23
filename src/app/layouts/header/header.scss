@@ -157,6 +157,43 @@
   font-weight: 600;
   white-space: nowrap;
   a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+  // Dyuno, the AI assistant - a gold pill with its avatar so it stands out from the text links.
+  .dyuno-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 3px 6px 3px 3px;
+    border-radius: 999px;
+    background: var(--header-gold);
+    color: var(--header-navy);
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(250, 173, 79, 0.45);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    img {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #fff;
+      object-fit: cover;
+    }
+
+    &:hover {
+      text-decoration: none;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(250, 173, 79, 0.6);
+    }
+  }
+
+  .dyuno-tag {
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: var(--header-navy);
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+  }
 }
 
 .header-ads {

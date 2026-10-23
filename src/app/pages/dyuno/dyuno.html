@@ -71,7 +71,7 @@
   <div class="flex min-w-0 flex-1 flex-col">
 
     <!-- ═══ Top bar ═══ -->
-    <header class="flex h-14 shrink-0 items-center gap-3 border-b border-primary/[0.08] px-3 sm:h-16 sm:px-5">
+    <header class="flex h-14 shrink-0 items-center gap-2 border-b border-primary/[0.08] px-3 sm:h-16 sm:gap-3 sm:px-5">
       <button type="button" (click)="sidebarOpen.set(true)" aria-label="Chat history" title="Chat history"
         class="flex h-9 w-9 items-center justify-center rounded-full text-primary transition-colors hover:bg-primary/[0.06] lg:hidden">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -79,7 +79,7 @@
           <path d="M4 6h16M4 12h16M4 18h10" />
         </svg>
       </button>
-      <div class="flex min-w-0 flex-1 items-center gap-2.5">
+      <div class="flex min-w-0 flex-1 items-center gap-2 sm:gap-2.5">
         <span class="flex h-9 w-9 shrink-0 overflow-hidden rounded-full bg-white ring-2 ring-primary/10">
           <img src="/assets/icons/dyuno/dyuno-avatar.webp" alt="" aria-hidden="true" width="36" height="36"
             class="h-full w-full object-cover" />
@@ -92,7 +92,7 @@
       @if (hasConversation()) {
       <button type="button" (click)="share()" [disabled]="thinking()" title="Share this chat"
         aria-label="Share this chat"
-        class="flex h-9 items-center gap-1.5 rounded-full border border-primary/15 px-3 text-[13.5px] font-medium text-primary transition-colors hover:bg-primary hover:text-white disabled:pointer-events-none disabled:opacity-40">
+        class="flex h-9 items-center gap-1.5 rounded-full border border-primary/15 px-2.5 text-[13.5px] sm:px-3 font-medium text-primary transition-colors hover:bg-primary hover:text-white disabled:pointer-events-none disabled:opacity-40">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
@@ -100,19 +100,30 @@
         </svg>
         <span class="hidden sm:inline">Share</span>
       </button>
-      <span class="h-6 w-px bg-primary/10" aria-hidden="true"></span>
+      <span class="hidden h-6 w-px bg-primary/10 sm:block" aria-hidden="true"></span>
       }
-      <a [routerLink]="returnTo" title="Back to the website"
-        class="flex h-9 items-center gap-1.5 rounded-full px-2.5 text-[14px] font-medium text-primary no-underline transition-colors hover:bg-primary/[0.06]">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      <!-- Minimize: back to the small floating chat, same conversation -->
+      <button type="button" (click)="minimize()" title="Minimize to the chat window"
+        aria-label="Minimize to the chat window"
+        class="flex h-9 items-center gap-1.5 rounded-full border border-primary/15 px-2.5 text-[13.5px] sm:px-3 font-medium text-primary transition-colors hover:bg-primary hover:text-white">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M19 12H5M11 18l-6-6 6-6" />
+          <path d="M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7" />
         </svg>
-        <span class="hidden sm:inline">Back</span>
+        <span class="hidden sm:inline">Minimize</span>
+      </button>
+      <!-- Close: red on hover, like the delete buttons -->
+      <a [routerLink]="returnTo" title="Close Dyuno" aria-label="Close Dyuno and return to the website"
+        class="flex h-9 items-center gap-1.5 rounded-full border border-primary/15 px-2.5 text-[13.5px] sm:px-3 font-medium text-primary no-underline transition-colors hover:border-[#fde8e8] hover:bg-[#fde8e8] hover:text-[#c0392b] focus-visible:border-[#fde8e8] focus-visible:bg-[#fde8e8] focus-visible:text-[#c0392b]">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 6 6 18M6 6l12 12" />
+        </svg>
+        <span class="hidden sm:inline">Close</span>
       </a>
       <!-- Desktop has New chat at the top of the sidebar -->
       <button type="button" (click)="newChat()" [disabled]="!hasConversation()" title="New chat"
-        class="flex h-9 items-center gap-1.5 rounded-full border border-primary/15 px-3 text-[13.5px] font-medium text-primary transition-colors hover:bg-primary hover:text-white disabled:pointer-events-none disabled:opacity-40 lg:hidden">
+        class="flex h-9 items-center gap-1.5 rounded-full border border-primary/15 px-2.5 text-[13.5px] sm:px-3 font-medium text-primary transition-colors hover:bg-primary hover:text-white disabled:pointer-events-none disabled:opacity-40 lg:hidden">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
@@ -267,4 +278,82 @@
     </div>
 
   </div>
+
+  <!-- ═══ "Share this chat" dialog - the link being made, the link, or why it failed ═══ -->
+  @if (shareOpen()) {
+  <div class="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-4 sm:items-center" (click)="closeShare()">
+    <div role="dialog" aria-modal="true" aria-labelledby="share-title" (click)="$event.stopPropagation()"
+      class="w-full max-w-md rounded-2xl bg-white p-5 shadow-2xl sm:p-6">
+
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h2 id="share-title" class="text-[17px] font-semibold text-primary">Share this chat</h2>
+          <p class="mt-1 text-[13px] leading-relaxed text-muted">
+            Anyone with the link can read this conversation. Your other chats stay on this device.
+          </p>
+        </div>
+        <button type="button" (click)="closeShare()" aria-label="Close"
+          class="-mr-1 -mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-primary transition-colors hover:bg-primary/[0.06]">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      @if (shareError(); as error) {
+      <div role="alert" class="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-[13.5px] text-red-900">{{ error }}</div>
+      <button type="button" (click)="share()"
+        class="mt-4 w-full rounded-xl bg-primary py-2.5 text-[14px] font-semibold text-white transition-opacity hover:opacity-90">
+        Try again
+      </button>
+      } @else if (shareUrl(); as url) {
+      <div class="mt-5 flex items-center gap-2 rounded-xl border border-primary/15 bg-[#F7F8FA] p-1.5 pl-3">
+        <input type="text" readonly [value]="url" aria-label="Share link" (focus)="$any($event.target).select()"
+          class="min-w-0 flex-1 bg-transparent text-[13.5px] text-primary outline-none" />
+        <button type="button" (click)="copyLink()"
+          class="flex shrink-0 items-center gap-1.5 rounded-lg bg-primary px-3.5 py-2 text-[13px] font-semibold text-white transition-opacity hover:opacity-90">
+          @if (linkCopied()) {
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+          Copied
+          } @else {
+          Copy link
+          }
+        </button>
+      </div>
+
+      <div class="mt-3 flex flex-wrap gap-2">
+        <a [href]="whatsappHref()" target="_blank" rel="noopener noreferrer"
+          class="flex flex-1 items-center justify-center gap-2 rounded-xl border border-[#25D366]/40 bg-[#25D366]/10 py-2.5 text-[13.5px] font-semibold text-[#128C7E] no-underline transition-colors hover:bg-[#25D366]/20">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.4-.3Z" />
+          </svg>
+          WhatsApp
+        </a>
+        @if (canNativeShare()) {
+        <button type="button" (click)="nativeShare()"
+          class="flex flex-1 items-center justify-center gap-2 rounded-xl border border-primary/15 py-2.5 text-[13.5px] font-semibold text-primary transition-colors hover:bg-primary/[0.04]">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+            <path d="m16 6-4-4-4 4M12 2v13" />
+          </svg>
+          More options
+        </button>
+        }
+      </div>
+
+      <p class="mt-4 text-[12px] leading-relaxed text-muted">
+        Messages you send after sharing aren't in this link - share again to include them.
+      </p>
+      } @else {
+      <div class="mt-6 flex items-center justify-center gap-2.5 py-4 text-[13.5px] text-muted" aria-live="polite">
+        <span class="h-4 w-4 animate-spin rounded-full border-2 border-primary/20 border-t-primary"></span>
+        Creating link…
+      </div>
+      }
+    </div>
+  </div>
+  }
 </div>

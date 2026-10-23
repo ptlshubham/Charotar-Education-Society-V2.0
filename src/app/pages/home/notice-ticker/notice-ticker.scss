@@ -1,0 +1,56 @@
+/* Slides in once the notices load (they're fetched in the browser, after the page paints). */
+.nt {
+  animation: nt-in 0.35s ease-out;
+}
+
+@keyframes nt-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Each copy is at least as wide as the strip, so even one short notice loops without a gap. */
+.nt-viewport {
+  container-type: inline-size;
+  mask-image: linear-gradient(to right, transparent, #000 28px, #000 calc(100% - 28px), transparent);
+}
+
+.nt-copy {
+  min-width: 100cqw;
+}
+
+/* Duration is bound from the component (text width / pace). */
+.nt-track {
+  animation: nt-scroll linear infinite;
+}
+
+.nt-viewport:hover .nt-track,
+.nt-viewport:focus-within .nt-track,
+.nt-track.is-paused {
+  animation-play-state: paused;
+}
+
+@keyframes nt-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* No motion: a still row the visitor can scroll sideways, one copy, no pause button. */
+@media (prefers-reduced-motion: reduce) {
+  .nt {
+    animation: none;
+  }
+
+  .nt-viewport {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nt-track {
+    animation: none;
+  }
+
+  .nt-copy + .nt-copy,
+  .nt-toggle {
+    display: none;
+  }
+}

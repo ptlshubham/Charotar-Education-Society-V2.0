@@ -228,3 +228,19 @@ export interface GalleryImage {
   mobileImage?: string;
   keywords?: string;
 }
+
+/**
+ * A site notice from GET /admin/GetNotificationByIdDetails/:instituteId - the
+ * "Notification Or Important Links" list in Website Management. `message` is rich-text
+ * HTML (usually one or more links). The dates are DATE columns sent as UTC instants of
+ * IST midnight (2026-10-03 → "2026-10-02T18:30:00.000Z"); either may be null.
+ */
+export interface SiteNotification {
+  id: number;
+  institute_id: number;
+  message: string | null;
+  isactive: number | boolean;
+  startDate: string | null;
+  endDate: string | null;
+  createddate: string;
+}

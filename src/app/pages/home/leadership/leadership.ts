@@ -1,37 +1,32 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { Reveal } from '../../../shared/reveal.directive';
 
 interface Leader {
-  // heading: string;
   name: string;
   role: string;
   quote: string;
-  photo?: string;
+  photo: string;
 }
 
+/**
+ * "Message from the Secretary" - a full-width navy feature: headline, the Secretary's message,
+ * name and role, and a link to the full message on the Management page; his portrait on the
+ * right in a gold corner frame.
+ */
 @Component({
   selector: 'app-leadership',
-  imports: [RouterLink],
+  imports: [RouterLink, Reveal],
   templateUrl: './leadership.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './leadership.scss',
 })
 export class Leadership {
-  // Real leaders and portraits, kept in step with the Management page (key-leaders).
-  readonly leaders: readonly Leader[] = [
-    {
-      // heading: 'Message from the Chairman',
-      name: 'Shri Niravkumar N. Patel',
-      role: 'Chairman, CES',
-      quote: 'Our mission is to create institutions that inspire, innovate and impact lives. Together, we can build a stronger and brighter tomorrow.',
-      photo: '/assets/images/directors/chairman.jpg',
-    },
-    {
-      // heading: 'Message from the Secretary',
-      name: 'Shri Ketankumar P. Patel',
-      role: 'Secretary, CES',
-      quote: 'Education is the most powerful tool to transform individuals and society. We remain committed to excellence in all that we do dfgh dwfg.',
-      photo: '/assets/images/directors/vc.jpg',
-    },
-  ];
+  // Kept in step with the Management page (key-leaders).
+  readonly secretary: Leader = {
+    name: 'Shri Ketankumar P. Patel',
+    role: 'Secretary, CES',
+    quote: 'Education is the most powerful tool to transform individuals and society. We remain committed to excellence in all that we do.',
+    photo: '/assets/images/directors/vc.jpg',
+  };
 }

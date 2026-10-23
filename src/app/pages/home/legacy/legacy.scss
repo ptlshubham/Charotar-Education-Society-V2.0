@@ -27,12 +27,23 @@
   transform: scale(0.4);
 }
 
-// Connector draws towards the next step, landing as that step's icon pops.
+// Connector draws towards the next step, landing as that step's icon pops: downwards on
+// phones (the steps stack), left to right from lg (64rem) where they sit in a row.
 .legacy-line {
-  transform-origin: left center;
+  transform-origin: center top;
   transition: transform 0.35s ease-out calc(var(--delay, 0ms) + 200ms);
 }
 
 .reveal-pending .legacy-line {
-  transform: scaleX(0);
+  transform: scaleY(0);
+}
+
+@media (min-width: 64rem) {
+  .legacy-line {
+    transform-origin: left center;
+  }
+
+  .reveal-pending .legacy-line {
+    transform: scaleX(0);
+  }
 }

@@ -15,6 +15,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AssistantBridge } from '../../core/services/assistant-bridge.service';
 import { CES_TOPICS, ChatTopic, Conversation, DyunoChat, STUDY_TOPICS } from '../../core/services/dyuno-chat.service';
 
 /** The composer grows with the question up to this height, then scrolls. */
@@ -42,6 +43,7 @@ const CONFIRM_CLEAR_MS = 4000;
 export class Dyuno {
   private readonly chat = inject(DyunoChat);
   private readonly router = inject(Router);
+  private readonly assistant = inject(AssistantBridge);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   @ViewChild('thread') thread?: ElementRef<HTMLElement>;
@@ -75,7 +77,7 @@ export class Dyuno {
   });
 
   draft = '';
-  /** Where "Back" goes - the page the panel was opened from, else home. */
+  /** Where "Minimize" and "Close" go - the page the panel was opened from, else home. */
   returnTo = '/';
   /** Index of the answer whose Copy button just worked, for the brief "Copied" state. */
   readonly copied = signal<number | null>(null);
@@ -144,6 +146,15 @@ export class Dyuno {
     if (!el) return;
     el.style.height = 'auto';
     el.style.height = `${Math.min(el.scrollHeight, COMPOSER_MAX_PX)}px`;
+  }
+
+  /**
+   * Back into the floating panel on the page Dyuno was opened from - the reverse of the
+   * panel's expand button. Same conversation, and a half-typed question comes along.
+   */
+  minimize(): void {
+    this.assistant.open('', this.draft);
+    this.router.navigateByUrl(this.returnTo);
   }
 
   /** Fresh conversation; the current one stays in the history. */

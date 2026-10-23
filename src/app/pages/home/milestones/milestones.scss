@@ -1,0 +1,90 @@
+/*
+ * World-records slider. Every slide - the circular record photo with its text under it, no box -
+ * sits in the same grid cell (so the stage is as tall as a slide) and is moved into place by
+ * milestones.ts → transform(). --w is the centre slide's width, --g the gap between slides.
+ * Narrow on phones so the neighbouring circles still peek in at the edges.
+ */
+.ms-stage {
+  --w: min(60vw, 280px);
+  --g: 14px;
+  --m: 170px; // circle height
+  display: grid;
+  touch-action: pan-y; // horizontal drags are swipes, vertical ones still scroll the page
+  user-select: none;
+
+  @media (min-width: 40rem) {
+    --g: 22px;
+    --m: 220px;
+  }
+}
+
+// Slides shrink around their circle's centre, so every circle sits on one line whatever the
+// length of the title under it.
+.ms-slide {
+  grid-area: 1 / 1;
+  justify-self: center;
+  align-self: start;
+  transform-origin: 50% calc(var(--m) / 2);
+  width: var(--w);
+  opacity: 0.4;
+  cursor: pointer;
+  transition:
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.5s ease;
+
+  // Fainter step by step away from the centre, as they get smaller (sizes: milestones.ts SCALES)
+  &[data-dist='1'] {
+    opacity: 0.75;
+  }
+
+  &[data-dist='2'] {
+    opacity: 0.55;
+  }
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &.is-active {
+    opacity: 1;
+    cursor: default;
+  }
+
+  // Beyond the peeking slides: out of sight and out of the way. No transition, so a slide wrapping
+  // round from one end to the other jumps there instead of sweeping across the row.
+  &.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transition: none;
+  }
+}
+
+// The circle's own shadow (follows its shape - there is no box to cast one)
+.ms-medal {
+  height: var(--m);
+  filter: drop-shadow(0 8px 14px rgba(18, 28, 48, 0.18));
+  transition: filter 0.5s ease;
+
+  .is-active & {
+    filter: drop-shadow(0 14px 24px rgba(18, 28, 48, 0.3));
+  }
+}
+
+// The "01 / 08" counter shows on the centre slide only; it keeps its line on the others so every
+// slide is the same height.
+.ms-count {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+
+  .is-active & {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ms-slide,
+  .ms-medal,
+  .ms-count {
+    transition: none;
+  }
+}

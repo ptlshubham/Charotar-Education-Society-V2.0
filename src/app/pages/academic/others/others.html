@@ -1,5 +1,5 @@
 <app-page-hero crumb="Others" [trail]="[{ label: 'Academic' }]" title="Others"
-  tagline="Enriching lives beyond academics through culture, art, and community." [image]="banner" />
+  tagline="Art, music, sport and skills, for students of every age." [image]="banner" />
 
 <section class="site-container py-14">
 
@@ -123,8 +123,8 @@
       <span class="mx-auto mt-3 block h-1 w-16 rounded-full bg-secondary" aria-hidden="true"></span>
 
       <p class="mx-auto mt-4 max-w-[620px] text-[12.5px] leading-[1.7] text-muted sm:text-[13px]">
-        Discover the initiatives that enrich learning, creativity,
-        community engagement, and lifelong connections.
+        Learning, coaching and company that carry on outside the timetable, for students and for the
+        wider CES family.
       </p>
 
     </div>
@@ -177,10 +177,17 @@
               </span>
               {{ item.location }}
             </span>
+            @if (item.link) {
+            <a [routerLink]="item.link" class="inline-flex items-center gap-1 text-[11px] font-semibold text-secondary no-underline opacity-90 hover:opacity-100">
+              Explore Initiative
+              <span class="material-symbols-outlined !text-[21px] [font-variation-settings:'wght'_300]" aria-hidden="true">arrow_forward</span>
+            </a>
+            } @else {
             <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-secondary opacity-90">
               Explore Initiative
               <span class="material-symbols-outlined !text-[21px] [font-variation-settings:'wght'_300]">arrow_forward</span>
             </span>
+            }
           </div>
 
         </div>

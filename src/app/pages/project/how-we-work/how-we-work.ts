@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
+/** "How We Work" - the five steps every project follows, numbered left to right. */
 @Component({
   selector: 'app-how-we-work',
   templateUrl: './how-we-work.html',
@@ -7,31 +8,14 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './how-we-work.scss',
 })
 export class HowWeWork {
-  readonly steps: ReadonlyArray<{ title: string; body: string; icon: string }> = [
-    {
-      title: 'Identify Needs',
-      body: 'Understanding community and student needs',
-      icon: 'lightbulb',
-    },
-    {
-      title: 'Plan & Design',
-      body: 'Designing innovative and sustainable solutions',
-      icon: 'description',
-    },
-    {
-      title: 'Implement',
-      body: 'Executing projects with passion and precision',
-      icon: 'light_mode',
-    },
-    {
-      title: 'Measure Impact',
-      body: 'Measuring outcomes and driving continuous improvement',
-      icon: 'bar_chart',
-    },
-    {
-      title: 'Create Change',
-      body: 'Building a better future for all',
-      icon: 'group',
-    },
+  readonly steps: ReadonlyArray<{ title: string; body: string }> = [
+    { title: 'Identify Needs', body: 'Understand community and student needs.' },
+    { title: 'Plan & Design', body: 'Design innovative and sustainable solutions.' },
+    { title: 'Implement', body: 'Execute projects with passion and precision.' },
+    { title: 'Measure Impact', body: 'Track outcomes and drive continuous improvement.' },
+    { title: 'Create Change', body: 'Build a better future for all.' },
   ];
+
+  /** "01" … "05" */
+  pad(n: number): string { return String(n).padStart(2, '0'); }
 }

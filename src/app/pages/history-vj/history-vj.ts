@@ -17,59 +17,71 @@ export class HistoryVj {
   readonly freedom = '/assets/images/history/freedom.jpg';
   readonly banner = '/assets/images/hero/vj-patel.jpeg';
 
-  /** Life-sketch paragraphs (verbatim from the legacy CES site). */
+  /** Life-sketch, from the legacy CES site and the Society's Gujarati life-sketch. */
   readonly intro: readonly string[] = [
-    'Shri Vitthalbhai J. Patel, Vitthal kaka, a serene, unassuming personality who reinforced the foundation of ' +
-    'this giant tree called "Charotar Education Society". His pupils still have fond memories of his excellent ' +
-    'pedagogical skills, his strong acumen in finding and nurturing talent and a complete dedication towards ' +
-    'development of student community in Charotar Region.',
-    'He listened to students patiently while being firm in making them obedient and hardworking persons. The ' +
-    'students, parents, colleagues and the members of society respected him for his active listening abilities, ' +
-    'complete dedication towards uplifting members of society and creating an ecosystem where fun and duties are ' +
-    'combined in making students a thorough professional.',
+    'Shri Vitthalbhai J. Patel, Vitthal Kaka to generations of students, was a quiet, modest man who ' +
+    'strengthened the roots of Charotar Education Society. His pupils still remember how well he taught, how ' +
+    'quickly he spotted talent, and how much of his life he gave to the students of Charotar.',
+    'He listened patiently, but he was firm. He expected students to work hard and behave well, and he made ' +
+    'school a place where fun and duty went together. Students, parents and colleagues respected him for it.',
   ];
 
   readonly earlyLife: readonly string[] = [
-    'Born on the 13th January, 1919 in Pij town of Nadiad district, Vitthalbhai J Patel was one of the finest teachers our country has produced.',
-    'His primary and secondary education was respectively completed at Pij and at A J High School, Vaso.',
-    'He completed higher education from Mumbai University, Vadodara. He was an Educational professional and an Exercise Specialist, STC.',
+    'Born on 13 January 1919 in Pij, in Nadiad taluka, he grew up to become one of the finest teachers the region has known.',
+    'He went to primary school in Pij and to secondary school at A.J. High School, Vaso.',
+    'He studied further in Vadodara under the University of Bombay, and qualified as a physical education teacher (Vyayam Visharad) and with an S.T.C. teaching certificate.',
   ];
 
   readonly freedomPoints: readonly string[] = [
-    "He joined Mahatma Gandhi's Bharat Chhodo Andolan (Quit India Movement) in 1942.",
-    'He played active role as freedom fighter while becoming member of the group pivotal in looting and burning post and money order of British government.',
-    'Arrested and served the sentence at Chhmas Jail, Sabarmati Jail, Ahmedabad in 1943.',
+    "He answered Gandhiji's call to Quit India in 1942.",
+    'He worked in an underground squad that seized government mail and money orders and set post on fire.',
+    'He was arrested in 1943 and spent six months in Sabarmati Jail, Ahmedabad.',
   ];
 
   readonly teaching: readonly string[] = [
-    'Joined D N High School, Charotar Education Society in 1944 as a teacher.',
-    'In 1945, he was promoted as Teacher and warden of Hostel along with being made a Physical Education Teacher.',
-    'In 1950 he volunteers to join CES day to day affairs.',
-    'Posted as a teacher at Bright School in Rochester city of USA for a period of one year on Indo-US Fulbright Teacher Exchange Program from 1964 to 1965. He was very much admired and respected by American students and faculties while teaching them in English.',
-    'Awarded with coveted "Best Teacher" award by Government of India for the year 1966-67.',
-    'In 1968, he took the reign of D N High School by becoming Principal.',
-    'He was honorary principal for commerce, finance and science subjects in higher secondary section of D N high school from 1977 to 1979.',
-    'From 1979 to 1988, Vitthal Kaka served Charotar Vidya Mandal as Honorary Secretary.',
-    'Served as Secretary at Sardar Patel Education Trust, Anand from 1979 to 1992.',
-    'He also served as President of Pij Kelavani Mandal in 1989.',
-    'In 1986, he served as Chairman of Sardar Patel Seva Samaj, Nadiad.',
-    'During 1991-92 he served as Professor, Bhaikaka Chair in Sardar Patel University, Vallabhvidyanagar.',
-    'He also held distinction of member of advisory committee at Pramukh Swami Medical College, Karamsad.',
-    'From 1944 to 1979 encompassing a period of 35 years, Vitthal Kaka untiring served Charotar Education Society in various capacities including teacher, hostel warden, member of governing bodies etc. Above all, he was doing the most pious work of shaping lives of students.',
-    'He was also pioneer in spreading the wings of quality school education in Ashi, Radhu, Nayaka, Ajarpura, Pij and Bharoda town of Charotar region.',
+    '1944: joined D.N. High School as a teacher.',
+    '1945: also became a hostel warden and the physical education teacher.',
+    '1950: became a volunteer of the Society, one of the people who run it.',
+    '1964-65: taught American students in English for a year at Bright School, Rochester, USA, on the Indo-US Fulbright Teacher Exchange. He was much admired there.',
+    '1966-67: received the Government of India award for the best teacher.',
+    '1968: became Principal of D.N. High School.',
+    '1977-79: set up the commerce, arts and science streams of the D.N. higher secondary section and was their honorary principal.',
+    '1979-88: Honorary Secretary, Charutar Vidya Mandal, Vallabh Vidyanagar.',
+    '1979-92: Secretary, Sardar Patel Education Trust, Anand.',
+    'From 1986: Chairman, Sardar Patel Seva Samaj, Nadiad.',
+    'From 1989: President, Pij Kelavani Mandal.',
+    '1991-92: Project officer for the Bhaikaka Chair at Sardar Patel University.',
+    'Member of the advisory committee of Pramukh Swami Medical College, Karamsad.',
+    'In all he served CES for 35 years, from 1944 to 1979: teacher, chief hostel warden, headmaster, principal, secretary and an active member of the governing body. Above everything, he shaped the lives of his students.',
+    'He also helped start and guide high schools in Ashi, Radhu, Nayaka, Ajarpura, Pij and Bharoda.',
   ];
 
-  /** "So, Vitthalbhai J Patel was…" - one card each. */
-  readonly traits: ReadonlyArray<{ text: string; icon: string }> = [
-    { text: 'Teacher, Hostel warden, Principal, volunteer, secretary and member of governing body at Charotar Education Society during the course of 35 years of service to this prestigious organization.', icon: 'group' },
-    { text: 'A staunch follower of Gandhian Philosophy, an activist, a freedom fighter and a member of Quit India movement.', icon: 'flag' },
-    { text: 'The one who committed to simplicity, discipline and service his entire working and retired life.', icon: 'shield' },
-    { text: 'A teacher par excellence and an admired administrator of Charotar region.', icon: 'school' },
-    { text: 'A stream of karmathata, and saatvikta.', icon: 'self_improvement' },
-    { text: 'A priest of honesty and a fatherly figure for students.', icon: 'tune' },
-    { text: 'A visionary and dynamic administrator.', icon: 'visibility' },
-    { text: 'Transparent, orator and epitome of manner.', icon: 'campaign' },
-    { text: 'An ardent scholar and a complete believer of humanity.', icon: 'menu_book' },
+  /** "Remembering Vitthalbhai J. Patel" - the Society's nine words about him, in three themes. */
+  readonly traitGroups: ReadonlyArray<{ title: string; traits: readonly string[] }> = [
+    {
+      title: 'An educator',
+      traits: [
+        'Teacher, hostel warden, principal, volunteer, secretary and governing-body member at CES across 35 years.',
+        "One of Charotar's finest teachers and ablest administrators.",
+        'A brilliant scholar and a true humanitarian.',
+      ],
+    },
+    {
+      title: 'A life of service',
+      traits: [
+        'A committed Gandhian and a Quit India freedom fighter.',
+        'A model hostel warden who lived by service, simplicity and discipline.',
+        'Pure-hearted, and never stopped working.',
+      ],
+    },
+    {
+      title: 'A guiding presence',
+      traits: [
+        'Honest to the core, and a father figure to his students.',
+        'A dynamic administrator who looked far ahead.',
+        'A clear, strong and courteous speaker.',
+      ],
+    },
   ];
 
   // ── Tribute publication PDF viewer ("નમન… - ભૂતપૂર્વ શિષ્યગણની ગુરુવંદના") ──

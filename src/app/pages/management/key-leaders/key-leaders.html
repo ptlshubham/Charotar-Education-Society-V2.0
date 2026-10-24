@@ -21,14 +21,14 @@
 
         <p class="mt-4 text-[13px] leading-relaxed text-muted">{{ leader.quote }}</p>
 
-        <button type="button"
-          class="mt-5 inline-flex items-center gap-2 rounded-md border border-gray-300 px-4 py-2 text-[13px] font-semibold text-white bg-primary transition-colors hover:border-primary hover:bg-primary hover:text-white">
-          Read More
+        <a [routerLink]="leader.link" [attr.aria-label]="'Read the full message from ' + leader.name"
+          class="mt-5 inline-flex items-center gap-2 rounded-md border border-gray-300 px-4 py-2 text-[13px] font-semibold text-white no-underline bg-primary transition-colors hover:border-primary hover:bg-primary-dark hover:text-white">
+          Read Full Message
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M5 12h14M13 6l6 6-6 6" />
           </svg>
-        </button>
+        </a>
       </div>
 
     </article>

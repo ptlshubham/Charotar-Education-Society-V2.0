@@ -77,6 +77,18 @@ export const ICONS = {
   cap: ['M22 10 12 5 2 10l10 5 10-5z', 'M6 12v5c0 1.1 2.7 2 6 2s6-.9 6-2v-5', 'M22 10v5'],
   user: ['M20 21v-1a5 5 0 0 0-5-5H9a5 5 0 0 0-5 5v1', 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z'],
   bulb: ['M9 18h6', 'M10 22h4', 'M12 2a7 7 0 0 0-4 12.7c.5.4.9 1 .9 1.6V17h6.2v-.7c0-.6.4-1.2.9-1.6A7 7 0 0 0 12 2z'],
+  sparkles: [
+    'M9.9 15.5a2 2 0 0 0-1.4-1.4l-6.1-1.6a.5.5 0 0 1 0-1l6.1-1.6a2 2 0 0 0 1.4-1.4l1.6-6.1a.5.5 0 0 1 1 0l1.6 6.1a2 2 0 0 0 1.4 1.4l6.1 1.6a.5.5 0 0 1 0 1l-6.1 1.6a2 2 0 0 0-1.4 1.4l-1.6 6.1a.5.5 0 0 1-1 0z',
+    'M20 3v4M22 5h-4',
+  ],
+  utensils: ['M3 2v7a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V2', 'M7 2v20', 'M21 15V2a5 5 0 0 0-5 5v6a2 2 0 0 0 2 2h3zm0 0v7'],
+  sprout: [
+    'M7 20h10',
+    'M10 20c5.5-2.5.8-6.4 3-10',
+    'M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z',
+    'M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z',
+  ],
+  flame: ['M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.1-.2-4.1 2-6 .5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.2.4-2.3 1-3a2.5 2.5 0 0 0 2.5 2.5z'],
 } as const;
 
 
@@ -133,25 +145,45 @@ export class Header implements AfterViewInit {
 
   /** Full nav tree - mirrors the live cesociety.in menu, including its third level. */
   readonly navLinks: ReadonlyArray<NavItem> = [
+    { label: 'Home', link: '/home', icon: 'home' },
     {
-      label: 'Home',
-      icon: 'home',
+      // Who the Society is today.
+      label: 'About Us',
+      icon: 'info',
       children: [
-        { label: 'Home', link: '/home', icon: 'home' },
-        { label: 'About Us', link: '/about', icon: 'info' },
+        { label: 'About CES', link: '/about', icon: 'info' },
+        { label: 'CES at a Glance', link: '/about/profile', icon: 'file' },
         { label: 'Management', link: '/management', icon: 'users' },
       ],
     },
     {
+      // Where it came from.
       label: 'Glory of CES',
-      icon: 'users',
+      icon: 'award',
       children: [
-        { label: 'Centenary Celebration', link: '/celebration', icon: 'award' },
-        { label: 'History of V. J. Patel', link: '/glory/history-vj', icon: 'award' },
+        { label: 'Our History', link: '/about/history', icon: 'book' },
+        { label: 'History of V. J. Patel', link: '/glory/history-vj', icon: 'user' },
       ],
     },
-    { label: 'Social Activity', link: '/social-activity', icon: 'heart' },
-    { label: 'Project', link: '/project', icon: 'file' },
+    {
+      // The Society's festivals: two every year, and the centenary it has completed.
+      label: 'Celebrations',
+      icon: 'sparkles',
+      children: [
+        { label: 'Chatkaro', link: '/chatkaro', icon: 'utensils' },
+        { label: 'Navratri Mahotsav', link: '/navratri', icon: 'flame' },
+        { label: 'Centenary Celebration', link: '/celebration', icon: 'award' },
+      ],
+    },
+    {
+      // The Society's work beyond the classroom.
+      label: 'Initiatives',
+      icon: 'sprout',
+      children: [
+        { label: 'Projects', link: '/project', icon: 'bulb' },
+        { label: 'Social Activity', link: '/social-activity', icon: 'heart' },
+      ],
+    },
     {
       label: 'Academic',
       icon: 'cap',
@@ -179,7 +211,6 @@ export class Header implements AfterViewInit {
       icon: 'play',
       children: [
         { label: 'Gallery', link: '/glory/gallery', icon: 'image' },
-        { label: 'Navratri', link: '/navratri', icon: 'calendar' },
         { label: 'Next UP', link: '/podcast', icon: 'play' },
       ],
     },
@@ -212,14 +243,22 @@ export class Header implements AfterViewInit {
     },
   ];
 
+  /** A top-level menu by its label, so the bars below survive menus being added or moved. */
+  private nav(label: string): NavItem {
+    const item = this.navLinks.find((n) => n.label === label);
+    if (!item) throw new Error(`No top-level menu "${label}"`);
+    return item;
+  }
+
   readonly desktopNav: ReadonlyArray<NavItem> = [
-    ...this.navLinks.slice(0, 8),
-    this.navLinks[9], // Student Corner
-    this.navLinks[8], // IP Cell
+    ...['Home', 'About Us', 'Glory of CES', 'Celebrations', 'Initiatives', 'Academic', 'Alumni', 'Rahatokarsh Fund', 'Media']
+      .map((label) => this.nav(label)),
+    this.nav('Student Corner'),
+    this.nav('IP Cell'),
     {
-      ...this.navLinks[11],
+      ...this.nav('More'),
       children: [
-        ...(this.navLinks[11].children ?? []),
+        ...(this.nav('More').children ?? []),
         { label: 'Contact Us', link: '/contact' },
         { label: 'RTI', link: '/support/disclosure-policy' },
         { label: 'Grievance', link: '/contact' },
@@ -231,13 +270,9 @@ export class Header implements AfterViewInit {
    * Inline items on the tablet nav bar (kept to five so they never overflow between
    * md and xl); everything else is reachable through the "More" drawer.
    */
-  readonly tabletNav: ReadonlyArray<NavItem> = [
-    this.navLinks[0], // Home
-    this.navLinks[1], // Glory of CES
-    this.navLinks[2], // Social Activity
-    this.navLinks[3], // Project
-    this.navLinks[4], // Academic
-  ];
+  readonly tabletNav: ReadonlyArray<NavItem> = ['Home', 'About Us', 'Glory of CES', 'Initiatives', 'Academic'].map(
+    (label) => this.nav(label),
+  );
 
   readonly desktopSocials = ['Instagram', 'LinkedIn', 'Facebook', 'YouTube'].map(label => ({
     label,
@@ -261,8 +296,9 @@ export class Header implements AfterViewInit {
    * or any 3.4:1 image) and add an entry here; `link` is optional.
    */
   readonly ads: ReadonlyArray<{ image: string; alt: string; link?: string }> = [
-    { image: '/assets/images/header/ads/navratri.jpeg', alt: 'Admissions Open 2025–26 - Apply Now', link: '/navratri/2026' },
-    { image: '/assets/images/header/ads/heritage.png', alt: 'Educating Since 1916' },
+    { image: '/assets/images/header/ads/navratri.jpeg', alt: 'Adi Devi Mahakali: Navratri Mahotsav 2026', link: '/navratri/2026' },
+    // Despite its file name, this is the Chatkaro artwork.
+    { image: '/assets/images/header/ads/heritage.png', alt: 'CES Chatkaro: coming soon', link: '/chatkaro' },
   ];
 
   /** Extra links in the top utility strip. RTI/Grievance point at the nearest
@@ -297,8 +333,9 @@ export class Header implements AfterViewInit {
   private static readonly KEYWORDS: Record<string, string> = {
     '/home': 'homepage main',
     '/about': 'about us history charotar education society motibhai amin legacy',
+    '/about/profile': 'society profile fact sheet key facts quick facts brochure pdf download overview',
     '/management': 'trustees leaders chairman secretary committee board',
-    '/celebration': 'centenary hundred 100 years guinness world records glory',
+    '/celebration': 'centenary shatabdi shatakotsav hundred 100 years guinness world records glory celebration',
     '/glory/history-vj': 'history vitthalbhai vj patel vitthal kaka visionary founder freedom fighter teacher',
     '/social-activity': 'social activities initiatives camps community service',
     '/project': 'projects initiatives development',
@@ -313,7 +350,8 @@ export class Header implements AfterViewInit {
     '/donner-list': 'donors donor list donation records',
     '/micro-donner': 'micro donors small donation list',
     '/glory/gallery': 'gallery photos images pictures videos media',
-    '/navratri': 'navratri garba festival celebration event',
+    '/navratri': 'navratri garba festival celebration event mahotsav',
+    '/chatkaro': 'chatkaro food festival skill fair alumni meet january millets gujarati mela event celebration',
     '/podcast': 'podcast next up video audio episodes',
     '/ipcell': 'ip cell intellectual property patents trademarks copyrights',
     '/student-corner/answer-key': 'answer key exam results papers standard',
@@ -396,10 +434,31 @@ export class Header implements AfterViewInit {
   }
 
   /** True when the current URL starts with the given prefix. */
-  linkActive(prefix: string): boolean {
+  /** Whether the URL is this link's page or a page beneath it. */
+  private matches(prefix: string): boolean {
     const path = this.router.url.split(/[?#]/)[0];
     if (prefix === '/home' && path === '/') return true;
     return path === prefix || path.startsWith(prefix + '/');
+  }
+
+  /**
+   * The menu link for the current page: the longest one the URL falls under, so
+   * /about/history marks "Our History" (Glory of CES) and not "About CES" as well.
+   */
+  private currentLink(): string | null {
+    let best: string | null = null;
+    const visit = (items: readonly NavItem[]): void => {
+      for (const item of items) {
+        if (item.link && this.matches(item.link) && (!best || item.link.length > best.length)) best = item.link;
+        if (item.children) visit(item.children);
+      }
+    };
+    visit(this.desktopNav);
+    return best;
+  }
+
+  linkActive(link: string): boolean {
+    return this.currentLink() === link;
   }
 
   /** True when the item itself, or any descendant, matches the current URL. */

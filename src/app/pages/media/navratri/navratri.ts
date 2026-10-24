@@ -58,13 +58,4 @@ export class Navratri {
     { value: '500+', label: 'Volunteers', icon: 'favorite' },
     { value: '100%', label: 'Safe & Secure', icon: 'verified_user' },
   ];
-
-  readonly highlights: ReadonlyArray<{ title: string; body: string; icon: string }> = [
-    { title: 'Divine Darshan', body: 'Beautifully decorated pandal with daily darshan of Maa Amba.', icon: 'home' },
-    { title: 'Daily Aarti', body: 'Soulful aarti every evening with a spiritual and peaceful atmosphere.', icon: 'local_fire_department' },
-    { title: 'Garba & Raas', body: 'Traditional Garba & Raas with live orchestra and energetic beats.', icon: 'person' },
-    { title: 'Cultural Programs', body: 'Skits, music, dance and competitions by students & invited artists.', icon: 'music_note' },
-    { title: 'Prasad & Annadan', body: 'Daily prasad and annadan seva for all devotees.', icon: 'restaurant' },
-    { title: 'Security & Safety', body: 'Round the clock security, medical support and dedicated management.', icon: 'verified_user' },
-  ];
 }

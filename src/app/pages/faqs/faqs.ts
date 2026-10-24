@@ -128,6 +128,58 @@ export class Faqs {
     },
   ];
 
+  /**
+   * Answers CES has published (its history document, cesociety.in and this site), keyed by question.
+   * Questions without one show the "being prepared" note until CES supplies the answer.
+   */
+  readonly answers: Readonly<Record<string, string>> = {
+    'What is Charotar Education Society (CES)?':
+      'A registered charitable education society in Anand, Gujarat, founded in 1916. It runs 31+ institutes, from pre-primary schools to postgraduate colleges, across three campuses.',
+    'When was CES established?':
+      'On 16 April 1916, in Anand. Shri Motibhai Amin led the effort, and Shri Vithalbhai Patel, elder brother of Sardar Vallabhbhai Patel, drew up its constitution.',
+    'What is the mission of Charotar Education Society?':
+      'To make good education affordable and within reach, while supporting innovation, research and the all-round growth of every student.',
+    'Where is CES located?':
+      'Our office is on the D.N. High School Campus, Station Road, Anand 388001, Gujarat. We have three campuses: Anand (21 acres), Khetiwadi (7.5 acres) and Mogri (12 acres).',
+    'What types of institutions are managed by CES?':
+      '17 schools, 13 colleges, 4 hostels and 7 other departments, covering everything from pre-primary to Ph.D., as well as teacher training, physical education, performing arts and vocational courses.',
+    'How can I contact CES?':
+      'Call (02692) 243083, email cesociety@cesociety.in, or send us a message from the Contact Us page.',
+    'Are there any scholarships available?':
+      'Yes. The Rahatokarsh Fund pays the fees of bright students who are short of money and get no other scholarship, at any CES institution from KG to PG.',
+    'What courses are offered at CES institutes?':
+      'Pre-school to class 12; B.Sc., B.Sc. IT, B.Com., B.A., BCA, BBA, BSW, B.Ed., B.P.Ed., PTC and medical laboratory technology; and M.Sc., M.Com., M.A., M.Ed., MSW and Ph.D.',
+    'Are the institutes affiliated to a university?':
+      'Our colleges are affiliated to Sardar Patel University, Vallabh Vidyanagar.',
+    'Do you offer postgraduate programs?':
+      'Yes: M.Sc., M.Com., M.A., M.Ed. and MSW, and a research centre for doctoral (Ph.D.) study.',
+    'Are there industry collaborations?':
+      'Our Swami Dayanand Saraswati Vocational Training Centre runs its courses with professional organisations under MoUs, and their experts do the teaching.',
+    'How do I download the answer key?':
+      'Answer keys are published under Student Corner > Answer Key.',
+    'What is the refund policy?':
+      'Please read our Refund & Cancellation Policy, linked in the footer of every page.',
+    'What facilities are available on campus?':
+      'Gyansthali Library and two e-libraries, a gym with free coaching, an amphitheatre, an auditorium, a Saraswati temple, a stationery store and four hostels.',
+    'Is hostel accommodation provided?':
+      'Yes. We have four hostels for boys and girls, from class 5 to postgraduate, with meals from our own kitchen. See the Hostels page for details.',
+    'Are there sports facilities?':
+      'Yes. The Sports Academy coaches students for state, national and international events, Project Arjun trains students in shooting, and the gym offers free coaching.',
+    'Is there a library?':
+      'Yes. Gyansthali Library has books, periodicals, journals and online material on every subject. There are also two e-libraries and a library club that runs book-review contests.',
+    'Is counselling available for students?':
+      'Yes. Under Project Anandam, students can talk privately with a counsellor about stress, studies, career choices or relationships. Free psychological counselling is also available; see the Counselling page.',
+    'What is the privacy policy?': 'You can read it on our Privacy Policy page, linked in the footer.',
+    'What are the website terms?': 'You can read them on our Website Terms page, linked in the footer.',
+    'What is the disclosure policy?': 'You can read it on our Disclosure Policy page, linked in the footer.',
+    'How can I get an e-Gate Pass?': 'Apply on the e-Gate Pass page, under More in the main menu.',
+    'How do I register as an alumnus?':
+      'Fill in the registration form on the Alumni page. Do come to the Alumni Meet, held every 13 January in Anand.',
+    'How can I donate to the Rahatokarsh Fund?':
+      'Donate online from the Donation page, or transfer to the "Rahatokarsh Fee Fund" account at State Bank of India, Sardar Gunj Branch, Anand. Donations are tax-exempt under Section 80G(5).',
+    'Where can I find current tenders?': 'On the Tenders page, under More in the main menu.',
+  };
+
   /** Which category panel is expanded; the first opens by default. */
   readonly openCategory = signal(0);
   /** Which question inside the open category is expanded. */

@@ -1,20 +1,24 @@
-<section class="site-container pb-12">
+<section class="site-container py-8 lg:py-10" aria-labelledby="how-we-work-title">
 
-  <h2 class="text-center text-[22px] font-bold text-primary sm:text-[26px]">How We Work</h2>
-  <span class="mx-auto mt-3 block h-1 w-14 rounded-full bg-secondary" aria-hidden="true"></span>
+  <!-- Heading, with the line about it on the right -->
+  <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-2">
+    <div>
+      <p class="text-[12px] font-semibold tracking-[1.5px] text-secondary uppercase sm:text-[13px]">Our Approach</p>
+      <h2 id="how-we-work-title" class="mt-2 text-[24px] leading-[1.15] font-bold tracking-tight text-primary sm:text-[30px] lg:text-[34px]">
+        How We Work
+      </h2>
+    </div>
+    <p class="text-[14px] text-[#5B6472] sm:mb-1 sm:text-[15px]">From understanding needs to creating lasting change.</p>
+  </div>
 
-  <ol class="relative mt-8 grid grid-cols-2 list-none gap-x-4 gap-y-8 lg:grid-cols-5 lg:gap-2">
-    <span class="absolute left-[10%] right-[10%] top-7 hidden h-px bg-gray-300 lg:block" aria-hidden="true"></span>
-
-    @for (step of steps; track step.title) {
-      <li class="relative z-10 flex flex-col items-center px-2 text-center">
-        <span class="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-secondary" aria-hidden="true">
-          <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]">{{ step.icon }}</span>
-        </span>
-
-        <h3 class="mt-4 text-[14px] font-bold text-primary">{{ step.title }}</h3>
-        <p class="mt-1.5 text-[12px] leading-relaxed text-muted">{{ step.body }}</p>
-
+  <!-- The five steps, divided by thin rules from desktop up -->
+  <ol class="mt-7 grid list-none grid-cols-2 gap-x-6 gap-y-7 border-b border-gray-200 pb-8 sm:grid-cols-3 lg:mt-8 lg:grid-cols-5 lg:gap-x-0">
+    @for (step of steps; track step.title; let i = $index) {
+      <li class="lg:border-l lg:border-gray-200 lg:px-8 lg:first:border-l-0 lg:first:pl-0">
+        <p class="text-[20px] font-bold text-secondary tabular-nums sm:text-[22px]" aria-hidden="true">{{ pad(i + 1) }}</p>
+        <span class="mt-2.5 block h-[3px] w-8 rounded-full bg-secondary" aria-hidden="true"></span>
+        <h3 class="mt-4 text-[15px] font-bold text-primary sm:text-[17px]">{{ step.title }}</h3>
+        <p class="mt-1.5 text-[13px] leading-relaxed text-[#5B6472] sm:text-[14px]">{{ step.body }}</p>
       </li>
     }
   </ol>

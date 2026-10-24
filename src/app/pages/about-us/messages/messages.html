@@ -12,9 +12,9 @@
           <blockquote class="mt-2 max-w-md text-[15px] leading-relaxed text-white/90">{{ leader.quote }}</blockquote>
 
           <p class="mt-4 text-[14px] font-bold text-secondary uppercase">{{ leader.name }}</p>
-          <p class="text-[12.5px] text-white/60">{{ leader.role }}</p>
+          <p class="text-[12.5px] text-white/60">{{ leader.title }}</p>
 
-          <a href="#"
+          <a [routerLink]="['/management', leader.role]" [attr.aria-label]="'Read the full message from ' + leader.name"
             class="mt-4 inline-flex items-center gap-1.5 rounded-md border border-white/30 px-4 py-2 text-[12.5px] font-semibold text-white no-underline transition-colors hover:bg-white hover:text-primary">
             Read Message
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"

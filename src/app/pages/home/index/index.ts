@@ -24,7 +24,7 @@ import { Stats } from '../stats/stats';
     Academics,
     Milestones,
     Leadership,
-    Impact,
+    // Impact,
     NewsEvents,
     AdmissionsCta,
   ],

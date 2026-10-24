@@ -114,7 +114,7 @@
 
                   @if (openQuestion() === qi) {
                     <p class="animate-dropdown border-t border-gray-100 px-4 py-3 text-[12.5px] leading-relaxed text-muted">
-                      The answer to this question is being prepared by the CES team and will appear here shortly.
+                      {{ answers[q] ?? 'The answer to this question is being prepared by the CES team and will appear here shortly.' }}
                     </p>
                   }
                 </li>

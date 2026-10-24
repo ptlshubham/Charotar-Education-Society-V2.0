@@ -1,144 +1,187 @@
 <!-- ─── Hero ─── -->
 <app-page-hero crumb="Answer Key" [trail]="[{ label: 'Student Corner', link: '/student-corner' }]" title="Answer Key"
   blurb="Access the official answer keys for various standard and subject examinations."
-  image="/assets/images/hero/answer-key.jpeg">
-  @if (lastUpdated()) {
-    <div class="mt-7 inline-flex items-center gap-3 rounded-lg bg-white px-5 py-3">
-      <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-secondary/10 text-secondary/85" aria-hidden="true">
-        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]">calendar_today</span>
-      </span>
-      <div>
-        <p class="text-[11.5px] text-muted">Latest Updated</p>
-        <p class="text-[13.5px] font-bold text-secondary/85">{{ lastUpdated() }}</p>
-      </div>
+  image="/assets/images/hero/answer-key.jpeg" />
+
+<section class="site-container py-8 lg:py-10" aria-labelledby="ak-title">
+
+  <!-- Heading, with the date of the latest key on the right -->
+  <div class="flex flex-wrap items-start justify-between gap-x-8 gap-y-2">
+    <div>
+      <h2 id="ak-title" class="text-[26px] leading-[1.15] font-bold tracking-tight text-primary sm:text-[30px] lg:text-[34px]">
+        Find your answer key
+      </h2>
+      <p class="mt-1.5 text-[14px] text-[#5B6472] sm:text-[15px]">Choose an exam category, then narrow your search.</p>
     </div>
-  }
-</app-page-hero>
-
-<section class="site-container py-8">
-
-  <!-- Exam type tabs -->
-  <div role="tablist" aria-label="Exam type" class="grid gap-4 sm:grid-cols-2">
-    <button type="button" role="tab" [attr.aria-selected]="tab() === 'general'" (click)="selectTab('general')"
-      class="flex items-center justify-center gap-2.5 rounded-lg border px-5 py-3.5 text-[14px] font-semibold transition-colors"
-      [class]="tab() === 'general' ? 'border-primary bg-primary text-white' : 'border-gray-200 bg-white text-primary hover:border-primary'">
-      <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">description</span>
-      General Exam Answer Key
-    </button>
-
-    <button type="button" role="tab" [attr.aria-selected]="tab() === 'competitive'" (click)="selectTab('competitive')"
-      class="flex items-center justify-center gap-2.5 rounded-lg border px-5 py-3.5 text-[14px] font-semibold transition-colors"
-      [class]="tab() === 'competitive' ? 'border-primary bg-primary text-white' : 'border-gray-200 bg-white text-primary hover:border-primary'">
-      <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">workspace_premium</span>
-      Competitive Exam Answer Key
-    </button>
+    @if (lastUpdated()) {
+      <p class="inline-flex items-center gap-2 text-[13.5px] text-[#5B6472] sm:mt-2 sm:text-[14px]">
+        <svg class="shrink-0 text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 4h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" />
+          <path d="M8 2v4M16 2v4M3 10h18M7.5 14h2M11.5 14h2M15.5 14h1M7.5 17.5h2" />
+        </svg>
+        Updated {{ lastUpdated() }}
+      </p>
+    }
   </div>
 
-  @if (tab() === 'general') {
-    <!-- Filters -->
-    <div class="animate-dropdown mt-5 grid gap-4 lg:grid-cols-[1fr_1fr_1fr_auto] lg:items-end">
-      <div>
-        <label for="ak-year" class="sr-only">Select Year</label>
-        <app-custom-select [(ngModel)]="year" [options]="years()" icon="calendar_month" />
-      </div>
-
-      <div>
-        <label for="ak-std" class="sr-only">Select Standard</label>
-        <app-custom-select [(ngModel)]="standard" [options]="standards()" icon="school" />
-      </div>
-
-      <div>
-        <label for="ak-sub" class="sr-only">Select Subject</label>
-        <app-custom-select [(ngModel)]="subject" [options]="subjects()" icon="menu_book" />
-      </div>
-
-      <button type="button" (click)="apply()"
-        class="flex h-12 items-center justify-center gap-2 rounded-lg bg-primary px-7 text-[13px] font-semibold text-white transition-colors hover:bg-primary-dark">
-        Apply Filter
-        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">filter_alt</span>
+  <!-- Exam type tabs -->
+  <div role="tablist" aria-label="Exam type" class="mt-6 flex gap-8 border-b border-gray-200 sm:gap-12"
+    (keydown.arrowright)="move($event)" (keydown.arrowleft)="move($event)">
+    @for (t of tabs; track t.id) {
+      <button type="button" role="tab" [id]="'ak-tab-' + t.id" [attr.aria-selected]="tab() === t.id"
+        aria-controls="ak-panel" [attr.tabindex]="tab() === t.id ? 0 : -1" (click)="selectTab(t.id)"
+        class="-mb-px border-b-[3px] pb-2.5 text-[15px] transition-colors sm:text-[16px]"
+        [class]="tab() === t.id ? 'border-secondary font-bold text-primary' : 'border-transparent text-[#5B6472] hover:text-primary'">
+        {{ t.label }}
       </button>
-    </div>
+    }
+  </div>
 
-    @if (loading()) {
-      <p class="mt-5 text-[13px] text-muted">Loading answer keys…</p>
-    } @else if (failed()) {
-      <p class="mt-5 rounded-xl border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
-        We couldn't load the answer keys right now. Please try again later.
-      </p>
-    } @else {
-      <!-- Table -->
-      <div class="mt-5 overflow-hidden rounded-xl border border-gray-200 bg-white">
-        <div class="overflow-x-auto">
-          <table class="w-full border-collapse text-left [&_td]:align-top">
-            <thead class="bg-primary text-white">
-              <tr>
-                <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">Exam Date</th>
-                <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">
-                  <app-sort-header [sorter]="sorter" sortKey="name">Exam / Paper Name</app-sort-header>
-                </th>
-                <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">
-                  <app-sort-header [sorter]="sorter" sortKey="standard">Standard</app-sort-header>
-                </th>
-                <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">
-                  <app-sort-header [sorter]="sorter" sortKey="subject">Subject</app-sort-header>
-                </th>
-                <th scope="col" class="px-5 py-3.5 text-center text-[13px] font-semibold">PDF</th>
-                
-                <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold text-center">Download</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (paper of pager.paged(); track $index) {
-                <tr class="border-b border-gray-100 last:border-b-0 hover:bg-[#F7F9FC]">
-                  <td class="px-5 py-3 text-[13px] whitespace-nowrap text-muted">{{ paper.day }} {{ paper.month }} {{ paper.year }}</td>
-                  <td class="px-5 py-3 min-w-[260px] max-w-[520px]">
-                    <div class="text-[13px] leading-relaxed font-semibold text-primary [&_a]:text-accent [&_a]:underline [&_p]:m-0" [innerHTML]="paper.message | safeHtml"></div>
-                  </td>
-                  <td class="px-5 py-3 text-[13px] text-muted">{{ paper.standard || '-' }}</td>
-                  <td class="px-5 py-3 text-[13px] text-muted">{{ paper.subject || '-' }}</td>
-                  <td class="px-5 py-3 text-center">
-                    @if (paper.file) {
-                      <span class="inline-flex items-center gap-1.5 text-[12px] text-muted">
-                        <svg class="text-logo" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM13 3.5 18.5 9H13z" />
-                        </svg>
-                        PDF
-                      </span>
-                    } @else {
-                      <span class="text-[12px] text-muted">-</span>
-                    }
-                  </td>
-                  <td class="px-5 py-3 text-center">
-                    @if (paper.file) {
-                      <a [href]="paper.file | mediaUrl" download target="_blank" rel="noopener noreferrer"
-                        aria-label="Download answer key" title="Download answer key"
-                        class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-logo/40 text-logo no-underline transition-colors hover:bg-logo hover:text-white">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
-                        </svg>
-                      </a>
-                    } @else {
-                      <span class="text-[12px] text-muted">-</span>
-                    }
-                  </td>
-                </tr>
-              } @empty {
-                <tr><td colspan="6" class="px-5 py-10 text-center text-[13px] text-muted">No answer keys match your filters.</td></tr>
-              }
-            </tbody>
-          </table>
+  <div id="ak-panel" role="tabpanel" [attr.aria-labelledby]="'ak-tab-' + tab()">
+    @if (tab() === 'general') {
+      <!-- Filters -->
+      <div class="mt-5 grid gap-4 rounded-xl bg-[#F7F6F2] p-4 sm:grid-cols-3 sm:p-5 lg:grid-cols-[1fr_1fr_1fr_auto_auto] lg:items-end lg:gap-5">
+        <div>
+          <p class="mb-1.5 text-[13px] text-[#5B6472]">Year</p>
+          <app-custom-select [(ngModel)]="year" [options]="years()" />
+        </div>
+        <div>
+          <p class="mb-1.5 text-[13px] text-[#5B6472]">Standard</p>
+          <app-custom-select [(ngModel)]="standard" [options]="standards()" />
+        </div>
+        <div>
+          <p class="mb-1.5 text-[13px] text-[#5B6472]">Subject</p>
+          <app-custom-select [(ngModel)]="subject" [options]="subjects()" />
+        </div>
+        <div class="flex items-center gap-5 sm:col-span-3 lg:contents">
+          <button type="button" (click)="apply()"
+            class="h-11 rounded-lg bg-primary px-7 text-[14px] font-semibold text-white transition-colors hover:bg-primary-dark">
+            Apply filters
+          </button>
+          <button type="button" (click)="reset()"
+            class="h-11 text-[14px] font-semibold text-primary underline underline-offset-4 transition-colors hover:text-secondary lg:px-2">
+            Reset
+          </button>
         </div>
       </div>
 
-      @if (pager.totalPages() > 1) {
-        <app-pagination [pager]="pager" variant="compact" />
+      <!-- Results heading and search -->
+      <div class="mt-7 flex flex-wrap items-center justify-between gap-x-8 gap-y-3">
+        <h3 class="text-[20px] font-bold text-primary sm:text-[22px]">General exam answer keys</h3>
+        <label class="relative block w-full sm:w-[360px]">
+          <span class="sr-only">Search paper name</span>
+          <svg class="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-[#5B6472]" width="18" height="18"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" />
+            <path d="m20 20-3.5-3.5" />
+          </svg>
+          <input type="search" [value]="search()" (input)="onSearch($any($event.target).value)"
+            placeholder="Search paper name" autocomplete="off"
+            class="h-11 w-full rounded-lg border border-gray-300 bg-white pr-4 pl-11 text-[14px] text-primary outline-none transition-colors placeholder:text-gray-400 focus:border-primary" />
+        </label>
+      </div>
+
+      @if (loading()) {
+        <p class="mt-4 text-[13px] text-muted">Loading answer keys…</p>
+      } @else if (failed()) {
+        <p class="mt-4 rounded-xl border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
+          We couldn't load the answer keys right now. Please try again later.
+        </p>
+      } @else {
+        <!-- Table; on phones each row stacks the name over its date and download -->
+        <table class="mt-4 block w-full text-left sm:table sm:border-separate sm:border-spacing-0">
+          <thead class="hidden bg-[#EEF1F6] sm:table-header-group">
+            <tr>
+              <th scope="col" class="rounded-l-lg px-5 py-3.5 text-[13.5px] font-semibold text-primary">Exam / Paper name</th>
+              <th scope="col" class="px-5 py-3.5 text-[13.5px] font-semibold whitespace-nowrap text-primary">Exam date</th>
+              <th scope="col" class="px-5 py-3.5 text-[13.5px] font-semibold text-primary">File</th>
+              <th scope="col" class="rounded-r-lg px-5 py-3.5 text-[13.5px] font-semibold text-primary">Action</th>
+            </tr>
+          </thead>
+          <tbody class="block sm:table-row-group">
+            @for (paper of pager.paged(); track $index) {
+              <tr class="grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-1 border-b border-gray-200 py-3 transition-colors hover:bg-[#FBF7EE] sm:table-row sm:border-b-0 sm:py-0">
+                <td class="col-span-2 sm:border-b sm:border-gray-200 sm:px-5 sm:py-3.5">
+                  <div class="text-[13.5px] leading-snug font-semibold text-primary sm:text-[14.5px] [&_a]:text-accent [&_a]:underline [&_p]:m-0"
+                    [innerHTML]="paper.message | safeHtml"></div>
+                </td>
+                <td class="text-[13px] whitespace-nowrap text-[#5B6472] sm:border-b sm:border-gray-200 sm:px-5 sm:py-3.5 sm:text-[14px]">{{ paper.shortDate || '-' }}</td>
+                <td class="hidden sm:table-cell sm:border-b sm:border-gray-200 sm:px-5 sm:py-3.5">
+                  @if (paper.file) {
+                    <span class="inline-flex items-center gap-2 text-[13px] text-[#5B6472]">
+                      <svg class="text-logo" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM13 3.5 18.5 9H13zM8 13h8v1.5H8zm0 3h8v1.5H8z" />
+                      </svg>
+                      {{ paper.fileType || 'File' }}
+                    </span>
+                  } @else {
+                    <span class="text-[13px] text-[#5B6472]">-</span>
+                  }
+                </td>
+                <td class="sm:border-b sm:border-gray-200 sm:px-5 sm:py-3.5">
+                  @if (paper.file) {
+                    <a [href]="paper.file | mediaUrl" download target="_blank" rel="noopener noreferrer"
+                      class="inline-flex items-center gap-2 text-[13.5px] font-semibold text-primary no-underline transition-colors hover:text-secondary">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 4v11M7 10l5 5 5-5M5 20h14" />
+                      </svg>
+                      Download<span class="sr-only"> {{ paper.name }} answer key</span>
+                    </a>
+                  } @else {
+                    <span class="text-[13px] text-[#5B6472]">-</span>
+                  }
+                </td>
+              </tr>
+            } @empty {
+              <tr class="block sm:table-row">
+                <td colspan="4" class="block px-5 py-10 text-center text-[13.5px] text-[#5B6472] sm:table-cell">
+                  No answer keys match your filters.
+                  <button type="button" (click)="reset()" class="ml-1 font-semibold text-primary underline underline-offset-4 hover:text-secondary">Reset</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+
+        <!-- Pages -->
+        @if (pager.total() > 0) {
+          <nav aria-label="Answer key pages" class="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-gray-200 pt-5">
+            <p class="text-[13.5px] text-[#5B6472]">Page {{ pager.page() }} of {{ pager.totalPages() }}</p>
+            @if (pager.totalPages() > 1) {
+              <div class="flex items-center gap-1.5 sm:gap-2">
+                <button type="button" (click)="pager.go(-1)" [disabled]="pager.page() === 1"
+                  class="px-2 text-[13.5px] font-semibold text-primary transition-colors hover:text-secondary disabled:pointer-events-none disabled:text-gray-400 sm:mr-2">
+                  Previous
+                </button>
+                @for (n of pager.pageNumbers(); track n) {
+                  <button type="button" (click)="pager.toPage(n)" [attr.aria-current]="pager.page() === n ? 'page' : null"
+                    class="h-9 min-w-9 rounded-md border px-2.5 text-[13.5px] font-semibold transition-colors"
+                    [class]="pager.page() === n ? 'border-primary bg-primary text-white' : 'border-gray-300 bg-white text-primary hover:border-primary'">
+                    {{ n }}
+                  </button>
+                }
+                <button type="button" (click)="pager.go(1)" [disabled]="pager.page() === pager.totalPages()"
+                  class="inline-flex items-center gap-1.5 px-2 text-[13.5px] font-semibold text-primary transition-colors hover:text-secondary disabled:pointer-events-none disabled:text-gray-400 sm:ml-2">
+                  Next
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </button>
+              </div>
+            }
+          </nav>
+        }
       }
+    } @else {
+      <div class="mt-5 rounded-xl border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-14 text-center">
+        <p class="text-[14px] font-semibold text-primary">Competitive exam answer keys coming soon.</p>
+        <p class="mt-1 text-[12.5px] text-muted">They will be published here by the CES exam cell.</p>
+      </div>
     }
-  } @else {
-    <div class="animate-dropdown mt-5 rounded-xl border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-14 text-center">
-      <p class="text-[14px] font-semibold text-primary">Competitive exam answer keys coming soon.</p>
-      <p class="mt-1 text-[12.5px] text-muted">They will be published here by the CES exam cell.</p>
-    </div>
-  }
+  </div>
 
 </section>

@@ -1,65 +1,39 @@
-<section class="site-container py-16">
-  <div class="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-10">
+<section class="site-container py-8 sm:py-10 lg:py-12" aria-labelledby="impact-title">
 
-    <!-- Left Side - Content -->
+  <!-- Heading beside the line about it -->
+  <div class="grid gap-4 lg:grid-cols-2 lg:items-end lg:gap-10">
     <div>
-      <p class="text-[13px] font-bold text-secondary uppercase tracking-wider mb-4">OUR IMPACT</p>
-      <h2 class="text-[32px] font-bold text-primary sm:text-[40px] leading-tight mb-6">Creating Meaningful Change,
-        Together</h2>
-      <p class="text-[15px] leading-relaxed text-muted mb-8">
-        Every number represents real people, real communities, and real change. Together, we're building a stronger,
-        healthier, and more compassionate society.
+      <p class="text-[12px] font-semibold tracking-[2px] text-secondary uppercase sm:text-[13px]">Our Impact</p>
+      <h2 id="impact-title" class="mt-2 text-[24px] leading-[1.15] font-semibold text-primary sm:text-[30px] xl:text-[34px]">
+        Meaningful change.<br /> Made together.
+      </h2>
+    </div>
+    <div>
+      <p class="max-w-[640px] text-[14px] leading-relaxed text-muted sm:text-[15px]">
+        Every number represents people, communities and meaningful change. Together, we're building a stronger,
+        healthier and more compassionate society.
       </p>
-      <p class="text-[15px] italic text-secondary font-medium mb-8">Thank you for being part of our journey.</p>
-      <a href="#"
-        class="inline-flex items-center gap-2.5 rounded-md bg-primary px-10 py-4 text-[14px] font-semibold text-white no-underline hover:bg-primary-dark transition-colors">
+      <a routerLink="/project"
+        class="group mt-3 inline-flex items-center gap-2 text-[14px] font-semibold text-primary no-underline hover:text-secondary-dark sm:text-[15px]">
         See Our Programs
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <svg class="transition-transform group-hover:translate-x-1" width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M5 12h14M13 6l6 6-6 6" />
         </svg>
       </a>
     </div>
-
-    <!-- Right Side - Cards Grid -->
-    <div>
-      <ul class="grid list-none gap-3 grid-cols-2 sm:gap-5 lg:grid-cols-3">
-        @for (stat of stats; track stat.label; let i = $index) {
-        <li class="bg-white rounded-lg p-4 text-center hover:shadow-md transition-shadow border border-gray-100">
-          <div class="flex justify-center mb-3 mx-auto">
-            <div class="flex h-12 w-12 items-center justify-center rounded-full" [class]="'flex h-12 w-12 items-center justify-center rounded-full ' + (
-                i === 0 ? 'bg-orange-100' :
-                i === 1 ? 'bg-green-100' :
-                i === 2 ? 'bg-purple-100' :
-                i === 3 ? 'bg-pink-100' :
-                i === 4 ? 'bg-blue-100' :
-                'bg-yellow-100'
-              )">
-              <span [class]="
-                  i === 0 ? 'text-orange-500' :
-                  i === 1 ? 'text-green-500' :
-                  i === 2 ? 'text-purple-500' :
-                  i === 3 ? 'text-pink-500' :
-                  i === 4 ? 'text-blue-500' :
-                  'text-yellow-500'
-                " class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]"
-                aria-hidden="true">{{ stat.icon }}</span>
-            </div>
-          </div>
-          <p class="text-[24px] leading-tight font-bold text-primary mb-2">{{ stat.value }}</p>
-          <div class="h-1 w-10 mx-auto mb-3 rounded-full" [class]="
-              i === 0 ? 'h-1 w-10 mx-auto mb-3 rounded-full bg-orange-500' :
-              i === 1 ? 'h-1 w-10 mx-auto mb-3 rounded-full bg-green-500' :
-              i === 2 ? 'h-1 w-10 mx-auto mb-3 rounded-full bg-purple-500' :
-              i === 3 ? 'h-1 w-10 mx-auto mb-3 rounded-full bg-pink-500' :
-              i === 4 ? 'h-1 w-10 mx-auto mb-3 rounded-full bg-blue-500' :
-              'h-1 w-10 mx-auto mb-3 rounded-full bg-yellow-500'
-            "></div>
-          <p class="text-[13px] font-semibold text-primary">{{ stat.label }}</p>
-        </li>
-        }
-      </ul>
-    </div>
-
   </div>
+
+  <!-- The figures, divided by thin rules -->
+  <ul class="mt-6 grid list-none grid-cols-2 gap-x-6 gap-y-6 border-t border-primary/10 p-0 pt-6 sm:mt-8 sm:grid-cols-3 sm:pt-8 lg:grid-cols-6 lg:gap-x-0">
+    @for (stat of stats; track stat.label) {
+    <li class="lg:border-l lg:border-primary/10 lg:px-6 lg:first:border-l-0 lg:first:pl-0 xl:px-8">
+      <p class="text-[26px] leading-none font-bold sm:text-[30px]" [class]="stat.accent ? 'text-secondary' : 'text-primary'">{{ stat.value }}</p>
+      <p class="mt-2 text-[13px] text-muted sm:text-[14px]">{{ stat.label }}</p>
+    </li>
+    }
+  </ul>
+
+  <p class="mt-6 text-[13px] text-muted sm:mt-8">Thank you for being part of our journey.</p>
+
 </section>

@@ -1,53 +1,25 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+
+/** The Society was founded in 1916 - the heading's years move on by themselves. */
+const FOUNDED = 1916;
 
 @Component({
   selector: 'app-journey',
+  imports: [RouterLink],
   templateUrl: './journey.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './journey.scss',
 })
 export class Journey {
-  readonly milestones: ReadonlyArray<{
-    year: string;
-    title: string;
-    body: string;
-    icon: string;
-  }> = [
-    {
-      year: '1915',
-      title: 'Foundation',
-      body: 'Founded to educate rural areas.',
-      icon: 'account_balance',
-    },
-    {
-      year: '1947',
-      title: 'Freedom Movement',
-      body: "Aiding India's freedom struggle.",
-      icon: 'flag',
-    },
-    {
-      year: '1970',
-      title: 'Expansion',
-      body: 'Expanding schools and colleges.',
-      icon: 'leaderboard',
-    },
-    {
-      year: '1995',
-      title: 'Excellence',
-      body: 'Quality education and research.',
-      icon: 'workspace_premium',
-    },
-    {
-      year: '2015',
-      title: 'Transformation',
-      body: 'Innovating for global standards.',
-      icon: 'computer',
-    },
-    {
-      year: '2026+',
-      title: 'Future Ready',
-      body: '31+ institutes, 25K+ students.',
-      icon: 'rocket_launch',
-    },
+  readonly years = new Date().getFullYear() - FOUNDED;
+
+  readonly milestones: ReadonlyArray<{ year: string; title: string; body: string }> = [
+    { year: '1906', title: 'Petlad Boarding House', body: 'Motibhai Amin gives village students a place to stay and study.' },
+    { year: '1916', title: 'The Society Begins', body: 'Founded in Anand on 16 April with 27 students.' },
+    { year: '1930', title: 'Dandi March', body: 'Gandhiji speaks to 20,000 people on the CES ground.' },
+    { year: '1947', title: 'A Free India', body: 'New schools and colleges grow across three campuses.' },
+    { year: '2016', title: 'Centenary', body: '100 events in a year and 8 Guinness World Records.' },
+    { year: '2026+', title: 'Still Growing', body: '31+ institutes, 5 lakh+ alumni.' },
   ];
 }

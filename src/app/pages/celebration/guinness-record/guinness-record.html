@@ -1,42 +1,59 @@
-<section id="guinness-records" class="site-container mt-16 mb-16 scroll-mt-40 pb-10">
-  <div class="grid gap-8 rounded-2xl bg-primary p-6 lg:grid-cols-[0.75fr_1.6fr] lg:items-center lg:gap-10 lg:p-8">
+<section id="guinness-records" class="site-container scroll-mt-40 py-8 lg:py-10" aria-labelledby="records-title">
 
-    <!-- Certificate + seal -->
-    <div class="relative mx-auto w-full max-w-[280px]">
-      <img [src]="certificate" alt="Guinness World Record certificate" loading="lazy"
-        class="w-full rounded-lg border-4 border-secondary/70 bg-primary-light object-cover" />
-
-      <img src="/assets/images/celebration/Guinness.png" alt="Guinness World Records" loading="lazy"
-        class="absolute -right-5 bottom-4 h-24 w-24 object-contain shadow-lg" />
-    </div>
-
-    
-    <!-- Copy -->
-    <div>
-      <h2 class="text-[22px] font-bold text-white sm:text-[26px]">Guinness World Record</h2>
-
-      <p class="mt-3 max-w-[640px] text-[13px] leading-relaxed text-white/75">
-        CES set 8 Guinness World Records during the centenary year, creating history and bringing pride to the
-        institution and the nation.
+  <!-- Heading -->
+  <div class="flex flex-wrap items-end justify-between gap-x-10 gap-y-4">
+    <div class="max-w-[1000px]">
+      <p class="text-[12px] font-semibold tracking-[2.5px] text-secondary uppercase sm:text-[13px]">Centenary Achievements</p>
+      <h2 id="records-title" class="mt-2 text-[24px] leading-[1.15] font-bold tracking-tight text-primary sm:text-[30px] lg:text-[34px]">
+        Eight records. One remarkable year.
+      </h2>
+      <p class="mt-2 text-[14px] leading-relaxed text-[#5B6472] sm:text-[15px]">
+        Set by CES students and staff during our centenary, and dedicated to the late Dr. A.P.J. Abdul Kalam.
       </p>
-
-      <ul class="mt-5 grid list-none gap-x-8 gap-y-3 lg:grid-cols-2">
-        @for (record of records; track record) {
-          <li class="flex items-start gap-2.5">
-            <svg class="mt-0.5 shrink-0 text-secondary" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="m5 13 4 4L19 7" />
-            </svg>
-            <span class="text-[12.5px] leading-snug text-white/85">{{ record }}</span>
-          </li>
-        }
-      </ul>
-
-      <button type="button"
-        class="mt-6 inline-flex items-center gap-2 rounded-md bg-secondary px-6 py-3 text-[14px] font-semibold text-primary transition-colors hover:bg-secondary-dark">
-        View All Records
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-      </button>
     </div>
+    <a routerLink="/" fragment="world-records"
+      class="inline-flex items-center gap-2.5 rounded-lg border-2 border-primary px-6 py-2.5 text-[14px] font-semibold text-primary no-underline transition-colors hover:bg-primary hover:text-white sm:mb-2">
+      View All Records
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 12h14M13 6l6 6-6 6" />
+      </svg>
+    </a>
+  </div>
+
+  <div class="mt-7 grid gap-8 lg:mt-8 lg:grid-cols-[minmax(0,280px)_minmax(0,1fr)] lg:gap-12">
+
+    <!-- Certificate (opens in the photo viewer) -->
+    <figure class="mx-auto w-full max-w-[280px]">
+      <button type="button" (click)="viewCertificate()" aria-label="View the Guinness World Records certificate"
+        class="group relative block w-full cursor-zoom-in overflow-hidden rounded-xl">
+        <img [src]="certificate" alt="Guinness World Records certificate awarded to Charotar Education Society"
+          loading="lazy" width="280" height="325"
+          class="aspect-[280/325] w-full bg-primary-light object-cover transition-transform duration-300 group-hover:scale-[1.03]" />
+        <span class="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all duration-300 group-hover:bg-black/25 group-hover:opacity-100"
+          aria-hidden="true">
+          <span class="flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-primary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5M11 8v6M8 11h6" /></svg>
+          </span>
+        </span>
+      </button>
+      <figcaption class="mt-2 text-[12px] text-[#5B6472] sm:text-[13px]">Guinness World Records · Centenary 2015–16</figcaption>
+    </figure>
+
+    <!-- The eight records -->
+    <ol class="grid list-none content-start sm:grid-cols-2 sm:gap-x-12">
+      @for (r of records; track r.title; let i = $index) {
+        <li [title]="r.official"
+          class="flex gap-4 border-b border-gray-200 py-4 first:pt-0 last:border-b-0 sm:[&:nth-child(2)]:pt-0 sm:[&:nth-last-child(2)]:border-b-0 sm:gap-6">
+          <span class="w-6 shrink-0 text-[15px] font-semibold text-secondary tabular-nums sm:text-[16px]" aria-hidden="true">{{ pad(i + 1) }}</span>
+          <div>
+            <h3 class="text-[15px] leading-snug font-bold text-primary sm:text-[16px]">{{ r.title }}</h3>
+            <p class="mt-1 text-[13px] text-[#5B6472] sm:text-[14px]">{{ r.detail }}</p>
+          </div>
+        </li>
+      }
+    </ol>
 
   </div>
 </section>

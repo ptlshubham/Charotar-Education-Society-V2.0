@@ -227,13 +227,6 @@ export const PLACEHOLDER = {
     whoWeAre: scene('ces-who-we-are', 900, 620),
     secretary: portrait(60),
     freedomFight: scene('ces-freedom-fight', 700, 900),
-    gallery: [
-      scene('ces-gallery-1', 500, 380),
-      scene('ces-gallery-2', 500, 380),
-      scene('ces-gallery-3', 500, 380),
-      scene('ces-gallery-4', 500, 380),
-      scene('ces-gallery-5', 500, 380),
-    ],
   },
 
   news: {

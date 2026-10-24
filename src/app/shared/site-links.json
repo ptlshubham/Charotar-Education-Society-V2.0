@@ -6,11 +6,10 @@
       "path": "/about",
       "links": [
         { "label": "About Us", "path": "/about" },
+        { "label": "Our History", "path": "/about/history" },
+        { "label": "CES at a Glance", "path": "/about/profile" },
         { "label": "Management", "path": "/management" },
-        { "label": "Centenary Celebration", "path": "/celebration" },
         { "label": "History of VJ Patel", "path": "/glory/history-vj" },
-        { "label": "Social Activity", "path": "/social-activity" },
-        { "label": "Projects", "path": "/project" },
         { "label": "Alumni", "path": "/alumni" },
         { "label": "Careers", "path": "/company/careers" }
       ]
@@ -22,12 +21,30 @@
       "links": [{ "label": "Blog", "path": "/blog" }]
     },
     {
+      "icon": "company",
+      "title": "Celebrations",
+      "path": "/chatkaro",
+      "links": [
+        { "label": "Chatkaro", "path": "/chatkaro" },
+        { "label": "Navratri Mahotsav", "path": "/navratri" },
+        { "label": "Centenary Celebration", "path": "/celebration" }
+      ]
+    },
+    {
+      "icon": "company",
+      "title": "Initiatives",
+      "path": "/project",
+      "links": [
+        { "label": "Projects", "path": "/project" },
+        { "label": "Social Activity", "path": "/social-activity" }
+      ]
+    },
+    {
       "icon": "resources",
       "title": "Media",
       "path": "/glory/gallery",
       "links": [
         { "label": "Gallery", "path": "/glory/gallery" },
-        { "label": "Navratri", "path": "/navratri" },
         { "label": "Next UP Podcast", "path": "/podcast" },
         { "label": "Blog", "path": "/blog" }
       ]

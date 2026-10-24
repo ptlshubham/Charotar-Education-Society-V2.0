@@ -1,6 +1,6 @@
 <!-- ─── Hero ─── -->
-<app-page-hero crumb="Navratri" [trail]="[{ label: 'Media' }]" title="Navratri" accent="Celebration"
-  blurb="A celebration of faith, culture, unity and divine energy." [image]="banner">
+<app-page-hero crumb="Navratri" [trail]="[{ label: 'Celebrations' }]" title="Navratri" accent="Celebration"
+  blurb="Nine nights of devotion, garba and culture on the CES campus, with a new theme every year." [image]="banner">
   <div class="mt-7 flex items-center gap-3.5">
     <svg class="shrink-0 text-secondary" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -28,13 +28,13 @@
       </h2>
 
       <p class="mt-4 text-[13px] leading-relaxed text-muted">
-        <span class="font-semibold text-primary">Navratri</span> at Charotar Education Society is not just a
-        festival; it is a beautiful blend of devotion, discipline and cultural heritage that brings our entire
-        CES family together.
+        <span class="font-semibold text-primary">Navratri</span> at CES has a theme of its own every year, each one
+        drawn from a form of the Mother Goddess: Shaktipeeth Sadhana in 2024, Brahmandeshwari in 2023 and
+        Aishwaryadayini Maa Amba in 2022, going back to Urja Shankh in 2010.
       </p>
       <p class="mt-3 text-[13px] leading-relaxed text-muted">
-        Every year, thousands of devotees, students, alumni and well-wishers participate in this nine-day
-        celebration with great enthusiasm, grace and unity.
+        Students help run the festival, and learn teamwork, discipline and time management along the way. Families
+        come together, and people of every community and every generation share the same garba ground.
       </p>
 
       <a routerLink="/navratri/2023"
@@ -129,49 +129,4 @@
     }
   </ul>
   }
-
-  <!-- Highlights -->
-  <p class="mt-10 text-center text-[11.5px] font-bold tracking-[0.15em] text-primary uppercase">Navratri Highlights</p>
-  <ul
-    class="relative -mx-4 -mt-14 grid grid-cols-2 list-none gap-3 rounded-t-[32px] bg-white px-4 pt-8 sm:-mx-6 sm:px-6 lg:-mx-12 xl:-mx-20 lg:-mt-16 lg:grid-cols-6 lg:px-12 xl:px-20 lg:pt-9">
-    @for (h of highlights; track h.title) {
-    <li class="rounded-xl border border-gray-200 bg-white px-4 py-5 text-center">
-      <span class="material-symbols-outlined text-secondary-dark !text-[23px] [font-variation-settings:'wght'_300]"
-        aria-hidden="true">{{ h.icon }}</span>
-      <h3 class="mt-3 text-[13px] font-bold text-primary">{{ h.title }}</h3>
-      <p class="mt-1.5 text-[11px] leading-relaxed text-muted">{{ h.body }}</p>
-    </li>
-    }
-  </ul>
-
-  <!-- CTA -->
-  <div class="mt-8 flex flex-wrap items-center justify-between gap-5 rounded-xl bg-[#2A1035] p-6">
-    <div class="flex items-center gap-4">
-      <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-secondary/20 text-secondary"
-        aria-hidden="true">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
-          stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2s4 5 4 8a4 4 0 0 1-8 0c0-3 4-8 4-8z" />
-          <path d="M8 21h8" />
-        </svg>
-      </span>
-      <div>
-        <p class="text-[16px] font-bold text-white">Be a Part of the Divine Celebration</p>
-        <p class="mt-1 text-[12.5px] text-white/70">
-          Join us with your family and friends. Let's seek the blessings of Maa Amba and celebrate unity,
-          culture and devotion together.
-        </p>
-      </div>
-    </div>
-
-    <button type="button"
-      class="inline-flex items-center gap-2 rounded-md bg-secondary px-6 py-3 text-[13px] font-semibold text-primary transition-colors hover:bg-secondary-dark">
-      View Schedule 2026
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M5 12h14M13 6l6 6-6 6" />
-      </svg>
-    </button>
-  </div>
-
 </section>

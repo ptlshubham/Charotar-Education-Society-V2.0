@@ -253,7 +253,9 @@
   }
 }
 
-.nav-chevron { width: 16px; height: 16px; transform: rotate(-90deg); }
+// Same small line chevron as the tablet bar; it takes the label's colour and flips while open.
+.nav-chevron { flex-shrink: 0; width: 14px; height: 14px; transition: transform .15s ease; }
+.nav-link[aria-expanded="true"] .nav-chevron { transform: rotate(180deg); }
 
 .nav-dropdown, .nav-submenu {
   position: absolute;

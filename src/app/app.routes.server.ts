@@ -1,4 +1,7 @@
 import { RenderMode, ServerRoute } from '@angular/ssr';
+import { LEADERS } from './shared/leaders';
+import { PROJECTS } from './shared/projects';
+import { ACTIVITY_PAGES } from './shared/social-activities';
 
 /**
  * Render modes are tuned for static hosting: the build output is rsynced to a
@@ -43,6 +46,24 @@ export const serverRoutes: ServerRoute[] = [
     // shared chats are noindex anyway.
     path: 'dyuno/share/:id',
     renderMode: RenderMode.Client,
+  },
+  {
+    // The office-bearers' pages: a fixed pair, so both are prerendered.
+    path: 'management/:role',
+    renderMode: RenderMode.Prerender,
+    getPrerenderParams: async () => LEADERS.map((l) => ({ role: l.role })),
+  },
+  {
+    // Each project's page: the list is fixed in shared/projects.ts, so all are prerendered.
+    path: 'project/:slug',
+    renderMode: RenderMode.Prerender,
+    getPrerenderParams: async () => PROJECTS.map((p) => ({ slug: p.slug })),
+  },
+  {
+    // Each social activity's page: also a fixed list (shared/social-activities.ts).
+    path: 'social-activity/:slug',
+    renderMode: RenderMode.Prerender,
+    getPrerenderParams: async () => ACTIVITY_PAGES.map((a) => ({ slug: a.slug })),
   },
   {
     path: '**',

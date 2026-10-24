@@ -9,26 +9,32 @@
   <swiper-container init="false" #swiperEl class="hero-swiper block w-full">
     @for (b of banners(); track b.desktop; let i = $index; let first = $first) {
       <swiper-slide [class.pre-hide]="!swiperReady() && !first">
-        @if (b.link) {
-          <a [routerLink]="b.link" class="block no-underline">
-            <picture>
-              <source media="(min-width: 768px)" [srcset]="b.desktop" />
-              <img [src]="b.mobile" [alt]="b.alt"
-                [attr.fetchpriority]="i === 0 ? 'high' : null" [attr.loading]="i === 0 ? null : 'lazy'"
-                class="block w-full object-cover aspect-[1080/1350] md:aspect-[1920/520]" />
-            </picture>
+        <!-- A linked banner is a click-through: another website in a new tab, a page on this site in the app -->
+        @if (b.href) {
+          <a [href]="b.href" target="_blank" rel="noopener" class="block no-underline">
+            <ng-container *ngTemplateOutlet="art; context: { $implicit: b, i: i }" />
+            <span class="sr-only">(opens in a new tab)</span>
+          </a>
+        } @else if (b.link) {
+          <a [href]="b.link" (click)="openLink($event, b.link)" class="block no-underline">
+            <ng-container *ngTemplateOutlet="art; context: { $implicit: b, i: i }" />
           </a>
         } @else {
-          <picture>
-            <source media="(min-width: 768px)" [srcset]="b.desktop" />
-            <img [src]="b.mobile" [alt]="b.alt"
-              [attr.fetchpriority]="i === 0 ? 'high' : null" [attr.loading]="i === 0 ? null : 'lazy'"
-              class="block w-full object-cover aspect-[1080/1350] md:aspect-[1920/520]" />
-          </picture>
+          <ng-container *ngTemplateOutlet="art; context: { $implicit: b, i: i }" />
         }
       </swiper-slide>
     }
   </swiper-container>
+
+  <!-- The banner artwork: desktop crop from 768px up, the phone crop below -->
+  <ng-template #art let-b let-i="i">
+    <picture>
+      <source media="(min-width: 768px)" [srcset]="b.desktop" />
+      <img [src]="b.mobile" [alt]="b.alt"
+        [attr.fetchpriority]="i === 0 ? 'high' : null" [attr.loading]="i === 0 ? null : 'lazy'"
+        class="block w-full object-cover aspect-[1080/1350] md:aspect-[1920/520]" />
+    </picture>
+  </ng-template>
 
   @if (banners().length > 1) {
     <!-- Prev / Next arrows. -->

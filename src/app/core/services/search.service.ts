@@ -14,6 +14,8 @@ import {
   SearchItem,
 } from '../../shared/models/models';
 import { ACADEMIC_INSTITUTES, CAMPUSES } from '../../shared/academic-institutes';
+import { PROJECT_SEARCH } from '../../shared/projects';
+import { ACTIVITY_SEARCH } from '../../shared/social-activities';
 import { blogSlug } from '../../shared/blog-post';
 
 /**
@@ -32,7 +34,7 @@ export class SearchService {
    * Live searchable entities. Seeded with the (static) academic institutes so they
    * are searchable instantly, then extended with the fetched feeds by {@link load}.
    */
-  readonly dynamicIndex = signal<readonly SearchItem[]>([...ACADEMIC_INSTITUTES, ...CAMPUSES]);
+  readonly dynamicIndex = signal<readonly SearchItem[]>([...ACADEMIC_INSTITUTES, ...CAMPUSES, ...PROJECT_SEARCH, ...ACTIVITY_SEARCH]);
 
   private loaded = false;
 
@@ -58,7 +60,7 @@ export class SearchService {
           }),
         ),
       )
-      .subscribe((feeds) => this.dynamicIndex.set([...ACADEMIC_INSTITUTES, ...CAMPUSES, ...this.build(feeds)]));
+      .subscribe((feeds) => this.dynamicIndex.set([...ACADEMIC_INSTITUTES, ...CAMPUSES, ...PROJECT_SEARCH, ...ACTIVITY_SEARCH, ...this.build(feeds)]));
   }
 
   private build(feeds: {

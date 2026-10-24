@@ -290,8 +290,10 @@ export class ResourcesService {
     // reads the most recent few. Off-topic questions come back as a normal reply with
     // the redirect already in `text`. SKIP_ERROR_REDIRECT so a failure shows in the
     // chat instead of replacing the page with the error screen.
-    askAssistant(message: string, history: { role: 'user' | 'assistant'; text: string }[] = []) {
-        return this.http.post(ApiService.AssistantChatURL, { message, history }, {
+    // visitorId: Dyuno's anonymous per-browser id - the backend's fair-use limit is per browser,
+    // because a whole college lab or mobile network can share one IP.
+    askAssistant(message: string, history: { role: 'user' | 'assistant'; text: string }[] = [], visitorId?: string) {
+        return this.http.post(ApiService.AssistantChatURL, { message, history, visitorId }, {
             context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
         });
     }

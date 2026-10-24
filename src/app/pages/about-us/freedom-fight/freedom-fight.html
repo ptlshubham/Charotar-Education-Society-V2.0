@@ -1,37 +1,47 @@
-<section class="site-container pt-5 pb-12">
-  <div class="py-4">
+<section class="site-container grid gap-10 py-16 lg:grid-cols-[minmax(0,0.65fr)_minmax(0,1fr)] lg:gap-14 lg:py-20 xl:gap-20"
+  aria-labelledby="freedom-title">
 
-    <h2 class="text-center text-[22px] font-bold text-primary sm:text-[26px]">Contribution to National Freedom Fight
+  <!-- Heading and archive photograph -->
+  <div>
+    <p class="text-[12px] font-semibold tracking-[2px] text-secondary uppercase sm:text-[14px]">A Legacy of Service</p>
+    <h2 id="freedom-title" class="mt-3 text-[30px] leading-[1.12] font-semibold text-primary sm:text-[38px] xl:text-[44px]">
+      Our part in India's<br class="hidden sm:block" /> freedom struggle.
     </h2>
-    <span class="mx-auto mt-3 block h-1 w-16 rounded-full bg-secondary" aria-hidden="true"></span>
+    <span class="mt-6 block h-1 w-16 rounded-full bg-secondary" aria-hidden="true"></span>
 
-    <div class="mt-7 grid items-center gap-6 lg:grid-cols-[0.8fr_1.6fr]">
-
-      <img [src]="image" alt="Historical photograph of the freedom movement" loading="lazy"
-        class="h-full max-h-[300px] w-full rounded-lg bg-primary-light object-cover" />
-
-      <ol class="relative grid list-none gap-4 sm:grid-cols-2 xl:grid-cols-4 mt-8 lg:mt-0">
-        <!-- Connector, desktop only: sits behind the nodes at their centre line. -->
-        <span class="pointer-events-none absolute top-5 right-[12%] left-[12%] hidden h-px bg-gray-200 xl:block"
-          aria-hidden="true"></span>
-
-        @for (event of events; track event.year; let last = $last) {
-        <li class="relative text-center">
-          <span class="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-white relative z-10"
-            aria-hidden="true">
-            <span class="absolute inset-0 rounded-full bg-primary/8"></span>
-            <span
-              class="material-symbols-outlined relative z-10 !text-[20px] text-primary [font-variation-settings:'wght'_300]">{{
-              event.icon }}</span>
-          </span>
-
-          <p class="mt-4 text-[16px] font-bold text-primary">{{ event.year }}</p>
-          <p class="mt-0.5 text-[13px] font-semibold text-secondary">{{ event.title }}</p>
-          <p class="mt-2 text-[12px] leading-relaxed text-muted">{{ event.body }}</p>
-        </li>
-        }
-      </ol>
-
-    </div>
+    <figure class="m-0 mt-8">
+      <img [src]="image" alt="Historical photographs of CES leaders and students during the freedom movement" loading="lazy"
+        width="1060" height="720" class="block aspect-[3/2] w-full rounded-xl bg-primary-light object-cover lg:aspect-[16/9]" />
+      <figcaption class="mt-3 text-[14px] text-muted">From the CES archives</figcaption>
+    </figure>
   </div>
+
+  <!-- The leaders who were jailed, then the movements year by year along a rail -->
+  <div class="lg:pt-2">
+    <p class="max-w-[800px] text-[15px] leading-relaxed text-muted sm:text-[16px]">
+      President Shri Vitthalbhai Zaverbhai Patel, chairman Shri Dadubhai Desai and volunteer Shri Umedbhai Naranbhai
+      Patel were jailed for the cause between 1916 and 1932. Teachers and students followed their lead.
+    </p>
+
+    <ol class="relative mt-4 list-none p-0">
+      <span class="absolute top-0 bottom-0 left-[4.5px] w-px bg-primary/15" aria-hidden="true"></span>
+
+      @for (event of events; track event.year) {
+      <li class="group relative pl-7 sm:pl-9">
+        <div class="grid gap-x-6 gap-y-1 border-b border-primary/10 py-4 group-last:border-b-0 sm:grid-cols-[110px_minmax(0,1fr)]">
+          <p class="relative self-start text-[18px] leading-tight font-semibold text-primary sm:text-[20px]">
+            <span class="absolute top-1/2 -left-7 h-2.5 w-2.5 -translate-y-1/2 rounded-full bg-secondary sm:-left-9"
+              aria-hidden="true"></span>
+            {{ event.year }}
+          </p>
+          <div>
+            <h3 class="text-[16px] leading-snug font-semibold text-primary sm:text-[17px]">{{ event.title }}</h3>
+            <p class="mt-1 text-[14px] leading-relaxed text-muted sm:text-[15px]">{{ event.body }}</p>
+          </div>
+        </div>
+      </li>
+      }
+    </ol>
+  </div>
+
 </section>

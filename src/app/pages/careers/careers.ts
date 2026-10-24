@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, HostListener, inject, PLATFORM_ID, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, PLATFORM_ID, signal } from '@angular/core';
 import { NgTemplateOutlet, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PageHero } from '../../shared/page-hero/page-hero';
 import { Paginator } from '../../shared/pagination/paginator';
 import { Pagination } from '../../shared/pagination/pagination';
 import { MediaUrlPipe } from '../../shared/media-url.pipe';
+import { LightboxService } from '../../core/services/lightbox.service';
 import { PLACEHOLDER } from '../../shared/placeholder-images';
 import { environment } from '../../../environments/environment';
 
@@ -236,21 +237,12 @@ export class Careers {
 
   private readonly platformId = inject(PLATFORM_ID);
 
-  // ── Image lightbox ──
-  /** Source of the image shown in the lightbox, or null when closed. */
-  readonly lightboxImage = signal<string | null>(null);
+  // ── Image viewer ──
+  private readonly lightbox = inject(LightboxService);
 
-  openImage(src: string): void {
-    this.lightboxImage.set(src);
-  }
-
-  closeLightbox(): void {
-    this.lightboxImage.set(null);
-  }
-
-  @HostListener('document:keydown.escape')
-  onEscape(): void {
-    this.closeLightbox();
+  /** Open a vacancy's advertisement images in the site-wide viewer, on image i. */
+  openImages(images: readonly string[], i: number): void {
+    this.lightbox.open(images.map((src) => ({ src, caption: 'Vacancy advertisement' })), i);
   }
 
   // ── File download ──

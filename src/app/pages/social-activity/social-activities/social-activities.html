@@ -1,74 +1,69 @@
-<section class="site-container mx-auto max-w-[1410px] px-4 py-10 sm:px-6 lg:px-10">
+<section class="site-container py-8 sm:py-10 lg:py-12" aria-labelledby="activities-title">
 
-  <!-- Heading -->
-  <div class="text-center mb-12 mt-8">
-    <h2 class="text-[22px] font-bold text-primary sm:text-[26px]">{{ heading() }}</h2>
-    <span class="mx-auto mt-3 block h-1 w-16 rounded-full bg-secondary" aria-hidden="true"></span>
-    <p class="mx-auto mt-6 max-w-[600px] text-[14px] leading-relaxed text-muted">
-      CES believes in holistic development and social responsibility. Our various social activities create a
-      positive impact on individuals and society.
-    </p>
+  <!-- Heading, with the line about them on the right -->
+  <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
+    <div>
+      <p class="text-[12px] font-semibold tracking-[2px] text-secondary uppercase sm:text-[13px]">In the Community</p>
+      <h2 id="activities-title" class="mt-2 text-[24px] leading-[1.15] font-semibold text-primary sm:text-[30px] xl:text-[34px]">
+        {{ heading() }}
+      </h2>
+    </div>
+    <p class="text-[14px] leading-relaxed text-muted sm:text-[15px] lg:pb-1">Learning, wellbeing and service beyond the classroom.</p>
   </div>
 
   <!-- Tabs -->
-  <div role="tablist" aria-label="Programme type"
-    class="grid w-full grid-cols-3 gap-2 sm:flex sm:justify-center sm:gap-4">
+  <div role="tablist" aria-label="Programme type" class="mt-5 flex gap-1 border-b border-primary/10 sm:mt-6 sm:gap-2">
     @for (tab of tabs; track tab.id) {
-    <button type="button" role="tab" [attr.aria-selected]="active() === tab.id" (click)="select(tab.id)"
-      class="flex items-center justify-center gap-1.5 rounded-lg border px-1 py-2.5 text-[11.5px] font-semibold transition-colors sm:gap-2.5 sm:px-5 sm:py-3 sm:text-[14px]"
-      [class]="active() === tab.id
-          ? 'border-primary bg-primary text-white shadow-md'
-          : 'border-gray-200 bg-gray-50/50 text-primary hover:border-primary hover:bg-white'">
-      <span class="material-symbols-outlined !text-[18px] sm:!text-[23px] [font-variation-settings:'wght'_300]"
-        aria-hidden="true">{{ tab.icon }}</span>
-      <span class="truncate">{{ tab.label }}</span>
+    @let on = view() === tab.id;
+    <button type="button" role="tab" [attr.aria-selected]="on" (click)="select(tab.id)"
+      class="-mb-px cursor-pointer border-b-[3px] px-4 pt-1.5 pb-2.5 text-[14px] transition-colors sm:px-5 sm:text-[15px] focus:outline-none focus-visible:bg-primary/5"
+      [class]="on ? 'border-secondary font-semibold text-primary' : 'border-transparent text-muted hover:text-primary'">
+      {{ tab.label }}
     </button>
     }
   </div>
 
-  <!-- Cards -->
-  <ul
-    class="animate-dropdown mt-8 grid list-none auto-cols-[calc(50%-10px)] grid-flow-col gap-5 overflow-x-auto snap-x snap-mandatory pb-4 sm:grid-flow-row sm:grid-cols-2 lg:grid-cols-4">
-    @for (item of visible(); track item.title) {
-    <li class="flex snap-start flex-col overflow-hidden rounded-xl border border-gray-200 bg-white">
+  <!-- Cards: photo beside the text, two to a row on wider screens -->
+  <ul class="animate-dropdown mt-2 grid list-none gap-x-10 p-0 lg:grid-cols-2 xl:gap-x-12">
+    @for (item of visible(); track item.slug) {
+    <li class="grid gap-4 border-b border-primary/10 py-5 sm:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] sm:gap-6">
+      <a [routerLink]="linkTo(item)" tabindex="-1" aria-hidden="true" class="block overflow-hidden rounded-lg">
+        <img [src]="item.image" alt="" loading="lazy" width="447" height="298"
+          class="block aspect-[16/10] w-full bg-primary-light object-cover transition-transform duration-300 hover:scale-[1.03]" />
+      </a>
 
-      <div class="relative">
-        <img [src]="item.image" [alt]="item.title" loading="lazy"
-          class="aspect-[3/2] w-full bg-primary-light object-cover" />
-      </div>
-
-      <div class="flex flex-1 flex-col p-4">
-        <h3 class="text-[15px] leading-snug font-bold text-primary">{{ item.title }}</h3>
-        <p class="mt-2 flex-1 text-[12.5px] leading-relaxed text-muted">{{ item.desc }}</p>
-
-        <a href="#"
-          class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-primary no-underline hover:text-accent">
+      <div class="flex min-w-0 flex-col">
+        <p class="text-[11.5px] font-semibold tracking-[1.5px] text-secondary uppercase sm:text-[12px]">{{ item.theme }}</p>
+        <h3 class="mt-1.5 text-[17px] leading-snug font-semibold text-primary sm:text-[18px]">{{ item.title }}</h3>
+        <p class="mt-2 text-[14px] leading-relaxed text-muted sm:text-[15px]">{{ item.desc }}</p>
+        <a [routerLink]="linkTo(item)" [attr.aria-label]="'Explore: ' + item.title"
+          class="group mt-3 inline-flex w-fit items-center gap-2 text-[14px] font-semibold text-primary no-underline hover:text-secondary-dark sm:mt-auto sm:pt-3">
           Explore
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg class="transition-transform group-hover:translate-x-1" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M5 12h14M13 6l6 6-6 6" />
           </svg>
         </a>
       </div>
-
     </li>
     } @empty {
-    <li
-      class="col-span-full rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
+    <li class="col-span-full rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[14px] text-muted">
       Details for this category are coming soon.
     </li>
     }
   </ul>
 
-  <div class="mt-8 text-center">
-    <button type="button"
-      class="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-[14px] font-semibold text-white transition-colors hover:bg-primary-dark">
+  @if (view() !== 'all') {
+  <div class="mt-5 flex justify-end">
+    <button type="button" (click)="select('all')"
+      class="group inline-flex cursor-pointer items-center gap-2 text-[15px] font-semibold text-primary hover:text-secondary-dark focus:outline-none focus-visible:underline">
       View All Activities
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg class="transition-transform group-hover:translate-x-1" width="16" height="16" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M5 12h14M13 6l6 6-6 6" />
       </svg>
     </button>
   </div>
+  }
 
 </section>

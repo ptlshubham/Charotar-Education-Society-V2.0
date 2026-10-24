@@ -3,97 +3,118 @@
   title="Motivation, Inspire" accent="Grow"
   blurb="Real conversations. Real stories. Real inspiration from the CES family." [image]="banner" />
 
-<section class="site-container py-8">
+<section class="site-container py-8 lg:py-10" aria-labelledby="podcast-title">
 
-  <!-- Pillars -->
-  <ul
-    class="mt-8 grid list-none gap-px overflow-hidden rounded-xl border border-gray-200 bg-gray-200 sm:grid-cols-2 lg:grid-cols-4">
-    @for (pillar of pillars; track pillar.title) {
-    <li class="flex items-center gap-3.5 bg-white p-5">
-      <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-secondary/10 text-secondary"
-        aria-hidden="true">
-        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]">{{ pillar.icon
-          }}</span>
-      </span>
-      <div class="min-w-0">
-        <h2 class="text-[13.5px] font-bold text-secondary">{{ pillar.title }}</h2>
-        <p class="mt-1 text-[11.5px] leading-relaxed text-muted">{{ pillar.body }}</p>
-      </div>
-    </li>
-    }
-  </ul>
-
-  <!-- Categories -->
-  <ul class="mt-12 flex list-none gap-3 overflow-x-auto pb-4 sm:justify-center no-scrollbar">
-    @for (cat of categories; track cat.label) {
-    <li>
-      <button type="button"
-        class="inline-flex items-center gap-2 rounded-lg border px-4 py-2.5 text-left text-[13px] font-semibold shadow-none transition-colors"
-        [class]="cat.active ? 'border-primary bg-primary text-white' : 'border-gray-200 bg-transparent text-primary hover:border-primary'">
-        <span class="material-symbols-outlined shrink-0 text-current !text-[23px] [font-variation-settings:'wght'_300]"
-          aria-hidden="true">{{ cat.icon }}</span>
-        <span>{{ cat.label }}</span>
-        <span class="rounded-full px-1.5 py-0.5 text-[10px] font-medium"
-          [class]="cat.active ? 'bg-white/15 text-white/85' : 'bg-gray-100 text-muted'">{{ cat.count }}</span>
-      </button>
-    </li>
-    }
-  </ul>
-
-  <!-- Featured episodes -->
-  <div class="mt-9">
-    <h2 class="text-[20px] font-bold text-primary sm:text-[22px]">Featured Episodes</h2>
-    <span class="mt-2 block h-1 w-12 rounded-full bg-secondary" aria-hidden="true"></span>
+  <!-- Intro, with the line about it on the right -->
+  <div class="flex flex-wrap items-center justify-between gap-x-10 gap-y-3">
+    <div>
+      <p class="text-[12px] font-semibold tracking-[2.5px] text-secondary uppercase sm:text-[13px]">
+        Next Up <span class="mx-1" aria-hidden="true">·</span> CES Podcast
+      </p>
+      <h2 id="podcast-title" class="mt-2 text-[26px] leading-[1.15] font-bold tracking-tight text-primary sm:text-[30px] lg:text-[34px]">
+        Conversations that inspire.
+      </h2>
+    </div>
+    <p class="max-w-[400px] text-[14px] leading-relaxed text-[#5B6472] sm:text-[15px] lg:border-l lg:border-gray-200 lg:py-1.5 lg:pl-8">
+      Real stories, fresh perspectives and ideas from the CES community.
+    </p>
   </div>
 
-  @if (loading()) {
-  <p class="mt-5 text-[13px] text-muted">Loading episodes…</p>
-  } @else if (failed()) {
-  <p
-    class="mt-5 rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
-    We couldn't load the episodes right now. Please try again later.
-  </p>
-  } @else {
-  <ul class="mt-5 grid list-none gap-5 lg:grid-cols-3">
-    @for (ep of episodes(); track ep.videoId) {
-    <li class="flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white">
-      <div class="relative">
-        <img [src]="ep.thumb" [alt]="ep.title" loading="lazy"
-          class="aspect-video w-full bg-primary-light object-cover" />
-
-        <span
-          class="absolute top-4 left-4 rounded-md bg-secondary px-3 py-1 text-[10.5px] font-bold tracking-wide text-white uppercase">{{
-          ep.number }}</span>
-
-        <button type="button" [attr.aria-label]="'Play ' + ep.title" (click)="play(ep)"
-          class="absolute inset-0 m-auto flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-logo transition-transform hover:scale-105">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M8 5v14l11-7z" />
-          </svg>
-        </button>
-      </div>
-
-      <div class="flex flex-1 flex-col justify-center p-5">
-        <h3 class="text-[17px] leading-snug font-bold text-primary">{{ ep.title }}</h3>
-
-        <div class="mt-5">
-          <button type="button" (click)="play(ep)"
-            class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-[12.5px] font-semibold text-white transition-colors hover:bg-primary-dark">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-            Play Episode
-          </button>
-        </div>
-      </div>
-    </li>
-    } @empty {
-    <li
-      class="rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
-      No episodes published yet. Check back soon!
-    </li>
+  <!-- What the podcast covers, divided by thin rules from desktop up -->
+  <ul class="mt-7 grid list-none grid-cols-2 gap-y-6 lg:mt-8 lg:grid-cols-4">
+    @for (pillar of pillars; track pillar.title) {
+      <li class="pr-4 even:border-l even:border-gray-200 even:pl-5 sm:pr-6 sm:even:pl-8 lg:border-l lg:border-gray-200 lg:pl-8 lg:first:border-l-0 lg:first:pl-0">
+        <svg class="text-primary" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          @for (d of pillar.icon; track d) {
+            <path [attr.d]="d" />
+          }
+        </svg>
+        <h3 class="mt-2.5 text-[16px] font-bold text-primary sm:text-[17px]">{{ pillar.title }}</h3>
+        <p class="mt-1 text-[13px] leading-relaxed text-[#5B6472] sm:text-[14px]">{{ pillar.body }}</p>
+      </li>
     }
   </ul>
+
+  <!-- Category filter, and the channel -->
+  <div class="mt-8 flex items-end justify-between gap-6 border-b border-gray-200 lg:mt-10">
+    <div role="group" aria-label="Filter episodes by category" data-lenis-prevent-horizontal
+      class="no-scrollbar -mb-px flex gap-7 overflow-x-auto sm:gap-10">
+      @for (cat of categories(); track cat) {
+        <button type="button" (click)="category.set(cat)" [attr.aria-pressed]="category() === cat"
+          class="shrink-0 border-b-[3px] pb-2.5 text-[14px] whitespace-nowrap transition-colors sm:text-[15px]"
+          [class]="category() === cat ? 'border-secondary font-bold text-primary' : 'border-transparent text-[#5B6472] hover:text-primary'">
+          {{ cat }}
+        </button>
+      }
+    </div>
+    <a [href]="youtube" target="_blank" rel="noopener"
+      class="mb-3 inline-flex shrink-0 items-center gap-1.5 text-[13.5px] font-semibold text-primary no-underline transition-colors hover:text-secondary sm:text-[14px]">
+      Watch on YouTube
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M7 17 17 7M8 7h9v9" />
+      </svg>
+      <span class="sr-only">(opens in a new tab)</span>
+    </a>
+  </div>
+
+  <!-- Featured episodes -->
+  <h3 class="mt-7 text-[20px] font-bold text-primary sm:text-[22px]">Featured episodes</h3>
+
+  @if (loading()) {
+    <p class="mt-4 text-[13px] text-muted">Loading episodes…</p>
+  } @else if (failed()) {
+    <p class="mt-4 rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
+      We couldn't load the episodes right now. Please try again later.
+    </p>
+  } @else {
+    <ul class="mt-4 list-none divide-y divide-gray-200">
+      @for (ep of shown(); track ep.videoId) {
+        <li class="grid gap-4 py-5 first:pt-0 sm:grid-cols-[minmax(0,280px)_minmax(0,1fr)] sm:gap-x-7 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)_auto] lg:items-center lg:gap-x-10">
+          <!-- Thumbnail plays the episode here -->
+          <button type="button" (click)="play(ep)" [attr.aria-label]="'Play episode ' + ep.number + ': ' + ep.title"
+            class="group relative block overflow-hidden rounded-lg sm:row-span-2 lg:row-span-1">
+            <img [src]="ep.thumb" alt="" loading="lazy" width="480" height="270"
+              class="aspect-video w-full bg-primary-light object-cover transition-transform duration-300 group-hover:scale-[1.03]" />
+            <span class="absolute inset-0 m-auto flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-logo shadow-md transition-transform group-hover:scale-110"
+              aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </span>
+          </button>
+
+          <div class="min-w-0">
+            <p class="text-[12px] font-semibold tracking-[2px] uppercase">
+              <span class="text-secondary">Episode {{ ep.number }}</span>
+              @if (ep.category) {
+                <span class="mx-1.5 text-gray-400" aria-hidden="true">·</span>
+                <span class="text-[#5B6472]">{{ ep.category }}</span>
+              }
+            </p>
+            <h4 class="mt-2 max-w-[560px] text-[19px] leading-snug font-bold text-primary sm:text-[22px] lg:text-[24px]">{{ ep.title }}</h4>
+            @if (ep.description) {
+              <p class="mt-2 max-w-[560px] text-[14px] leading-relaxed text-[#5B6472] sm:text-[15px]">{{ ep.description }}</p>
+            }
+          </div>
+
+          <a [href]="ep.watchUrl" target="_blank" rel="noopener"
+            class="inline-flex items-center gap-2.5 justify-self-start rounded-md bg-primary px-6 py-3 text-[14px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark sm:col-start-2 sm:self-start lg:col-start-auto lg:self-center lg:justify-self-end">
+            Watch episode
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 17 17 7M8 7h9v9" />
+            </svg>
+            <span class="sr-only">on YouTube (opens in a new tab)</span>
+          </a>
+        </li>
+      } @empty {
+        <li class="rounded-lg border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-10 text-center text-[13px] text-muted">
+          No episodes published yet. Check back soon!
+        </li>
+      }
+    </ul>
   }
 
 </section>

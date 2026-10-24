@@ -1,4 +1,13 @@
-<app-page-hero crumb="Centenary Celebration" [trail]="[{ label: 'Glory of CES' }]" eyebrow="Celebrating a Century of Excellence"
+<app-page-hero crumb="Centenary Celebration" [trail]="[{ label: 'Celebrations' }]" eyebrow="Celebrating a Century of Excellence"
   title="Centenary Celebration"
-  blurb="100 years of education, service and empowerment at the Charotar Education Society."
-  [image]="backdrop" />
+  blurb="A hundred years of teaching in Anand, celebrated with 100 events and 8 Guinness World Records."
+  [image]="backdrop">
+  <a routerLink="/celebration" fragment="centenary-intro"
+    class="mt-7 inline-flex items-center gap-2 rounded-md bg-secondary px-6 py-3 text-[14px] font-semibold text-primary no-underline transition-colors hover:bg-secondary-dark">
+    Explore the celebration
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+      stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 5v14M6 13l6 6 6-6" />
+    </svg>
+  </a>
+</app-page-hero>

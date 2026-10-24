@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { leaderByRole } from '../../../shared/leaders';
 import { Reveal } from '../../../shared/reveal.directive';
 
 interface Leader {
@@ -22,11 +23,12 @@ interface Leader {
   styleUrl: './leadership.scss',
 })
 export class Leadership {
-  // Kept in step with the Management page (key-leaders).
+  private readonly leader = leaderByRole('secretary')!;
+
   readonly secretary: Leader = {
-    name: 'Shri Ketankumar P. Patel',
-    role: 'Secretary, CES',
-    quote: 'Education is the most powerful tool to transform individuals and society. We remain committed to excellence in all that we do.',
-    photo: '/assets/images/directors/vc.jpg',
+    name: this.leader.name,
+    role: this.leader.title,
+    quote: this.leader.quote,
+    photo: this.leader.photo,
   };
 }

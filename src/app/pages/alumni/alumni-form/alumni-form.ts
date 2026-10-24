@@ -4,6 +4,11 @@ import { Country, State, City } from 'country-state-city';
 import { SuccessDialogService } from '../../../core/services/success-dialog.service';
 import { CustomSelect } from '../../../shared/custom-select/custom-select';
 
+/** The Alumni Meet is held every 13 January; this is the next one (today's, on the day itself). */
+function nextMeetYear(now = new Date()): number {
+  return now.getMonth() === 0 && now.getDate() <= 13 ? now.getFullYear() : now.getFullYear() + 1;
+}
+
 /**
  * Ported from the legacy alumni page: same fields, validators and payload keys
  * (instituteName / alumniName / alumniCourse / …) so the existing
@@ -39,6 +44,8 @@ export class AlumniForm {
   readonly countryNames = this.countries.map((country) => country.name);
   readonly states = signal<ReadonlyArray<{ name: string; iso: string; countryIso: string }>>([]);
   readonly cities = signal<readonly string[]>([]);
+
+  readonly meetYear = nextMeetYear();
 
   readonly statuses: readonly string[] = [
     'Student',

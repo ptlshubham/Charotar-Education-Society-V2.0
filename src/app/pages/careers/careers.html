@@ -83,8 +83,8 @@
               }
               @if (vac.images?.length) {
               <div class="mt-2 space-y-2">
-                @for (img of vac.images; track img) {
-                <button type="button" (click)="openImage(img)" [attr.aria-label]="'View advertisement image'"
+                @for (img of vac.images; track img; let i = $index) {
+                <button type="button" (click)="openImages(vac.images, i)" [attr.aria-label]="'View advertisement image'"
                   class="block w-full max-w-[300px] cursor-zoom-in overflow-hidden rounded border border-gray-200">
                   <img [src]="img" alt="Vacancy advertisement" loading="lazy"
                     class="w-full transition-transform duration-300 hover:scale-[1.03]" />
@@ -203,18 +203,3 @@
 
 
 </section>
-
-<!-- ─── Image lightbox ─── -->
-@if (lightboxImage(); as src) {
-<div class="fixed inset-0 z-[999] flex items-center justify-center bg-black/85 p-4" (click)="closeLightbox()">
-  <button type="button" (click)="closeLightbox()" aria-label="Close image"
-    class="absolute top-5 right-5 flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-      stroke-linecap="round" stroke-linejoin="round">
-      <path d="M18 6 6 18M6 6l12 12" />
-    </svg>
-  </button>
-  <img [src]="src" alt="Vacancy advertisement" (click)="$event.stopPropagation()"
-    class="max-h-[90vh] max-w-[92vw] rounded-lg object-contain shadow-2xl" />
-</div>
-}

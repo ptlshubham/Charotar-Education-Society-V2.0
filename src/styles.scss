@@ -103,3 +103,27 @@ body {
   box-shadow: none !important;
 }
 
+/* Printing any page (e.g. CES at a Glance's "Download PDF"): the page itself, without the
+   site header, footer, floating widgets or anything marked .no-print. */
+@media print {
+  app-header,
+  app-footer,
+  app-ai-assistant,
+  app-scroll-to-top,
+  app-cookie-consent,
+  app-page-faq,
+  app-subscribe-success-modal,
+  app-success-dialog,
+  app-lightbox,
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+  }
+
+  @page {
+    margin: 14mm;
+  }
+}

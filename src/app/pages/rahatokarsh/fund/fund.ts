@@ -22,14 +22,14 @@ export class Fund {
   }
 
   readonly english: readonly string[] = [
-    "The objective of 'Rahatokarsh Fund' is to provide financial aid to the poor students who are brilliant and studying in any of the institutions (from KG to PG) managed by Charotar Education Society, Anand. To assist the students who are not receiving any scholarship or economical help and who are willing to study further in order to build their career.",
-    'Shri Ketankumar P. Patel administers the said fund in a transparent manner.',
-    'The "Rahatokarsh Fund" initiative was started by Charotar Education Society as a part of the centenary celebrations that will be held from April 2015 to April 2016. On www.cesociety.in, information on the accumulated fund\'s interest, the donors\' identities, and the students who benefited are all listed....',
-    '"While donating doesn\'t look at what you have in hands, But consider what you have in your heart."',
-    'Charotar Education Society was established with the motive of helping and educating the children/students of Charotar region and it has been playing its role in the society since 1916. Today the institution has earned name and fame at international level. I would like to share the idea that has occurred to me on the occasion of the centenary celebration of Charotar Education Society.',
-    'People often come to me with a request to provide exemption for fees to some bright students who are keen to study but either they are orphans or their parents are financially incapable and deprived of any other source of income. But still they economise and try to manage for the expenditures for their children\'s bright future.',
-    "In fact, Charotar Education Society has been assisting the poor students since the year of the establishment of the institution. More students will be benefitted if we manage to gather a good amount and so in this 99th year of Society, I am looking forward to raise fund named as 'Rahatokarsh Fund'. This very thought of the present reality of the society and the thought that how many students will be made scapegoat by this era of price hike gives me a lot of pain. So I want to initialize this new path to growth where I would like to request the well – wishers of Society to donate a good amount.",
-    'You can deposit your valuable donation to the below mentioned bank. Moreover the amount of donation will be exempted from income tax under Clause 80 – G (5).',
+    'The Rahatokarsh Fund helps bright students who are short of money keep studying at any CES institution, from KG to PG. It is meant for students who get no scholarship or other help but want to carry on and build a career.',
+    'The fund is run openly by our Secretary, Shri Ketankumar P. Patel.',
+    'We started the fund as part of our centenary celebrations, which ran from April 2015 to April 2016. The interest it earns, the names of donors and the students it has helped are all published on this website.',
+    `"When you give, don't look at what is in your hands. Look at what is in your heart."`,
+    'Charotar Education Society was set up to teach the children of the Charotar region, and it has been doing that since 1916. Today its name is known well beyond India. Our centenary gave me an idea I would like to share with you.',
+    'People often come to me asking for a fee waiver for a bright student who badly wants to study. Some of these children have lost their parents. Others have parents with almost no income, who still scrimp and save so their children can have a better future.',
+    "CES has helped students like these ever since it began. With a proper fund behind us we can help many more, so in the Society's 99th year I set up the Rahatokarsh Fund. It pains me to think how many students rising prices could push out of school, so I ask every well-wisher of the Society to give what they can.",
+    'You can send your donation to the bank account below. Donations are exempt from income tax under Section 80G(5).',
   ];
 
   /** Mixed headings and paragraphs, so each block carries its own kind. */

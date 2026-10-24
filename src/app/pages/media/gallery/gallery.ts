@@ -6,6 +6,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { catchError, of, switchMap } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
 import { InstituteService } from '../../../core/services/institute.service';
+import { LightboxService } from '../../../core/services/lightbox.service';
 import { GalleryImage } from '../../../shared/models/models';
 import { Paginator } from '../../../shared/pagination/paginator';
 import { Pagination } from '../../../shared/pagination/pagination';
@@ -40,6 +41,7 @@ export class Gallery {
   private readonly resources = inject(ResourcesService);
   private readonly institute = inject(InstituteService);
   private readonly sanitizer = inject(DomSanitizer);
+  private readonly lightbox = inject(LightboxService);
 
   readonly banner = 'assets/images/hero/gallery.jpeg';
 
@@ -137,139 +139,12 @@ export class Gallery {
 
   readonly pager = new Paginator(this.filtered, 12);
 
-  // ── Lightbox (zoom / pan / download / prev-next) ──────────────────────────
-  readonly lightboxIndex = signal<number | null>(null);
-  readonly zoom = signal(1);
-  readonly panX = signal(0);
-  readonly panY = signal(0);
-  readonly dragging = signal(false);
-
-  private dragStartX = 0;
-  private dragStartY = 0;
-  private panStartX = 0;
-  private panStartY = 0;
-
-  /** The photo currently open in the lightbox (indexes the full filtered list). */
-  readonly current = computed(() => {
-    const i = this.lightboxIndex();
-    return i === null ? null : (this.filtered()[i] ?? null);
-  });
-
-  readonly lightboxPosition = computed(() => {
-    const i = this.lightboxIndex();
-    return i === null ? '' : `${i + 1} / ${this.filtered().length}`;
-  });
-
-  readonly zoomPercent = computed(() => `${Math.round(this.zoom() * 100)}%`);
-
+  /** Open the site-wide viewer on this photo, with the whole filtered list to browse. */
   open(photo: Photo): void {
-    const i = this.filtered().findIndex((p) => p.id === photo.id);
+    const list = this.filtered();
+    const i = list.findIndex((p) => p.id === photo.id);
     if (i === -1) return;
-    this.lightboxIndex.set(i);
-    this.resetZoom();
-  }
-
-  close(): void {
-    this.lightboxIndex.set(null);
-    this.resetZoom();
-  }
-
-  next(): void {
-    const list = this.filtered();
-    const i = this.lightboxIndex();
-    if (i === null || !list.length) return;
-    this.lightboxIndex.set((i + 1) % list.length);
-    this.resetZoom();
-  }
-
-  prev(): void {
-    const list = this.filtered();
-    const i = this.lightboxIndex();
-    if (i === null || !list.length) return;
-    this.lightboxIndex.set((i - 1 + list.length) % list.length);
-    this.resetZoom();
-  }
-
-  zoomIn(): void {
-    this.zoom.set(Math.min(4, +(this.zoom() + 0.5).toFixed(2)));
-  }
-
-  zoomOut(): void {
-    const z = Math.max(1, +(this.zoom() - 0.5).toFixed(2));
-    this.zoom.set(z);
-    if (z === 1) {
-      this.panX.set(0);
-      this.panY.set(0);
-    }
-  }
-
-  resetZoom(): void {
-    this.zoom.set(1);
-    this.panX.set(0);
-    this.panY.set(0);
-  }
-
-  toggleZoom(): void {
-    if (this.zoom() > 1) this.resetZoom();
-    else this.zoom.set(2);
-  }
-
-  onWheel(e: WheelEvent): void {
-    e.preventDefault();
-    if (e.deltaY < 0) this.zoomIn();
-    else this.zoomOut();
-  }
-
-  onPointerDown(e: PointerEvent): void {
-    if (this.zoom() <= 1) return;
-    this.dragging.set(true);
-    this.dragStartX = e.clientX;
-    this.dragStartY = e.clientY;
-    this.panStartX = this.panX();
-    this.panStartY = this.panY();
-    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
-    e.preventDefault();
-  }
-
-  onPointerMove(e: PointerEvent): void {
-    if (!this.dragging()) return;
-    this.panX.set(this.panStartX + (e.clientX - this.dragStartX));
-    this.panY.set(this.panStartY + (e.clientY - this.dragStartY));
-  }
-
-  onPointerUp(): void {
-    this.dragging.set(false);
-  }
-
-  /**
-   * Download the current image. A cross-origin `<a download>` is ignored by the
-   * browser (it just navigates), so fetch the bytes and save a blob URL instead;
-   * fall back to opening the image if the fetch is blocked (CORS).
-   */
-  async download(): Promise<void> {
-    const p = this.current();
-    if (!p) return;
-    try {
-      const res = await fetch(p.src);
-      if (!res.ok) throw new Error('download failed');
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = this.filename(p.src);
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    } catch {
-      window.open(p.src, '_blank', 'noopener');
-    }
-  }
-
-  private filename(src: string): string {
-    const clean = src.split('?')[0].split('#')[0];
-    const name = clean.substring(clean.lastIndexOf('/') + 1);
-    return name || 'ces-gallery-image.jpg';
+    this.lightbox.open(list.map((p) => ({ src: p.src, caption: p.caption })), i);
   }
 
   // ── Video player popup ──
@@ -304,17 +179,6 @@ export class Gallery {
   @HostListener('document:keydown.escape')
   onEscape(): void {
     if (this.activeVideo() !== null) this.closeVideo();
-    else if (this.lightboxIndex() !== null) this.close();
-  }
-
-  @HostListener('document:keydown.arrowright')
-  onArrowRight(): void {
-    if (this.lightboxIndex() !== null) this.next();
-  }
-
-  @HostListener('document:keydown.arrowleft')
-  onArrowLeft(): void {
-    if (this.lightboxIndex() !== null) this.prev();
   }
 
   /** Mirrors MediaUrlPipe: prefix a relative media path with the API host. */

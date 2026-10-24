@@ -171,23 +171,28 @@ export class SeoService {
     this.setName('keywords', keywords);
     this.setName('robots', robots);
 
+    // A detail page with its own URL (a project, a leader, a blog post) borrows its section's
+    // admin entry only for the fallbacks above; that entry's canonical and social titles
+    // describe the section page, not this one.
+    const own = override?.url ? null : page;
+
     // Open Graph  og:title tracks the resolved <title> unless overridden.
-    this.setProperty('og:title', firstNonEmpty(page?.ogTitle, title));
-    this.setProperty('og:description', firstNonEmpty(page?.ogDescription, description));
+    this.setProperty('og:title', firstNonEmpty(own?.ogTitle, title));
+    this.setProperty('og:description', firstNonEmpty(own?.ogDescription, description));
     this.setProperty('og:image', image);
     this.setProperty('og:site_name', firstNonEmpty(defaults.siteName));
 
     // An explicit canonical on the admin entry wins outright; otherwise resolve
     // the page/override path against the configured site URL.
     const url =
-      firstNonEmpty(page?.canonicalUrl) ??
+      firstNonEmpty(own?.canonicalUrl) ??
       this.buildUrl(defaults.siteUrl, firstNonEmpty(override?.url, page?.path));
     this.setProperty('og:url', url);
 
     // Twitter
-    this.setName('twitter:title', firstNonEmpty(page?.twitterTitle, title));
-    this.setName('twitter:description', firstNonEmpty(page?.twitterDescription, description));
-    this.setName('twitter:image', firstNonEmpty(page?.twitterImage, image));
+    this.setName('twitter:title', firstNonEmpty(own?.twitterTitle, title));
+    this.setName('twitter:description', firstNonEmpty(own?.twitterDescription, description));
+    this.setName('twitter:image', firstNonEmpty(own?.twitterImage, image));
     this.setName('twitter:site', firstNonEmpty(defaults.twitterHandle));
     this.setName('twitter:creator', firstNonEmpty(defaults.twitterHandle));
 
@@ -197,7 +202,7 @@ export class SeoService {
     const faqs = override ? [] : (page?.aiFaqs ?? []).filter(f => firstNonEmpty(f?.q) && firstNonEmpty(f?.a));
     this.pageFaqs.set({ pageKey: page?.pageKey ?? null, faqs });
 
-    this.setJsonLd(this.pageJsonLd(url, title, firstNonEmpty(page?.aiSummary, description), defaults, faqs));
+    this.setJsonLd(this.pageJsonLd(url, title, firstNonEmpty(own?.aiSummary, description), defaults, faqs));
   }
 
   /**

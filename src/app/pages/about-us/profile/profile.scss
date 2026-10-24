@@ -1,0 +1,17 @@
+/* Section headings, shared by every block of the profile. */
+.pf-h2 {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-primary);
+
+  @media (min-width: 640px) {
+    font-size: 26px;
+  }
+}
+
+/* Keep the light panel fills and borders when printed. */
+.pf {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}

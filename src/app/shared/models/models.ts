@@ -103,6 +103,10 @@ export interface PodcastEntry {
   link: string;
   title: string;
   isactive: boolean;
+  /** Episode details from the dashboard (migration 0050); NULL on episodes saved before it. */
+  episodeNo?: number | null;
+  category?: string | null;
+  description?: string | null;
 }
 
 /**

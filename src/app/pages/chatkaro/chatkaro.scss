@@ -1,0 +1,38 @@
+// Chatkaro's look comes from its own menu artwork: deep pink with soft light rays, ticket
+// stubs for the dates, and a perforated edge where the hero meets the page. Colours are the
+// --color-chatkaro-* tokens in tailwind.css.
+
+.ck-hero {
+  background: linear-gradient(135deg, var(--color-chatkaro-deep) 0%, var(--color-chatkaro) 100%);
+}
+
+// Rays fanning out from behind the photo, as on the menu cover.
+.ck-rays {
+  background: repeating-conic-gradient(from 0deg at 78% 45%, rgb(255 255 255 / 0.07) 0deg 5deg, transparent 5deg 12deg);
+  mask-image: radial-gradient(circle at 78% 45%, #000 0%, transparent 75%);
+}
+
+// The hero's bottom edge, bitten like a torn ticket.
+.ck-perforation {
+  background: radial-gradient(circle at 50% 100%, #fff 6px, transparent 6.5px) 0 0 / 18px 12px repeat-x;
+}
+
+// Date stubs: a notch on each side, like a ticket.
+.ck-stub {
+  mask:
+    radial-gradient(circle at 0 50%, transparent 5px, #000 5.5px) left / 51% 100% no-repeat,
+    radial-gradient(circle at 100% 50%, transparent 5px, #000 5.5px) right / 51% 100% no-repeat;
+}
+
+// The menu panel's perforated top edge.
+.ck-ticket {
+  mask:
+    radial-gradient(circle at 50% 0, transparent 5px, #000 5.5px) top / 16px 12px repeat-x,
+    linear-gradient(#000, #000) bottom / 100% calc(100% - 11px) no-repeat;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse {
+    animation: none;
+  }
+}

@@ -58,14 +58,14 @@ const COLLEGES = [
   'Shri V. J. Patel College of Physical Education',
 ];
 
-const HOSTELS = ['Vidhyarthi Ashram', 'Kasturba Kanya Chhatalay', 'Ladies Hostel', 'Adhyapan Mandir Chhatalay'];
+const HOSTELS = ['Vidhyarthi Ashram', 'Kasturba Kanya Chhatralay', 'Ladies Hostel', 'Adhyapan Mandir Chhatralay'];
 
 const OTHERS = [
   'CES Performing Arts And Fine Arts Academy',
-  'CES Library & Resource Center',
-  'CES Community & Social Welfare',
-  'CES Alumni Association',
-  'CES Cultural & Events Committee',
+  'Gyansthali Library',
+  'Udaan Education',
+  'Swami Dayanand Saraswati Vocational Training Centre',
+  'Senior Citizen Forum',
 ];
 
 export const ACADEMIC_INSTITUTES: readonly SearchItem[] = [

@@ -3,11 +3,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { PageHero } from '../../shared/page-hero/page-hero';
 import { PLACEHOLDER } from '../../shared/placeholder-images';
+import { LightboxService } from '../../core/services/lightbox.service';
 
 interface Campus {
   key: 'anand' | 'khetiwadi' | 'mogri';
   name: string;
-  established: string;
+  /** Campus area, from the Society's records (40.5 acres in all). */
+  area: string;
   location: string;
   institutions: string;
   facilities: string;
@@ -30,37 +32,37 @@ export class Campuses {
     {
       key: 'anand',
       name: 'Anand Campus',
-      established: '1945',
-      location: 'Anand, Gujarat, India',
-      institutions: 'Schools, Colleges & Other Units',
-      facilities: 'Library, Laboratories, Sports Complex, Auditorium, Computer Labs and more.',
+      area: '21 acres',
+      location: 'D.N. High School Campus, Station Road, Anand',
+      institutions: 'D.N. High School, Kasturba Kanya Vidyalaya, Charotar English Medium School, V.J. Patel Higher Secondary School and most of our colleges',
+      facilities: 'Gyansthali Library, gym, amphitheatre, auditorium, Saraswati temple, stationery store and three hostels.',
       intro:
-        'The Anand Campus is the oldest and main campus of Charotar Education Society, located in the heart of Anand city. It has been a pioneer in providing value-based education for decades.',
-      cardBlurb: 'The main campus located in Anand city with schools, colleges and other institutions.',
+        'Our main campus near Anand railway station is where CES began in 1916, with 27 students in three classrooms. Today its 21 acres hold our oldest schools, most of our colleges and three of our four hostels.',
+      cardBlurb: 'Where CES began in 1916: 21 acres near Anand railway station.',
       photos: PLACEHOLDER.campuses.anand,
     },
     {
       key: 'khetiwadi',
       name: 'Khetiwadi Campus',
-      established: '1962',
-      location: 'Khetiwadi, Anand, Gujarat, India',
-      institutions: 'Schools & Higher Secondary Units',
+      area: '7.5 acres',
+      location: 'Khetiwadi, Anand, Gujarat',
+      institutions: 'Sardar Vallabhbhai Patel High School and Shishuvihar/Balshala',
       facilities: 'Library, Laboratories, Playground, Computer Labs and more.',
       intro:
-        'A serene campus focused on academic excellence and student development, offering a calm environment for focused learning.',
-      cardBlurb: 'A serene campus focused on academic excellence and student development.',
+        'The 7.5-acre Khetiwadi campus is home to Sardar Vallabhbhai Patel High School, with classes from Shishuvihar right up to class 12.',
+      cardBlurb: '7.5 acres, home to Sardar Vallabhbhai Patel High School.',
       photos: PLACEHOLDER.campuses.khetiwadi,
     },
     {
       key: 'mogri',
       name: 'Mogri Campus',
-      established: '1971',
-      location: 'Mogri, Anand, Gujarat, India',
-      institutions: 'Schools, Adhyapan Mandir & Hostels',
+      area: '12 acres',
+      location: 'Mogri, Anand, Gujarat',
+      institutions: 'Motibhai Amin Adhyapan Mandir (PTC), I.J. Patel B.Ed. and M.Ed., V.J. Patel B.P.Ed., M.B. Patel Applied Science College, Mahatma Gandhi Vidyalaya and K.M. Patel Balshala',
       facilities: 'Library, Laboratories, Hostel, Sports Ground and more.',
       intro:
-        'Committed to quality education with modern facilities in a green and peaceful environment away from the city bustle.',
-      cardBlurb: 'Committed to quality education with modern facilities in a green and peaceful environment.',
+        'The 12-acre Mogri campus is where CES trains its teachers and physical education instructors. It was redeveloped at a cost of about Rs. 2 crore and has its own hostel, Adhyapan Mandir Chhatralay.',
+      cardBlurb: '12 acres for teacher training and physical education.',
       photos: PLACEHOLDER.campuses.mogri,
     },
   ];
@@ -69,6 +71,7 @@ export class Campuses {
   readonly activePhoto = signal(0);
 
   private readonly route = inject(ActivatedRoute);
+  private readonly lightbox = inject(LightboxService);
 
   constructor() {
     // Deep-link support: /more/campus?campus=khetiwadi opens that campus (and keeps
@@ -89,6 +92,12 @@ export class Campuses {
 
   selectPhoto(i: number): void {
     this.activePhoto.set(i);
+  }
+
+  /** Open the active campus's photos in the site-wide viewer, on photo i. */
+  viewPhotos(i = this.activePhoto()): void {
+    const c = this.active();
+    this.lightbox.open(c.photos.map((src, n) => ({ src, caption: `${c.name} - Photo ${n + 1}` })), i);
   }
 
   readonly active = computed(

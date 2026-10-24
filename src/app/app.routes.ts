@@ -44,9 +44,25 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/about-us/index/index').then(m => m.Index)
       },
       {
+        path: 'about/history',
+        ...seo('about'),
+        loadComponent: () => import('./pages/about-us/history/history').then(m => m.History)
+      },
+      {
+        path: 'about/profile',
+        ...seo('about'),
+        loadComponent: () => import('./pages/about-us/profile/profile').then(m => m.Profile)
+      },
+      {
         path: 'management',
         ...seo('management'),
         loadComponent: () => import('./pages/management/index/index').then(m => m.Index)
+      },
+      {
+        // One page per office-bearer: /management/chairman and /management/secretary.
+        path: 'management/:role',
+        ...seo('management'),
+        loadComponent: () => import('./pages/management/leader/leader').then(m => m.LeaderPage)
       },
       {
         path: 'celebration',
@@ -64,9 +80,21 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/social-activity/index/index').then(m => m.Index)
       },
       {
+        // One page per activity, initiative or camp: /social-activity/chatkaro, ...
+        path: 'social-activity/:slug',
+        ...seo('social-activity'),
+        loadComponent: () => import('./pages/social-activity/activity-detail/activity-detail').then(m => m.ActivityDetail)
+      },
+      {
         path: 'project',
         ...seo('project'),
         loadComponent: () => import('./pages/project/index/index').then(m => m.Index)
+      },
+      {
+        // One page per project: /project/aditya, /project/udaan-education, ...
+        path: 'project/:slug',
+        ...seo('project'),
+        loadComponent: () => import('./pages/project/project-detail/project-detail').then(m => m.ProjectDetail)
       },
       {
         path: 'alumni',
@@ -154,6 +182,11 @@ export const routes: Routes = [
         path: 'glory/gallery',
         ...seo('glory/gallery'),
         loadComponent: () => import('./pages/media/gallery/gallery').then(m => m.Gallery)
+      },
+      {
+        path: 'chatkaro',
+        ...seo('chatkaro'),
+        loadComponent: () => import('./pages/chatkaro/chatkaro').then(m => m.Chatkaro)
       },
       {
         path: 'navratri',

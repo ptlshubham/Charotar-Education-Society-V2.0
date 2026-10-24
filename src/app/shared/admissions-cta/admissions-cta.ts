@@ -4,6 +4,9 @@ import { RouterLink } from '@angular/router';
 /** The Society was founded in 1916 - the seal's years move on by themselves. */
 const FOUNDED = 1916;
 
+/** The admission session on offer - also named by the Celebration page's closing section. */
+export const ADMISSION_SESSION = '2026-27';
+
 /**
  * "Admissions Open" call-to-action, shared by the home, about, celebration, management,
  * project and social-activity pages. Navy message side - the session, the facts an applicant
@@ -19,8 +22,7 @@ const FOUNDED = 1916;
   styleUrl: './admissions-cta.scss',
 })
 export class AdmissionsCta {
-  /** The admission session on offer. */
-  readonly session = '2026-27';
+  readonly session = ADMISSION_SESSION;
   readonly years = new Date().getFullYear() - FOUNDED;
 
   /** Same office number as the header and footer. */

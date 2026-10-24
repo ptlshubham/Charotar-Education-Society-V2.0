@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { PLACEHOLDER } from '../../../shared/placeholder-images';
 
 @Component({
   selector: 'app-freedom-fight',
@@ -10,30 +9,26 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
 export class FreedomFight {
   readonly image = '/assets/images/about/freedom-fighter.jpeg';
 
-  readonly events: ReadonlyArray<{ year: string; title: string; body: string; icon: string }> = [
+  readonly events: ReadonlyArray<{ year: string; title: string; body: string }> = [
     {
-      year: '1917',
+      year: '1917-18',
       title: 'Kheda Satyagraha',
-      body: 'Supported farmers and communities during Kheda Satyagraha.',
-      icon: 'flag',
+      body: "D.N. High School's 195 students were encouraged to stand with Kheda's farmers.",
     },
     {
-      year: '1920',
+      year: '1919-20',
       title: 'Non-Cooperation Movement',
-      body: "Actively contributed to Mahatma Gandhi's Non-Cooperation Movement.",
-      icon: 'group',
+      body: 'The school joined Gujarat Vidyapith and students picketed shops selling foreign goods.',
+    },
+    {
+      year: '1930',
+      title: 'Dandi March',
+      body: 'Gandhiji camped at Anand and spoke to 20,000 people on the CES ground.',
     },
     {
       year: '1942',
       title: 'Quit India Movement',
-      body: 'Our leaders and students participated in the Quit India Movement.',
-      icon: 'language',
-    },
-    {
-      year: '1947',
-      title: "India's Independence",
-      body: 'Proud to be part of India\'s independence and nation building.',
-      icon: 'lightbulb',
+      body: 'Principal Ishwarbhai J. Patel resigned to join the movement. The school stayed shut for six months.',
     },
   ];
 }

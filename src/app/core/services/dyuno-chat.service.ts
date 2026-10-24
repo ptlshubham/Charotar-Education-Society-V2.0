@@ -12,6 +12,8 @@ export interface ChatMessage {
   sig?: string;
   /** Official pages an answer was looked up from (syllabus PDFs etc.) - shown as links under it. */
   citations?: Citation[];
+  /** This browser's own "couldn't reach / too many questions" text - never sent back as history. */
+  error?: true;
 }
 
 export interface Citation {
@@ -56,9 +58,26 @@ interface AssistantReply {
 const ERROR_REPLY =
   "Sorry, I couldn't reach our assistant just now. Please try again in a moment, or contact our support team.";
 
-/** The backend rate-limits per visitor (429) - say so rather than blame the connection. */
-const RATE_LIMIT_REPLY =
-  "You're asking questions a bit quickly. Please wait a minute and try again.";
+/**
+ * The backend rate-limits (429) and says when to retry. A wait of minutes-to-hours is the daily
+ * allowance, not typing too fast - say which, rather than "wait a minute" forever.
+ */
+function rateLimitReply(retryAfterSeconds: unknown): string {
+  const seconds = Number(retryAfterSeconds);
+  if (seconds > 15 * 60) return "You've reached today's question limit. Please come back tomorrow - Dyuno will be ready.";
+  const wait = seconds > 0 && seconds < 60 ? `${Math.ceil(seconds)} seconds` : 'a minute';
+  return `You're asking questions a bit quickly. Please wait ${wait} and try again.`;
+}
+
+/** Anonymous id for this browser, sent with each question for the backend's fair-use limit. */
+const VISITOR_KEY = 'ces_dyuno_visitor';
+
+/** Error lines saved before messages carried the `error` flag - still kept out of the history sent. */
+const LEGACY_ERROR_TEXTS = new Set([ERROR_REPLY, "You're asking questions a bit quickly. Please wait a minute and try again."]);
+
+function isLocalError(m: ChatMessage): boolean {
+  return !!m.error || (m.role === 'assistant' && LEGACY_ERROR_TEXTS.has(m.text));
+}
 
 /**
  * Chat history is kept in this browser (localStorage), like ChatGPT/Claude's sidebar but
@@ -122,7 +141,8 @@ function isMessage(m: any): m is ChatMessage {
     typeof m.text === 'string' &&
     (m.notice === undefined || m.notice === 'warning' || m.notice === 'closed') &&
     (m.sig === undefined || typeof m.sig === 'string') &&
-    (m.citations === undefined || (Array.isArray(m.citations) && m.citations.every(isCitation)))
+    (m.citations === undefined || (Array.isArray(m.citations) && m.citations.every(isCitation))) &&
+    (m.error === undefined || m.error === true)
   );
 }
 
@@ -216,8 +236,9 @@ export class DyunoChat {
 
     let id = this.activeId();
     // Snapshot the thread before adding this turn - the backend wants the prior
-    // conversation, not the question it is about to be asked.
-    const history = this.messages();
+    // conversation, not the question it is about to be asked. Local error lines are not
+    // conversation: the model would read "please wait a minute" as something it said.
+    const history = this.messages().filter((m) => !isLocalError(m));
     const now = Date.now();
     if (!id) {
       id = newId();
@@ -229,10 +250,10 @@ export class DyunoChat {
     const chatId = id;
     this.pendingChatId.set(chatId);
     this.slowTimer = setTimeout(() => this.slow.set(true), SLOW_REPLY_MS);
-    this.pending = this.resources.askAssistant(text, history).subscribe({
+    this.pending = this.resources.askAssistant(text, history, this.visitorId()).subscribe({
       next: (res: any) => {
         const reply = res?.data as AssistantReply | undefined;
-        if (!reply?.text) return this.finish(chatId, { role: 'assistant', text: ERROR_REPLY });
+        if (!reply?.text) return this.finish(chatId, { role: 'assistant', text: ERROR_REPLY, error: true });
         if (reply.moderation) {
           return this.finish(chatId, { role: 'assistant', text: reply.text, notice: reply.moderation === 'closed' ? 'closed' : 'warning' });
         }
@@ -244,8 +265,29 @@ export class DyunoChat {
           ...(citations.length ? { citations } : {}),
         });
       },
-      error: (err) => this.finish(chatId, { role: 'assistant', text: err?.status === 429 ? RATE_LIMIT_REPLY : ERROR_REPLY }),
+      error: (err) => this.finish(chatId, {
+        role: 'assistant',
+        text: err?.status === 429 ? rateLimitReply(err?.error?.retryAfter) : ERROR_REPLY,
+        error: true,
+      }),
     });
+  }
+
+  private visitor?: string;
+
+  /** Random, per browser, kept in localStorage; a per-tab id when storage is blocked. */
+  private visitorId(): string {
+    if (this.visitor) return this.visitor;
+    try {
+      this.visitor = localStorage.getItem(VISITOR_KEY) || undefined;
+      if (!this.visitor || !/^[A-Za-z0-9-]{16,64}$/.test(this.visitor)) {
+        this.visitor = newId();
+        localStorage.setItem(VISITOR_KEY, this.visitor);
+      }
+    } catch {
+      this.visitor ??= newId();
+    }
+    return this.visitor;
   }
 
   private finish(chatId: string, message: ChatMessage): void {

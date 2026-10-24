@@ -1,0 +1,52 @@
+.lb {
+  animation: lb-in 0.2s ease-out;
+}
+
+/* Gestures are handled in code: no browser scrolling, pinch-zoom or double-tap zoom here. */
+.lb-stage {
+  touch-action: none;
+}
+
+.lb-photo {
+  transition: opacity 0.3s ease;
+  transform-origin: center;
+  -webkit-user-drag: none;
+
+  /* Buttons and the wheel ease the zoom; dragging and pinching follow the pointer directly. */
+  &.lb-ease {
+    transition: opacity 0.3s ease, transform 0.2s ease;
+  }
+}
+
+.lb-spinner {
+  animation: lb-spin 0.8s linear infinite;
+}
+
+.lb-strip {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes lb-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes lb-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lb,
+  .lb-photo,
+  .lb-photo.lb-ease {
+    animation: none;
+    transition: none;
+  }
+}

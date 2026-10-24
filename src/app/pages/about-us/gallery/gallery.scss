@@ -1,1 +1,47 @@
-/* Intentionally empty - styled with Tailwind utilities only. */
+/* Strip sizing. --u is one photo's width: a screen shows ~1.2 photos on phones, ~2.8 on
+   tablets and exactly 5 on desktop (the wide one counts as 1.4), the rest scrolling in.
+   The % resolves against the track where each slide uses it. */
+.gallery-track {
+  --gap: 12px;
+  --u: calc((100% - var(--gap)) / 1.2);
+  gap: var(--gap);
+  scrollbar-width: none;
+  cursor: grab;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* While a mouse drag or its glide runs, snapping would fight the scroll. */
+  &.is-free {
+    scroll-snap-type: none;
+  }
+
+  &.is-grabbing,
+  &.is-grabbing * {
+    cursor: grabbing;
+  }
+
+  @media (min-width: 640px) {
+    --u: calc((100% - 2 * var(--gap)) / 2.8);
+  }
+
+  @media (min-width: 1024px) {
+    --u: calc((100% - 4 * var(--gap)) / 5.4);
+  }
+}
+
+/* Every photo is the same height: the wide one's ratio is 1.4x the others'. */
+.gallery-slide {
+  flex: 0 0 var(--u);
+  aspect-ratio: 4 / 3;
+
+  @media (min-width: 640px) {
+    aspect-ratio: 16 / 15;
+
+    &.is-wide {
+      flex-basis: calc(var(--u) * 1.4);
+      aspect-ratio: 22.4 / 15;
+    }
+  }
+}

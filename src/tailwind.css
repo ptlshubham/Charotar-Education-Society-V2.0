@@ -17,6 +17,12 @@
   /* Neutral muted body copy (was the ZarklyX --color-secondary grey). */
   --color-muted: #546968;
 
+  /* Chatkaro festival palette, taken from its own menu artwork (/chatkaro only). */
+  --color-chatkaro: #c83e6c;
+  --color-chatkaro-deep: #8e2453;
+  --color-chatkaro-gold: #ffd84d;
+  --color-chatkaro-blush: #fcebf1;
+
   /* Cursive display face for the header's "Education for a Better Tomorrow" tagline. */
   --font-script: 'Dancing Script', cursive;
 

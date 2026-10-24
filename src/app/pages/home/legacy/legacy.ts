@@ -24,12 +24,14 @@ export class Legacy {
   /** The CES tribute film both play links open. */
   readonly video = 'https://youtu.be/_-ntpkeG7O4';
 
-  readonly quote = 'An exemplary householder who insists on service, simplicity and modesty.';
+  readonly quote = 'A model hostel warden who lived by service, simplicity and discipline.';
 
   readonly paragraphs: readonly string[] = [
-    'From a young volunteer to a guiding force at CES, Pujya Vitthalbhai Saheb inspired generations through ' +
-      'humility, discipline and service.',
-    'This tribute celebrates his life, values and enduring contribution to education.',
+    'He joined D.N. High School as a teacher in 1944, fresh from six months in Sabarmati Jail for his part in ' +
+      'the Quit India Movement. Over the next 35 years he was hostel warden, principal and secretary, and won ' +
+      "the Government of India's best teacher award.",
+    'Every 13 January, his birthday, former students from India and abroad come back to CES for the Alumni ' +
+      'Meet held in his memory.',
   ];
 
   readonly films: readonly string[] = [this.name, this.title];

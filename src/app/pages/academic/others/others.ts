@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { PageHero } from '../../../shared/page-hero/page-hero';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
 
 @Component({
   selector: 'app-others',
-  imports: [PageHero],
+  imports: [RouterLink, PageHero],
   templateUrl: './others.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './others.scss',
@@ -14,7 +15,7 @@ export class Others {
 
   readonly featured = {
     name: 'CES Performing Arts And Fine Arts Academy',
-    desc: 'Nurturing creativity and artistic excellence in music, dance, theatre, and visual arts for all age groups.',
+    desc: 'Dance, music, drawing, theatre and animation, taught by people who work in those fields, for children and adults alike.',
     phone: '(02692) 266789',
     website: 'https://www.performing.cesociety.in/',
     location: 'Anand, Gujarat',
@@ -22,40 +23,45 @@ export class Others {
     icon: 'palette',
   };
 
+  /** Each listed with the Society's office number until the units have their own. */
   readonly initiatives: ReadonlyArray<{
     name: string;
     desc: string;
     phone: string;
     location: string;
     icon: string;
+    /** Its page under Projects, where there is one. */
+    link?: string;
   }> = [
       {
-        name: 'CES Library & Resource Center',
-        desc: 'A knowledge hub promoting reading culture, learning resources, and research support.',
-        phone: '(02692) 241041',
+        name: 'Gyansthali Library',
+        desc: 'Books, periodicals, journals and online material on every subject, two e-libraries, a library club and book-review contests.',
+        phone: '(02692) 243083',
         location: 'Anand, Gujarat',
         icon: 'menu_book',
       },
       {
-        name: 'CES Community & Social Welfare',
-        desc: 'Working for community upliftment through health camps, awareness programs and outreach.',
-        phone: '(02692) 241320',
+        name: 'Udaan Education',
+        desc: 'Hands-on science and maths for classes 6 to 10, and JEE, NEET and GUJCET coaching for classes 11 and 12.',
+        phone: '(02692) 243083',
         location: 'Anand, Gujarat',
-        icon: 'group',
+        icon: 'science',
+        link: '/project/udaan-education',
       },
       {
-        name: 'CES Alumni Association',
-        desc: 'Building lifelong connections and fostering growth through alumni engagement.',
-        phone: '(02692) 241080',
+        name: 'Swami Dayanand Saraswati Vocational Training Centre',
+        desc: 'Practical courses taught by experts from partner organisations: Data Structures & Algorithms, CELTAS English and Tally accounting.',
+        phone: '(02692) 243083',
         location: 'Anand, Gujarat',
-        icon: 'handshake',
+        icon: 'work',
+        link: '/project/vocational-training-centre',
       },
       {
-        name: 'CES Cultural & Events Committee',
-        desc: 'Organizing cultural festivals and celebrations that bring talent and tradition together.',
-        phone: '(02692) 241050',
+        name: 'Senior Citizen Forum',
+        desc: 'For anyone over 60 who studied or worked at CES: a meeting and meal every month, a trip every three months, and free gym, library and computer classes.',
+        phone: '(02692) 243083',
         location: 'Anand, Gujarat',
-        icon: 'music_note',
+        icon: 'elderly',
       },
     ];
 

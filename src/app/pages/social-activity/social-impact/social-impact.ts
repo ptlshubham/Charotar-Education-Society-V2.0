@@ -1,18 +1,21 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-social-impact',
+  imports: [RouterLink],
   templateUrl: './social-impact.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './social-impact.scss',
 })
 export class SocialImpact {
-  readonly stats: ReadonlyArray<{ value: string; label: string; description: string; icon: string }> = [
-    { value: '100+', label: 'Activities Organized', description: 'Events and initiatives that create lasting community impact.', icon: 'calendar_month' },
-    { value: '25K+', label: 'People Benefited', description: 'Lives touched and empowered through our programs.', icon: 'group' },
-    { value: '150+', label: 'Community Partners', description: 'Collaborations that strengthen communities and drive change.', icon: 'handshake' },
-    { value: '500+', label: 'Volunteers Engaged', description: 'Passionate volunteers contributing their time and skills.', icon: 'favorite' },
-    { value: '1,000+', label: 'Students Involved', description: 'Young minds inspired and supported for a better tomorrow.', icon: 'school' },
-    { value: '1,500+', label: 'Meals Distributed', description: 'Nutritious meals provided to those who need it most.', icon: 'restaurant' },
+  // TODO: placeholder figures - replace with the numbers CES confirms.
+  readonly stats: ReadonlyArray<{ value: string; label: string; accent?: boolean }> = [
+    { value: '100+', label: 'Activities Organized' },
+    { value: '25K+', label: 'People Benefited', accent: true },
+    { value: '150+', label: 'Community Partners' },
+    { value: '500+', label: 'Volunteers Engaged' },
+    { value: '1,000+', label: 'Students Involved' },
+    { value: '1,500+', label: 'Meals Distributed' },
   ];
 }

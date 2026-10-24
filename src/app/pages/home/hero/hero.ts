@@ -1,6 +1,7 @@
 import { afterNextRender, ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, DestroyRef, ElementRef, inject, signal, viewChild } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { catchError, of, switchMap, timeout } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
 import { InstituteService } from '../../../core/services/institute.service';
@@ -21,18 +22,20 @@ type SwiperEl = HTMLElement & { initialize(): void; swiper?: HeroSwiper };
 /**
  * One promo banner. Both crops are supplied so the artwork is never cropped:
  * `desktop` at 1920×520 (landscape) and `mobile` at 1080×1350 (portrait).
- * `link` is optional (whole banner becomes a click-through).
+ * A banner with a link (Website Management → Image Uploader) is a click-through:
+ * `link` is a page on this site (routed in the app), `href` another website (new tab).
  */
 interface Banner {
   desktop: string;
   mobile: string;
   alt: string;
   link?: string;
+  href?: string;
 }
 
 @Component({
   selector: 'app-hero',
-  imports: [RouterLink],
+  imports: [NgTemplateOutlet],
   templateUrl: './hero.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './hero.scss',
@@ -42,6 +45,7 @@ export class Hero {
   private readonly resources = inject(ResourcesService);
   private readonly institute = inject(InstituteService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly router = inject(Router);
 
   /**
    * The slides - only ever the server's banners. Empty until they load (and always under
@@ -84,13 +88,39 @@ export class Hero {
           desktop: this.resolve(b.image),
           mobile: this.resolve(b.mobileImage || b.image),
           alt: b.title || b.keywords || 'Charotar Education Society',
-          link: b.link || undefined,
+          ...this.target(b.link),
         }));
         if (!mapped.length) return; // no banners - the section stays out
 
         this.banners.set(mapped);
         this.mountSwiper();
       });
+  }
+
+  /**
+   * Where a banner's link goes. A path ("/admission"), or a full address on this same site, is
+   * routed in the app; another website opens in a new tab. Anything but a path or an http(s)
+   * address is dropped (the API refuses those too). Browser-only, like the banners.
+   */
+  private target(raw?: string | null): Pick<Banner, 'link' | 'href'> {
+    const v = (raw ?? '').trim();
+    if (!v) return {};
+    if (/^\/(?!\/)/.test(v)) return { link: v };
+    try {
+      const u = new URL(v);
+      if (u.protocol !== 'http:' && u.protocol !== 'https:') return {};
+      if (u.host === window.location.host) return { link: u.pathname + u.search + u.hash };
+      return { href: u.href };
+    } catch {
+      return {};
+    }
+  }
+
+  /** Open an on-site banner link in the app; ctrl/⌘/shift/middle clicks keep the browser's own new-tab behaviour. */
+  openLink(e: MouseEvent, link: string): void {
+    if (e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    this.router.navigateByUrl(link);
   }
 
   /** Prefix a relative media path with the API host (mirrors MediaUrlPipe). */

@@ -110,14 +110,17 @@
         @if (item.link) {
         <a class="nav-link" [class.is-active]="activeTab(item, first)" [routerLink]="item.link"
           [attr.aria-current]="activeTab(item, first) ? 'page' : null">
-          {{ item.label === 'Project' ? 'Projects' : item.label }}
+          {{ item.label }}
         </a>
         } @else {
         <button class="nav-link" [class.is-active]="activeTab(item, first)" type="button"
           (click)="toggleDropdown(item.label)" [attr.aria-current]="activeTab(item, first) ? 'true' : null"
           [attr.aria-expanded]="openMenu() === item.label">
           {{ item.label }}
-          <img class="nav-chevron" src="/assets/images/header/icons/nav-chevron.svg" width="16" height="16" alt="" />
+          <svg class="nav-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
         </button>
         }
         @if (item.children && openMenu() === item.label) {
@@ -259,7 +262,7 @@
           <a [routerLink]="item.link" [attr.aria-current]="activeTab(item, first) ? 'page' : null"
             class="flex items-center whitespace-nowrap border-b-[3px] px-3.5 py-3 text-[14px] font-medium no-underline transition-colors"
             [class]="activeTab(item, first) ? 'border-secondary text-secondary' : 'border-transparent text-white hover:text-secondary'">
-            {{ item.label === 'Project' ? 'Projects' : item.label }}
+            {{ item.label }}
           </a>
           } @else {
           <button type="button" (click)="toggleDropdown(item.label)" [attr.aria-expanded]="openMenu() === item.label"
@@ -414,7 +417,7 @@
         @for (d of iconFor(item.icon); track d) {
         <path [attr.d]="d" /> }
       </svg>
-      {{ item.label === 'Project' ? 'Projects' : item.label }}
+      {{ item.label }}
     </a>
     } @else {
     <button type="button" (click)="toggleExpanded(item.label)" [attr.aria-expanded]="isExpanded(item.label)"

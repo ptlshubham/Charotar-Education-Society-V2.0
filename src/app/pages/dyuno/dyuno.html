@@ -204,6 +204,26 @@
             </span>
             <div class="min-w-0 flex-1 pt-1">
               <p class="whitespace-pre-wrap break-words text-[15px] leading-[1.7] text-[#1f2a44]">{{ m.text }}</p>
+              @if (m.citations?.length) {
+              <!-- Official pages this answer was looked up from - OpenAI requires them visible and clickable. -->
+              <div class="mt-3">
+                <p class="text-[12px] font-semibold uppercase tracking-wide text-muted">Official sources</p>
+                <ul class="mt-1.5 flex list-none flex-wrap gap-2 p-0">
+                  @for (c of m.citations; track c.url) {
+                  <li class="min-w-0 max-w-full">
+                    <a [href]="c.url" target="_blank" rel="noopener noreferrer" [title]="c.url"
+                      class="inline-flex max-w-full items-center gap-1.5 rounded-full border border-primary/15 bg-primary/[0.03] px-3 py-1.5 text-[12.5px] font-medium text-primary no-underline transition-colors hover:border-primary hover:bg-primary hover:text-white">
+                      <span class="truncate">{{ c.title }}</span>
+                      <svg class="shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M7 17 17 7M8 7h9v9" />
+                      </svg>
+                    </a>
+                  </li>
+                  }
+                </ul>
+              </div>
+              }
               <button type="button" (click)="copy(m.text, i)"
                 class="mt-2 inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-[12px] font-medium text-muted transition-colors hover:bg-primary/[0.06] hover:text-primary">
                 @if (copied() === i) {
@@ -237,6 +257,9 @@
               <span class="h-2 w-2 rounded-full bg-muted/60"></span>
               <span class="h-2 w-2 rounded-full bg-muted/60"></span>
             </span>
+            @if (slow()) {
+            <span class="text-[13px] text-muted" role="status">Checking official websites - this can take a few seconds…</span>
+            }
           </div>
           }
         </div>

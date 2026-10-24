@@ -10,6 +10,13 @@ export interface ChatMessage {
   notice?: 'warning' | 'closed';
   /** The backend's signature on a Dyuno answer - what lets it be shared (see shareLink). */
   sig?: string;
+  /** Official pages an answer was looked up from (syllabus PDFs etc.) - shown as links under it. */
+  citations?: Citation[];
+}
+
+export interface Citation {
+  url: string;
+  title: string;
 }
 
 export interface ChatTopic {
@@ -37,6 +44,8 @@ interface AssistantReply {
   moderation?: 'warning' | 'final_warning' | 'closed';
   /** Signature over (question, answer); never set on abuse notices. */
   sig?: string;
+  /** Set when the answer came from an official-website lookup - the pages it cites. */
+  citations?: Citation[];
 }
 
 /**
@@ -67,6 +76,8 @@ const MAX_CHATS = 30;
 /** Per conversation - plenty to continue from, and keeps storage small. */
 const MAX_MESSAGES = 40;
 const TITLE_CHARS = 60;
+/** A normal answer takes 1-4 s; past this the backend is looking something up on official websites. */
+const SLOW_REPLY_MS = 5000;
 
 interface SavedHistory {
   activeId: string | null;
@@ -100,12 +111,18 @@ function titleFrom(question: string): string {
   return oneLine.length > TITLE_CHARS ? `${oneLine.slice(0, TITLE_CHARS - 1)}…` : oneLine;
 }
 
+/** Only real web pages become links - never a javascript: or data: URL from tampered storage. */
+function isCitation(c: any): c is Citation {
+  return typeof c?.url === 'string' && /^https?:\/\//i.test(c.url) && typeof c.title === 'string';
+}
+
 function isMessage(m: any): m is ChatMessage {
   return (
     (m?.role === 'user' || m?.role === 'assistant') &&
     typeof m.text === 'string' &&
     (m.notice === undefined || m.notice === 'warning' || m.notice === 'closed') &&
-    (m.sig === undefined || typeof m.sig === 'string')
+    (m.sig === undefined || typeof m.sig === 'string') &&
+    (m.citations === undefined || (Array.isArray(m.citations) && m.citations.every(isCitation)))
   );
 }
 
@@ -135,8 +152,11 @@ export class DyunoChat {
   readonly busy = computed(() => this.pendingChatId() !== null);
   /** Typing dots - only in the conversation that is actually waiting. */
   readonly thinking = computed(() => this.busy() && this.pendingChatId() === this.activeId());
+  /** The reply is taking a while - almost always an official-website lookup; the views say so. */
+  readonly slow = signal(false);
 
   private pending?: Subscription;
+  private slowTimer?: ReturnType<typeof setTimeout>;
   /** Set once history has been read back, so the empty start never overwrites it. */
   private restored = false;
 
@@ -208,20 +228,35 @@ export class DyunoChat {
 
     const chatId = id;
     this.pendingChatId.set(chatId);
+    this.slowTimer = setTimeout(() => this.slow.set(true), SLOW_REPLY_MS);
     this.pending = this.resources.askAssistant(text, history).subscribe({
       next: (res: any) => {
         const reply = res?.data as AssistantReply | undefined;
-        const notice = reply?.moderation === 'closed' ? 'closed' : reply?.moderation ? 'warning' : undefined;
-        this.finish(chatId, reply?.text || ERROR_REPLY, notice, reply?.text ? reply.sig : undefined);
+        if (!reply?.text) return this.finish(chatId, { role: 'assistant', text: ERROR_REPLY });
+        if (reply.moderation) {
+          return this.finish(chatId, { role: 'assistant', text: reply.text, notice: reply.moderation === 'closed' ? 'closed' : 'warning' });
+        }
+        const citations = (reply.citations ?? []).filter(isCitation);
+        this.finish(chatId, {
+          role: 'assistant',
+          text: reply.text,
+          ...(reply.sig ? { sig: reply.sig } : {}),
+          ...(citations.length ? { citations } : {}),
+        });
       },
-      error: (err) => this.finish(chatId, err?.status === 429 ? RATE_LIMIT_REPLY : ERROR_REPLY),
+      error: (err) => this.finish(chatId, { role: 'assistant', text: err?.status === 429 ? RATE_LIMIT_REPLY : ERROR_REPLY }),
     });
   }
 
-  private finish(chatId: string, text: string, notice?: ChatMessage['notice'], sig?: string): void {
-    const message: ChatMessage = notice ? { role: 'assistant', text, notice } : sig ? { role: 'assistant', text, sig } : { role: 'assistant', text };
+  private finish(chatId: string, message: ChatMessage): void {
     this.append(chatId, message);
     this.pendingChatId.set(null);
+    this.clearSlow();
+  }
+
+  private clearSlow(): void {
+    clearTimeout(this.slowTimer);
+    this.slow.set(false);
   }
 
   /**
@@ -265,6 +300,7 @@ export class DyunoChat {
   private cancelPending(): void {
     this.pending?.unsubscribe();
     this.pendingChatId.set(null);
+    this.clearSlow();
   }
 
   /** Adds a message and moves its conversation to the top of the history. */

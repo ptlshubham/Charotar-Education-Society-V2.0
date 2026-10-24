@@ -110,6 +110,24 @@
         </span>
         <div class="min-w-0 rounded-[12px] rounded-tl-[4px] bg-[#f4f7f6] px-3.5 py-2.5">
           <p class="text-primary text-[13px] leading-[19px] whitespace-pre-wrap break-words">{{ m.text }}</p>
+          @if (m.citations?.length) {
+          <!-- Official pages this answer was looked up from - OpenAI requires them visible and clickable. -->
+          <p class="mt-2 text-[11px] font-semibold uppercase tracking-wide text-muted">Official sources</p>
+          <ul class="mt-1 list-none space-y-1 p-0">
+            @for (c of m.citations; track c.url) {
+            <li class="min-w-0">
+              <a [href]="c.url" target="_blank" rel="noopener noreferrer" [title]="c.url"
+                class="inline-flex max-w-full items-center gap-1 text-[12px] font-medium text-primary underline decoration-primary/30 underline-offset-2 hover:decoration-primary">
+                <span class="truncate">{{ c.title }}</span>
+                <svg class="shrink-0" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M7 17 17 7M8 7h9v9" />
+                </svg>
+              </a>
+            </li>
+            }
+          </ul>
+          }
         </div>
       </div>
       }
@@ -125,6 +143,9 @@
           <span class="w-1.5 h-1.5 rounded-full bg-muted/60"></span>
           <span class="w-1.5 h-1.5 rounded-full bg-muted/60"></span>
         </span>
+        @if (slow()) {
+        <span class="text-[11.5px] leading-[15px] text-muted" role="status">Checking official websites…</span>
+        }
       </div>
       }
     </div>

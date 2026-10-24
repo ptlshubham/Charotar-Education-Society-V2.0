@@ -82,6 +82,8 @@ export class AiAssistant implements OnDestroy {
     () => this.minimized() && this.messages().length > this.seenCount() && this.messages().at(-1)?.role === 'assistant',
   );
   readonly thinking = this.chat.thinking;
+  /** Waiting past a normal answer - an official-website lookup is running. */
+  readonly slow = this.chat.slow;
   /** A reply is still coming (maybe in another conversation) - Send waits for it. */
   readonly busy = this.chat.busy;
   /** Closed after repeated abuse - the composer becomes a "Start a new chat" button. */

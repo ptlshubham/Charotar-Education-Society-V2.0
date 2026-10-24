@@ -51,6 +51,8 @@ export class Dyuno {
 
   readonly messages = this.chat.messages;
   readonly thinking = this.chat.thinking;
+  /** Waiting past a normal answer - an official-website lookup is running. */
+  readonly slow = this.chat.slow;
   /** A reply is still coming (maybe in another conversation) - Send waits for it. */
   readonly busy = this.chat.busy;
   readonly hasConversation = this.chat.hasConversation;

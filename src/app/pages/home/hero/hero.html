@@ -2,7 +2,8 @@
      baked in), so there is no HTML overlay. Desktop (1920×520) and mobile
      (1080×1350) crops are art-directed via <picture>; the slide's aspect ratio
      matches each crop so nothing is ever cut off. Slides come from the server
-     (ResourcesService.getSliderBanners) with built-in fallback banners. -->
+     (ResourcesService.getSliderBanners) only - with none, the section isn't shown. -->
+@if (banners().length) {
 <section class="relative w-full overflow-hidden bg-primary">
 
   <swiper-container init="false" #swiperEl class="hero-swiper block w-full">
@@ -51,3 +52,4 @@
   }
 
 </section>
+}

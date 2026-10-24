@@ -1,10 +1,10 @@
 @if (notices().length) {
-<section class="nt bg-primary" aria-label="Latest notices">
+<section class="nt bg-secondary" aria-label="Latest notices">
   <div class="site-container flex items-center gap-3 py-2.5 sm:gap-4">
 
     <!-- Label -->
     <span
-      class="inline-flex shrink-0 items-center gap-2 rounded-full bg-secondary px-2.5 py-1.5 text-[12px] font-bold tracking-[0.14em] text-primary uppercase sm:px-3.5 sm:text-[13px]">
+      class="inline-flex shrink-0 items-center gap-2 rounded-full bg-primary px-2.5 py-1.5 text-[12px] font-bold tracking-[0.14em] text-secondary uppercase sm:px-3.5 sm:text-[13px]">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="m3 11 15-6v14L3 13z" />
@@ -24,18 +24,18 @@
             @if (n.href) {
             <a [href]="n.href" (click)="open($event, n)" [attr.target]="n.external ? '_blank' : null"
               [attr.rel]="n.external ? 'noopener' : null" [attr.tabindex]="c === 1 ? -1 : null"
-              class="inline-flex items-center gap-1.5 whitespace-nowrap text-[14px] font-medium text-white no-underline decoration-secondary underline-offset-4 transition-colors hover:text-secondary hover:underline sm:text-[15px]">
+              class="inline-flex items-center gap-1.5 whitespace-nowrap text-[14px] font-semibold text-primary no-underline underline-offset-4 transition-colors hover:text-accent hover:underline sm:text-[15px]">
               {{ n.text }}
-              <svg class="shrink-0 text-secondary" width="13" height="13" viewBox="0 0 24 24" fill="none"
+              <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"
                 aria-hidden="true">
                 <path d="M7 17 17 7M8 7h9v9" />
               </svg>
             </a>
             } @else {
-            <span class="whitespace-nowrap text-[14px] text-white/90 sm:text-[15px]">{{ n.text }}</span>
+            <span class="whitespace-nowrap text-[14px] font-medium text-primary sm:text-[15px]">{{ n.text }}</span>
             }
-            <span class="mx-7 h-1.5 w-1.5 shrink-0 rotate-45 bg-secondary" aria-hidden="true"></span>
+            <span class="mx-7 h-1.5 w-1.5 shrink-0 rotate-45 bg-primary" aria-hidden="true"></span>
           </li>
           }
         </ul>
@@ -46,7 +46,7 @@
     <!-- Pause / play - moving text must be stoppable -->
     <button type="button" (click)="paused.set(!paused())" [attr.aria-pressed]="paused()"
       [attr.aria-label]="paused() ? 'Play notices' : 'Pause notices'" [title]="paused() ? 'Play' : 'Pause'"
-      class="nt-toggle flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white/80 ring-1 ring-white/20 transition-colors hover:bg-white/10 hover:text-white">
+      class="nt-toggle flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-primary ring-1 ring-primary/30 transition-colors hover:bg-primary hover:text-secondary">
       @if (paused()) {
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="M7 4.5v15l13-7.5z" />

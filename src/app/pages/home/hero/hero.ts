@@ -44,27 +44,11 @@ export class Hero {
   private readonly destroyRef = inject(DestroyRef);
 
   /**
-   * Built-in fallback banners. Shown during SSR/prerender (no API there) and kept
-   * whenever the server returns nothing or errors, so the hero is never empty.
-   * Replace the artwork in /assets/images/hero/banners/ as needed.
+   * The slides - only ever the server's banners. Empty until they load (and always under
+   * SSR/prerender, which has no API), and empty if there are none or the request fails:
+   * then the whole section is left out rather than showing stand-in artwork.
    */
-  private readonly fallbackBanners: readonly Banner[] = [
-    {
-      desktop: '/assets/images/hero/banners/anniversary-desktop.svg',
-      mobile: '/assets/images/hero/banners/anniversary-mobile.svg',
-      alt: 'Charotar Education Society - 110 Years, a legacy since 1916',
-      link: '/celebration',
-    },
-    {
-      desktop: '/assets/images/hero/banners/admissions-desktop.svg',
-      mobile: '/assets/images/hero/banners/admissions-mobile.svg',
-      alt: 'Admissions open 2025–26 at Charotar Education Society',
-      link: '/academic/school',
-    },
-  ];
-
-  /** Slides actually rendered - fallback first, replaced by the server list (browser). */
-  readonly banners = signal<readonly Banner[]>(this.fallbackBanners);
+  readonly banners = signal<readonly Banner[]>([]);
 
   /** Current slide, mirrored from Swiper so the custom dots can highlight. */
   readonly activeIndex = signal(0);
@@ -76,19 +60,15 @@ export class Hero {
   private mounted = false;
 
   constructor() {
-    // Browser-only (afterNextRender never runs on the server). Mount Swiper right
-    // away with the fallback banners so the slider always works regardless of the
-    // network, then swap in the live banners once they load.
-    afterNextRender(async () => {
-      await this.mountSwiper();
-      this.loadBanners();
-    });
+    // Browser-only (afterNextRender never runs on the server): load the banners, and
+    // only if there are any, render the section and start Swiper on them.
+    afterNextRender(() => this.loadBanners());
   }
 
   /**
    * Resolve which institute this site is (backend-driven, like the legacy boot
-   * flow), load that institute's slider banners, and swap them in. Any failure
-   * leaves the fallback banners in place.
+   * flow) and load that institute's slider banners. None, or a failure, leaves the
+   * section out.
    */
   private loadBanners(): void {
     this.institute
@@ -106,16 +86,10 @@ export class Hero {
           alt: b.title || b.keywords || 'Charotar Education Society',
           link: b.link || undefined,
         }));
-        if (!mapped.length) return; // keep the fallback banners
+        if (!mapped.length) return; // no banners - the section stays out
 
         this.banners.set(mapped);
-        // Let the @for render the new slides, then tell Swiper to re-read them.
-        requestAnimationFrame(() => {
-          const swiper = this.swiperEl()?.nativeElement.swiper;
-          swiper?.update();
-          swiper?.slideToLoop(0);
-          this.activeIndex.set(0);
-        });
+        this.mountSwiper();
       });
   }
 
@@ -133,8 +107,8 @@ export class Hero {
     const { register } = await import('swiper/element/bundle');
     register();
 
-    // Reveal every slide, then wait one frame so the @for has rendered before
-    // Swiper reads the DOM.
+    // Reveal every slide, then wait one frame so the section and its @for have
+    // rendered before Swiper reads the DOM.
     this.swiperReady.set(true);
     await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
 
@@ -146,9 +120,6 @@ export class Hero {
       autoplay: { delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true },
       grabCursor: true,
       a11y: { enabled: true },
-      // Auto-detect when the banner list is swapped in from the server.
-      observer: true,
-      observeSlideChildren: true,
     });
     // Guard against a double init (e.g. dev HMR re-running this on an already
     // upgraded element, where `initialize` is no longer present).

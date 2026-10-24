@@ -7,12 +7,26 @@
   display: none; /* Chrome, Safari and Opera */
 }
 
-/* Optional fade-in animation for grid */
-.course-grid {
-  animation: fadeIn 0.4s ease-out;
+/* Tab icons: light, heavier on the active tab (the icon font has no filled style loaded). */
+.tab-icon {
+  font-variation-settings: 'wght' 300;
+}
+.tab-icon.is-on {
+  font-variation-settings: 'wght' 600;
+}
+
+/* Cards fade up as a tab's set appears */
+.course-card {
+  animation: fadeIn 0.35s ease-out both;
 }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .course-card {
+    animation: none;
+  }
 }

@@ -329,6 +329,12 @@
   .nav-items { padding-inline: 24px; }
 }
 
+// Just above that, full gaps make search + quick links (with the Dyuno pill) + ads a few px
+// wider than the screen, pushing the ads past the edge - tighten the gaps only.
+@media (min-width: 1400px) and (max-width: 1479px) {
+  .search-row, .quick-links { gap: 24px; }
+}
+
 // Keep the selected page distinct from hover in desktop and mobile submenus.
 a.active-menu-item,
 button.active-menu-item,

@@ -1,51 +1,52 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PageHero } from '../../../shared/page-hero/page-hero';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { catchError, of, switchMap } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
 import { InstituteService } from '../../../core/services/institute.service';
+import { SeoService } from '../../../core/services/seo.service';
 import { BlogPost } from '../../../shared/models/models';
 import { MediaUrlPipe } from '../../../shared/media-url.pipe';
 import { SafeHtmlPipe } from '../../../shared/safe-html.pipe';
+import { AdmissionsCta } from '../../../shared/admissions-cta/admissions-cta';
+import { Academics } from '../../home/academics/academics';
+import { blogExcerpt, blogImageUrl, blogSlug, blogTags, plainText, sortCategories } from '../../../shared/blog-post';
+
+/** Average adult reading speed, for the "N min read" estimate. */
+const WORDS_PER_MINUTE = 200;
 
 interface Brief {
   id: string;
   title: string;
   date: string;
   image: string;
+  imageAlt: string;
 }
 
 @Component({
   selector: 'app-blog-detail',
-  imports: [FormsModule, RouterLink, MediaUrlPipe, SafeHtmlPipe, PageHero],
+  imports: [FormsModule, RouterLink, MediaUrlPipe, SafeHtmlPipe, PageHero, Academics, AdmissionsCta],
   templateUrl: './detail.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './detail.scss',
 })
 export class BlogDetail {
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   private readonly resources = inject(ResourcesService);
   private readonly institute = inject(InstituteService);
+  private readonly seo = inject(SeoService);
 
   readonly loading = signal(true);
   readonly failed = signal(false);
   private readonly blogs = signal<readonly BlogPost[]>([]);
+  /** The :slug route param - a post's slug, or its id in links made before slugs existed. */
   private readonly currentId = signal(this.route.snapshot.paramMap.get('slug') ?? '');
 
   search = '';
-
-  readonly categories: ReadonlyArray<{ label: string; count: number }> = [
-    { label: 'News', count: 24 },
-    { label: 'Events', count: 18 },
-    { label: 'Achievements', count: 16 },
-    { label: 'Academics', count: 22 },
-    { label: 'Student Corner', count: 15 },
-    { label: 'Research & Innovation', count: 12 },
-    { label: 'Campus Life', count: 10 },
-  ];
 
   readonly shares: ReadonlyArray<{ label: string; tone: string }> = [
     { label: 'Facebook', tone: 'bg-[#1877F2]' },
@@ -72,13 +73,66 @@ export class BlogDetail {
         this.blogs.set(Array.isArray(list) ? list : []);
         this.loading.set(false);
       });
+
+    // An old /blog/<id> link moves to the post's slug URL in place, so every share and bookmark
+    // converges on one address; then the post's own meta tags are applied.
+    effect(() => {
+      const p = this.post();
+      if (!p) return;
+      const slug = blogSlug(p);
+      if (this.currentId() !== slug) {
+        this.router.navigate(['/blog', slug], { replaceUrl: true });
+        return;
+      }
+      this.seo.applyCustom({
+        title: p.metaTitle || p.blogTitle,
+        description: p.metaDescription || blogExcerpt(p),
+        keywords: p.metaKeywords || p.tags,
+        image: p.blogImage ? blogImageUrl(p) : null,
+        url: `/blog/${slug}`,
+      });
+    });
   }
 
-  private readonly index = computed(() => this.blogs().findIndex((b) => String(b.id) === this.currentId()));
+  private readonly index = computed(() => {
+    const key = this.currentId();
+    const list = this.blogs();
+    const bySlug = list.findIndex((b) => b.slug === key);
+    return bySlug >= 0 ? bySlug : list.findIndex((b) => String(b.id) === key);
+  });
 
   readonly post = computed<BlogPost | null>(() => this.blogs()[this.index()] ?? null);
 
   readonly date = computed(() => this.fmt(this.post()?.blogDate ?? ''));
+
+  readonly author = computed(() => this.post()?.authorName?.trim() || 'CES');
+  readonly authorInitial = computed(() => Array.from(this.author())[0]?.toUpperCase() ?? 'C');
+
+  readonly readingTime = computed(() => {
+    const words = plainText(this.post()?.blogDetails).split(' ').filter(Boolean).length;
+    return `${Math.max(1, Math.round(words / WORDS_PER_MINUTE))} min read`;
+  });
+
+  /** Shown only when the post was edited on a later day than its blog date. */
+  readonly updated = computed(() => {
+    const p = this.post();
+    const edited = p?.updateddate ? new Date(p.updateddate) : null;
+    const published = p ? new Date(p.blogDate) : null;
+    if (!edited || !published || isNaN(edited.getTime()) || isNaN(published.getTime())) return '';
+    return edited.getTime() - published.getTime() >= 24 * 60 * 60 * 1000 ? this.fmt(p!.updateddate!) : '';
+  });
+
+  readonly cover = computed(() => {
+    const p = this.post();
+    return p ? blogImageUrl(p) : '';
+  });
+
+  readonly tags = computed(() => {
+    const p = this.post();
+    return p ? blogTags(p) : [];
+  });
+
+  readonly attachments = computed(() => this.post()?.attachments ?? []);
 
   readonly prev = computed<Brief | null>(() => {
     const i = this.index();
@@ -93,11 +147,41 @@ export class BlogDetail {
 
   readonly recent = computed<readonly Brief[]>(() => this.blogs().slice(0, 5).map((b) => this.brief(b)));
 
-  /** True once the feed has loaded but the requested id wasn't found. */
+  /** Categories with a published post, and how many. */
+  readonly categories = computed(() => {
+    const counts = new Map<string, number>();
+    for (const b of this.blogs()) {
+      if (b.category) counts.set(b.category, (counts.get(b.category) ?? 0) + 1);
+    }
+    return sortCategories(counts.keys()).map((label) => ({ label, count: counts.get(label) ?? 0 }));
+  });
+
+  /** True once the feed has loaded but the requested post wasn't found. */
   readonly notFound = computed(() => !this.loading() && !this.failed() && !this.post());
 
+  fileSize(bytes: number): string {
+    if (!bytes) return '';
+    return bytes >= 1024 * 1024 ? `${(bytes / (1024 * 1024)).toFixed(1)} MB` : `${Math.max(1, Math.round(bytes / 1024))} KB`;
+  }
+
+  /** Material Symbols icon for an attachment, by extension. */
+  fileIcon(name: string): string {
+    const ext = name.split('.').pop()?.toLowerCase() ?? '';
+    if (ext === 'pdf') return 'picture_as_pdf';
+    if (ext === 'zip') return 'folder_zip';
+    if (ext === 'xls' || ext === 'xlsx' || ext === 'csv') return 'table_chart';
+    if (ext === 'ppt' || ext === 'pptx') return 'slideshow';
+    return 'description';
+  }
+
   private brief(b: BlogPost): Brief {
-    return { id: String(b.id), title: b.blogTitle ?? '', date: this.fmt(b.blogDate), image: b.blogImage ?? '' };
+    return {
+      id: blogSlug(b),
+      title: b.blogTitle ?? '',
+      date: this.fmt(b.blogDate),
+      image: blogImageUrl(b),
+      imageAlt: b.imageAlt || b.blogTitle || '',
+    };
   }
 
   private fmt(value: string): string {

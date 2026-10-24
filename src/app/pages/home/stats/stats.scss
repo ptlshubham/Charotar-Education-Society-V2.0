@@ -1,1 +1,5 @@
-/* Intentionally empty - styled with Tailwind utilities only. */
+/* The founding year as a faint outline behind the intro - texture, not text to read. */
+.st-watermark {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(32, 49, 84, 0.1);
+}

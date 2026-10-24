@@ -105,7 +105,11 @@ export interface PodcastEntry {
   isactive: boolean;
 }
 
-/** A blog post from GET /admin/GetBlogsDetailsById/:instituteId. `blogDetails` is HTML. */
+/**
+ * A blog post from GET /admin/GetBlogsDetailsById/:instituteId (published posts only).
+ * `blogDetails` is HTML. The optional fields come from the dashboard's blog editor and are
+ * null on posts written before it - see shared/blog-post.ts for the fallbacks.
+ */
 export interface BlogPost {
   id: number | string;
   blogTitle: string;
@@ -113,6 +117,25 @@ export interface BlogPost {
   blogDate: string;
   authorName: string;
   blogDetails: string;
+  slug?: string | null;
+  category?: string | null;
+  /** Comma-separated. */
+  tags?: string | null;
+  excerpt?: string | null;
+  imageAlt?: string | null;
+  metaTitle?: string | null;
+  metaDescription?: string | null;
+  metaKeywords?: string | null;
+  attachments?: BlogAttachment[];
+  /** Day of the last dashboard edit. */
+  updateddate?: string | null;
+}
+
+/** A downloadable file attached to a blog post; `url` is a media path. */
+export interface BlogAttachment {
+  name: string;
+  url: string;
+  size: number;
 }
 
 /** An answer-key notice from GET /admin/GetAllAnswerkey/:instituteId. `message` is HTML;

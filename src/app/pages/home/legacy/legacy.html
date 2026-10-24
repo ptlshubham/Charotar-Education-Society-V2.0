@@ -1,51 +1,63 @@
-<!-- ─── Visionary tribute, then the legacy timeline under it - one parchment section ─── -->
-<section class="bg-[#F3EBDA] bg-[url('/assets/images/home/parchment.jpg')] bg-cover bg-center">
-  <div class="flex flex-col lg:flex-row lg:items-center">
+<!-- ─── The Vision Behind CES - tribute to Pujya Shri Vitthalbhai J. Patel ─── -->
+<section class="bg-white py-14 sm:py-16 lg:py-20" aria-labelledby="legacy-title">
+  <div class="site-container grid items-center gap-12 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:gap-16 xl:gap-20">
 
-    <!-- Portrait - shown in full (no crop), sized to its own aspect ratio -->
-    <div class="w-full bg-[#241d12] lg:w-[40%]">
-      <img [src]="portrait" alt="Pujya Shri Vitthalbhai J. Patel - Visionary of CES" loading="lazy"
-        class="aspect-[508/583] w-full object-cover object-center" />
+    <!-- Portrait card: a gold frame offset behind it, the name plate along its foot -->
+    <!-- Narrower than the screen on phones, so the frame (offset 16px up-left) isn't at the edge -->
+    <div class="relative mx-auto w-full max-w-[min(320px,calc(100%-32px))] sm:max-w-[400px] lg:mx-0 lg:max-w-[440px] lg:justify-self-end" appReveal>
+      <span class="absolute -top-4 -left-4 right-8 bottom-8 border-2 border-secondary sm:-top-5 sm:-left-5" aria-hidden="true"></span>
+      <figure class="relative m-0 shadow-[0_24px_48px_-24px_rgba(32,49,84,0.45)]">
+        <img [src]="portrait" alt="Pujya Shri Vitthalbhai J. Patel" loading="lazy" width="508" height="583"
+          class="block aspect-[508/583] w-full bg-[#241d12] object-cover object-center" />
+        <figcaption class="bg-primary px-5 py-5 text-center sm:py-6">
+          <p class="text-[18px] font-semibold text-white sm:text-[20px]">{{ name }}</p>
+          <p class="mt-1.5 text-[11px] font-semibold tracking-[3px] text-secondary uppercase sm:text-[12px]">{{ title }}</p>
+        </figcaption>
+      </figure>
     </div>
 
     <!-- Message -->
-    <div class="flex flex-col justify-center px-6 py-12 sm:px-10 sm:py-14 lg:w-[60%] lg:px-16 lg:py-16">
-      <blockquote>
-        <h2 class="max-w-2xl text-[24px] leading-snug font-semibold text-[#59513f] sm:text-[30px]">
-          &ldquo;{{ quote }}&rdquo;
-        </h2>
+    <div [appReveal]="150">
+      <p class="text-[12px] font-semibold tracking-[2px] text-secondary uppercase sm:text-[14px]">The Vision Behind CES</p>
+      <h2 id="legacy-title" class="mt-3 text-[32px] leading-[1.08] font-semibold text-primary sm:text-[42px] xl:text-[50px]">
+        A life dedicated to service.
+      </h2>
+
+      <blockquote class="mt-7 border-l-[3px] border-secondary pl-5 sm:pl-7">
+        <p class="text-[20px] leading-snug font-medium text-primary sm:text-[26px] xl:text-[30px]">&ldquo;{{ quote }}&rdquo;</p>
       </blockquote>
 
-      @for (p of paragraphs; track p) {
-      <p class="mt-5 max-w-2xl text-[15px] leading-relaxed text-[#59513f] sm:text-[16.5px]">{{ p }}</p>
+      @for (p of paragraphs; track p; let first = $first) {
+      <p class="max-w-[640px] text-[15px] leading-relaxed text-muted sm:text-[17px]" [class]="first ? 'mt-7' : 'mt-4'">{{ p }}</p>
       }
 
-      <!-- Credits (new-site red play links) -->
-      <div class="mt-7 flex flex-wrap items-center gap-x-8 gap-y-3">
-        @for (credit of credits; track credit) {
-        <a [href]="video" target="_blank" rel="noopener noreferrer"
-          class="group inline-flex items-center gap-2.5 text-[13.5px] font-semibold text-[#59513f] no-underline transition-colors hover:text-accent">
+      <!-- Full story, then the tribute film -->
+      <div class="mt-9 flex flex-wrap items-center gap-x-7 gap-y-5">
+        <a routerLink="/glory/history-vj"
+          class="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-[15px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary">
+          Explore his journey
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </a>
+
+        <span class="hidden h-8 w-px bg-primary/15 sm:block" aria-hidden="true"></span>
+
+        @for (film of films; track film) {
+        <a [href]="video" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'Watch the tribute film: ' + film"
+          class="group inline-flex items-center gap-3 text-[15px] font-medium text-primary no-underline transition-colors hover:text-secondary-dark">
           <span
-            class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent text-white transition-transform group-hover:scale-105"
+            class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-2 border-secondary text-secondary transition-colors group-hover:bg-secondary group-hover:text-white"
             aria-hidden="true">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8 5v14l11-7z" />
+            <svg class="ml-0.5" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7 4.5v15l13-7.5z" />
             </svg>
           </span>
-          {{ credit }}
+          {{ film }}
         </a>
         }
       </div>
-
-      <!-- New-site button -->
-      <a routerLink="/glory/history-vj"
-        class="mt-9 inline-flex w-fit items-center gap-2 rounded-md bg-accent px-6 py-3.5 text-[15px] font-semibold text-white no-underline transition-colors hover:brightness-110">
-        Read More
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M5 12h14M13 6l6 6-6 6" />
-        </svg>
-      </a>
     </div>
 
   </div>

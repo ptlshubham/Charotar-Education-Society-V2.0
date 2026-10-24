@@ -14,6 +14,7 @@ import {
   SearchItem,
 } from '../../shared/models/models';
 import { ACADEMIC_INSTITUTES, CAMPUSES } from '../../shared/academic-institutes';
+import { blogSlug } from '../../shared/blog-post';
 
 /**
  * Builds the "live" half of the universal search: it fetches the backend-driven
@@ -87,9 +88,9 @@ export class SearchService {
       items.push({
         title: b.blogTitle,
         category: 'Blog',
-        link: `/blog/${b.id}`,
+        link: `/blog/${blogSlug(b)}`,
         icon: 'news',
-        keywords: kw(`blog article post ${b.blogTitle} ${b.authorName ?? ''}`),
+        keywords: kw(`blog article post ${b.blogTitle} ${b.authorName ?? ''} ${b.category ?? ''} ${b.tags ?? ''}`),
       });
     }
 

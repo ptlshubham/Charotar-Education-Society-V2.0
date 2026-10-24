@@ -5,10 +5,12 @@
 <section class="site-container py-14">
   <!-- Tabs + search (Full width row) -->
   <div class="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <!-- Category tabs - only categories that have a post -->
+    @if (tabs().length > 1) {
     <ul class="flex list-none gap-2 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] lg:flex-wrap lg:overflow-visible lg:pb-0">
-      @for (t of tabs; track t) {
+      @for (t of tabs(); track t) {
         <li class="shrink-0">
-          <button type="button" (click)="select(t)"
+          <button type="button" (click)="select(t)" [attr.aria-pressed]="tab() === t"
             class="whitespace-nowrap rounded-md border px-4 py-2 text-[12.5px] font-semibold transition-colors"
             [class]="tab() === t ? 'border-primary bg-primary text-white' : 'border-gray-200 bg-white text-primary hover:border-primary'">
             {{ t }}
@@ -16,8 +18,9 @@
         </li>
       }
     </ul>
+    }
 
-    <div class="flex h-11 w-full min-w-0 items-stretch lg:w-auto lg:min-w-[260px]">
+    <div class="flex h-11 w-full min-w-0 items-stretch lg:ml-auto lg:w-auto lg:min-w-[260px]">
       <label for="blog-search" class="sr-only">Search blogs</label>
       <input id="blog-search" type="search" [(ngModel)]="search" (keyup.enter)="applySearch()" placeholder="Search blogs..."
         class="min-w-0 flex-1 rounded-l-md border border-r-0 border-gray-300 px-3.5 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary" />
@@ -40,12 +43,20 @@
         We couldn't load the blog right now. Please try again later.
       </p>
       } @else {
+      @if (tag()) {
+      <p class="mb-5 flex flex-wrap items-center gap-2 text-[13px] text-muted">
+        Posts tagged
+        <span class="rounded-md bg-primary/8 px-2.5 py-1 font-semibold text-primary">#{{ tag() }}</span>
+        <button type="button" (click)="clearTag()"
+          class="text-[12.5px] font-semibold text-accent underline-offset-2 hover:underline">Show all</button>
+      </p>
+      }
       <!-- Featured -->
       @if (featured(); as f) {
       <article class="relative overflow-hidden rounded-xl border border-gray-200 bg-white">
         <span
           class="absolute top-4 left-4 z-10 rounded-md bg-primary px-3 py-1 text-[10.5px] font-bold tracking-wide text-white uppercase">Featured</span>
-        <img [src]="f.image | mediaUrl" [alt]="f.title" loading="lazy"
+        <img [src]="f.image" [alt]="f.imageAlt" loading="lazy"
           class="aspect-[16/7] w-full bg-primary-light object-cover" />
 
         <div class="relative p-5">
@@ -57,6 +68,9 @@
           </span>
 
           <div class="pl-[76px]">
+            @if (f.category) {
+            <span class="mb-1 block text-[11px] font-bold tracking-wide text-accent uppercase">{{ f.category }}</span>
+            }
             <h2 class="text-[17px] leading-snug font-bold text-primary">
               <a [routerLink]="['/blog', f.id]" class="text-primary no-underline hover:text-accent">{{ f.title }}</a>
             </h2>
@@ -83,8 +97,12 @@
         @for (post of visible(); track post.id) {
         <li class="flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white">
           <div class="relative">
-            <img [src]="post.image | mediaUrl" [alt]="post.title" loading="lazy"
+            <img [src]="post.image" [alt]="post.imageAlt" loading="lazy"
               class="aspect-[4/3] w-full bg-primary-light object-cover" />
+            @if (post.category) {
+            <span
+              class="absolute top-3 left-3 rounded-md bg-primary px-2.5 py-1 text-[10px] font-bold tracking-wide text-white uppercase">{{ post.category }}</span>
+            }
             <span
               class="absolute bottom-3 left-3 flex w-12 flex-col items-center rounded-md bg-secondary py-1.5 text-center text-primary">
               <span class="text-[15px] leading-none font-bold">{{ post.day }}</span>
@@ -133,7 +151,7 @@
         <ul class="mt-4 list-none space-y-4">
           @for (post of recent(); track post.id) {
           <li class="flex gap-3">
-            <img [src]="post.image | mediaUrl" [alt]="post.title" loading="lazy"
+            <img [src]="post.image" [alt]="post.imageAlt" loading="lazy"
               class="h-14 w-16 shrink-0 rounded-md bg-primary-light object-cover" />
             <div class="min-w-0">
               <h3 class="text-[12.5px] leading-snug font-semibold text-primary">

@@ -10,6 +10,7 @@ import { NewsEvents } from '../news-events/news-events';
 import { AdmissionsCta } from '../../../shared/admissions-cta/admissions-cta';
 import { Categories } from '../categories/categories';
 import { NoticeTicker } from '../notice-ticker/notice-ticker';
+import { Stats } from '../stats/stats';
 
 @Component({
   selector: 'app-home-index',
@@ -18,6 +19,7 @@ import { NoticeTicker } from '../notice-ticker/notice-ticker';
     Hero,
     NoticeTicker,
     Institutes,
+    Stats,
     Legacy,
     Academics,
     Milestones,

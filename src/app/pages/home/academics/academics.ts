@@ -1,117 +1,89 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { NgClass } from '@angular/common';
+
+type Level = 'SCHOOL' | "BACHELOR'S" | "MASTER'S" | 'DIPLOMA / CERTIFICATE' | 'DOCTORATE';
 
 interface Course {
   id: string;
   name: string;
-  level: string;
+  /** Short name on the card's pill - B.Sc., BCA, Primary… */
+  short: string;
+  level: Level;
+  image: string;
+}
+
+interface Tab {
+  label: string;
+  level: Level;
+  /** Material Symbols name. */
   icon: string;
+  /** Where "Explore programme" and "View All Programmes" go for this level. */
   link: string;
-  image?: string;
-  rating?: number;
-  reviews?: number;
-  duration?: string;
 }
 
-// Simple hash function for deterministic pseudo-random values
-function hashString(str: string): number {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = Math.imul(31, hash) + str.charCodeAt(i) | 0;
-  }
-  return Math.abs(hash);
-}
+/** Cards per tab - the most-asked programmes of each level, in this order. */
+const PER_TAB = 4;
 
-function withPlaceholderData(course: Course): Course {
-  // TODO: PLACEHOLDER DATA. Replace image, rating, reviews and duration with real values before launch.
-  const slug = course.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-  const hash = hashString(course.id);
-  
-  // Rating between 4.2 and 4.9
-  const ratingVal = 4.2 + (hash % 8) / 10;
-  
-  // Reviews between 120 and 2500
-  const reviewsVal = 120 + (hash % 2380);
-  
-  let duration = "1 Year";
-  if (course.level === 'DOCTORATE') duration = "3 Years";
-  else if (course.level === "MASTER'S") duration = "2 Years";
-  else if (course.level === "BACHELOR'S") duration = "3 Years";
-  else if (course.level === 'SCHOOL') {
-    if (course.name === 'Pre School') duration = "3 Years";
-    else if (course.name === 'Standard 1 to 5') duration = "5 Years";
-    else if (course.name === 'Standard 6 to 8') duration = "3 Years";
-    else if (course.name === 'Standard 9 to 10') duration = "2 Years";
-    else if (course.name === 'Standard 11 to 12') duration = "2 Years";
-  }
-
-  return {
-    ...course,
-    image: course.image || `https://picsum.photos/seed/${slug}/640/400`,
-    rating: course.rating || parseFloat(ratingVal.toFixed(1)),
-    reviews: course.reviews || reviewsVal,
-    duration: course.duration || duration
-  };
-}
-
+/**
+ * "Our Programmes" - a tab per level (School … Doctorate) and four programme cards for
+ * it, each a photo with the programme's short name, its full name and a link to the
+ * School or Colleges page (there are no per-programme pages yet).
+ */
 @Component({
   selector: 'app-academics',
-  imports: [RouterLink, NgClass],
+  imports: [RouterLink],
   templateUrl: './academics.html',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './academics.scss',
 })
 export class Academics {
-  tabs = [
-    { label: 'School', icon: 'backpack' },
-    { label: "Bachelor's", icon: 'menu_book' },
-    { label: "Master's", icon: 'school' },
-    { label: 'Diploma & Certificate', icon: 'description' },
-    { label: 'Doctorate', icon: 'workspace_premium' }
+  readonly tabs: readonly Tab[] = [
+    { label: 'School', level: 'SCHOOL', icon: 'backpack', link: '/academic/school' },
+    { label: "Bachelor's", level: "BACHELOR'S", icon: 'school', link: '/academic/colleges' },
+    { label: "Master's", level: "MASTER'S", icon: 'history_edu', link: '/academic/colleges' },
+    { label: 'Diploma & Certificate', level: 'DIPLOMA / CERTIFICATE', icon: 'description', link: '/academic/colleges' },
+    { label: 'Doctorate', level: 'DOCTORATE', icon: 'workspace_premium', link: '/academic/colleges' },
   ];
-  
-  activeTab = "School";
 
   readonly courses: readonly Course[] = [
-    { id: '1', name: 'Doctor of Philosophy', level: 'DOCTORATE', icon: 'school', link: '#', image: '/assets/images/institutes/alpesh-science.jpg' },
-    { id: '2', name: 'Master of Science', level: "MASTER'S", icon: 'science', link: '#', image: '/assets/images/institutes/mb-patel-science.jpg' },
-    { id: '3', name: 'Master of Commerce', level: "MASTER'S", icon: 'business_center', link: '#', image: '/assets/images/institutes/dn-pg-commerce.jpg' },
-    { id: '4', name: 'Master of Arts', level: "MASTER'S", icon: 'palette', link: '#', image: '/assets/images/institutes/bhikhabhai-pg-studies.jpg' },
-    { id: '5', name: 'Master of Education', level: "MASTER'S", icon: 'history_edu', link: '#', image: '/assets/images/institutes/ij-patel-med.jpg' },
-    { id: '6', name: 'Master of Social Work', level: "MASTER'S", icon: 'group', link: '#', image: '/assets/images/institutes/bhikhabhai-arts.jpg' },
-    { id: '7', name: 'Bachelor of Science', level: "BACHELOR'S", icon: 'science', link: '#', image: '/assets/images/institutes/mb-patel-science.jpg' },
-    { id: '8', name: 'Bachelor of Commerce', level: "BACHELOR'S", icon: 'business_center', link: '#', image: '/assets/images/institutes/vz-patel-commerce.jpg' },
-    { id: '9', name: 'Bachelor of Arts', level: "BACHELOR'S", icon: 'menu_book', link: '#', image: '/assets/images/institutes/bhikhabhai-arts.jpg' },
-    { id: '10', name: 'Bachelor of Computer Application', level: "BACHELOR'S", icon: 'laptop_mac', link: '#', image: '/assets/images/institutes/dn-computer.jpg' },
-    { id: '11', name: 'Bachelor of Science in IT', level: "BACHELOR'S", icon: 'laptop_mac', link: '#', image: '/assets/images/institutes/dn-computer.jpg' },
-    { id: '12', name: 'Bachelor of Business Administration General', level: "BACHELOR'S", icon: 'domain', link: '#', image: '/assets/images/institutes/dn-business.jpg' },
-    { id: '13', name: 'Bachelor of Business Administration ITM', level: "BACHELOR'S", icon: 'domain', link: '#', image: '/assets/images/institutes/dn-business.jpg' },
-    { id: '14', name: 'Bachelor of Education', level: "BACHELOR'S", icon: 'history_edu', link: '#', image: '/assets/images/institutes/ij-patel-bed.jpg' },
-    { id: '15', name: 'Bachelor of Physical Education', level: "BACHELOR'S", icon: 'fitness_center', link: '#', image: '/assets/images/institutes/vj-patel-physical.jpg' },
-    { id: '16', name: 'Bachelor of Physical Education and Sports', level: "BACHELOR'S", icon: 'emoji_events', link: '#', image: '/assets/images/institutes/vj-patel-physical.jpg' },
-    { id: '17', name: 'Bachelor of Social Work', level: "BACHELOR'S", icon: 'group', link: '#', image: '/assets/images/institutes/bhikhabhai-arts.jpg' },
-    { id: '18', name: 'Medical Laboratory Technology', level: 'DIPLOMA / CERTIFICATE', icon: 'biotech', link: '#', image: '/assets/images/institutes/alpesh-science.jpg' },
-    { id: '19', name: 'Primary Teachers Certificate', level: 'DIPLOMA / CERTIFICATE', icon: 'history_edu', link: '#', image: '/assets/images/institutes/motibhai-amin.jpg' },
-    { id: '20', name: 'Pre School', level: 'SCHOOL', icon: 'child_care', link: '#', image: '/assets/images/institutes/shishuvihar.jpg' },
-    { id: '21', name: 'Standard 1 to 5', level: 'SCHOOL', icon: 'backpack', link: '#', image: '/assets/images/institutes/ambalal-balshala.jpg' },
-    { id: '22', name: 'Standard 6 to 8', level: 'SCHOOL', icon: 'backpack', link: '#', image: '/assets/images/institutes/dn-high-6-8.jpg' },
-    { id: '23', name: 'Standard 9 to 10', level: 'SCHOOL', icon: 'backpack', link: '#', image: '/assets/images/institutes/dn-high-9-12.jpg' },
-    { id: '24', name: 'Standard 11 to 12', level: 'SCHOOL', icon: 'backpack', link: '#', image: '/assets/images/institutes/kkv-9-12.jpg' }
-  ].map(withPlaceholderData);
+    { id: '1', name: 'Doctor of Philosophy', short: 'Ph.D.', level: 'DOCTORATE', image: '/assets/images/institutes/alpesh-science.jpg' },
+    { id: '2', name: 'Master of Science', short: 'M.Sc.', level: "MASTER'S", image: '/assets/images/institutes/mb-patel-science.jpg' },
+    { id: '3', name: 'Master of Commerce', short: 'M.Com.', level: "MASTER'S", image: '/assets/images/institutes/dn-pg-commerce.jpg' },
+    { id: '4', name: 'Master of Arts', short: 'M.A.', level: "MASTER'S", image: '/assets/images/institutes/bhikhabhai-pg-studies.jpg' },
+    { id: '5', name: 'Master of Education', short: 'M.Ed.', level: "MASTER'S", image: '/assets/images/institutes/ij-patel-med.jpg' },
+    { id: '6', name: 'Master of Social Work', short: 'MSW', level: "MASTER'S", image: '/assets/images/institutes/bhikhabhai-arts.jpg' },
+    { id: '7', name: 'Bachelor of Science', short: 'B.Sc.', level: "BACHELOR'S", image: '/assets/images/institutes/mb-patel-science.jpg' },
+    { id: '8', name: 'Bachelor of Commerce', short: 'B.Com.', level: "BACHELOR'S", image: '/assets/images/institutes/vz-patel-commerce.jpg' },
+    { id: '9', name: 'Bachelor of Arts', short: 'B.A.', level: "BACHELOR'S", image: '/assets/images/institutes/bhikhabhai-arts.jpg' },
+    { id: '10', name: 'Bachelor of Computer Application', short: 'BCA', level: "BACHELOR'S", image: '/assets/images/institutes/dn-computer.jpg' },
+    { id: '11', name: 'Bachelor of Science in IT', short: 'B.Sc. IT', level: "BACHELOR'S", image: '/assets/images/institutes/dn-computer.jpg' },
+    { id: '12', name: 'Bachelor of Business Administration General', short: 'BBA', level: "BACHELOR'S", image: '/assets/images/institutes/dn-business.jpg' },
+    { id: '13', name: 'Bachelor of Business Administration ITM', short: 'BBA (ITM)', level: "BACHELOR'S", image: '/assets/images/institutes/dn-business.jpg' },
+    { id: '14', name: 'Bachelor of Education', short: 'B.Ed.', level: "BACHELOR'S", image: '/assets/images/institutes/ij-patel-bed.jpg' },
+    { id: '15', name: 'Bachelor of Physical Education', short: 'B.P.Ed.', level: "BACHELOR'S", image: '/assets/images/institutes/vj-patel-physical.jpg' },
+    { id: '16', name: 'Bachelor of Physical Education and Sports', short: 'B.P.E.S.', level: "BACHELOR'S", image: '/assets/images/institutes/vj-patel-physical.jpg' },
+    { id: '17', name: 'Bachelor of Social Work', short: 'BSW', level: "BACHELOR'S", image: '/assets/images/institutes/bhikhabhai-arts.jpg' },
+    { id: '18', name: 'Medical Laboratory Technology', short: 'MLT', level: 'DIPLOMA / CERTIFICATE', image: '/assets/images/institutes/alpesh-science.jpg' },
+    { id: '19', name: 'Primary Teachers Certificate', short: 'PTC', level: 'DIPLOMA / CERTIFICATE', image: '/assets/images/institutes/motibhai-amin.jpg' },
+    { id: '20', name: 'Pre School', short: 'Pre-Primary', level: 'SCHOOL', image: '/assets/images/institutes/shishuvihar.jpg' },
+    { id: '21', name: 'Standard 1 to 5', short: 'Primary', level: 'SCHOOL', image: '/assets/images/institutes/ambalal-balshala.jpg' },
+    { id: '22', name: 'Standard 6 to 8', short: 'Upper Primary', level: 'SCHOOL', image: '/assets/images/institutes/dn-high-6-8.jpg' },
+    { id: '23', name: 'Standard 9 to 10', short: 'Secondary', level: 'SCHOOL', image: '/assets/images/institutes/dn-high-9-12.jpg' },
+    { id: '24', name: 'Standard 11 to 12', short: 'Higher Secondary', level: 'SCHOOL', image: '/assets/images/institutes/kkv-9-12.jpg' },
+  ];
 
-  get filteredCourses() {
-    const levelMap: Record<string, string> = {
-      'Doctorate': 'DOCTORATE',
-      "Master's": "MASTER'S",
-      "Bachelor's": "BACHELOR'S",
-      'Diploma & Certificate': 'DIPLOMA / CERTIFICATE',
-      'School': 'SCHOOL'
-    };
-    return this.courses.filter(c => c.level === levelMap[this.activeTab]).slice(0, 4);
+  readonly active = signal<Tab>(this.tabs[1]); // Bachelor's - the most-searched level
+
+  readonly visible = computed(() => this.courses.filter((c) => c.level === this.active().level).slice(0, PER_TAB));
+
+  select(tab: Tab): void {
+    this.active.set(tab);
   }
 
-  setTab(tab: string) {
-    this.activeTab = tab;
+  /** Arrow keys move between tabs, as a tab list should. */
+  moveTab(step: 1 | -1, list: HTMLElement): void {
+    const i = (this.tabs.indexOf(this.active()) + step + this.tabs.length) % this.tabs.length;
+    this.active.set(this.tabs[i]);
+    (list.querySelectorAll<HTMLButtonElement>('[role="tab"]')[i])?.focus();
   }
 }

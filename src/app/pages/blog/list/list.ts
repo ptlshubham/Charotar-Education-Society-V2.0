@@ -8,7 +8,7 @@ import { catchError, of, switchMap } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
 import { InstituteService } from '../../../core/services/institute.service';
 import { BlogPost } from '../../../shared/models/models';
-import { blogExcerpt, blogImageUrl, blogSlug, blogTags, countTags, sortCategories } from '../../../shared/blog-post';
+import { BLOG_BANNER, blogExcerpt, blogImageUrl, blogSlug, blogTags, countTags, sortCategories } from '../../../shared/blog-post';
 
 interface Post {
   /** URL segment - the slug, or the id for older posts. */
@@ -42,7 +42,7 @@ export class BlogList {
   private readonly resources = inject(ResourcesService);
   private readonly institute = inject(InstituteService);
 
-  readonly banner = '/assets/images/hero/blog.jpeg';
+  readonly banner = BLOG_BANNER;
 
   readonly tab = signal(ALL);
   /** Set from ?tag= (the tag chips on a post link here). */

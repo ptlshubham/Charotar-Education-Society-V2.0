@@ -13,7 +13,7 @@ import { MediaUrlPipe } from '../../../shared/media-url.pipe';
 import { SafeHtmlPipe } from '../../../shared/safe-html.pipe';
 import { AdmissionsCta } from '../../../shared/admissions-cta/admissions-cta';
 import { Academics } from '../../home/academics/academics';
-import { blogBody, blogExcerpt, blogImageUrl, blogSlug, blogTags, countTags, plainText, sortCategories } from '../../../shared/blog-post';
+import { BLOG_BANNER, blogBody, blogExcerpt, blogImageUrl, blogSlug, blogTags, countTags, plainText, sortCategories } from '../../../shared/blog-post';
 
 /** Average adult reading speed, for the "N min read" estimate. */
 const WORDS_PER_MINUTE = 200;
@@ -122,9 +122,10 @@ export class BlogDetail {
     return edited.getTime() - published.getTime() >= 24 * 60 * 60 * 1000 ? this.fmt(p!.updateddate!) : '';
   });
 
+  /** Hero photo: the post's own cover, else the blog banner (the card placeholder is too plain for a hero). */
   readonly cover = computed(() => {
     const p = this.post();
-    return p ? blogImageUrl(p) : '';
+    return p?.blogImage ? blogImageUrl(p) : BLOG_BANNER;
   });
 
   readonly tags = computed(() => {

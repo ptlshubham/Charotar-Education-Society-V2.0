@@ -36,8 +36,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     <div class="relative w-full">
       <button type="button" [disabled]="disabled" (click)="toggle()"
         [attr.aria-expanded]="open()" aria-haspopup="listbox"
-        class="flex h-11 w-full items-center justify-start gap-2 rounded-md border bg-white px-3.5 text-left text-[13px] outline-none transition-colors focus:border-primary disabled:opacity-60"
-        [class]="invalid ? 'border-red-400' : 'border-gray-300'">
+        class="flex w-full items-center justify-start gap-2 border bg-white text-left outline-none transition-colors focus:border-primary disabled:opacity-60"
+        [class]="(invalid ? 'border-red-400' : 'border-gray-300') + (large ? ' h-12 rounded-lg px-4 text-[14.5px]' : ' h-11 rounded-md px-3.5 text-[13px]')">
         @if (icon) {
           <span class="material-symbols-outlined shrink-0 text-primary !text-[20px] [font-variation-settings:'wght'_300]" aria-hidden="true">{{ icon }}</span>
         }
@@ -85,6 +85,8 @@ export class CustomSelect implements ControlValueAccessor {
   @Input() placeholder = 'Select';
   @Input() icon = '';
   @Input({ transform: booleanAttribute }) invalid = false;
+  /** Taller, roomier trigger for forms whose inputs are h-12 (e.g. the e-Gate Pass form). */
+  @Input({ transform: booleanAttribute }) large = false;
   @Input() disabled = false;
   @Output() valueChange = new EventEmitter<string>();
   /** Show the search box once the list is longer than this. */

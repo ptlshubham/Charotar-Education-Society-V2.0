@@ -1,7 +1,7 @@
 {
   "primary": [
     {
-      "icon": "company",
+      "icon": "account_balance",
       "title": "Institution",
       "path": "/about",
       "links": [
@@ -15,13 +15,7 @@
       ]
     },
     {
-      "icon": "resources",
-      "title": "Resources",
-      "path": "/blog",
-      "links": [{ "label": "Blog", "path": "/blog" }]
-    },
-    {
-      "icon": "company",
+      "icon": "redeem",
       "title": "Celebrations",
       "path": "/chatkaro",
       "links": [
@@ -31,7 +25,7 @@
       ]
     },
     {
-      "icon": "company",
+      "icon": "lightbulb",
       "title": "Initiatives",
       "path": "/project",
       "links": [
@@ -40,17 +34,17 @@
       ]
     },
     {
-      "icon": "resources",
-      "title": "Media",
+      "icon": "image",
+      "title": "Media & Resources",
       "path": "/glory/gallery",
       "links": [
         { "label": "Gallery", "path": "/glory/gallery" },
-        { "label": "Next UP Podcast", "path": "/podcast" },
+        { "label": "Next Up Podcast", "path": "/podcast" },
         { "label": "Blog", "path": "/blog" }
       ]
     },
     {
-      "icon": "other",
+      "icon": "group",
       "title": "Student Corner",
       "path": "/student-corner",
       "links": [
@@ -60,7 +54,7 @@
       ]
     },
     {
-      "icon": "company",
+      "icon": "school",
       "title": "Academic",
       "path": "/academic/school",
       "links": [
@@ -71,7 +65,7 @@
       ]
     },
     {
-      "icon": "other",
+      "icon": "volunteer_activism",
       "title": "Rahatokarsh Fund",
       "path": "/fund",
       "links": [
@@ -84,8 +78,8 @@
     }
   ],
   "support": {
-    "icon": "support",
-    "title": "Support & Help",
+    "icon": "verified_user",
+    "title": "Support & Policies",
     "path": "/support",
     "links": [
       { "label": "Privacy Policy", "path": "/support/privacy-policy" },
@@ -98,13 +92,14 @@
   },
   "secondary": [
     {
-      "icon": "other",
+      "icon": "description",
       "title": "Other Pages",
       "path": "/",
       "links": [
         { "label": "Home", "path": "/" },
         { "label": "Contact Us", "path": "/contact" },
-        { "label": "Sitemap", "path": "/sitemap" }
+        { "label": "Sitemap", "path": "/sitemap" },
+        { "label": "News", "path": "/more/news" }
       ]
     }
   ]

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { PageHero } from '../../shared/page-hero/page-hero';
@@ -40,7 +40,19 @@ export class GatePass {
     { value: '160+', label: 'Research Projects', path: ['M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'] },
   ];
 
+  readonly tabs: ReadonlyArray<{ id: 'visitor' | 'staff'; label: string }> = [
+    { id: 'visitor', label: 'For visitors' },
+    { id: 'staff', label: 'For staff' },
+  ];
   readonly tab = signal<'visitor' | 'staff'>('visitor');
+
+  /** "What happens next?" beside the form; the first step names the open tab. */
+  readonly steps = computed(() => [
+    { title: 'Submit your request', body: `Share your ${this.tab()} details and purpose.` },
+    { title: 'Management review', body: 'The office will review your request.' },
+    { title: 'Receive confirmation', body: 'You will be notified by SMS once approved.' },
+  ]);
+
   readonly visitorMeetOptions = VISITOR_MEET;
   readonly staffMeetOptions = STAFF_MEET;
 
@@ -102,6 +114,14 @@ export class GatePass {
     this.tab.set(t);
   }
 
+  /** ← / → move between the tabs (WAI-ARIA tabs pattern). */
+  moveTab(e: Event): void {
+    e.preventDefault();
+    const next = this.tab() === 'visitor' ? 'staff' : 'visitor';
+    this.tab.set(next);
+    document.getElementById(`gp-tab-${next}`)?.focus();
+  }
+
   onSubmit(role: 'Visitor' | 'Office'): void {
     const form = role === 'Visitor' ? this.visitorForm : this.staffForm;
     if (form.invalid) {
@@ -138,7 +158,7 @@ export class GatePass {
           titleAccent: 'submitted!',
           subtitle: 'Your e-Gate Pass request has been sent to the CES Management Office.',
           infoTitle: "What's next?",
-          infoText: 'You will receive a confirmation via email/SMS once your e-Gate Pass is approved.',
+          infoText: 'You will be notified by SMS once your e-Gate Pass is approved.',
           actions: [{ label: 'Close', primary: true }],
         });
       },

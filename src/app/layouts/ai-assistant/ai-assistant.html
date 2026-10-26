@@ -105,8 +105,9 @@
       <!-- Study answers run to several numbered steps - pre-wrap keeps the backend's line
            breaks (and code indentation) instead of collapsing them into one paragraph. -->
       <div class="flex items-start gap-2 max-w-[85%]">
-        <span class="ai-badge flex items-center justify-center w-7 h-7 rounded-full shrink-0 mt-0.5">
-          <img src="/assets/icons/dyuno/dyuno-wave.webp" alt="Dyuno assistant" aria-hidden="true" class="w-4 h-4" />
+        <span class="flex w-7 h-7 rounded-full shrink-0 mt-0.5 overflow-hidden bg-white ring-2 ring-primary/10">
+          <img src="/assets/icons/dyuno/dyuno-avatar.webp" alt="" aria-hidden="true" width="28" height="28"
+            class="w-full h-full object-cover" />
         </span>
         <div class="min-w-0 rounded-[12px] rounded-tl-[4px] bg-[#f4f7f6] px-3.5 py-2.5">
           <p class="text-primary text-[13px] leading-[19px] whitespace-pre-wrap break-words">{{ m.text }}</p>
@@ -135,8 +136,9 @@
 
       @if (thinking()) {
       <div class="flex items-center gap-2">
-        <span class="ai-badge flex items-center justify-center w-7 h-7 rounded-full shrink-0">
-          <img src="/assets/icons/dyuno/dyuno-wave.webp" alt="Dyuno assistant" aria-hidden="true" class="w-4 h-4" />
+        <span class="flex w-7 h-7 rounded-full shrink-0 overflow-hidden bg-white ring-2 ring-primary/10">
+          <img src="/assets/icons/dyuno/dyuno-avatar.webp" alt="" aria-hidden="true" width="28" height="28"
+            class="w-full h-full object-cover" />
         </span>
         <span class="ai-typing flex items-center gap-1 rounded-[12px] bg-[#f4f7f6] px-3.5 py-3">
           <span class="w-1.5 h-1.5 rounded-full bg-muted/60"></span>
@@ -260,8 +262,9 @@
   class="ai-greeting fixed bottom-[168px] right-6 z-[86] w-[250px] rounded-[12px] bg-white p-3 pr-7 shadow-[0_18px_40px_-12px_rgba(11,40,39,0.3)] ring-1 ring-primary/[0.06]"
   role="status" aria-live="polite">
   <button type="button" (click)="openFromGreeting()" class="flex items-start gap-2.5 text-left w-full cursor-pointer">
-    <span class="ai-badge flex items-center justify-center w-7 h-7 rounded-full shrink-0">
-      <img src="/assets/icons/dyuno/dyuno-wave.webp" alt="Dyuno assistant" aria-hidden="true" class="w-4 h-4" />
+    <span class="flex w-8 h-8 rounded-full shrink-0 overflow-hidden bg-white ring-2 ring-primary/10">
+      <img src="/assets/icons/dyuno/dyuno-avatar.webp" alt="" aria-hidden="true" width="32" height="32"
+        class="w-full h-full object-cover" />
     </span>
     <span class="min-w-0">
       <span class="block text-primary text-[12px] font-semibold leading-tight">Dyuno</span>

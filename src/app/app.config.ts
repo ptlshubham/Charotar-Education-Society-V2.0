@@ -24,10 +24,11 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(
       withEventReplay(),
       withHttpTransferCacheOptions({
-        // Static pages are prerendered at build time, which would freeze the SEO
-        // payload into the transfer cache. Excluding it makes the browser refetch,
-        // so admin edits reach real visitors without waiting for a redeploy.
-        filter: (req) => !req.url.startsWith(ApiService.GetPublicSeoURL),
+        // Static pages are prerendered at build time, which would freeze the SEO,
+        // Careers and Tenders payloads into the transfer cache. Excluding them makes
+        // the browser refetch, so admin edits reach real visitors without a redeploy.
+        filter: (req) => ![ApiService.GetPublicSeoURL, ApiService.GetPublicCareersURL, ApiService.GetPublicTendersURL]
+          .some((url) => req.url.startsWith(url)),
       }), withNoIncrementalHydration()
     ),
     provideAnimations(),

@@ -20,11 +20,23 @@
 </app-page-hero>
 
 
-<!-- Reusable download-chip list for the advertisement columns -->
-<ng-template #docs let-list>
+<!-- Reusable download-chip list for the advertisement columns. The API sends no file for an
+     application form whose vacancy is not open (upcoming or closed): it shows locked, with no link. -->
+<ng-template #docs let-list let-status="status">
   @if (list.length) {
   <div class="flex flex-col items-start gap-1.5">
-    @for (doc of list; track doc.file) {
+    @for (doc of list; track $index) {
+    @if (!doc.file) {
+    <span aria-disabled="true" [title]="lockNote(status)"
+      class="inline-flex cursor-not-allowed items-start gap-1.5 rounded-md border border-gray-200 bg-gray-50 px-2.5 py-1.5 text-[11px] font-medium text-gray-400">
+      <svg class="mt-0.5 shrink-0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="5" y="11" width="14" height="10" rx="2" />
+        <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+      </svg>
+      <span>{{ doc.label }}<span class="sr-only"> ({{ status === 'upcoming' ? 'applications not open yet' : 'applications closed' }}, not available)</span></span>
+    </span>
+    } @else {
     <a [href]="doc.file | mediaUrl" download (click)="download($event, doc.file, doc.label)"
       class="inline-flex items-start gap-1.5 rounded-md border border-gray-200 px-2.5 py-1.5 text-[11px] font-medium text-primary no-underline transition-colors hover:border-primary hover:bg-primary/[0.03]">
       <svg class="mt-0.5 shrink-0 text-logo" width="12" height="12" viewBox="0 0 24 24" fill="none"
@@ -33,6 +45,7 @@
       </svg>
       <span>{{ doc.label }}</span>
     </a>
+    }
     }
   </div>
   } @else {
@@ -49,7 +62,9 @@
         <h2 class="text-[20px] font-bold text-primary">Advertisement</h2>
         <span class="mt-2 block h-1 w-12 rounded-full bg-secondary" aria-hidden="true"></span>
       </div>
-      <p class="text-[11.5px] font-semibold text-muted">[ Advertisement updated on website: {{ updatedOn }} ]</p>
+      @if (updatedOn()) {
+      <p class="text-[11.5px] font-semibold text-muted">[ Advertisement updated on website: {{ updatedOn() }} ]</p>
+      }
     </div>
 
     <div class="mt-5 overflow-x-auto rounded-lg border border-gray-200">
@@ -57,7 +72,8 @@
         <thead class="bg-primary text-white">
           <tr>
             <th scope="col" class="px-4 py-3.5 text-[12.5px] font-semibold whitespace-nowrap">Sr. No.</th>
-            <th scope="col" class="px-4 py-3.5 text-[12.5px] font-semibold">Previous Vacancies of CES Institutes</th>
+            <th scope="col" class="px-4 py-3.5 text-[12.5px] font-semibold">Vacancies of CES Institutes</th>
+            <th scope="col" class="px-4 py-3.5 text-[12.5px] font-semibold whitespace-nowrap">Application Dates</th>
             <th scope="col" class="px-4 py-3.5 text-[12.5px] font-semibold">Advertisement</th>
             <th scope="col" class="px-4 py-3.5 text-[12.5px] font-semibold">Instructions / Application Form</th>
             <th scope="col" class="px-4 py-3.5 text-[12.5px] font-semibold">Requirement</th>
@@ -65,7 +81,8 @@
           </tr>
         </thead>
         <tbody>
-          @for (vac of vacancies; track $index; let i = $index) {
+          @for (vac of vacancies(); track vac.id; let i = $index) {
+          @let st = vac.status;
           <tr class="border-b border-gray-100 last:border-b-0 hover:bg-[#F7F9FC]">
             <td class="px-4 py-3.5 text-[13px] text-muted">{{ (i + 1).toString().padStart(2, '0') }}</td>
 
@@ -86,14 +103,14 @@
                 @for (img of vac.images; track img; let i = $index) {
                 <button type="button" (click)="openImages(vac.images, i)" [attr.aria-label]="'View advertisement image'"
                   class="block w-full max-w-[300px] cursor-zoom-in overflow-hidden rounded border border-gray-200">
-                  <img [src]="img" alt="Vacancy advertisement" loading="lazy"
+                  <img [src]="imageSrc(img)" alt="Vacancy advertisement" loading="lazy"
                     class="w-full transition-transform duration-300 hover:scale-[1.03]" />
                 </button>
                 }
               </div>
               }
               <div class="mt-2.5 flex flex-wrap gap-1.5">
-                @if (vac.isNew) {
+                @if (vac.isNew && st === 'open') {
                 <span
                   class="inline-flex items-center gap-1.5 rounded-md border border-red-200 bg-red-50 px-2 py-0.5 text-[10.5px] font-bold tracking-wide text-red-600 uppercase">
                   <span class="relative flex h-1.5 w-1.5" aria-hidden="true">
@@ -104,22 +121,72 @@
                   New
                 </span>
                 }
-                @if (vac.closed) {
+                @switch (st) {
+                @case ('open') {
+                <span
+                  class="inline-flex items-center rounded bg-green-50 px-2 py-0.5 text-[10.5px] font-bold tracking-wide text-green-700 uppercase">Applications
+                  Open</span>
+                }
+                @case ('upcoming') {
+                <span
+                  class="inline-flex items-center rounded bg-amber-50 px-2 py-0.5 text-[10.5px] font-bold tracking-wide text-amber-700 uppercase">Opening
+                  Soon</span>
+                }
+                @case ('closed') {
                 <span
                   class="inline-flex items-center rounded bg-red-50 px-2 py-0.5 text-[10.5px] font-bold tracking-wide text-red-600 uppercase">Application
                   Closed</span>
                 }
+                }
               </div>
             </td>
 
+            <!-- When to apply: start and last date, and the days left while open -->
+            <td class="px-4 py-3.5 min-w-[140px]">
+              @if (vac.startDate || vac.lastDate) {
+              <dl class="space-y-2 text-[12.5px] whitespace-nowrap">
+                @if (vac.startDate) {
+                <div>
+                  <dt class="text-[10.5px] font-semibold tracking-wide text-muted uppercase">Starts</dt>
+                  <dd class="font-semibold text-primary">{{ vac.startDate | date: 'dd MMM yyyy' }}</dd>
+                </div>
+                }
+                @if (vac.lastDate) {
+                <div>
+                  <dt class="text-[10.5px] font-semibold tracking-wide text-muted uppercase">Last date</dt>
+                  <dd class="font-semibold text-primary">{{ vac.lastDate | date: 'dd MMM yyyy' }}</dd>
+                </div>
+                }
+              </dl>
+              @if (st === 'open' && vac.lastDate) {
+              <p class="mt-2 text-[11.5px] font-semibold text-green-700">{{ countdown(vac) }}</p>
+              }
+              } @else {
+              <span class="text-[12px] text-muted">-</span>
+              }
+            </td>
+
             <td class="px-4 py-3.5 min-w-[190px]"><ng-container [ngTemplateOutlet]="docs"
-                [ngTemplateOutletContext]="{ $implicit: vac.advertisement }" /></td>
+                [ngTemplateOutletContext]="{ $implicit: vac.advertisement, status: st }" /></td>
             <td class="px-4 py-3.5 min-w-[230px]"><ng-container [ngTemplateOutlet]="docs"
-                [ngTemplateOutletContext]="{ $implicit: vac.instructions }" /></td>
+                [ngTemplateOutletContext]="{ $implicit: vac.instructions, status: st }" /></td>
             <td class="px-4 py-3.5 min-w-[210px]"><ng-container [ngTemplateOutlet]="docs"
-                [ngTemplateOutletContext]="{ $implicit: vac.requirement }" /></td>
+                [ngTemplateOutletContext]="{ $implicit: vac.requirement, status: st }" /></td>
             <td class="px-4 py-3.5 min-w-[210px]"><ng-container [ngTemplateOutlet]="docs"
-                [ngTemplateOutletContext]="{ $implicit: vac.result }" /></td>
+                [ngTemplateOutletContext]="{ $implicit: vac.result, status: st }" /></td>
+          </tr>
+          } @empty {
+          <tr>
+            <td colspan="7" class="px-4 py-10 text-center text-[13px] text-muted">
+              @switch (state()) {
+              @case ('loading') { Loading vacancies… }
+              @case ('error') {
+              We couldn't load the vacancies.
+              <button type="button" (click)="load()" class="ml-1 font-semibold text-primary underline">Try again</button>
+              }
+              @default { There are no vacancies at the moment. Please check back later. }
+              }
+            </td>
           </tr>
           }
         </tbody>
@@ -168,20 +235,41 @@
           </tr>
         </thead>
         <tbody>
-          @for (notice of noticePager.paged(); track notice.file) {
+          @for (notice of noticePager.paged(); track notice.id) {
           <tr class="border-b border-gray-100 last:border-b-0 hover:bg-[#F7F9FC]">
             <td class="px-4 py-3.5 min-w-[240px]">
+              @if (notice.institutes.length) {
               <ol class="list-decimal space-y-1 pl-5 text-[12px] text-muted">
-                @for (inst of noticeInstitutes; track $index) {
-                <li><a [href]="inst.url" target="_blank" rel="noopener noreferrer"
-                    class="text-accent no-underline hover:underline">{{ inst.name }}</a></li>
+                @for (inst of notice.institutes; track $index) {
+                <li>
+                  @if (inst.url) {
+                  <a [href]="inst.url" target="_blank" rel="noopener noreferrer"
+                    class="text-accent no-underline hover:underline">{{ inst.name }}</a>
+                  } @else {
+                  {{ inst.name }}
+                  }
+                </li>
                 }
               </ol>
+              } @else {
+              <span class="text-[12px] text-muted">-</span>
+              }
             </td>
             <td class="px-4 py-3.5 min-w-[280px] max-w-[520px] text-[12.5px] leading-relaxed text-primary">{{
               notice.title }}</td>
-            <td class="px-4 py-3.5 text-[12.5px] whitespace-nowrap text-muted">{{ notice.date }}</td>
+            <td class="px-4 py-3.5 text-[12.5px] whitespace-nowrap text-muted">{{ notice.date | date: 'MMM d, y' }}</td>
             <td class="px-4 py-3.5">
+              @if (!notice.file) {
+              <span aria-disabled="true" [title]="lockNote(notice.status)"
+                class="inline-flex cursor-not-allowed items-center gap-1.5 rounded-md bg-gray-100 px-3 py-1.5 text-[12px] font-semibold whitespace-nowrap text-gray-400">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="5" y="11" width="14" height="10" rx="2" />
+                  <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+                </svg>
+                {{ notice.status === 'upcoming' ? 'Not open yet' : 'Closed' }}
+              </span>
+              } @else {
               <a [href]="notice.file | mediaUrl" download (click)="download($event, notice.file, notice.title)"
                 class="inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-[12px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -190,6 +278,13 @@
                 </svg>
                 Download
               </a>
+              }
+            </td>
+          </tr>
+          } @empty {
+          <tr>
+            <td colspan="4" class="px-4 py-10 text-center text-[13px] text-muted">
+              {{ state() === 'loading' ? 'Loading notices…' : state() === 'error' ? "We couldn't load the notices." : 'No recruitment notices at the moment.' }}
             </td>
           </tr>
           }

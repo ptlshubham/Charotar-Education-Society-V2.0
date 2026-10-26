@@ -3,150 +3,146 @@
   blurb="Find quick answers to the most common questions about Charotar Education Society."
   image="/assets/images/hero/home.jpeg" />
 
-<section class="site-container py-8">
+<div class="site-container py-10 sm:py-14 lg:py-16">
 
-  <!-- Search bar -->
-  <div class="flex flex-wrap items-center justify-between gap-5 rounded-xl bg-[#EEF3FB] p-6">
-    <div class="flex items-center gap-4">
-      <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary text-white" aria-hidden="true">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10" /><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3" /><path d="M12 17h.01" />
-        </svg>
-      </span>
-      <div>
-        <h2 class="text-[16px] font-bold text-primary">Have a Question?</h2>
-        <p class="mt-1 text-[12.5px] text-muted">Search our FAQs or browse by category to find the information you need.</p>
-      </div>
+  <!-- Search -->
+  <div class="flex flex-wrap items-center justify-between gap-5 rounded-2xl bg-[#F7F9FC] p-5 sm:p-6">
+    <div>
+      <h2 class="text-[17px] font-semibold text-primary sm:text-[18px]">Have a question?</h2>
+      <p class="mt-1 text-[13.5px] text-muted sm:text-[14px]">Search the answers below, or pick a topic from the list.</p>
     </div>
 
-    <div class="flex h-11 min-w-[300px] flex-1 items-stretch sm:max-w-[420px]">
+    <form class="flex h-11 w-full items-stretch sm:max-w-[440px]" role="search" (ngSubmit)="applySearch()">
       <label for="faq-search" class="sr-only">Search FAQs</label>
-      <input id="faq-search" type="search" [(ngModel)]="search" (keyup.enter)="applySearch()" placeholder="Search for answers..."
-        class="min-w-0 flex-1 rounded-l-md border border-r-0 border-gray-300 bg-white px-3.5 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary" />
-      <button type="button" (click)="applySearch()"
-        class="shrink-0 rounded-r-md bg-primary px-6 text-[13px] font-semibold text-white transition-colors hover:bg-primary-dark">
+      <input id="faq-search" type="search" name="q" [ngModel]="search" (ngModelChange)="onSearch($event)" placeholder="Search for answers…"
+        autocomplete="off" aria-describedby="faq-search-status"
+        class="min-w-0 flex-1 rounded-l-md border border-r-0 bg-white px-3.5 text-[14px] text-primary outline-none placeholder:text-gray-400 focus:border-primary"
+        [class]="query() ? 'border-primary' : 'border-gray-300'" />
+      <button type="submit"
+        class="shrink-0 cursor-pointer rounded-r-md bg-primary px-6 text-[14px] font-semibold text-white transition-colors hover:bg-primary-dark">
         Search
       </button>
-    </div>
+    </form>
+
+    <!-- The active filter -->
+    <p id="faq-search-status" role="status" class="w-full text-[13.5px] text-muted sm:text-[14px]" [class.hidden]="!query()">
+      @if (query()) {
+      Showing <span class="font-semibold text-primary">{{ matches() }}</span> {{ matches() === 1 ? 'answer' : 'answers' }}
+      for “<span class="font-semibold text-primary">{{ search.trim() }}</span>”
+      <button type="button" (click)="clearSearch()"
+        class="ml-2 inline-flex cursor-pointer items-center gap-1 rounded-full border border-primary/20 bg-white px-2.5 py-0.5 text-[12.5px] font-semibold text-primary transition-colors hover:border-primary">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+        Clear
+      </button>
+      }
+    </p>
   </div>
 
-  <div class="mt-6 grid gap-5 lg:grid-cols-[300px_1fr]">
+  <div class="mt-10 grid gap-8 lg:mt-12 lg:grid-cols-[230px_minmax(0,1fr)] lg:gap-14 xl:grid-cols-[260px_minmax(0,1fr)] xl:gap-20">
 
-    <!-- Category rail -->
-    <aside class="space-y-5">
-      <nav class="rounded-xl border border-gray-200 bg-white p-5" aria-label="FAQ categories">
-        <h2 class="text-[15px] font-bold text-primary">Categories</h2>
-        <span class="mt-2 block h-1 w-12 rounded-full bg-secondary" aria-hidden="true"></span>
+    <!-- Topic list: sticky beside the answers on desktop, a scrolling row on phones and tablets -->
+    <nav aria-label="FAQ topics" class="min-w-0 lg:sticky lg:top-40 lg:self-start">
+      <p class="hidden text-[12px] font-semibold tracking-[2px] text-secondary uppercase lg:block">On this page</p>
+      <ol class="hide-scrollbar -mx-4 flex list-none gap-2 overflow-x-auto px-4 py-1 sm:-mx-6 sm:px-6 lg:mx-0 lg:mt-4 lg:block lg:max-h-[calc(100vh-13rem)] lg:space-y-0.5 lg:overflow-y-auto lg:p-0 lg:thin-scrollbar">
+        @for (cat of visible(); track cat.id; let i = $index) {
+        @let on = current() === cat.id;
+        <li class="shrink-0">
+          <a [attr.href]="'/support/faqs#' + cat.id" (click)="jump($event, cat.id)" [attr.aria-current]="on ? 'true' : null"
+            class="block rounded-full border px-4 py-2 text-[13px] whitespace-nowrap no-underline transition-colors lg:flex lg:gap-3 lg:rounded-none lg:border-0 lg:border-l-2 lg:py-1.5 lg:pl-4 lg:whitespace-normal"
+            [class]="on ? 'border-secondary bg-secondary/10 font-semibold text-primary lg:bg-transparent' : 'border-primary/15 text-primary/70 hover:text-primary lg:border-primary/10'">
+            <span class="hidden w-5 shrink-0 text-[11px] font-semibold tracking-[1px] text-secondary-dark lg:block lg:pt-px">{{ (i + 1).toString().padStart(2, '0') }}</span>
+            <span class="lg:flex-1">{{ cat.label }}</span>
+            <span class="ml-1.5 text-[11px] font-normal text-muted lg:ml-0 lg:pt-px">{{ cat.faqs.length }}</span>
+          </a>
+        </li>
+        }
+      </ol>
+    </nav>
 
-        <ul class="mt-4 list-none space-y-1">
-          @for (cat of visible(); track cat.label; let i = $index) {
-            <li>
-              <button type="button" (click)="toggleCategory(i)"
-                class="flex w-full items-center justify-between gap-3 rounded-md px-3 py-2.5 text-left text-[12.5px] transition-colors"
-                [class]="openCategory() === i ? 'bg-[#EEF3FB] font-semibold text-primary' : 'text-muted hover:bg-[#F7F9FC]'">
-                <span class="inline-flex items-center gap-2.5">
-                  <svg class="shrink-0 text-primary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    @for (d of cat.path; track d) { <path [attr.d]="d" /> }
-                  </svg>
-                  {{ cat.label }}
-                </span>
-                <span class="rounded-full bg-white px-2 py-0.5 text-[11px] font-semibold text-muted">{{ cat.questions.length }}</span>
-              </button>
-            </li>
+    <!-- Answers, grouped by topic -->
+    <div class="min-w-0">
+      @for (cat of visible(); track cat.id; let first = $first) {
+      <section [id]="cat.id" class="scroll-mt-40" [class]="first ? '' : 'mt-10 border-t border-primary/10 pt-10 lg:mt-12 lg:pt-12'"
+        [attr.aria-labelledby]="cat.id + '-title'">
+        <p class="flex items-center gap-2.5 text-[12px] font-semibold tracking-[2px] text-secondary uppercase sm:text-[13px]">
+          <svg class="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            @for (d of cat.path; track d) { <path [attr.d]="d" /> }
+          </svg>
+          {{ cat.faqs.length }} {{ cat.faqs.length === 1 ? 'question' : 'questions' }}
+        </p>
+        <h2 [id]="cat.id + '-title'" class="mt-2 text-[23px] leading-[1.2] font-semibold text-primary sm:text-[27px] xl:text-[30px]">
+          {{ cat.label }}
+        </h2>
+        <span class="mt-4 block h-1 w-12 rounded-full bg-secondary" aria-hidden="true"></span>
+
+        <ul class="mt-6 max-w-[860px] list-none border-t border-primary/10 p-0">
+          @for (f of cat.faqs; track f.q; let qi = $index) {
+          @let isOpen = open().has(f.q);
+          @let answerId = cat.id + '-a' + qi;
+          <li class="border-b border-primary/10 transition-colors" [class]="isOpen ? 'bg-[#FDF8EF]' : ''">
+            <button type="button" (click)="toggle(f.q)" [attr.aria-expanded]="isOpen" [attr.aria-controls]="answerId"
+              class="flex w-full cursor-pointer items-center justify-between gap-4 px-4 py-4 text-left sm:px-5">
+              <span class="text-[15px] font-semibold text-primary sm:text-[16px]">@for (p of parts(f.q); track $index) {@if (p.hit) {<mark class="rounded-sm bg-secondary/30 px-0.5 text-primary">{{ p.t }}</mark>} @else {{{ p.t }}}}</span>
+              <svg class="shrink-0 text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+                <path d="M5 12h14" />
+                @if (!isOpen) { <path d="M12 5v14" /> }
+              </svg>
+            </button>
+
+            @if (isOpen) {
+            <div [id]="answerId" class="animate-dropdown px-4 pb-5 sm:px-5">
+              <p class="text-[14.5px] leading-relaxed text-muted sm:text-[15px]">@for (p of parts(f.a); track $index) {@if (p.hit) {<mark class="rounded-sm bg-secondary/30 px-0.5 text-primary">{{ p.t }}</mark>} @else {{{ p.t }}}}</p>
+              @if (f.link; as l) {
+              <a [routerLink]="l.link"
+                class="group mt-3 inline-flex items-center gap-2 text-[14px] font-semibold text-primary no-underline hover:text-secondary-dark">
+                {{ l.label }}
+                <svg class="transition-transform group-hover:translate-x-1" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </a>
+              }
+            </div>
+            }
+          </li>
           }
         </ul>
-      </nav>
-
-      <div class="rounded-xl bg-[#EEF3FB] p-6 text-center">
-        <span class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 14v-2a9 9 0 0 1 18 0v2" /><path d="M21 16a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2zM3 16a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 2z" />
-          </svg>
-        </span>
-        <h2 class="mt-3 text-[15px] font-bold text-primary">Still need help?</h2>
-        <p class="mt-2 text-[12.5px] leading-relaxed text-muted">
-          Can't find what you're looking for? Our team is here to assist you.
-        </p>
-        <a routerLink="/contact"
-          class="mt-4 inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-[12.5px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
-          Contact Us
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-        </a>
-      </div>
-    </aside>
-
-    <!-- Accordion -->
-    <div class="rounded-xl border border-gray-200 bg-white p-5 lg:p-6">
-      @for (cat of visible(); track cat.label; let i = $index) {
-        <div class="border-b border-gray-100 last:border-b-0">
-          <button type="button" (click)="toggleCategory(i)" [attr.aria-expanded]="openCategory() === i"
-            class="flex w-full items-center justify-between gap-3 py-4 text-left">
-            <span class="inline-flex items-center gap-3">
-              <svg class="shrink-0 text-primary" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                @for (d of cat.path; track d) { <path [attr.d]="d" /> }
-              </svg>
-              <span class="text-[15px] font-bold text-primary">{{ cat.label }}</span>
-            </span>
-
-            <span class="inline-flex items-center gap-3">
-              @if (openCategory() !== i) {
-                <span class="rounded-full bg-[#F1F5FB] px-2.5 py-0.5 text-[11px] font-semibold text-muted">{{ cat.questions.length }}</span>
-              }
-              <svg class="shrink-0 text-muted transition-transform duration-200" [class.rotate-180]="openCategory() === i"
-                width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="m6 9 6 6 6-6" />
-              </svg>
-            </span>
-          </button>
-
-          @if (openCategory() === i) {
-            <ul class="animate-dropdown list-none space-y-2 pb-4">
-              @for (q of cat.questions; track q; let qi = $index) {
-                <li class="rounded-lg border border-gray-200">
-                  <button type="button" (click)="toggleQuestion(qi)" [attr.aria-expanded]="openQuestion() === qi"
-                    class="flex w-full items-center justify-between gap-3 px-4 py-3 text-left">
-                    <span class="text-[13px] text-primary">{{ q }}</span>
-                    <svg class="shrink-0 text-muted transition-transform duration-200" [class.rotate-45]="openQuestion() === qi"
-                      width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <path d="M12 5v14M5 12h14" />
-                    </svg>
-                  </button>
-
-                  @if (openQuestion() === qi) {
-                    <p class="animate-dropdown border-t border-gray-100 px-4 py-3 text-[12.5px] leading-relaxed text-muted">
-                      {{ answers[q] ?? 'The answer to this question is being prepared by the CES team and will appear here shortly.' }}
-                    </p>
-                  }
-                </li>
-              }
-            </ul>
-          }
-        </div>
+      </section>
       } @empty {
-        <p class="py-10 text-center text-[13px] text-muted">No questions match your search.</p>
+      <div class="rounded-2xl border border-dashed border-gray-300 px-6 py-12 text-center">
+        <p class="text-[15px] text-muted">No questions match “{{ search.trim() }}”. Try a different word, such as “hostel” or “fees”.</p>
+        <button type="button" (click)="clearSearch()"
+          class="mt-3 cursor-pointer text-[14px] font-semibold text-primary underline underline-offset-4 hover:text-secondary-dark">
+          Show all questions
+        </button>
+      </div>
       }
-    </div>
-  </div>
 
-  <!-- Foot CTA -->
-  <div class="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-xl bg-[#EEF3FB] p-6">
-    <div class="flex items-center gap-4">
-      <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-white" aria-hidden="true">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z" />
-        </svg>
-      </span>
-      <div>
-        <p class="text-[15px] font-bold text-primary">Still have questions?</p>
-        <p class="mt-0.5 text-[12.5px] text-muted">We're here to help! Reach out to us for any further assistance.</p>
+      <!-- Still have questions -->
+      <div class="mt-12 flex flex-wrap items-center justify-between gap-5 rounded-2xl bg-[#F7F9FC] p-6 sm:p-8 lg:mt-14">
+        <div>
+          <h2 class="text-[12px] font-semibold tracking-[2px] text-secondary uppercase sm:text-[13px]">Still have questions?</h2>
+          <p class="mt-2 max-w-[520px] text-[15px] leading-relaxed text-muted">
+            Ask Dyuno, our AI assistant, any time, or write to us and the CES office will help.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a routerLink="/dyuno"
+            class="inline-flex h-11 items-center gap-2 rounded-md border border-primary/25 bg-white px-5 text-[14px] font-semibold text-primary no-underline transition-colors hover:border-primary">
+            Ask Dyuno
+          </a>
+          <a routerLink="/contact"
+            class="inline-flex h-11 items-center gap-2 rounded-md bg-primary px-5 text-[14px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
+            Contact Us
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
-
-    <a routerLink="/contact"
-      class="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-[13px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
-      Contact Us
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-    </a>
   </div>
-
-</section>
+</div>

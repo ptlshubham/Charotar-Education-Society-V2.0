@@ -2,23 +2,43 @@
 <app-page-hero crumb="Tenders" title="Tenders &amp;" accent="Notifications"
   blurb="Transparent opportunities, fair process, stronger future." image="/assets/images/hero/tenders-hub.jpeg" />
 
-<!-- Assurance bar -->
-<div class="site-container relative z-10 mt-8">
-  <ul class="grid list-none grid-cols-2 gap-6 py-6 sm:grid-cols-3 lg:grid-cols-5">
+<!-- Intro + assurances -->
+<section class="site-container pt-12 lg:pt-16" aria-labelledby="tenders-title">
+  <div class="flex flex-wrap items-start justify-between gap-x-8 gap-y-4">
+    <div>
+      <h2 id="tenders-title"
+        class="text-[28px] leading-[1.15] font-bold tracking-tight text-primary sm:text-[34px] lg:text-[40px]">
+        Tender opportunities
+      </h2>
+      <p class="mt-2 text-[15px] text-[#5B6472] sm:text-[16px]">
+        Explore procurement opportunities with Charotar Education Society.
+      </p>
+    </div>
+    <a routerLink="/contact"
+      class="inline-flex items-center gap-1 border-b border-primary pb-0.5 text-[14px] font-semibold text-primary no-underline transition-colors hover:border-secondary hover:text-secondary sm:mt-3 sm:text-[15px]">
+      Need help? Contact us
+      <span class="material-symbols-outlined !text-[18px] [font-variation-settings:'wght'_400]"
+        aria-hidden="true">arrow_outward</span>
+    </a>
+  </div>
+
+  <ul
+    class="mt-8 grid list-none gap-x-8 gap-y-6 border-b border-gray-200 p-0 pb-8 sm:grid-cols-2 lg:mt-10 lg:grid-cols-4 lg:gap-x-0">
     @for (item of assurances; track item.title) {
-    <li class="text-center">
-      <span class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white"
-        aria-hidden="true">
-        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]">{{ item.icon }}</span>
-      </span>
-      <h2 class="mt-3 text-[13px] font-bold text-primary">{{ item.title }}</h2>
-      <p class="mt-1.5 text-[11px] leading-relaxed text-muted">{{ item.body }}</p>
+    <li class="flex gap-4 lg:border-l lg:border-gray-200 lg:px-8 lg:first:border-l-0 lg:first:pl-0 lg:last:pr-0">
+      <span
+        class="material-symbols-outlined shrink-0 !text-[34px] leading-none text-primary [font-variation-settings:'wght'_300]"
+        aria-hidden="true">{{ item.icon }}</span>
+      <div>
+        <h3 class="text-[15px] font-bold text-primary sm:text-[16px]">{{ item.title }}</h3>
+        <p class="mt-1 text-[13.5px] leading-relaxed text-[#5B6472] sm:text-[14px]">{{ item.body }}</p>
+      </div>
     </li>
     }
   </ul>
-</div>
+</section>
 
-<section class="site-container py-14">
+<section class="site-container pt-10 pb-14">
   <div class="rounded-xl border border-gray-200 bg-white p-6">
 
     <div class="flex flex-wrap items-center justify-between gap-4">
@@ -151,10 +171,10 @@
               <app-sort-header [sorter]="sorter" sortKey="department">Department</app-sort-header>
             </th>
             <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">
-              <app-sort-header [sorter]="sorter" sortKey="start">Start Date</app-sort-header>
+              <app-sort-header [sorter]="sorter" sortKey="startDate">Start Date</app-sort-header>
             </th>
             <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap">
-              <app-sort-header [sorter]="sorter" sortKey="end">End Date</app-sort-header>
+              <app-sort-header [sorter]="sorter" sortKey="endDate">End Date</app-sort-header>
             </th>
             <th scope="col" class="px-5 py-3.5 text-[13px] font-semibold">
               <app-sort-header [sorter]="sorter" sortKey="status">Status</app-sort-header>
@@ -163,22 +183,30 @@
           </tr>
         </thead>
         <tbody>
-          @for (tender of pager.paged(); track tender.number; let i = $index) {
+          @for (tender of pager.paged(); track tender.id; let i = $index) {
           <tr class="border-b border-gray-100 last:border-b-0 hover:bg-[#F7F9FC]">
             <td class="px-5 py-3.5 text-[13px] text-muted">{{ (pager.rangeStart() + i).toString().padStart(2, '0') }}
             </td>
             <td class="px-5 py-3.5">
               <p class="text-[13px] font-semibold text-primary">{{ tender.title }}</p>
-              @if (tender.number) {
-              <p class="mt-0.5 text-[11.5px] text-secondary-dark">Tender No. {{ tender.number }}</p>
+              @if (tender.tenderNo) {
+              <p class="mt-0.5 text-[11.5px] text-secondary-dark">Tender No. {{ tender.tenderNo }}</p>
+              }
+              @if (tender.category) {
+              <p class="mt-0.5 text-[11.5px] text-muted">{{ tender.category }}</p>
               }
             </td>
             <td class="px-5 py-3.5 text-[13px] text-muted">{{ tender.department || '-' }}</td>
-            <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ tender.start }}</td>
-            <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ tender.end }}</td>
+            <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ tender.startDate ? (tender.startDate | date: 'dd MMM yyyy') : '-' }}</td>
+            <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">
+              {{ tender.endDate ? (tender.endDate | date: 'dd MMM yyyy') : '-' }}
+              @if (tender.endTime) {
+              <span class="block text-[11.5px]">by {{ time12(tender.endTime) }}</span>
+              }
+            </td>
             <td class="px-5 py-3.5">
               <span class="rounded px-3 py-1 text-[11px] font-semibold" [class]="statusClass(tender.status)">{{
-                tender.status }}</span>
+                statusLabel(tender.status) }}</span>
             </td>
             <td class="px-5 py-3.5">
               <div class="flex gap-2">
@@ -197,7 +225,16 @@
           </tr>
           } @empty {
           <tr>
-            <td colspan="7" class="px-5 py-10 text-center text-[13px] text-muted">No tenders match your filters.</td>
+            <td colspan="7" class="px-5 py-10 text-center text-[13px] text-muted">
+              @switch (state()) {
+              @case ('loading') { Loading tenders… }
+              @case ('error') {
+              We couldn't load the tenders.
+              <button type="button" (click)="load()" class="ml-1 font-semibold text-primary underline">Try again</button>
+              }
+              @default { No tenders match your filters. }
+              }
+            </td>
           </tr>
           }
         </tbody>

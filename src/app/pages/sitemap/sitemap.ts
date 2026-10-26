@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, computed, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PageHero } from '../../shared/page-hero/page-hero';
 import siteLinks from '../../shared/site-links.json';
@@ -10,20 +10,19 @@ interface SitemapLink {
 }
 
 interface SitemapGroup {
+  /** Material Symbols glyph name. */
   icon: string;
   title: string;
   path: string;
   links: SitemapLink[];
 }
 
-/** Feather-style glyphs keyed by the `icon` field in site-links.json. */
-const ICONS: Record<string, string[]> = {
-  company: ['M3 21h18', 'M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16', 'M9 7h2M13 7h2M9 11h2M13 11h2'],
-  resources: ['M4 19.5A2.5 2.5 0 0 1 6.5 17H20', 'M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'],
-  legal: ['M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'],
-  support: ['M3 14v-2a9 9 0 0 1 18 0v2', 'M21 16a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2zM3 16a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 2z'],
-  other: ['M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z'],
-};
+/** Where each group sits in the three-column grid, by title. A group not listed here lands in the last column. */
+const COLUMNS: readonly (readonly string[])[] = [
+  ['Institution', 'Academic', 'Initiatives'],
+  ['Celebrations', 'Media & Resources', 'Student Corner'],
+  ['Rahatokarsh Fund', 'Support & Policies', 'Other Pages'],
+];
 
 @Component({
   selector: 'app-sitemap',
@@ -41,23 +40,41 @@ export class Sitemap {
    * never disagree. Every path must resolve - a sitemap linking to routes that
    * do not exist sends visitors and crawlers into the 404 page.
    */
-  readonly groups: readonly SitemapGroup[] = [
+  private readonly groups: readonly SitemapGroup[] = [
     ...(siteLinks.primary as SitemapGroup[]),
     siteLinks.support as SitemapGroup,
     ...(siteLinks.secondary as SitemapGroup[]),
   ];
 
-  iconFor(key: string): string[] {
-    return ICONS[key] ?? ICONS['other'];
-  }
+  private readonly layout: readonly (readonly SitemapGroup[])[] = (() => {
+    const byTitle = new Map(this.groups.map((g) => [g.title, g]));
+    const columns = COLUMNS.map((titles) => titles.flatMap((t) => byTitle.get(t) ?? []));
+    const placed = new Set(COLUMNS.flat());
+    columns[columns.length - 1].push(...this.groups.filter((g) => !placed.has(g.title)));
+    return columns;
+  })();
 
-  /** Pulled out of the group grid and shown as the strip at the bottom. */
-  readonly importantLinks: readonly SitemapLink[] = [
-    { label: 'Privacy Policy', path: '/support/privacy-policy' },
-    { label: 'Terms & Conditions', path: '/support/terms' },
-    { label: 'Refund Policy', path: '/support/refund-cancellation-policy' },
-    { label: 'Website Terms', path: '/support/website-terms' },
-    { label: "FAQ's", path: '/support/faqs' },
+  readonly query = signal('');
+
+  /** The grid narrowed to the search. A group whose title matches keeps all its links. */
+  readonly columns = computed(() => {
+    const q = this.query().trim().toLowerCase();
+    if (!q) return this.layout;
+    return this.layout.map((column) =>
+      column.flatMap((group) => {
+        if (group.title.toLowerCase().includes(q)) return [group];
+        const links = group.links.filter((l) => l.label.toLowerCase().includes(q));
+        return links.length ? [{ ...group, links }] : [];
+      }),
+    );
+  });
+
+  readonly noMatches = computed(() => this.columns().every((column) => !column.length));
+
+  readonly quickLinks: readonly SitemapLink[] = [
+    { label: 'Home', path: '/' },
+    { label: 'Contact Us', path: '/contact' },
+    { label: 'Careers', path: '/company/careers' },
     { label: 'News', path: '/more/news' },
   ];
 }

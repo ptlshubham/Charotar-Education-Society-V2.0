@@ -63,6 +63,10 @@ export class ApiService {
 
   // Public Website SEO URL (per-page meta tags + sitewide defaults)
   public static GetPublicSeoURL: string = ApiService.HOST_URL + '/seo/public/all';
+  // Careers page: vacancies + recruitment notices, managed in Website Management → Careers.
+  public static GetPublicCareersURL: string = ApiService.HOST_URL + '/careers/public';
+  // Tenders page, managed in Website Management → Tenders.
+  public static GetPublicTendersURL: string = ApiService.HOST_URL + '/tenders/public';
 
   // Public Website Video Guide (Tutorials) URLs
   public static GetPublicVideosURL: string = ApiService.HOST_URL + '/superAdmin/help-center/video-guide/public/videos';

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { ApiService } from './api.service';
 import { SKIP_ERROR_REDIRECT } from '../interceptors/error.interceptor';
-import { AnswerKeyEntry, BeneficiaryStudent, BlogPost, Copyright, CounsellingPayload, DonationPayload, Donor, GalleryImage, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NavratriImage, NavratriLiveLink, Patent, PodcastEntry, SiteNotification, Trademark } from '../../shared/models/models';
+import { AnswerKeyEntry, BeneficiaryStudent, BlogPost, CareersPage, TenderItem, Copyright, CounsellingPayload, DonationPayload, Donor, GalleryImage, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NavratriImage, NavratriLiveLink, Patent, PodcastEntry, SiteNotification, Trademark } from '../../shared/models/models';
 
 
 @Injectable({
@@ -63,6 +63,21 @@ export class ResourcesService {
         return this.http.get<Institute[]>(ApiService.GetInstitutesURL, {
             context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
         });
+    }
+
+    // Careers page (Website Management → Careers). Kept out of the transfer cache (app.config)
+    // so the browser always shows the live list, not the one baked in at build time.
+    getCareers() {
+        return this.http.get<{ data: CareersPage }>(ApiService.GetPublicCareersURL, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        }).pipe(map((res) => res.data));
+    }
+
+    // Tenders page (Website Management → Tenders), also kept out of the transfer cache.
+    getTenders() {
+        return this.http.get<{ data: TenderItem[] }>(ApiService.GetPublicTendersURL, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        }).pipe(map((res) => res.data));
     }
 
     // Live visitor presence - how many people are currently on the site. The response

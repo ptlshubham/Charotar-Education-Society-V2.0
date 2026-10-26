@@ -89,3 +89,17 @@
 @utility site-container {
   @apply mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-12 xl:px-20;
 }
+
+/* Scrolls without showing a scrollbar - the sideways chip rows on phones. */
+@utility hide-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* A slim, quiet scrollbar for a list that may be taller than the screen (sticky "On this page" lists). */
+@utility thin-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--color-primary) 18%, transparent) transparent;
+}

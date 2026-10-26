@@ -1,112 +1,186 @@
+import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
-import { PageHero } from '../../shared/page-hero/page-hero';
-import { PLACEHOLDER } from '../../shared/placeholder-images';
-import { LightboxService } from '../../core/services/lightbox.service';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { HeroStat, PageHero } from '../../shared/page-hero/page-hero';
+
+type CampusKey = 'anand' | 'khetiwadi' | 'mogri';
+type Kind = 'school' | 'college' | 'hostel';
+
+interface Institute {
+  name: string;
+  kind: Kind;
+  phone?: string;
+  website?: string;
+  image: string;
+}
 
 interface Campus {
-  key: 'anand' | 'khetiwadi' | 'mogri';
+  key: CampusKey;
   name: string;
   /** Campus area, from the Society's records (40.5 acres in all). */
   area: string;
-  location: string;
-  institutions: string;
-  facilities: string;
+  address: string;
+  /** What Google Maps should search for to find the campus. */
+  mapQuery: string;
   intro: string;
-  cardBlurb: string;
-  photos: readonly string[];
+  facilities?: readonly string[];
+  /** Lead photo, and the institute it shows. */
+  image: string;
+  caption: string;
+  institutes: readonly Institute[];
 }
 
+const GROUPS: ReadonlyArray<{ kind: Kind; label: string; link: string; linkLabel: string }> = [
+  { kind: 'school', label: 'Schools', link: '/academic/school', linkLabel: 'All schools' },
+  { kind: 'college', label: 'Colleges', link: '/academic/colleges', linkLabel: 'All colleges' },
+  { kind: 'hostel', label: 'Hostels', link: '/academic/hostels', linkLabel: 'All hostels' },
+];
+
+const IMG = '/assets/images/institutes/';
+
+/**
+ * The three CES campuses and the institutes on each. Which institute sits on which campus follows
+ * CES at a Glance (/about/profile); names, phone numbers, websites and photos follow the Schools,
+ * Colleges and Hostels pages - keep them in step when an institute is added or renamed.
+ * /more/campus?campus=khetiwadi opens that campus.
+ */
 @Component({
   selector: 'app-campuses',
-  imports: [PageHero],
+  imports: [PageHero, RouterLink],
   templateUrl: './campuses.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './campuses.scss',
 })
 export class Campuses {
-  readonly banner = PLACEHOLDER.about.hero;
+  private readonly document = inject(DOCUMENT);
+
+  readonly banner = '/assets/images/hero/about.png';
+
+  readonly heroStats: readonly HeroStat[] = [
+    { value: '3', label: 'Campuses', path: [], icon: 'location_city', iconClass: 'text-white' },
+    { value: '40.5', label: 'Acres in all', path: [], icon: 'landscape', iconClass: 'text-white' },
+    { value: '31+', label: 'Institutes', path: [], icon: 'school', iconClass: 'text-white' },
+    { value: '4', label: 'Hostels', path: [], icon: 'bed', iconClass: 'text-white' },
+  ];
 
   readonly campuses: readonly Campus[] = [
     {
       key: 'anand',
       name: 'Anand Campus',
       area: '21 acres',
-      location: 'D.N. High School Campus, Station Road, Anand',
-      institutions: 'D.N. High School, Kasturba Kanya Vidyalaya, Charotar English Medium School, V.J. Patel Higher Secondary School and most of our colleges',
-      facilities: 'Gyansthali Library, gym, amphitheatre, auditorium, Saraswati temple, stationery store and three hostels.',
+      address: 'D.N. High School Campus, Station Road, Anand 388001',
+      mapQuery: 'D N High School, Station Road, Anand, Gujarat',
       intro:
-        'Our main campus near Anand railway station is where CES began in 1916, with 27 students in three classrooms. Today its 21 acres hold our oldest schools, most of our colleges and three of our four hostels.',
-      cardBlurb: 'Where CES began in 1916: 21 acres near Anand railway station.',
-      photos: PLACEHOLDER.campuses.anand,
+        'Our main campus near Anand railway station is where CES began in 1916, with 27 pupils in three standards. Today its 21 acres hold our oldest schools, most of our colleges, three of our four hostels and the Society\'s office.',
+      facilities: ['Gyansthali Library', 'Gym with free coaching', 'Amphitheatre', 'Auditorium', 'Saraswati temple', 'Stationery store'],
+      image: `${IMG}dn-high-9-12.jpg`,
+      caption: 'D.N. High School, where CES began',
+      institutes: [
+        { kind: 'school', name: 'D. N. High School (Std 6 to 8)', phone: '(02692) 269060', website: 'https://www.up.dnhighschool.ac.in/', image: `${IMG}dn-high-6-8.jpg` },
+        { kind: 'school', name: 'D. N. High School (Std 9 to 12)', phone: '(02692) 268940', website: 'https://www.hs.dnhighschool.ac.in/', image: `${IMG}dn-high-9-12.jpg` },
+        { kind: 'school', name: 'Kasturba Kanya Vidyalaya (Std 6 to 8)', phone: '(02692) 250137', website: 'https://www.up.kkv.ac.in/', image: `${IMG}kkv-6-8.jpg` },
+        { kind: 'school', name: 'Kasturba Kanya Vidyalaya (Std 9 to 12)', phone: '(02692) 268940', website: 'https://www.hs.kkv.ac.in/', image: `${IMG}kkv-9-12.jpg` },
+        { kind: 'school', name: 'V. J. Patel Higher Secondary School', phone: '(02692) 250669', website: 'https://www.vjhs.ac.in/', image: `${IMG}dn-high-6-8.jpg` },
+        { kind: 'school', name: 'Charotar English Medium School', phone: '(02692) 266789', website: 'https://www.cems.ac.in/', image: `${IMG}cems.jpg` },
+        { kind: 'school', name: 'Ambalal Balshala', phone: '(02692) 243634', website: 'https://www.ambs.ac.in/', image: `${IMG}ambalal-balshala.jpg` },
+        { kind: 'school', name: 'Shishuvihar, Nutan Shishuvihar and Nursery', phone: '(02692) 250864', website: 'https://www.shishuvihar.ac.in/', image: `${IMG}shishuvihar.jpg` },
+        { kind: 'college', name: 'M. B. Patel Science College', phone: '(02692) 244415', website: 'https://www.mbpatelscience.ac.in/', image: `${IMG}mb-patel-science.jpg` },
+        { kind: 'college', name: 'Shri Alpesh N. Patel Post Graduate Institute of Science and Research', phone: '(02692) 267404', website: 'https://www.sanppgi.ac.in/', image: `${IMG}alpesh-science.jpg` },
+        { kind: 'college', name: 'Shri V. Z. Patel Commerce College', phone: '(02692) 252000', website: 'https://www.vzp.ac.in/', image: `${IMG}vz-patel-commerce.jpg` },
+        { kind: 'college', name: 'Shri D. N. Institute of P. G. Studies in Commerce', phone: '(02692) 252804', website: 'https://www.shridnpgs.ac.in/', image: `${IMG}dn-pg-commerce.jpg` },
+        { kind: 'college', name: 'Shri Bhikhabhai Patel Arts College', phone: '(02692) 244043', website: 'https://www.bpac.ac.in/', image: `${IMG}bhikhabhai-arts.jpg` },
+        { kind: 'college', name: 'Shri Bhikhabhai Patel Institute of P. G. Studies & Research in Humanities', phone: '(02692) 244043', website: 'https://www.bppg.ac.in/', image: `${IMG}bhikhabhai-pg-studies.jpg` },
+        { kind: 'college', name: 'Shri D. N. Institute of Business Administration', phone: '(02692) 252800', website: 'https://www.dniba.ac.in/', image: `${IMG}dn-business.jpg` },
+        { kind: 'college', name: 'Shri D. N. Institute of Computer Applications', phone: '(02692) 266679', website: 'https://www.dnica.ac.in/', image: `${IMG}dn-computer.jpg` },
+        { kind: 'college', name: 'Shri D. N. Institute of Law', phone: '(02692) 243083', image: `${IMG}dn-law.jpg` },
+        { kind: 'hostel', name: 'Vidhyarthi Ashram', image: `${IMG}hostel-vidhyarthi-ashram.jpg` },
+        { kind: 'hostel', name: 'Kasturba Kanya Chhatralay', image: `${IMG}hostel-kasturba-kanya.jpg` },
+        { kind: 'hostel', name: 'Ladies Hostel (M. B. Patel Science College)', image: `${IMG}hostel-ladies.jpg` },
+      ],
     },
     {
       key: 'khetiwadi',
       name: 'Khetiwadi Campus',
       area: '7.5 acres',
-      location: 'Khetiwadi, Anand, Gujarat',
-      institutions: 'Sardar Vallabhbhai Patel High School and Shishuvihar/Balshala',
-      facilities: 'Library, Laboratories, Playground, Computer Labs and more.',
+      address: 'Khetiwadi, Anand, Gujarat',
+      mapQuery: 'Sardar Vallabhbhai Patel High School, Khetiwadi, Anand, Gujarat',
       intro:
         'The 7.5-acre Khetiwadi campus is home to Sardar Vallabhbhai Patel High School, with classes from Shishuvihar right up to class 12.',
-      cardBlurb: '7.5 acres, home to Sardar Vallabhbhai Patel High School.',
-      photos: PLACEHOLDER.campuses.khetiwadi,
+      image: `${IMG}svp-high-9-12.jpg`,
+      caption: 'Sardar Vallabhbhai Patel High School',
+      institutes: [
+        { kind: 'school', name: 'Sardar Vallabhbhai Patel Shishuvihar and Balshala', phone: '(02692) 262904', website: 'https://www.bal.svpschool.ac.in/', image: `${IMG}svp-shishuvihar.jpg` },
+        { kind: 'school', name: 'Sardar Vallabhbhai Patel High School (Std 6 to 8)', phone: '(02692) 264516', website: 'https://www.up.svpschool.ac.in/', image: `${IMG}svp-high-6-8.jpg` },
+        { kind: 'school', name: 'Sardar Vallabhbhai Patel High School (Std 9 to 12)', phone: '(02692) 262436', website: 'https://www.hs.svpschool.ac.in/', image: `${IMG}svp-high-9-12.jpg` },
+      ],
     },
     {
       key: 'mogri',
       name: 'Mogri Campus',
       area: '12 acres',
-      location: 'Mogri, Anand, Gujarat',
-      institutions: 'Motibhai Amin Adhyapan Mandir (PTC), I.J. Patel B.Ed. and M.Ed., V.J. Patel B.P.Ed., M.B. Patel Applied Science College, Mahatma Gandhi Vidyalaya and K.M. Patel Balshala',
-      facilities: 'Library, Laboratories, Hostel, Sports Ground and more.',
+      address: 'Mogri, Anand, Gujarat',
+      mapQuery: 'Shri I J Patel B.Ed. College, Mogri, Anand, Gujarat',
       intro:
-        'The 12-acre Mogri campus is where CES trains its teachers and physical education instructors. It was redeveloped at a cost of about Rs. 2 crore and has its own hostel, Adhyapan Mandir Chhatralay.',
-      cardBlurb: '12 acres for teacher training and physical education.',
-      photos: PLACEHOLDER.campuses.mogri,
+        'The 12-acre Mogri campus is where CES trains its teachers and physical education instructors, alongside a school and an applied science college. It was redeveloped at a cost of about Rs. 2 crore and has its own hostel, Adhyapan Mandir Chhatralay.',
+      image: `${IMG}ij-patel-bed.jpg`,
+      caption: 'The college building on the Mogri campus',
+      institutes: [
+        { kind: 'school', name: 'K. M. Patel Balshala and Shishuvihar', phone: '(02692) 233123', website: 'https://www.kmbal.ac.in/', image: `${IMG}km-patel-balshala.jpg` },
+        { kind: 'school', name: 'Mahatma Gandhi Vidyalaya (Std 6 to 8)', phone: '(02692) 230192', website: 'https://www.up.mgvidyalaya.ac.in/', image: `${IMG}mg-vidyalaya-6-8.jpg` },
+        { kind: 'school', name: 'Mahatma Gandhi Vidyalaya (Std 9 to 12)', phone: '(02692) 230192', website: 'https://www.hs.mgvidyalaya.ac.in/', image: `${IMG}mg-vidyalaya-9-12.jpg` },
+        // The Mogri building photo carries this college's signboard (the Colleges page shows the Anand science college).
+        { kind: 'college', name: 'M. B. Patel Applied Science College', phone: '(02692) 233000', website: 'https://www.mbpasc.ac.in/', image: `${IMG}ij-patel-bed.jpg` },
+        { kind: 'college', name: 'Motibhai Amin P. S. Adhyapan Mandir (D.El.Ed.)', phone: '(02692) 233343', website: 'https://www.maptc.ac.in/', image: `${IMG}motibhai-amin.jpg` },
+        { kind: 'college', name: 'Shri I. J. Patel B.Ed. College', phone: '(02692) 236266', website: 'https://www.ijbed.ac.in/', image: `${IMG}ij-patel-bed.jpg` },
+        { kind: 'college', name: 'Shri I. J. Patel M.Ed. College', phone: '(02692) 233064', website: 'https://www.ipmed.ac.in/', image: `${IMG}ij-patel-med.jpg` },
+        { kind: 'college', name: 'Shri V. J. Patel College of Physical Education', phone: '(02692) 229062', website: 'https://www.vjbped.ac.in/', image: `${IMG}vj-patel-physical.jpg` },
+        { kind: 'hostel', name: 'Adhyapan Mandir Chhatralay', image: `${IMG}hostel-adhyapan-mandir.jpg` },
+      ],
     },
   ];
 
-  readonly activeKey = signal<Campus['key']>('anand');
-  readonly activePhoto = signal(0);
+  readonly activeKey = signal<CampusKey>('anand');
 
-  private readonly route = inject(ActivatedRoute);
-  private readonly lightbox = inject(LightboxService);
+  readonly active = computed(() => this.campuses.find((c) => c.key === this.activeKey()) ?? this.campuses[0]);
+
+  /** The active campus's institutes, as Schools / Colleges / Hostels (empty groups left out). */
+  readonly groups = computed(() =>
+    GROUPS.map((g) => ({ ...g, items: this.active().institutes.filter((i) => i.kind === g.kind) })).filter((g) => g.items.length),
+  );
 
   constructor() {
     // Deep-link support: /more/campus?campus=khetiwadi opens that campus (and keeps
     // reacting if the param changes while the page stays mounted, e.g. via search).
-    this.route.queryParamMap.pipe(takeUntilDestroyed()).subscribe((pm) => {
-      const key = pm.get('campus');
-      if (key === 'anand' || key === 'khetiwadi' || key === 'mogri') {
-        this.activeKey.set(key);
-        this.activePhoto.set(0);
-      }
-    });
+    inject(ActivatedRoute)
+      .queryParamMap.pipe(takeUntilDestroyed())
+      .subscribe((pm) => {
+        const key = pm.get('campus');
+        if (key === 'anand' || key === 'khetiwadi' || key === 'mogri') this.activeKey.set(key);
+      });
   }
 
-  select(key: Campus['key']): void {
+  select(key: CampusKey): void {
     this.activeKey.set(key);
-    this.activePhoto.set(0);
   }
 
-  selectPhoto(i: number): void {
-    this.activePhoto.set(i);
+  /** "Explore" on a campus card: switch to it and bring its details into view. */
+  explore(key: CampusKey): void {
+    this.select(key);
+    this.document.getElementById('campus-tabs')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  /** Open the active campus's photos in the site-wide viewer, on photo i. */
-  viewPhotos(i = this.activePhoto()): void {
-    const c = this.active();
-    this.lightbox.open(c.photos.map((src, n) => ({ src, caption: `${c.name} - Photo ${n + 1}` })), i);
+  /** How many of a campus's institutes are of one kind, e.g. "8 schools". */
+  count(c: Campus, kind: Kind): number {
+    return c.institutes.filter((i) => i.kind === kind).length;
   }
 
-  readonly active = computed(
-    () => this.campuses.find((c) => c.key === this.activeKey()) ?? this.campuses[0],
-  );
+  mapLink(c: Campus): string {
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.mapQuery)}`;
+  }
 
-  readonly highlights: ReadonlyArray<{ label: string; path: string[] }> = [
-    { label: 'Multiple Institutions', path: ['M3 21h18', 'M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16'] },
-    { label: 'Modern Infrastructure', path: ['M2 20h20', 'M4 20V8l8-5 8 5v12', 'M10 20v-6h4v6'] },
-    { label: 'Excellent Faculty', path: ['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', 'M22 21v-2a4 4 0 0 0-3-3.87'] },
-  ];
+  /** Templates can't hold regex literals, so strip formatting here. */
+  telHref(phone: string): string {
+    return `tel:${phone.replace(/[^0-9]/g, '')}`;
+  }
 }

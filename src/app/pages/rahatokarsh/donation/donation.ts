@@ -185,7 +185,8 @@ export class Donation {
       currency: 'INR',
       name: 'Charotar Education Society',
       description: 'Rahatokarsh Fund Donation',
-      image: `${environment.frontendUrl}/assets/images/apple-touch-icon.png`,
+      // The 180x180 site icon lives at the site root (it was never under /assets/images).
+      image: `${environment.frontendUrl}/apple-touch-icon.png`,
       prefill: { name: v.fullName, email: v.email, contact: v.contactNumber },
       notes: { address: v.city },
       theme: { color: '#203154' },

@@ -271,3 +271,71 @@ export interface SiteNotification {
   endDate: string | null;
   createddate: string;
 }
+
+/** Application window of a vacancy, worked out by the API (IST): before the start date, open, or past the last date / closed by hand. */
+export type CareerStatus = 'upcoming' | 'open' | 'closed';
+
+/** A file in one of a vacancy's document columns. `file` is null for an application form while its vacancy is not open. */
+export interface CareerDocument {
+  label: string;
+  file: string | null;
+  isForm: boolean;
+}
+
+export interface CareerInstitute {
+  name: string;
+  url: string;
+}
+
+/** A row of the Careers page's Advertisement table (Website Management → Careers). */
+export interface CareerVacancy {
+  id: number;
+  title: string | null;
+  institutes: CareerInstitute[];
+  /** Advertisement images: /assets/… are the website's own files, anything else is an upload on the API host. */
+  images: string[];
+  /** YYYY-MM-DD, or null when the vacancy has none. */
+  startDate: string | null;
+  lastDate: string | null;
+  isNew: boolean;
+  status: CareerStatus;
+  advertisement: CareerDocument[];
+  instructions: CareerDocument[];
+  requirement: CareerDocument[];
+  result: CareerDocument[];
+}
+
+/** A row of the Recruitment Notice table; `institutes` and `status` are those of the recruitment it belongs to. */
+export interface CareerNotice {
+  id: number;
+  title: string;
+  date: string;
+  file: string | null;
+  isForm: boolean;
+  institutes: CareerInstitute[];
+  status: CareerStatus;
+}
+
+/** GET /careers/public. `updatedOn` (YYYY-MM-DD) is when the page last changed. */
+export interface CareersPage {
+  updatedOn: string | null;
+  vacancies: CareerVacancy[];
+  notices: CareerNotice[];
+}
+
+/** A tender on the Tenders page (Website Management → Tenders), from GET /tenders/public, newest first. */
+export interface TenderItem {
+  id: number;
+  title: string;
+  tenderNo: string | null;
+  department: string | null;
+  category: 'Goods' | 'Services' | 'Works' | null;
+  /** YYYY-MM-DD, or null. */
+  startDate: string | null;
+  endDate: string | null;
+  /** HH:mm closing time on the end date (IST); null = end of that day. */
+  endTime: string | null;
+  /** Worked out by the API (IST): before the start date, between the dates, or past the closing time / closed by hand. */
+  status: 'upcoming' | 'open' | 'closed';
+  documents: { label: string; file: string }[];
+}

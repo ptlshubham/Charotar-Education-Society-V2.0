@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
-/** The Society's centenary blog (2015). */
-const BLOG = 'https://ces100anand.blogspot.com/';
+/** A post of the Society's 2015 centenary blog - now on the Society's own blog. */
+const post = (slug: string) => `/blog/${slug}`;
 /** Talks recorded at Shatakotsav events, on the Society's YouTube channel. */
 const watch = (id: string) => `https://www.youtube.com/watch?v=${id}`;
 /** How many guests show before "View all guests" - the first ones in `guests`. */
@@ -28,6 +29,7 @@ interface Guest {
  */
 @Component({
   selector: 'app-centenary-guests',
+  imports: [RouterLink],
   templateUrl: './centenary-guests.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './centenary-guests.scss',
@@ -82,12 +84,12 @@ export class CentenaryGuests {
     },
   ];
 
-  /** More guests of the year, named with the event they came for. */
+  /** More guests of the year, named with the event they came for. `href` starting with "/" is a page of this site. */
   readonly alsoWithUs: ReadonlyArray<{ name: string; event: string; href: string }> = [
     { name: 'Dr. Dipak Amrapurkar', event: 'Health is Wealth, April 2016', href: watch('9yyu3KCPM_0') },
-    { name: 'Pu. Pa. Yuvraj Vagishkumarji of Kankroli', event: 'blessed the Haveli Sangeet evening, May 2015', href: `${BLOG}2015/05/blog-post_25.html` },
-    { name: 'Abhinay Banker and Kalpana Gagdekar', event: '“Kasturba” on stage, October 2015', href: `${BLOG}2015/10/` },
-    { name: 'RJ Aditi Rawal, Red FM', event: 'Skill Fair, 2015', href: `${BLOG}2015/08/blog-post_7.html` },
+    { name: 'Pu. Pa. Yuvraj Vagishkumarji of Kankroli', event: 'blessed the Haveli Sangeet evening, May 2015', href: post('santoor-evening-sangeet-vidyalaya') },
+    { name: 'Abhinay Banker and Kalpana Gagdekar', event: '“Kasturba” on stage, October 2015', href: post('kasturba-the-play') },
+    { name: 'RJ Aditi Rawal, Red FM', event: 'Skill Fair, 2015', href: post('skill-fair-marathon-lectures') },
     { name: 'Koustuva Mukherjee, Taj Hotels', event: 'Skill Fair, 2015', href: watch('s3ll-mUJzXA') },
   ];
 

@@ -13,7 +13,7 @@ import { MediaUrlPipe } from '../../../shared/media-url.pipe';
 import { SafeHtmlPipe } from '../../../shared/safe-html.pipe';
 import { AdmissionsCta } from '../../../shared/admissions-cta/admissions-cta';
 import { Academics } from '../../home/academics/academics';
-import { blogExcerpt, blogImageUrl, blogSlug, blogTags, plainText, sortCategories } from '../../../shared/blog-post';
+import { blogBody, blogExcerpt, blogImageUrl, blogSlug, blogTags, countTags, plainText, sortCategories } from '../../../shared/blog-post';
 
 /** Average adult reading speed, for the "N min read" estimate. */
 const WORDS_PER_MINUTE = 200;
@@ -132,6 +132,8 @@ export class BlogDetail {
     return p ? blogTags(p) : [];
   });
 
+  readonly body = computed(() => blogBody(this.post()?.blogDetails));
+
   readonly attachments = computed(() => this.post()?.attachments ?? []);
 
   readonly prev = computed<Brief | null>(() => {
@@ -155,6 +157,10 @@ export class BlogDetail {
     }
     return sortCategories(counts.keys()).map((label) => ({ label, count: counts.get(label) ?? 0 }));
   });
+
+  /** The Labels box: every tag in use, with its post count; this post's own are marked. */
+  readonly labels = computed(() => countTags(this.blogs().map(blogTags)));
+  readonly ownTags = computed(() => new Set(this.tags().map((t) => t.toLowerCase())));
 
   /** True once the feed has loaded but the requested post wasn't found. */
   readonly notFound = computed(() => !this.loading() && !this.failed() && !this.post());

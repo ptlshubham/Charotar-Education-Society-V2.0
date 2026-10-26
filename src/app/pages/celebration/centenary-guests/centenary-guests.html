@@ -53,8 +53,13 @@
     <p class="mt-5 text-[13.5px] leading-relaxed text-muted sm:text-[14px]">
       <span class="mr-1 font-semibold text-primary">Also with us:</span>
       @for (g of alsoWithUs; track g.name; let last = $last) {
+      @if (g.href.startsWith('/')) {
+      <a [routerLink]="g.href"
+        class="font-medium text-primary underline decoration-primary/25 underline-offset-4 hover:text-secondary-dark hover:decoration-current">{{ g.name }}</a>
+      } @else {
       <a [href]="g.href" target="_blank" rel="noopener noreferrer"
         class="font-medium text-primary underline decoration-primary/25 underline-offset-4 hover:text-secondary-dark hover:decoration-current">{{ g.name }}</a>
+      }
       ({{ g.event }}){{ last ? '.' : ';' }}
       }
     </p>

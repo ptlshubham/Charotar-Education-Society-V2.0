@@ -31,10 +31,9 @@ export class ApiService {
   // Resolve which institute this site is, by its public URL → [{ id, name, url }].
   // The legacy site called this on boot and cached the id (see InstituteService).
   public static GetInstituteDetailByUrlURL: string = ApiService.HOST_URL + '/admin/GetInstituteDetailByURL/';
-  // Live site presence - visitors currently online. The GET doubles as the heartbeat
-  // (each poll marks this client active) and returns the count. Not yet built on the
-  // backend; the header badge stays hidden until this endpoint responds.
-  public static GetOnlineVisitorsURL: string = ApiService.HOST_URL + '/visitors/online';
+  // Footer visitor counter. The POST is this browser's check-in - on open and once a minute -
+  // and returns what the footer shows (Website Management → Visitor Counter).
+  public static VisitorCheckInURL: string = ApiService.HOST_URL + '/visitors/public/check-in';
   public static SaveGatePassURL: string = ApiService.HOST_URL + '/admin/SaveGatePassUserList';
   // Counselling - book an appointment (institute dropdown reuses GetInstitutesURL).
   public static SaveCounselingURL: string = ApiService.HOST_URL + '/admin/SaveCounselingDetails';

@@ -53,6 +53,20 @@
     color: var(--color-muted);
   }
 
+  // YouTube videos - the editor's media embed, made a player by blogBody().
+  figure.media {
+    clear: both;
+    margin: 1.25rem 0;
+
+    iframe {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 0;
+      border-radius: 0.5rem;
+    }
+  }
+
   blockquote {
     margin: 1.25rem 0;
     padding: 0.25rem 0 0.25rem 1rem;

@@ -30,8 +30,7 @@
         She wrote back to each of them. The replies reached the school in {{ letters.when }}, in one parcel weighing over
         100 kg.
       </p>
-      <a [href]="letters.link.href" target="_blank" rel="noopener noreferrer"
-        [attr.aria-label]="letters.link.label + ' (opens in a new tab)'"
+      <a [routerLink]="letters.link.href"
         class="group mt-4 inline-flex w-fit items-center gap-2 text-[14px] font-semibold text-white no-underline hover:text-secondary">
         {{ letters.link.label }}
         <svg class="transition-transform group-hover:translate-x-1" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -44,7 +43,10 @@
 
   <!-- Old students, in their own words -->
   <h3 class="mt-10 text-[17px] font-semibold text-primary sm:text-[18px]">In their words</h3>
-  <p class="mt-1 text-[13.5px] text-muted sm:text-[14px]">Former students wrote down their memories for the centenary blog in 2015.</p>
+  <p class="mt-1 text-[13.5px] text-muted sm:text-[14px]">Former students wrote down their memories for the
+    <a routerLink="/blog" [queryParams]="archive"
+      class="font-medium text-primary underline decoration-primary/25 underline-offset-4 hover:text-secondary-dark hover:decoration-current">centenary blog</a>
+    in 2015.</p>
   <ul class="mt-4 flex snap-x snap-mandatory list-none gap-4 overflow-x-auto p-0 pb-3 sm:grid sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:pb-0 lg:grid-cols-4"
     aria-label="Memories from former students">
     @for (voice of voices; track voice.name) {
@@ -68,8 +70,8 @@
           <p class="text-[12px] leading-snug text-muted">{{ voice.role }}</p>
         </div>
       </div>
-      <a [href]="voice.source" target="_blank" rel="noopener noreferrer"
-        [attr.aria-label]="'Read ' + voice.name + '’s full memory (opens in a new tab)'"
+      <a [routerLink]="voice.source"
+        [attr.aria-label]="'Read ' + voice.name + '’s full memory'"
         class="mt-3 w-fit text-[12.5px] font-semibold text-primary underline decoration-primary/25 underline-offset-4 hover:text-secondary-dark hover:decoration-current">
         Read the full memory
       </a>

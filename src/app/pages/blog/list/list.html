@@ -138,6 +138,14 @@
         </li>
         }
       </ul>
+      @if (moreCount()) {
+      <div class="mt-7 text-center">
+        <button type="button" (click)="showMore()"
+          class="rounded-md border border-primary px-6 py-2.5 text-[13px] font-semibold text-primary transition-colors hover:bg-primary hover:text-white">
+          Show more posts ({{ moreCount() }} more)
+        </button>
+      </div>
+      }
       }
     </div>
 
@@ -164,6 +172,27 @@
           }
         </ul>
       </div>
+
+      <!-- Labels - every tag in use (the 2015 centenary blog's labels among them) -->
+      @if (labels().length) {
+      <div class="rounded-xl border border-gray-200 bg-white p-5">
+        <h2 class="text-[16px] font-bold text-primary">Labels</h2>
+        <span class="mt-2 block h-1 w-12 rounded-full bg-secondary" aria-hidden="true"></span>
+        <ul class="mt-4 flex list-none flex-wrap gap-2">
+          @for (l of labels(); track l.label) {
+          <li>
+            <a routerLink="/blog" [queryParams]="{ tag: l.label }"
+              [attr.aria-current]="activeTag() === l.label.toLowerCase() ? 'true' : null"
+              class="inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-[12px] no-underline transition-colors"
+              [class]="activeTag() === l.label.toLowerCase() ? 'border-primary bg-primary text-white' : 'border-gray-200 bg-white text-primary hover:border-primary'">
+              {{ l.label }}
+              <span class="text-[11px] opacity-60">{{ l.count }}</span>
+            </a>
+          </li>
+          }
+        </ul>
+      </div>
+      }
 
       <!-- Subscribe -->
       <div class="rounded-xl bg-primary p-5">

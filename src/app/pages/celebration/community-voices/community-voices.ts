@@ -1,8 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { BLOG_ARCHIVE_TAG } from '../../../shared/blog-post';
 
-/** The Society's centenary blog (2015) - where the memories below were first published. */
-const BLOG = 'https://ces100anand.blogspot.com/';
+/**
+ * A post of the Society's 2015 centenary blog, where the memories below were first published - now
+ * on the Society's own blog.
+ */
+const post = (slug: string) => `/blog/${slug}`;
 
 interface Voice {
   /** English rendering of their words (translated where the original is Gujarati). */
@@ -28,12 +32,15 @@ interface Voice {
   styleUrl: './community-voices.scss',
 })
 export class CommunityVoices {
+  /** The 2015 centenary blog's posts on the blog page. */
+  readonly archive = { tag: BLOG_ARCHIVE_TAG };
+
   /** The Union minister who answered 15,000 invitations - the section's introduction. */
   readonly letters = {
     name: 'Smriti Irani',
     role: 'Union Minister of Human Resource Development',
     when: 'May 2015',
-    link: { label: 'Read the story', href: `${BLOG}2015/05/smriti-irani-replies-to-15000-students.html` },
+    link: { label: 'Read the story', href: post('smriti-irani-replies-to-dn-students') },
   };
 
   readonly voices: readonly Voice[] = [
@@ -43,14 +50,14 @@ export class CommunityVoices {
       name: 'Prajnesh Patel',
       role: 'President, Anand Municipality (2015), and former student',
       initials: 'PP',
-      source: `${BLOG}2015/08/blog-post_31.html`,
+      source: post('three-generations-with-ces-prajnesh-patel'),
     },
     {
       quote: 'I want to give the credit of my success to Vithal Kaka and will be indebted to him my whole life.',
       name: 'Dr. Bharat J. Patel',
       role: 'Former student',
       initials: 'BP',
-      source: `${BLOG}2015/05/if-you-dont-get-100-marks-in.html`,
+      source: post('dr-bharat-patel-diary-of-memories'),
     },
     {
       quote: 'Here I did more than live my life. I enjoyed it.',
@@ -58,7 +65,7 @@ export class CommunityVoices {
       name: 'R. B. Patel',
       role: 'D.N. High School student, 1952–1959',
       initials: 'RP',
-      source: `${BLOG}2015/07/blog-post_27.html`,
+      source: post('bunking-class-cost-dearly-rb-patel'),
     },
     {
       quote: 'My life began right here. Whatever I can say today, whatever I have achieved, was possible only because of D.N. and CES.',
@@ -66,7 +73,7 @@ export class CommunityVoices {
       name: 'Nirav Patel',
       role: 'Chairman, CES, and former student',
       initials: 'NP',
-      source: `${BLOG}2015/08/blog-post_91.html`,
+      source: post('when-the-chairman-was-a-student-nirav-patel'),
     },
   ];
 }

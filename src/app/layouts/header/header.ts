@@ -17,7 +17,6 @@ import { isPlatformBrowser } from '@angular/common';
 import gsap from 'gsap';
 import { LenisService } from '../../core/services/lenis.service';
 import { SearchService } from '../../core/services/search.service';
-import { ResourcesService } from '../../core/services/resources.service';
 import { SOCIAL_LINKS } from '../../shared/social-links';
 import { SearchItem } from '../../shared/models/models';
 import { LanguageSwitcher } from '../../shared/language-switcher/language-switcher';
@@ -125,10 +124,6 @@ export class Header implements AfterViewInit {
 
   private readonly destroyRef = inject(DestroyRef);
   private readonly searchSvc = inject(SearchService);
-  private readonly resources = inject(ResourcesService);
-
-  /** Visitors currently online - null while unknown / until the backend endpoint exists. */
-  readonly onlineVisitors = signal<number | null>(null);
 
   /** Which mobile accordion sections are expanded, keyed by label. */
   private readonly expanded = signal<ReadonlySet<string>>(new Set());
@@ -573,30 +568,6 @@ export class Header implements AfterViewInit {
     };
     document.addEventListener('click', onDocClick);
     this.destroyRef.onDestroy(() => document.removeEventListener('click', onDocClick));
-
-    // Live visitor presence - poll the count; the GET also acts as this client's
-    // heartbeat. Stays null (badge hidden) until the backend endpoint responds.
-    const pollVisitors = () => {
-      // this.resources.getOnlineVisitors().subscribe({
-      //   next: res => this.onlineVisitors.set(this.parseCount(res)),
-      //   error: () => { },
-      // });
-    };
-    pollVisitors();
-    const visitorTimer = setInterval(pollVisitors, 20000);
-    this.destroyRef.onDestroy(() => clearInterval(visitorTimer));
-  }
-
-  /** Accept a bare number or common shapes ({ online }, { count }, { visitors }, { total }, { data }). */
-  private parseCount(res: unknown): number | null {
-    if (typeof res === 'number' && isFinite(res)) return res;
-    if (res && typeof res === 'object') {
-      const o = res as Record<string, unknown>;
-      const v = o['online'] ?? o['count'] ?? o['visitors'] ?? o['total'] ?? o['data'];
-      if (typeof v === 'number' && isFinite(v)) return v;
-      if (typeof v === 'string' && v.trim() !== '' && !isNaN(Number(v))) return Number(v);
-    }
-    return null;
   }
 
   openMobileMenu(): void {

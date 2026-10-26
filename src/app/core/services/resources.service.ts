@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, map, shareReplay, tap } from 'rxjs';
 import { ApiService } from './api.service';
 import { SKIP_ERROR_REDIRECT } from '../interceptors/error.interceptor';
-import { AnswerKeyEntry, BeneficiaryStudent, BlogPost, CareersPage, TenderItem, Copyright, CounsellingPayload, DonationPayload, Donor, GalleryImage, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NavratriImage, NavratriLiveLink, Patent, PodcastEntry, SiteNotification, Trademark } from '../../shared/models/models';
+import { AnswerKeyEntry, BeneficiaryStudent, BlogPost, CareersPage, TenderItem, Copyright, CounsellingPayload, DonationPayload, Donor, GalleryImage, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NavratriImage, NavratriLiveLink, Patent, PodcastEntry, SiteNotification, Trademark, VisitorCounter } from '../../shared/models/models';
 
 
 @Injectable({
@@ -80,14 +80,13 @@ export class ResourcesService {
         }).pipe(map((res) => res.data));
     }
 
-    // Live visitor presence - how many people are currently on the site. The response
-    // shape is parsed loosely by the caller (number, or { online } / { count } etc.).
-    // SKIP_ERROR_REDIRECT so a missing endpoint never bounces the page - the header
-    // simply keeps the badge hidden.
-    getOnlineVisitors() {
-        return this.http.get<unknown>(ApiService.GetOnlineVisitorsURL, {
+    // Footer visitor counter (Website Management → Visitor Counter): counts this browser's visit
+    // (once a day), keeps it in "online now" and returns what the footer shows.
+    // SKIP_ERROR_REDIRECT so a failure only leaves the counter out.
+    visitorCheckIn(instituteId: number, visitorId: string) {
+        return this.http.post<{ data: VisitorCounter }>(ApiService.VisitorCheckInURL, { instituteId, visitorId }, {
             context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
-        });
+        }).pipe(map((res) => res.data));
     }
 
     saveGatePass(payload: GatePassPayload) {

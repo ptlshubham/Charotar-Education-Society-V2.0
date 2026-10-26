@@ -339,3 +339,17 @@ export interface TenderItem {
   status: 'upcoming' | 'open' | 'closed';
   documents: { label: string; file: string }[];
 }
+
+/**
+ * The footer's visitor counter (Website Management → Visitor Counter), from POST
+ * /visitors/public/check-in. `show: false` = the institute has it switched off (no numbers then);
+ * a null number is one it chose not to show.
+ */
+export interface VisitorCounter {
+  show: boolean;
+  /** Starting count + every visitor counted (one browser per day). */
+  total?: number;
+  today?: number | null;
+  /** On the website in the last 2 minutes. */
+  online?: number | null;
+}

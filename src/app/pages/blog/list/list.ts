@@ -8,7 +8,7 @@ import { catchError, of, switchMap } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
 import { InstituteService } from '../../../core/services/institute.service';
 import { BlogPost } from '../../../shared/models/models';
-import { blogExcerpt, blogImageUrl, blogSlug, blogTags, sortCategories } from '../../../shared/blog-post';
+import { blogExcerpt, blogImageUrl, blogSlug, blogTags, countTags, sortCategories } from '../../../shared/blog-post';
 
 interface Post {
   /** URL segment - the slug, or the id for older posts. */
@@ -27,6 +27,8 @@ interface Post {
 }
 
 const ALL = 'All Posts';
+/** Cards in the grid before "Show more posts" (three rows on desktop). */
+const PAGE = 9;
 
 @Component({
   selector: 'app-blog-list',
@@ -48,17 +50,27 @@ export class BlogList {
   search = '';
   private readonly query = signal('');
 
+  /** How many grid cards show; back to one page whenever the filter changes. */
+  readonly limit = signal(PAGE);
+
   select(t: string): void {
     this.tab.set(t);
     this.tag.set('');
+    this.limit.set(PAGE);
   }
 
   clearTag(): void {
     this.tag.set('');
+    this.limit.set(PAGE);
   }
 
   applySearch(): void {
     this.query.set(this.search.trim().toLowerCase());
+    this.limit.set(PAGE);
+  }
+
+  showMore(): void {
+    this.limit.update((n) => n + PAGE);
   }
 
   readonly loading = signal(true);
@@ -70,6 +82,7 @@ export class BlogList {
     this.route.queryParamMap.pipe(takeUntilDestroyed()).subscribe((pm) => {
       this.tab.set(pm.get('category') || ALL);
       this.tag.set(pm.get('tag') || '');
+      this.limit.set(PAGE);
     });
 
     this.institute
@@ -112,9 +125,15 @@ export class BlogList {
 
   /** The newest post is featured on the unfiltered page; a filter shows every match in the grid. */
   readonly featured = computed(() => (this.filtering() ? null : this.allPosts()[0] ?? null));
-  readonly visible = computed(() => (this.filtering() ? this.matches() : this.allPosts().slice(1)));
+  private readonly gridPosts = computed(() => (this.filtering() ? this.matches() : this.allPosts().slice(1)));
+  readonly visible = computed(() => this.gridPosts().slice(0, this.limit()));
+  readonly moreCount = computed(() => Math.max(0, this.gridPosts().length - this.limit()));
 
   readonly recent = computed(() => this.allPosts().slice(0, 5));
+
+  /** The Labels box: every tag in use, with its post count. */
+  readonly labels = computed(() => countTags(this.allPosts().map((p) => p.tags)));
+  readonly activeTag = computed(() => this.tag().toLowerCase());
 
   email = '';
 

@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, afterNextRender, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SOCIAL_LINKS } from '../../shared/social-links';
 import { LenisService } from '../../core/services/lenis.service';
+import { VisitorCounterService } from '../../core/services/visitor-counter.service';
 
 interface FooterLink {
   label: string;
@@ -19,6 +20,20 @@ interface FooterLink {
 })
 export class Footer {
   private readonly lenis = inject(LenisService);
+  private readonly visitorCounter = inject(VisitorCounterService);
+
+  /** The live visitor counter (Website Management → Visitor Counter); null = not shown. */
+  readonly visitors = this.visitorCounter.counter;
+  private readonly numbers = new Intl.NumberFormat('en-IN');
+
+  constructor() {
+    afterNextRender(() => this.visitorCounter.start());
+  }
+
+  /** Indian digit grouping: 1,23,456. */
+  fmt(n: number | null | undefined): string {
+    return this.numbers.format(n ?? 0);
+  }
 
   readonly currentYear = new Date().getFullYear();
   readonly socials = SOCIAL_LINKS;

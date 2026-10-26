@@ -86,20 +86,9 @@
           <span class="dyuno-tag" aria-hidden="true">AI</span>
         </a>
       </div>
-      <!-- Rotating promo banners; slides are configured in Header.ads. -->
-      <div class="header-ads">
-        <swiper-container init="false" #adSwiper class="ads-swiper" aria-label="Announcements">
-          @for (ad of ads; track ad.image) {
-          <swiper-slide>
-            @if (ad.link) {
-            <a [routerLink]="ad.link"><img [src]="ad.image" [alt]="ad.alt" width="220" height="64" loading="lazy" /></a>
-            } @else {
-            <img [src]="ad.image" [alt]="ad.alt" width="220" height="64" loading="lazy" />
-            }
-          </swiper-slide>
-          }
-        </swiper-container>
-      </div>
+      <!-- Header banners from Website Management (a site-wide notice); the "Educating Since 1916"
+           badge holds the spot when none is active. -->
+      <app-header-ads class="header-ads" fallback />
     </div>
   </div>
 
@@ -248,8 +237,8 @@
       </div>
       }
     </div>
-    <img src="/assets/images/header/icons/heritage.png" alt="Educating Since 1916" width="220" height="64"
-      class="hidden h-14 w-auto shrink-0 object-contain lg:block" />
+    <!-- Header banners, as on desktop (below lg they show in the strip under the header instead) -->
+    <app-header-ads class="hidden h-14 w-[193px] shrink-0 lg:block" fallback />
   </div>
 
   <!-- nav bar -->

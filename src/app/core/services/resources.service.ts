@@ -1,7 +1,7 @@
 import { HttpClient, HttpContext, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map, shareReplay, tap } from 'rxjs';
 import { ApiService } from './api.service';
 import { SKIP_ERROR_REDIRECT } from '../interceptors/error.interceptor';
 import { AnswerKeyEntry, BeneficiaryStudent, BlogPost, CareersPage, TenderItem, Copyright, CounsellingPayload, DonationPayload, Donor, GalleryImage, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NavratriImage, NavratriLiveLink, Patent, PodcastEntry, SiteNotification, Trademark } from '../../shared/models/models';
@@ -168,22 +168,50 @@ export class ResourcesService {
         );
     }
 
-    // Home hero banners - the same mixed image list as the gallery (one endpoint),
-    // kept to purpose 'slider'/'banner' and newest-first (highest id). The legacy
-    // admin site loaded these exactly this way. SKIP_ERROR_REDIRECT so a failure
-    // leaves the hero on its built-in fallback banners instead of bouncing the page.
-    getSliderBanners(instituteId: number | string) {
-        return this.http.post<GalleryImage[]>(
-            ApiService.GetGalleryImagesURL,
-            { institute_id: instituteId },
-            { context: new HttpContext().set(SKIP_ERROR_REDIRECT, true) },
-        ).pipe(
+    /**
+     * An institute's active images (all purposes), fetched once per visit and shared by the home
+     * hero and the header banner, which both read from it. A failed request isn't kept, so the next
+     * caller tries again. SKIP_ERROR_REDIRECT so a failure only leaves those banners out.
+     */
+    private readonly bannerImages = new Map<string, Observable<GalleryImage[]>>();
+
+    private activeImages(instituteId: number | string): Observable<GalleryImage[]> {
+        const key = String(instituteId);
+        let list$ = this.bannerImages.get(key);
+        if (!list$) {
+            list$ = this.http.post<GalleryImage[]>(
+                ApiService.GetGalleryImagesURL,
+                { institute_id: instituteId },
+                { context: new HttpContext().set(SKIP_ERROR_REDIRECT, true) },
+            ).pipe(
+                tap({ error: () => this.bannerImages.delete(key) }),
+                shareReplay({ bufferSize: 1, refCount: false }),
+            );
+            this.bannerImages.set(key, list$);
+        }
+        return list$;
+    }
+
+    /** Active images of one purpose that have a file, newest first (highest id). */
+    private bannersOf(instituteId: number | string, purposes: readonly string[]) {
+        return this.activeImages(instituteId).pipe(
             map((list) =>
                 (list ?? [])
-                    .filter((b) => (b.purpose === 'slider' || b.purpose === 'banner') && !!b.image)
+                    .filter((b) => purposes.includes(b.purpose) && !!b.image)
                     .sort((a, b) => (b.id ?? 0) - (a.id ?? 0)),
             ),
         );
+    }
+
+    // Home hero banners - purpose 'slider' (legacy 'banner'), as the legacy admin site loaded them.
+    getSliderBanners(instituteId: number | string) {
+        return this.bannersOf(instituteId, ['slider', 'banner']);
+    }
+
+    // Header banners - the small rotating banners beside the logo, purpose 'headerbanner'
+    // (Website Management → Image Uploader → Header Banner, 440×128, optional link).
+    getHeaderBanners(instituteId: number | string) {
+        return this.bannersOf(instituteId, ['headerbanner']);
     }
 
     // IP Cell registers. Patents come back mixed; the page splits them by `purpose`.

@@ -1,0 +1,26 @@
+@let ads = banners.ads();
+<!-- Two or more rotate in Swiper. A single banner is a plain image: an uninitialised <swiper-container>
+     hides its slides once another part of the page (e.g. the home hero) has registered Swiper. -->
+@if (ads.length > 1) {
+<swiper-container init="false" #swiper class="ads-swiper" aria-label="Announcements">
+  @for (ad of ads; track ad.image) {
+  <swiper-slide><ng-container *ngTemplateOutlet="banner; context: { $implicit: ad }" /></swiper-slide>
+  }
+</swiper-container>
+} @else if (ads.length === 1) {
+<div class="ads-single" role="region" aria-label="Announcement">
+  <ng-container *ngTemplateOutlet="banner; context: { $implicit: ads[0] }" />
+</div>
+} @else if (fallback) {
+<img src="/assets/images/header/icons/heritage.png" alt="Educating Since 1916" width="220" height="64" class="ads-default" />
+}
+
+<ng-template #banner let-ad>
+  @if (ad.link) {
+  <a [href]="ad.link" (click)="openAd($event, ad.link)"><img [src]="ad.image" [alt]="ad.alt" width="220" height="64" /></a>
+  } @else if (ad.href) {
+  <a [href]="ad.href" target="_blank" rel="noopener noreferrer"><img [src]="ad.image" [alt]="ad.alt" width="220" height="64" /></a>
+  } @else {
+  <img [src]="ad.image" [alt]="ad.alt" width="220" height="64" />
+  }
+</ng-template>

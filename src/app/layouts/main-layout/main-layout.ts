@@ -17,6 +17,8 @@ import { SuccessDialog } from '../../shared/success-dialog/success-dialog';
 import { Lightbox } from '../../shared/lightbox/lightbox';
 import { PageFaq } from '../../shared/page-faq/page-faq';
 import { LenisService } from '../../core/services/lenis.service';
+import { HeaderBannersService } from '../../core/services/header-banners.service';
+import { HeaderAds } from '../header/header-ads/header-ads';
 
 @Component({
   selector: 'app-main-layout',
@@ -31,6 +33,7 @@ import { LenisService } from '../../core/services/lenis.service';
     SuccessDialog,
     Lightbox,
     PageFaq,
+    HeaderAds,
   ],
   templateUrl: './main-layout.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -39,6 +42,8 @@ import { LenisService } from '../../core/services/lenis.service';
 export class MainLayout {
   private readonly lenis = inject(LenisService);
   private readonly router = inject(Router);
+  /** The header banners (a site-wide notice), for the strip under the header on smaller screens. */
+  readonly headerBanners = inject(HeaderBannersService);
 
   constructor() {
     const destroyRef = inject(DestroyRef);

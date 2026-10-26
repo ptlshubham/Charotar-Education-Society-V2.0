@@ -241,7 +241,7 @@ export interface DonationPayload {
 export interface GalleryImage {
   id?: number;
   image: string;
-  /** 'image' (gallery photo), 'video', 'slider', 'banner'… */
+  /** 'image' (gallery photo), 'video', 'slider', 'banner', 'headerbanner' (header promo)… */
   purpose: string;
   title?: string;
   /** Video entries may carry the URL in a dedicated field instead of `image`. */

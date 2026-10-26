@@ -21,6 +21,7 @@ import { ResourcesService } from '../../core/services/resources.service';
 import { SOCIAL_LINKS } from '../../shared/social-links';
 import { SearchItem } from '../../shared/models/models';
 import { LanguageSwitcher } from '../../shared/language-switcher/language-switcher';
+import { HeaderAds } from './header-ads/header-ads';
 
 export interface NavItem {
   label: string;
@@ -92,12 +93,9 @@ export const ICONS = {
 } as const;
 
 
-/** Minimal shape of the Swiper custom element we initialise for the ad banner. */
-type SwiperEl = HTMLElement & { initialize(): void };
-
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, LanguageSwitcher],
+  imports: [RouterLink, LanguageSwitcher, HeaderAds],
   templateUrl: './header.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './header.scss',
@@ -289,17 +287,6 @@ export class Header implements AfterViewInit {
     { label: 'Gallery', short: 'Gallery', link: '/glory/gallery', icon: 'image' },
   ];
 
-  /**
-   * Rotating promo banners shown top-right of the brand bar. Auto-plays when there
-   * is more than one slide (a single entry just shows statically). Replace or extend
-   * these as campaigns change - drop artwork in /assets/images/header/ads/ (220×64,
-   * or any 3.4:1 image) and add an entry here; `link` is optional.
-   */
-  readonly ads: ReadonlyArray<{ image: string; alt: string; link?: string }> = [
-    { image: '/assets/images/header/ads/navratri.jpeg', alt: 'Adi Devi Mahakali: Navratri Mahotsav 2026', link: '/navratri/2026' },
-    // Despite its file name, this is the Chatkaro artwork.
-    { image: '/assets/images/header/ads/heritage.png', alt: 'CES Chatkaro: coming soon', link: '/chatkaro' },
-  ];
 
   /** Extra links in the top utility strip. RTI/Grievance point at the nearest
    *  existing pages until dedicated ones are built. */
@@ -528,7 +515,6 @@ export class Header implements AfterViewInit {
 
   @ViewChild('mobileSidebar') sidebarRef!: ElementRef<HTMLElement>;
   @ViewChild('mobileOverlay') overlayRef!: ElementRef<HTMLElement>;
-  @ViewChild('adSwiper') adSwiperRef?: ElementRef<SwiperEl>;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -599,24 +585,6 @@ export class Header implements AfterViewInit {
     pollVisitors();
     const visitorTimer = setInterval(pollVisitors, 20000);
     this.destroyRef.onDestroy(() => clearInterval(visitorTimer));
-
-    // Rotating ad banner - Swiper's custom elements need `customElements`, absent
-    // during SSR, so this runs browser-only. A single ad stays static (no autoplay).
-    if (this.ads.length > 1 && this.adSwiperRef) {
-      const { register } = await import('swiper/element/bundle');
-      register();
-      const el = this.adSwiperRef.nativeElement;
-      Object.assign(el, {
-        loop: true,
-        speed: 700,
-        effect: 'fade',
-        fadeEffect: { crossFade: true },
-        autoplay: { delay: 3500, disableOnInteraction: false, pauseOnMouseEnter: true },
-        allowTouchMove: false,
-        a11y: { enabled: true },
-      });
-      el.initialize();
-    }
   }
 
   /** Accept a bare number or common shapes ({ online }, { count }, { visitors }, { total }, { data }). */

@@ -1,0 +1,24 @@
+// Fills whatever box the parent gives it (220×64 in the desktop header).
+:host {
+  display: block;
+}
+
+.ads-swiper,
+.ads-single {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;         // clip stacked slides to one row before Swiper upgrades
+
+  swiper-slide { display: flex; }
+  a { display: block; width: 100%; height: 100%; }
+  img { display: block; width: 100%; height: 100%; object-fit: cover; }
+}
+
+// The "Educating Since 1916" badge, shown when no header banner is active.
+.ads-default {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

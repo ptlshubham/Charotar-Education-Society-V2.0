@@ -55,7 +55,7 @@ const IMG = '/assets/images/institutes/';
 export class Campuses {
   private readonly document = inject(DOCUMENT);
 
-  readonly banner = '/assets/images/hero/about.png';
+  readonly banner = '/assets/images/hero/about.webp';
 
   readonly heroStats: readonly HeroStat[] = [
     { value: '3', label: 'Campuses', path: [], icon: 'location_city', iconClass: 'text-white' },
@@ -74,29 +74,29 @@ export class Campuses {
       intro:
         'Our main campus near Anand railway station is where CES began in 1916, with 27 pupils in three standards. Today its 21 acres hold our oldest schools, most of our colleges, three of our four hostels and the Society\'s office.',
       facilities: ['Gyansthali Library', 'Gym with free coaching', 'Amphitheatre', 'Auditorium', 'Saraswati temple', 'Stationery store'],
-      image: `${IMG}dn-high-9-12.jpg`,
+      image: `${IMG}dn-high-9-12.webp`,
       caption: 'D.N. High School, where CES began',
       institutes: [
-        { kind: 'school', name: 'D. N. High School (Std 6 to 8)', phone: '(02692) 269060', website: 'https://www.up.dnhighschool.ac.in/', image: `${IMG}dn-high-6-8.jpg` },
-        { kind: 'school', name: 'D. N. High School (Std 9 to 12)', phone: '(02692) 268940', website: 'https://www.hs.dnhighschool.ac.in/', image: `${IMG}dn-high-9-12.jpg` },
-        { kind: 'school', name: 'Kasturba Kanya Vidyalaya (Std 6 to 8)', phone: '(02692) 250137', website: 'https://www.up.kkv.ac.in/', image: `${IMG}kkv-6-8.jpg` },
-        { kind: 'school', name: 'Kasturba Kanya Vidyalaya (Std 9 to 12)', phone: '(02692) 268940', website: 'https://www.hs.kkv.ac.in/', image: `${IMG}kkv-9-12.jpg` },
-        { kind: 'school', name: 'V. J. Patel Higher Secondary School', phone: '(02692) 250669', website: 'https://www.vjhs.ac.in/', image: `${IMG}dn-high-6-8.jpg` },
-        { kind: 'school', name: 'Charotar English Medium School', phone: '(02692) 266789', website: 'https://www.cems.ac.in/', image: `${IMG}cems.jpg` },
-        { kind: 'school', name: 'Ambalal Balshala', phone: '(02692) 243634', website: 'https://www.ambs.ac.in/', image: `${IMG}ambalal-balshala.jpg` },
-        { kind: 'school', name: 'Shishuvihar, Nutan Shishuvihar and Nursery', phone: '(02692) 250864', website: 'https://www.shishuvihar.ac.in/', image: `${IMG}shishuvihar.jpg` },
-        { kind: 'college', name: 'M. B. Patel Science College', phone: '(02692) 244415', website: 'https://www.mbpatelscience.ac.in/', image: `${IMG}mb-patel-science.jpg` },
-        { kind: 'college', name: 'Shri Alpesh N. Patel Post Graduate Institute of Science and Research', phone: '(02692) 267404', website: 'https://www.sanppgi.ac.in/', image: `${IMG}alpesh-science.jpg` },
-        { kind: 'college', name: 'Shri V. Z. Patel Commerce College', phone: '(02692) 252000', website: 'https://www.vzp.ac.in/', image: `${IMG}vz-patel-commerce.jpg` },
+        { kind: 'school', name: 'D. N. High School (Std 6 to 8)', phone: '(02692) 269060', website: 'https://www.up.dnhighschool.ac.in/', image: `${IMG}dn-high-6-8.webp` },
+        { kind: 'school', name: 'D. N. High School (Std 9 to 12)', phone: '(02692) 268940', website: 'https://www.hs.dnhighschool.ac.in/', image: `${IMG}dn-high-9-12.webp` },
+        { kind: 'school', name: 'Kasturba Kanya Vidyalaya (Std 6 to 8)', phone: '(02692) 250137', website: 'https://www.up.kkv.ac.in/', image: `${IMG}kkv-6-8.webp` },
+        { kind: 'school', name: 'Kasturba Kanya Vidyalaya (Std 9 to 12)', phone: '(02692) 268940', website: 'https://www.hs.kkv.ac.in/', image: `${IMG}kkv-9-12.webp` },
+        { kind: 'school', name: 'V. J. Patel Higher Secondary School', phone: '(02692) 250669', website: 'https://www.vjhs.ac.in/', image: `${IMG}dn-high-6-8.webp` },
+        { kind: 'school', name: 'Charotar English Medium School', phone: '(02692) 266789', website: 'https://www.cems.ac.in/', image: `${IMG}cems.webp` },
+        { kind: 'school', name: 'Ambalal Balshala', phone: '(02692) 243634', website: 'https://www.ambs.ac.in/', image: `${IMG}ambalal-balshala.webp` },
+        { kind: 'school', name: 'Shishuvihar, Nutan Shishuvihar and Nursery', phone: '(02692) 250864', website: 'https://www.shishuvihar.ac.in/', image: `${IMG}shishuvihar.webp` },
+        { kind: 'college', name: 'M. B. Patel Science College', phone: '(02692) 244415', website: 'https://www.mbpatelscience.ac.in/', image: `${IMG}mb-patel-science.webp` },
+        { kind: 'college', name: 'Shri Alpesh N. Patel Post Graduate Institute of Science and Research', phone: '(02692) 267404', website: 'https://www.sanppgi.ac.in/', image: `${IMG}alpesh-science.webp` },
+        { kind: 'college', name: 'Shri V. Z. Patel Commerce College', phone: '(02692) 252000', website: 'https://www.vzp.ac.in/', image: `${IMG}vz-patel-commerce.webp` },
         { kind: 'college', name: 'Shri D. N. Institute of P. G. Studies in Commerce', phone: '(02692) 252804', website: 'https://www.shridnpgs.ac.in/', image: `${IMG}dn-pg-commerce.jpg` },
-        { kind: 'college', name: 'Shri Bhikhabhai Patel Arts College', phone: '(02692) 244043', website: 'https://www.bpac.ac.in/', image: `${IMG}bhikhabhai-arts.jpg` },
-        { kind: 'college', name: 'Shri Bhikhabhai Patel Institute of P. G. Studies & Research in Humanities', phone: '(02692) 244043', website: 'https://www.bppg.ac.in/', image: `${IMG}bhikhabhai-pg-studies.jpg` },
-        { kind: 'college', name: 'Shri D. N. Institute of Business Administration', phone: '(02692) 252800', website: 'https://www.dniba.ac.in/', image: `${IMG}dn-business.jpg` },
-        { kind: 'college', name: 'Shri D. N. Institute of Computer Applications', phone: '(02692) 266679', website: 'https://www.dnica.ac.in/', image: `${IMG}dn-computer.jpg` },
-        { kind: 'college', name: 'Shri D. N. Institute of Law', phone: '(02692) 243083', image: `${IMG}dn-law.jpg` },
-        { kind: 'hostel', name: 'Vidhyarthi Ashram', image: `${IMG}hostel-vidhyarthi-ashram.jpg` },
-        { kind: 'hostel', name: 'Kasturba Kanya Chhatralay', image: `${IMG}hostel-kasturba-kanya.jpg` },
-        { kind: 'hostel', name: 'Ladies Hostel (M. B. Patel Science College)', image: `${IMG}hostel-ladies.jpg` },
+        { kind: 'college', name: 'Shri Bhikhabhai Patel Arts College', phone: '(02692) 244043', website: 'https://www.bpac.ac.in/', image: `${IMG}bhikhabhai-arts.webp` },
+        { kind: 'college', name: 'Shri Bhikhabhai Patel Institute of P. G. Studies & Research in Humanities', phone: '(02692) 244043', website: 'https://www.bppg.ac.in/', image: `${IMG}bhikhabhai-pg-studies.webp` },
+        { kind: 'college', name: 'Shri D. N. Institute of Business Administration', phone: '(02692) 252800', website: 'https://www.dniba.ac.in/', image: `${IMG}dn-business.webp` },
+        { kind: 'college', name: 'Shri D. N. Institute of Computer Applications', phone: '(02692) 266679', website: 'https://www.dnica.ac.in/', image: `${IMG}dn-computer.webp` },
+        { kind: 'college', name: 'Shri D. N. Institute of Law', phone: '(02692) 243083', image: `${IMG}dn-law.webp` },
+        { kind: 'hostel', name: 'Vidhyarthi Ashram', image: `${IMG}hostel-vidhyarthi-ashram.webp` },
+        { kind: 'hostel', name: 'Kasturba Kanya Chhatralay', image: `${IMG}hostel-kasturba-kanya.webp` },
+        { kind: 'hostel', name: 'Ladies Hostel (M. B. Patel Science College)', image: `${IMG}hostel-ladies.webp` },
       ],
     },
     {
@@ -107,12 +107,12 @@ export class Campuses {
       mapQuery: 'Sardar Vallabhbhai Patel High School, Khetiwadi, Anand, Gujarat',
       intro:
         'The 7.5-acre Khetiwadi campus is home to Sardar Vallabhbhai Patel High School, with classes from Shishuvihar right up to class 12.',
-      image: `${IMG}svp-high-9-12.jpg`,
+      image: `${IMG}svp-high-9-12.webp`,
       caption: 'Sardar Vallabhbhai Patel High School',
       institutes: [
-        { kind: 'school', name: 'Sardar Vallabhbhai Patel Shishuvihar and Balshala', phone: '(02692) 262904', website: 'https://www.bal.svpschool.ac.in/', image: `${IMG}svp-shishuvihar.jpg` },
-        { kind: 'school', name: 'Sardar Vallabhbhai Patel High School (Std 6 to 8)', phone: '(02692) 264516', website: 'https://www.up.svpschool.ac.in/', image: `${IMG}svp-high-6-8.jpg` },
-        { kind: 'school', name: 'Sardar Vallabhbhai Patel High School (Std 9 to 12)', phone: '(02692) 262436', website: 'https://www.hs.svpschool.ac.in/', image: `${IMG}svp-high-9-12.jpg` },
+        { kind: 'school', name: 'Sardar Vallabhbhai Patel Shishuvihar and Balshala', phone: '(02692) 262904', website: 'https://www.bal.svpschool.ac.in/', image: `${IMG}svp-shishuvihar.webp` },
+        { kind: 'school', name: 'Sardar Vallabhbhai Patel High School (Std 6 to 8)', phone: '(02692) 264516', website: 'https://www.up.svpschool.ac.in/', image: `${IMG}svp-high-6-8.webp` },
+        { kind: 'school', name: 'Sardar Vallabhbhai Patel High School (Std 9 to 12)', phone: '(02692) 262436', website: 'https://www.hs.svpschool.ac.in/', image: `${IMG}svp-high-9-12.webp` },
       ],
     },
     {
@@ -123,19 +123,19 @@ export class Campuses {
       mapQuery: 'Shri I J Patel B.Ed. College, Mogri, Anand, Gujarat',
       intro:
         'The 12-acre Mogri campus is where CES trains its teachers and physical education instructors, alongside a school and an applied science college. It was redeveloped at a cost of about Rs. 2 crore and has its own hostel, Adhyapan Mandir Chhatralay.',
-      image: `${IMG}ij-patel-bed.jpg`,
+      image: `${IMG}ij-patel-bed.webp`,
       caption: 'The college building on the Mogri campus',
       institutes: [
-        { kind: 'school', name: 'K. M. Patel Balshala and Shishuvihar', phone: '(02692) 233123', website: 'https://www.kmbal.ac.in/', image: `${IMG}km-patel-balshala.jpg` },
-        { kind: 'school', name: 'Mahatma Gandhi Vidyalaya (Std 6 to 8)', phone: '(02692) 230192', website: 'https://www.up.mgvidyalaya.ac.in/', image: `${IMG}mg-vidyalaya-6-8.jpg` },
-        { kind: 'school', name: 'Mahatma Gandhi Vidyalaya (Std 9 to 12)', phone: '(02692) 230192', website: 'https://www.hs.mgvidyalaya.ac.in/', image: `${IMG}mg-vidyalaya-9-12.jpg` },
+        { kind: 'school', name: 'K. M. Patel Balshala and Shishuvihar', phone: '(02692) 233123', website: 'https://www.kmbal.ac.in/', image: `${IMG}km-patel-balshala.webp` },
+        { kind: 'school', name: 'Mahatma Gandhi Vidyalaya (Std 6 to 8)', phone: '(02692) 230192', website: 'https://www.up.mgvidyalaya.ac.in/', image: `${IMG}mg-vidyalaya-6-8.webp` },
+        { kind: 'school', name: 'Mahatma Gandhi Vidyalaya (Std 9 to 12)', phone: '(02692) 230192', website: 'https://www.hs.mgvidyalaya.ac.in/', image: `${IMG}mg-vidyalaya-9-12.webp` },
         // The Mogri building photo carries this college's signboard (the Colleges page shows the Anand science college).
-        { kind: 'college', name: 'M. B. Patel Applied Science College', phone: '(02692) 233000', website: 'https://www.mbpasc.ac.in/', image: `${IMG}ij-patel-bed.jpg` },
-        { kind: 'college', name: 'Motibhai Amin P. S. Adhyapan Mandir (D.El.Ed.)', phone: '(02692) 233343', website: 'https://www.maptc.ac.in/', image: `${IMG}motibhai-amin.jpg` },
-        { kind: 'college', name: 'Shri I. J. Patel B.Ed. College', phone: '(02692) 236266', website: 'https://www.ijbed.ac.in/', image: `${IMG}ij-patel-bed.jpg` },
-        { kind: 'college', name: 'Shri I. J. Patel M.Ed. College', phone: '(02692) 233064', website: 'https://www.ipmed.ac.in/', image: `${IMG}ij-patel-med.jpg` },
-        { kind: 'college', name: 'Shri V. J. Patel College of Physical Education', phone: '(02692) 229062', website: 'https://www.vjbped.ac.in/', image: `${IMG}vj-patel-physical.jpg` },
-        { kind: 'hostel', name: 'Adhyapan Mandir Chhatralay', image: `${IMG}hostel-adhyapan-mandir.jpg` },
+        { kind: 'college', name: 'M. B. Patel Applied Science College', phone: '(02692) 233000', website: 'https://www.mbpasc.ac.in/', image: `${IMG}ij-patel-bed.webp` },
+        { kind: 'college', name: 'Motibhai Amin P. S. Adhyapan Mandir (D.El.Ed.)', phone: '(02692) 233343', website: 'https://www.maptc.ac.in/', image: `${IMG}motibhai-amin.webp` },
+        { kind: 'college', name: 'Shri I. J. Patel B.Ed. College', phone: '(02692) 236266', website: 'https://www.ijbed.ac.in/', image: `${IMG}ij-patel-bed.webp` },
+        { kind: 'college', name: 'Shri I. J. Patel M.Ed. College', phone: '(02692) 233064', website: 'https://www.ipmed.ac.in/', image: `${IMG}ij-patel-med.webp` },
+        { kind: 'college', name: 'Shri V. J. Patel College of Physical Education', phone: '(02692) 229062', website: 'https://www.vjbped.ac.in/', image: `${IMG}vj-patel-physical.webp` },
+        { kind: 'hostel', name: 'Adhyapan Mandir Chhatralay', image: `${IMG}hostel-adhyapan-mandir.webp` },
       ],
     },
   ];

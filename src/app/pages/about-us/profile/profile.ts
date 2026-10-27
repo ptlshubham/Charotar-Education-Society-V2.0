@@ -26,7 +26,7 @@ const FOUNDED = 1916;
 export class Profile {
   private readonly document = inject(DOCUMENT);
 
-  readonly hero = '/assets/images/hero/about.png';
+  readonly hero = '/assets/images/hero/about.webp';
   readonly leaders = LEADERS;
 
   readonly highlights: ReadonlyArray<{ value: string; label: string }> = [

@@ -12,7 +12,7 @@ interface JobPosition {
   typeColor: string;
 }
 
-const PLACEHOLDER_IMAGE = '/assets/images/blog-placeholder.png';
+const PLACEHOLDER_IMAGE = '/assets/images/blog-placeholder.svg';
 
 @Component({
   selector: 'app-careers',

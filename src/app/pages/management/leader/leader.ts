@@ -25,7 +25,7 @@ export class LeaderPage {
   private readonly router = inject(Router);
   private readonly seo = inject(SeoService);
 
-  readonly heroImage = '/assets/images/hero/management.jpeg';
+  readonly heroImage = '/assets/images/hero/management.webp';
 
   private readonly role = toSignal(this.route.paramMap.pipe(map((p) => p.get('role'))), {
     initialValue: this.route.snapshot.paramMap.get('role'),

@@ -23,7 +23,7 @@ interface Hostel {
   styleUrl: './hostels.scss',
 })
 export class Hostels {
-  readonly banner = '/assets/images/hero/hostel.jpeg';
+  readonly banner = '/assets/images/hero/hostel.webp';
 
   readonly tabs: readonly TabItem[] = [
     { id: 'all', label: 'All Hostels', path: [], icon: 'apartment' },
@@ -54,7 +54,7 @@ export class Hostels {
         { label: 'Class 5 to PG', path: ['M4 19.5A2.5 2.5 0 0 1 6.5 17H20', 'M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'] },
         { label: 'Meals included', path: ['M3 2v7c0 1.1.9 2 2 2h1a2 2 0 0 0 2-2V2', 'M5 2v20M16 2v20M16 12h4a2 2 0 0 0 0-10h-4z'] },
       ],
-      image: '/assets/images/institutes/hostel-vidhyarthi-ashram.jpg',
+      image: '/assets/images/institutes/hostel-vidhyarthi-ashram.webp',
     },
     {
       name: 'Kasturba Kanya Chhatralay',
@@ -65,7 +65,7 @@ export class Hostels {
         { label: 'Class 5 to 12', path: ['M4 19.5A2.5 2.5 0 0 1 6.5 17H20', 'M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'] },
         { label: 'Meals included', path: ['M3 2v7c0 1.1.9 2 2 2h1a2 2 0 0 0 2-2V2', 'M5 2v20M16 2v20M16 12h4a2 2 0 0 0 0-10h-4z'] },
       ],
-      image: '/assets/images/institutes/hostel-kasturba-kanya.jpg',
+      image: '/assets/images/institutes/hostel-kasturba-kanya.webp',
     },
     {
       name: 'Ladies Hostel',
@@ -76,7 +76,7 @@ export class Hostels {
         { label: 'UG & PG', path: ['M4 19.5A2.5 2.5 0 0 1 6.5 17H20', 'M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'] },
         { label: '24-hour security', path: ['M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'] },
       ],
-      image: '/assets/images/institutes/hostel-ladies.jpg',
+      image: '/assets/images/institutes/hostel-ladies.webp',
     },
     {
       name: 'Adhyapan Mandir Chhatralay',
@@ -87,7 +87,7 @@ export class Hostels {
         { label: 'Laundry', path: ['M20.4 6.6 16 4a4 4 0 0 1-8 0L3.6 6.6a1 1 0 0 0-.5 1.1l.9 4.3a1 1 0 0 0 1 .8H7v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-8h2a1 1 0 0 0 1-.8l.9-4.3a1 1 0 0 0-.5-1.1z'] },
         { label: 'Free first aid', path: ['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z', 'M12 8v8M8 12h8'] },
       ],
-      image: '/assets/images/institutes/hostel-adhyapan-mandir.jpg',
+      image: '/assets/images/institutes/hostel-adhyapan-mandir.webp',
     },
   ];
 

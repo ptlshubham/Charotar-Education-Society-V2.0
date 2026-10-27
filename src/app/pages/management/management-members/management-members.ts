@@ -23,21 +23,21 @@ export class ManagementMembers {
   // Designations carried over verbatim from the legacy site's management page -
   // the earlier port had flattened every member to "Managing Committee Member".
   readonly members: readonly Member[] = [
-    { name: 'Shri Vijay Patel', role: 'Chairman, Anand District Cricket Association · Ex. President, Anand Nagar Palika', photo: `${DIR}/Vijaybhai.png` },
-    { name: 'Shri Vinod Parmar', role: 'College Administrator', photo: `${DIR}/Vinodbhai.png` },
-    { name: 'Dr. Uday Vora', role: 'Doctor', photo: `${DIR}/Udaybhai.png` },
-    { name: 'Shri Dipen Patel', role: 'Counsellor, Anand Nagar Palika · Businessman', photo: `${DIR}/Dipenbhai.png` },
-    { name: 'Shri Ketan Patel', role: 'Engineer and Builder', photo: `${DIR}/Ketanbhai.png` },
-    { name: 'Shri Shailesh Patel', role: 'Advocate · Senate Member of Sardar Patel University', photo: `${DIR}/Shaileshbhai.png` },
-    { name: 'Shri Kalpesh Patel', role: 'BJP Mahamantri, Vadodara District', photo: `${DIR}/Kalpeshbhai.png` },
-    { name: 'Shri Chirag Patel', role: 'Businessman', photo: `${DIR}/chirag.png` },
-    { name: 'Shri Pragnesh Patel', role: 'Senate Member of Sardar Patel University · Ex. President, Anand Nagar Palika', photo: `${DIR}/Pragneshbhai.png` },
-    { name: 'Shri Hemant Patel', role: 'Member of Advisory Committee, Charotar Gas', photo: `${DIR}/Hemantbhai.png` },
-    { name: 'Shri Swetal Patel', role: 'Secretary, Anand District Cricket Association · Ex. Counsellor, Anand Nagar Palika', photo: `${DIR}/Swetalbhai.png` },
-    { name: 'Shri Samir Patel', role: 'Businessman', photo: `${DIR}/Samirbhai.png` },
-    { name: 'Shri Pinal Patel', role: 'Businessman', photo: `${DIR}/Pinalbhai.png` },
-    { name: 'Shri Sandip Patel', role: 'Businessman', photo: `${DIR}/SandipPatel.png` },
-    { name: 'Shri Jay Patel', role: 'Businessman and Lawyer', photo: `${DIR}/Jay.jpg` },
+    { name: 'Shri Vijay Patel', role: 'Chairman, Anand District Cricket Association · Ex. President, Anand Nagar Palika', photo: `${DIR}/Vijaybhai.webp` },
+    { name: 'Shri Vinod Parmar', role: 'College Administrator', photo: `${DIR}/Vinodbhai.webp` },
+    { name: 'Dr. Uday Vora', role: 'Doctor', photo: `${DIR}/Udaybhai.webp` },
+    { name: 'Shri Dipen Patel', role: 'Counsellor, Anand Nagar Palika · Businessman', photo: `${DIR}/Dipenbhai.webp` },
+    { name: 'Shri Ketan Patel', role: 'Engineer and Builder', photo: `${DIR}/Ketanbhai.webp` },
+    { name: 'Shri Shailesh Patel', role: 'Advocate · Senate Member of Sardar Patel University', photo: `${DIR}/Shaileshbhai.webp` },
+    { name: 'Shri Kalpesh Patel', role: 'BJP Mahamantri, Vadodara District', photo: `${DIR}/Kalpeshbhai.webp` },
+    { name: 'Shri Chirag Patel', role: 'Businessman', photo: `${DIR}/chirag.webp` },
+    { name: 'Shri Pragnesh Patel', role: 'Senate Member of Sardar Patel University · Ex. President, Anand Nagar Palika', photo: `${DIR}/Pragneshbhai.webp` },
+    { name: 'Shri Hemant Patel', role: 'Member of Advisory Committee, Charotar Gas', photo: `${DIR}/Hemantbhai.webp` },
+    { name: 'Shri Swetal Patel', role: 'Secretary, Anand District Cricket Association · Ex. Counsellor, Anand Nagar Palika', photo: `${DIR}/Swetalbhai.webp` },
+    { name: 'Shri Samir Patel', role: 'Businessman', photo: `${DIR}/Samirbhai.webp` },
+    { name: 'Shri Pinal Patel', role: 'Businessman', photo: `${DIR}/Pinalbhai.webp` },
+    { name: 'Shri Sandip Patel', role: 'Businessman', photo: `${DIR}/SandipPatel.webp` },
+    { name: 'Shri Jay Patel', role: 'Businessman and Lawyer', photo: `${DIR}/Jay.webp` },
   ];
 
   /** Which member card has its designation expanded, by name. */

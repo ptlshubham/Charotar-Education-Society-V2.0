@@ -44,7 +44,7 @@ export const PROJECTS: readonly Project[] = [
     focus: 'technology',
     image: '/assets/icons/dyuno/dyuno-stand.webp',
     contain: true,
-    heroImage: '/assets/images/hero/home.jpeg',
+    heroImage: '/assets/images/hero/home.webp',
     tagline: 'Our AI assistant, free for everyone who visits this website.',
     heading: 'Help with studies, and answers about CES, at any hour.',
     about: [
@@ -77,7 +77,7 @@ export const PROJECTS: readonly Project[] = [
     title: 'Project ADITYA',
     desc: 'The first and largest solar power plant in the Charotar region, built to run our institutions on sunlight and save electricity.',
     focus: 'environment',
-    image: '/assets/images/project/aditya.png',
+    image: '/assets/images/project/aditya.webp',
     tagline: 'Solar power for our schools and colleges, made on our own campus.',
     heading: 'Classrooms that run on sunlight.',
     about: [
@@ -101,7 +101,7 @@ export const PROJECTS: readonly Project[] = [
     title: 'Project EKLAVYA',
     desc: 'Life skills, personality development and everyday technology like computers and the internet, taught alongside the syllabus.',
     focus: 'education',
-    image: '/assets/images/project/eklavya.png',
+    image: '/assets/images/project/eklavya.webp',
     tagline: 'Life skills, confidence and everyday technology, taught alongside the syllabus.',
     heading: 'Ready for life, not only for exams.',
     about: [
@@ -125,7 +125,7 @@ export const PROJECTS: readonly Project[] = [
     title: 'Project E-GYAN',
     desc: 'Presentations, e-books and animations gathered and rewritten in simple language, so students can learn and revise online.',
     focus: 'technology',
-    image: '/assets/images/project/egyan.png',
+    image: '/assets/images/project/egyan.webp',
     tagline: 'Good study material from the web, gathered in one place and written in simple language.',
     heading: 'Study material that is easy to find and easy to follow.',
     about: [
@@ -149,7 +149,7 @@ export const PROJECTS: readonly Project[] = [
     title: 'Project SETU',
     desc: 'Every CES campus joined on one network, which keeps our digital work and accounts simple.',
     focus: 'technology',
-    image: '/assets/images/project/setu.png',
+    image: '/assets/images/project/setu.webp',
     tagline: 'Every CES campus joined on one network.',
     heading: 'One network for the whole Society.',
     about: [
@@ -172,7 +172,7 @@ export const PROJECTS: readonly Project[] = [
     title: 'Project SANGAM',
     desc: 'All our institutions run from a single website, so the whole Society works as one.',
     focus: 'technology',
-    image: '/assets/images/project/sangam.png',
+    image: '/assets/images/project/sangam.webp',
     tagline: 'All our institutions managed from a single web portal.',
     heading: 'Many institutions, one portal.',
     about: [
@@ -195,7 +195,7 @@ export const PROJECTS: readonly Project[] = [
     title: 'Project ARJUN',
     desc: "Coaching in shooting sport, from a student's first lesson to competing.",
     focus: 'sports',
-    image: '/assets/images/project/arjun.png',
+    image: '/assets/images/project/arjun.webp',
     tagline: 'Professional coaching in shooting sport, within easy reach of our students.',
     heading: 'A steady hand and a sharp eye.',
     about: [
@@ -219,7 +219,7 @@ export const PROJECTS: readonly Project[] = [
     title: 'Project ANANDAM',
     desc: 'Students can talk privately with a counsellor about stress, study worries, career choices or relationships.',
     focus: 'health',
-    image: '/assets/images/project/anandam.png',
+    image: '/assets/images/project/anandam.webp',
     tagline: 'Free, private counselling for any student who needs to talk.',
     heading: 'Someone to talk to, in confidence.',
     about: [
@@ -244,7 +244,7 @@ export const PROJECTS: readonly Project[] = [
     title: 'Sports Academy',
     desc: 'Proper coaching for students who want to compete at state, national and international level.',
     focus: 'sports',
-    image: '/assets/images/project/sports.png',
+    image: '/assets/images/project/sports.webp',
     tagline: 'Professional coaching for students who want to compete.',
     heading: 'From the school ground to the national stage.',
     about: [
@@ -267,7 +267,7 @@ export const PROJECTS: readonly Project[] = [
     title: 'Performing Arts Academy',
     desc: 'Training in dance, music, drawing, theatre and animation for students who want to take their talent further.',
     focus: 'arts',
-    image: '/assets/images/project/performing-arts.png',
+    image: '/assets/images/project/performing-arts.webp',
     tagline: 'Theatre, dance, music, singing, drawing, design and animation, taught by people who work in those fields.',
     heading: 'Room for every talent.',
     about: [
@@ -288,7 +288,7 @@ export const PROJECTS: readonly Project[] = [
     desc: 'Job-ready courses taught by experts from partner organisations. Now running: Data Structures & Algorithms, the CELTAS English Enrichment Programme and Tally accounting.',
     focus: 'skill',
     // TODO: a photo of the centre; the careers banner stands in until then.
-    image: '/assets/images/hero/careers.jpeg',
+    image: '/assets/images/hero/careers.webp',
     tagline: 'Job-ready courses taught by experts from partner organisations.',
     heading: 'Skills that lead to work.',
     about: [
@@ -312,7 +312,7 @@ export const PROJECTS: readonly Project[] = [
     desc: 'Learning by doing in science and maths for classes 6 to 10, plus JEE, NEET and GUJCET coaching for classes 11 and 12. 134 Udaan students sat the Ramanujan Maths Olympiad and came back with 17 medals.',
     focus: 'education',
     // TODO: a photo of an Udaan class; the Schools banner stands in until then.
-    image: '/assets/images/hero/school.jpeg',
+    image: '/assets/images/hero/school.webp',
     tagline: 'Hands-on science and maths for Std 6 to 10, and coaching for JEE, NEET and GUJCET.',
     heading: 'Science and maths, learned by doing.',
     about: [

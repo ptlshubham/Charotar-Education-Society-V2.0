@@ -44,7 +44,7 @@ export class Gallery {
   private readonly sanitizer = inject(DomSanitizer);
   private readonly lightbox = inject(LightboxService);
 
-  readonly banner = 'assets/images/hero/gallery.jpeg';
+  readonly banner = 'assets/images/hero/gallery.webp';
 
   readonly stats: ReadonlyArray<{ value: string; label: string; tone: string; icon: string }> = [
     { value: '1,248+', label: 'Photos', tone: 'bg-primary/10 text-primary', icon: 'photo_library' },

@@ -31,7 +31,7 @@ interface Chapter {
 export class History {
   private readonly document = inject(DOCUMENT);
 
-  readonly hero = '/assets/images/hero/about.png';
+  readonly hero = '/assets/images/hero/about.webp';
 
   /** The chapter currently in view, for the chapter list. */
   readonly current = signal('beginnings');
@@ -74,7 +74,7 @@ export class History {
         { value: 'F/53/Anand', label: 'Registration number' },
       ],
       image: {
-        src: '/assets/images/header/campus.png',
+        src: '/assets/images/header/campus.webp',
         alt: 'Line drawing of D.N. High School, Anand',
         caption: 'D.N. High School, Anand, where CES began',
         contain: true,
@@ -108,7 +108,7 @@ export class History {
         { value: '6 months', label: 'the school stayed shut after Quit India' },
       ],
       image: {
-        src: '/assets/images/about/freedom-fighter.jpeg',
+        src: '/assets/images/about/freedom-fighter.webp',
         alt: 'Archive photographs of CES leaders and students in the freedom movement',
         caption: 'From the CES archives',
       },
@@ -123,7 +123,7 @@ export class History {
         'Much of this growth carries the mark of Shri Vitthalbhai J. Patel, who joined D.N. High School as a teacher in 1944 and over 35 years served it as hostel warden, principal and secretary. Every 13 January, his birthday, former students come home for the Alumni Meet held in his memory.',
       ],
       image: {
-        src: '/assets/images/history/freedom.jpg',
+        src: '/assets/images/history/freedom.webp',
         alt: 'Shri Vitthalbhai J. Patel at the spinning wheel',
         caption: 'Shri Vitthalbhai J. Patel',
       },
@@ -143,7 +143,7 @@ export class History {
         { value: '8', label: 'Guinness World Records' },
       ],
       image: {
-        src: '/assets/images/celebration/shatakotsav/06.jpg',
+        src: '/assets/images/celebration/shatakotsav/06.webp',
         alt: 'Students forming a large pattern on the ground during the centenary',
         caption: 'From Shatakotsav, our centenary year (2015-16)',
       },
@@ -161,7 +161,7 @@ export class History {
         'Beyond the classroom it runs Dyuno, an AI assistant open to everyone on its website, the first and largest solar power plant in the Charotar region, counselling under Project Anandam, the Udaan science and maths programme, sports and performing arts academies and a vocational training centre. Each January the Chatkaro fair and the Alumni Meet bring former students home, and each autumn the campus celebrates Navratri, every year with a new theme.',
       ],
       image: {
-        src: '/assets/images/about/who-we-are.jpeg',
+        src: '/assets/images/about/who-we-are.webp',
         alt: 'Students in an auditorium at CES',
         caption: 'Students at CES today',
       },

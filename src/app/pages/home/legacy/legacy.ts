@@ -16,7 +16,7 @@ import { Reveal } from '../../../shared/reveal.directive';
 })
 export class Legacy {
   /** Portrait of Pujya Shri Vitthalbhai J. Patel, the visionary of CES. */
-  readonly portrait = '/assets/images/home/vitthalbhai.png';
+  readonly portrait = '/assets/images/home/vitthalbhai.webp';
 
   readonly name = 'Shree Vitthalbhai J. Patel';
   readonly title = 'Visionary of CES';

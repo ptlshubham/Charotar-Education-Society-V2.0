@@ -33,7 +33,7 @@ export class Podcast {
   private readonly resources = inject(ResourcesService);
   private readonly sanitizer = inject(DomSanitizer);
 
-  readonly banner = '/assets/images/hero/nextup.jpeg';
+  readonly banner = '/assets/images/hero/nextup.webp';
   readonly youtube = SOCIAL_LINKS.find((l) => l.label === 'YouTube')?.href ?? 'https://www.youtube.com/@cesociety';
 
   /** `icon` is the path data of a 24×24 outline icon (Lucide shapes). */

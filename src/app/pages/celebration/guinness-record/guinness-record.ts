@@ -17,7 +17,7 @@ import { LightboxService } from '../../../core/services/lightbox.service';
 export class GuinnessRecord {
   private readonly lightbox = inject(LightboxService);
 
-  readonly certificate = '/assets/images/celebration/certificate.jpeg';
+  readonly certificate = '/assets/images/celebration/certificate.webp';
 
   /** Short name and figure for the list; `official` is the record's full title (shown on hover). */
   readonly records: ReadonlyArray<{ title: string; detail: string; official: string }> = [

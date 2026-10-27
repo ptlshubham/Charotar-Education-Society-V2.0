@@ -26,7 +26,7 @@ export class Donation {
   /** Razorpay LIVE key, carried over from the legacy site - charges real money. */
   private static readonly RAZORPAY_KEY = 'rzp_live_leOKtvTfzPgxqJ';
 
-  readonly heroImage = '/assets/images/hero/donate-now.jpeg';
+  readonly heroImage = '/assets/images/hero/donate-now.webp';
   readonly aboutImage = PLACEHOLDER.about.whoWeAre;
 
   readonly stats: ReadonlyArray<{ value: string; label: string; path: string[] }> = [

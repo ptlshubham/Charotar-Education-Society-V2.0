@@ -25,7 +25,7 @@ interface College {
   styleUrl: './colleges.scss',
 })
 export class Colleges {
-  readonly banner = '/assets/images/hero/college.jpeg';
+  readonly banner = '/assets/images/hero/college.webp';
 
   readonly heroStats: readonly HeroStat[] = [
     { value: '14', label: 'Colleges', path: [], icon: 'apartment' },
@@ -61,25 +61,25 @@ export class Colleges {
 
   readonly colleges: readonly College[] = [
     // Science
-    { name: 'Shri Alpesh N. Patel Post Graduate Institute of Science and Research', location: 'Anand, Gujarat', desc: 'Postgraduate science education and research across advanced disciplines.', phone: '(02692) 267404', website: 'https://www.sanppgi.ac.in/', stream: 'science', image: '/assets/images/institutes/alpesh-science.jpg', path: Colleges.CAP },
-    { name: 'M. B. Patel Science College', location: 'Anand, Gujarat', desc: 'Excellence in science education and research.', phone: '(02692) 244415', website: 'https://www.mbpatelscience.ac.in/', stream: 'science', image: '/assets/images/institutes/mb-patel-science.jpg', path: Colleges.CAP },
-    { name: 'Shri D. N. Institute of Computer Applications', location: 'Anand, Gujarat', desc: 'Industry-focused computer application programmes.', phone: '(02692) 266679', website: 'https://www.dnica.ac.in/', stream: 'science', image: '/assets/images/institutes/dn-computer.jpg', path: Colleges.MONITOR },
-    { name: 'M. B. Patel Applied Science College', location: 'Mogri, Gujarat', desc: 'Applied and skill-based science programmes with modern labs.', phone: '(02692) 233000', website: 'https://www.mbpasc.ac.in/', stream: 'science', image: '/assets/images/institutes/mb-patel-science.jpg', path: Colleges.CAP },
+    { name: 'Shri Alpesh N. Patel Post Graduate Institute of Science and Research', location: 'Anand, Gujarat', desc: 'Postgraduate science education and research across advanced disciplines.', phone: '(02692) 267404', website: 'https://www.sanppgi.ac.in/', stream: 'science', image: '/assets/images/institutes/alpesh-science.webp', path: Colleges.CAP },
+    { name: 'M. B. Patel Science College', location: 'Anand, Gujarat', desc: 'Excellence in science education and research.', phone: '(02692) 244415', website: 'https://www.mbpatelscience.ac.in/', stream: 'science', image: '/assets/images/institutes/mb-patel-science.webp', path: Colleges.CAP },
+    { name: 'Shri D. N. Institute of Computer Applications', location: 'Anand, Gujarat', desc: 'Industry-focused computer application programmes.', phone: '(02692) 266679', website: 'https://www.dnica.ac.in/', stream: 'science', image: '/assets/images/institutes/dn-computer.webp', path: Colleges.MONITOR },
+    { name: 'M. B. Patel Applied Science College', location: 'Mogri, Gujarat', desc: 'Applied and skill-based science programmes with modern labs.', phone: '(02692) 233000', website: 'https://www.mbpasc.ac.in/', stream: 'science', image: '/assets/images/institutes/mb-patel-science.webp', path: Colleges.CAP },
     // Management
-    { name: 'Shri D. N. Institute of Business Administration', location: 'Anand, Gujarat', desc: 'Quality management education for a dynamic world.', phone: '(02692) 252800', website: 'https://www.dniba.ac.in/', stream: 'management', image: '/assets/images/institutes/dn-business.jpg', path: Colleges.PEOPLE },
+    { name: 'Shri D. N. Institute of Business Administration', location: 'Anand, Gujarat', desc: 'Quality management education for a dynamic world.', phone: '(02692) 252800', website: 'https://www.dniba.ac.in/', stream: 'management', image: '/assets/images/institutes/dn-business.webp', path: Colleges.PEOPLE },
     // Commerce
     { name: 'Shri D. N. Institute of P. G. Studies in Commerce', location: 'Anand, Gujarat', desc: 'Postgraduate excellence in commerce education.', phone: '(02692) 252804', website: 'https://www.shridnpgs.ac.in/', stream: 'commerce', image: '/assets/images/institutes/dn-pg-commerce.jpg', path: Colleges.BRIEFCASE },
-    { name: 'Shri V. Z. Patel Commerce College', location: 'Anand, Gujarat', desc: 'Shaping future leaders in commerce and business.', phone: '(02692) 252000', website: 'https://www.vzp.ac.in/', stream: 'commerce', image: '/assets/images/institutes/vz-patel-commerce.jpg', path: Colleges.BRIEFCASE },
+    { name: 'Shri V. Z. Patel Commerce College', location: 'Anand, Gujarat', desc: 'Shaping future leaders in commerce and business.', phone: '(02692) 252000', website: 'https://www.vzp.ac.in/', stream: 'commerce', image: '/assets/images/institutes/vz-patel-commerce.webp', path: Colleges.BRIEFCASE },
     // Arts
-    { name: 'Shri Bhikhabhai Patel Institute of P. G. Studies & Research in Humanities', location: 'Anand, Gujarat', desc: 'Postgraduate studies and research in humanities and social sciences.', phone: '(02692) 244043', website: 'https://www.bppg.ac.in/', stream: 'arts', image: '/assets/images/institutes/bhikhabhai-pg-studies.jpg', path: Colleges.BOOK },
-    { name: 'Shri Bhikhabhai Patel Arts College', location: 'Anand, Gujarat', desc: 'Nurturing creativity, culture and social awareness.', phone: '(02692) 244043', website: 'https://www.bpac.ac.in/', stream: 'arts', image: '/assets/images/institutes/bhikhabhai-arts.jpg', path: Colleges.BOOK },
+    { name: 'Shri Bhikhabhai Patel Institute of P. G. Studies & Research in Humanities', location: 'Anand, Gujarat', desc: 'Postgraduate studies and research in humanities and social sciences.', phone: '(02692) 244043', website: 'https://www.bppg.ac.in/', stream: 'arts', image: '/assets/images/institutes/bhikhabhai-pg-studies.webp', path: Colleges.BOOK },
+    { name: 'Shri Bhikhabhai Patel Arts College', location: 'Anand, Gujarat', desc: 'Nurturing creativity, culture and social awareness.', phone: '(02692) 244043', website: 'https://www.bpac.ac.in/', stream: 'arts', image: '/assets/images/institutes/bhikhabhai-arts.webp', path: Colleges.BOOK },
     // Law
-    { name: 'Shri D. N. Institute of Law', location: 'Anand, Gujarat', desc: 'Building strong foundations in legal education and ethics.', phone: '(02692) 243083', website: '#', stream: 'law', image: '/assets/images/institutes/dn-law.jpg', path: Colleges.SCALES },
+    { name: 'Shri D. N. Institute of Law', location: 'Anand, Gujarat', desc: 'Building strong foundations in legal education and ethics.', phone: '(02692) 243083', website: '#', stream: 'law', image: '/assets/images/institutes/dn-law.webp', path: Colleges.SCALES },
     // Others (Education & Physical Education)
-    { name: 'Motibhai Amin P. S. Adhyapan Mandir (D.El.Ed.)', location: 'Mogri, Gujarat', desc: 'Primary teacher education shaping the educators of tomorrow.', phone: '(02692) 233343', website: 'https://www.maptc.ac.in/', stream: 'others', image: '/assets/images/institutes/motibhai-amin.jpg', path: Colleges.CAP },
-    { name: 'Shri I. J. Patel B.Ed. College', location: 'Mogri, Gujarat', desc: 'Professional teacher training for secondary education (B.Ed.).', phone: '(02692) 236266', website: 'https://www.ijbed.ac.in/', stream: 'others', image: '/assets/images/institutes/ij-patel-bed.jpg', path: Colleges.CAP },
-    { name: 'Shri I. J. Patel M.Ed. College', location: 'Mogri, Gujarat', desc: 'Advanced pedagogy and educational research (M.Ed.).', phone: '(02692) 233064', website: 'https://www.ipmed.ac.in/', stream: 'others', image: '/assets/images/institutes/ij-patel-med.jpg', path: Colleges.CAP },
-    { name: 'Shri V. J. Patel College of Physical Education', location: 'Mogri, Gujarat', desc: 'Physical education and sports training for aspiring coaches and teachers.', phone: '(02692) 229062', website: 'https://www.vjbped.ac.in/', stream: 'others', image: '/assets/images/institutes/vj-patel-physical.jpg', path: Colleges.WHISTLE },
+    { name: 'Motibhai Amin P. S. Adhyapan Mandir (D.El.Ed.)', location: 'Mogri, Gujarat', desc: 'Primary teacher education shaping the educators of tomorrow.', phone: '(02692) 233343', website: 'https://www.maptc.ac.in/', stream: 'others', image: '/assets/images/institutes/motibhai-amin.webp', path: Colleges.CAP },
+    { name: 'Shri I. J. Patel B.Ed. College', location: 'Mogri, Gujarat', desc: 'Professional teacher training for secondary education (B.Ed.).', phone: '(02692) 236266', website: 'https://www.ijbed.ac.in/', stream: 'others', image: '/assets/images/institutes/ij-patel-bed.webp', path: Colleges.CAP },
+    { name: 'Shri I. J. Patel M.Ed. College', location: 'Mogri, Gujarat', desc: 'Advanced pedagogy and educational research (M.Ed.).', phone: '(02692) 233064', website: 'https://www.ipmed.ac.in/', stream: 'others', image: '/assets/images/institutes/ij-patel-med.webp', path: Colleges.CAP },
+    { name: 'Shri V. J. Patel College of Physical Education', location: 'Mogri, Gujarat', desc: 'Physical education and sports training for aspiring coaches and teachers.', phone: '(02692) 229062', website: 'https://www.vjbped.ac.in/', stream: 'others', image: '/assets/images/institutes/vj-patel-physical.webp', path: Colleges.WHISTLE },
   ];
 
   readonly visible = computed(() => {

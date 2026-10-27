@@ -1,7 +1,7 @@
 /** Helpers shared by the /navratri page and the year pages (/navratri/<year>). */
 
 /** The Navratri pages' banner until one is uploaded in the dashboard (Navratri page card). */
-export const NAVRATRI_BANNER = '/assets/images/hero/navratri.jpeg';
+export const NAVRATRI_BANNER = '/assets/images/hero/navratri.webp';
 
 /** Where Navratri is held when a year has no venue of its own. */
 export const NAVRATRI_VENUE = 'CES Campus, Anand';

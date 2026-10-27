@@ -43,7 +43,7 @@ export class CentenaryGuests {
       event: 'Independence Day',
       when: '15 August 2015',
       note: 'Guest of honour when the Society celebrated Independence Day in its centenary year.',
-      photo: '/assets/images/celebration/shatakotsav/19.jpg',
+      photo: '/assets/images/celebration/shatakotsav/19.webp',
       link: { label: 'Watch his speech', href: watch('XeFiYvdN1fk') },
     },
     {
@@ -52,7 +52,7 @@ export class CentenaryGuests {
       event: "Teachers' Day",
       when: '22 September 2015',
       note: 'Chief guest at Anand Town Hall as the Society honoured its best teachers and those retiring. He told his stories in his own style and had the hall in splits.',
-      photo: '/assets/images/celebration/shatakotsav/01.jpg',
+      photo: '/assets/images/celebration/shatakotsav/01.webp',
       link: { label: 'Watch the programme', href: watch('5NM5-MRt_oA') },
     },
     {
@@ -61,7 +61,7 @@ export class CentenaryGuests {
       event: 'Mega Placement Fair',
       when: 'February 2016',
       note: 'Addressed students at the centenary placement fair for commerce, management and computer graduates.',
-      photo: '/assets/images/celebration/shatakotsav/31.jpg',
+      photo: '/assets/images/celebration/shatakotsav/31.webp',
       link: { label: 'Watch his address', href: watch('UNASDvVIwFA') },
     },
     {
@@ -70,7 +70,7 @@ export class CentenaryGuests {
       event: 'Dussehra evening',
       when: '22 October 2015',
       note: 'Led the Shatakotsav Dussehra evening of music for students and families at D.N. High School, Anand.',
-      photo: '/assets/images/celebration/shatakotsav/04.jpg',
+      photo: '/assets/images/celebration/shatakotsav/04.webp',
       link: { label: 'Watch the performance', href: watch('QbifqY4Y-1A') },
     },
     {
@@ -79,7 +79,7 @@ export class CentenaryGuests {
       event: 'Netaji Subhas Chandra Bose',
       when: 'July 2015',
       note: 'Presented his research on Netaji and the mystery around his death to students and staff.',
-      photo: '/assets/images/celebration/shatakotsav/15.jpg',
+      photo: '/assets/images/celebration/shatakotsav/15.webp',
       link: { label: 'Watch the talk', href: watch('F0HQqmHk3Pk') },
     },
   ];

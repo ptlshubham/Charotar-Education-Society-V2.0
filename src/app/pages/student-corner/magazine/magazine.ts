@@ -13,7 +13,7 @@ import { PageHero } from '../../../shared/page-hero/page-hero';
 import { CustomSelect } from '../../../shared/custom-select/custom-select';
 
 /** Generic cover used for every magazine - the backend stores only the PDF, no cover. */
-const MAGAZINE_COVER = '/assets/images/magazine-cover.jpg';
+const MAGAZINE_COVER = '/assets/images/magazine-cover.webp';
 
 interface Issue {
   name: string;
@@ -35,7 +35,7 @@ export class Magazine {
   /** Fanned stack in the hero (decorative). */
   readonly PLACEHOLDER_COVER = PLACEHOLDER.magazines[1];
   readonly PLACEHOLDER_COVER2 = PLACEHOLDER.magazines[2];
-  readonly PLACEHOLDER_COVER3 = '/assets/images/hero/magazine.jpeg';
+  readonly PLACEHOLDER_COVER3 = '/assets/images/hero/magazine.webp';
 
   readonly loading = signal(true);
   readonly failed = signal(false);

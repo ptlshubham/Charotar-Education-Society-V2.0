@@ -35,7 +35,7 @@ const EVENT_SCRIPT_ID = 'chatkaro-event-jsonld';
 export class Chatkaro {
   private readonly document = inject(DOCUMENT);
 
-  readonly photo = '/assets/images/social-activity/food-festival.png';
+  readonly photo = '/assets/images/social-activity/food-festival.webp';
   readonly menuSite = 'https://chatkaro.cesociety.in/';
   readonly venue = VENUE;
   readonly street = STREET;
@@ -118,14 +118,14 @@ export class Chatkaro {
       title: 'Navratri Mahotsav',
       when: 'Every autumn',
       body: 'Nine nights of devotion, garba and culture on the CES campus, with a new theme every year.',
-      image: '/assets/images/hero/navratri.jpeg',
+      image: '/assets/images/hero/navratri.webp',
       link: '/navratri',
     },
     {
       title: 'Centenary Celebration',
       when: '2015-16',
       body: 'A hundred years of CES, marked with 100 events over 338 days and 8 Guinness World Records.',
-      image: '/assets/images/hero/centenary-celebration.jpeg',
+      image: '/assets/images/hero/centenary-celebration.webp',
       link: '/celebration',
     },
   ];

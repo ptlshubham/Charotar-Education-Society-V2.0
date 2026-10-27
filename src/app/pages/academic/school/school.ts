@@ -31,7 +31,7 @@ const ICON = {
   styleUrl: './school.scss',
 })
 export class School {
-  readonly banner = '/assets/images/hero/school.jpeg';
+  readonly banner = '/assets/images/hero/school.webp';
 
   readonly heroStats: readonly HeroStat[] = [
     { value: '18+', label: 'Schools', path: ICON.building, icon: 'apartment', iconClass: 'text-white' },
@@ -54,21 +54,21 @@ export class School {
 
   /** Names, phone numbers and websites carried over verbatim from the legacy CES site. */
   readonly schools: readonly SchoolItem[] = [
-    { name: 'Charotar English Medium School, Anand', phone: '(02692) 266789', website: 'https://www.cems.ac.in/', medium: 'english', image: '/assets/images/institutes/cems.jpg', path: ICON.cap },
-    { name: 'Shishuvihar, Nutan Shishuvihar And Nursary, Anand', phone: '(02692) 250864', website: 'https://www.shishuvihar.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/shishuvihar.jpg', path: ICON.home },
-    { name: 'Ambalal Balshala, Anand', phone: '(02692) 243634', website: 'https://www.ambs.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/ambalal-balshala.jpg', path: ICON.arts },
-    { name: 'D. N. High School (Std 6 to 8), Anand', phone: '(02692) 269060', website: 'https://www.up.dnhighschool.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/dn-high-6-8.jpg', path: ICON.building },
-    { name: 'Kasturba Kanya Vidyalaya (Std 6 to 8), Anand', phone: '(02692) 250137', website: 'https://www.up.kkv.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/kkv-6-8.jpg', path: ICON.book },
-    { name: 'D. N. High School (Std 9 to 12), Anand', phone: '(02692) 268940', website: 'https://www.hs.dnhighschool.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/dn-high-9-12.jpg', path: ICON.building },
-    { name: 'Kasturba Kanya Vidhyalaya (Std 9 to 12), Anand', phone: '(02692) 268940', website: 'https://www.hs.kkv.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/kkv-9-12.jpg', path: ICON.book },
-    { name: 'V. J. Patel Higher Secondary School, Anand', phone: '(02692) 250669', website: 'https://www.vjhs.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/dn-high-6-8.jpg', path: ICON.cap },
-    { name: 'Sardar Vallabhbhai Patel Shishuvihar and Balshala, Khetiwadi', phone: '(02692) 262904', website: 'https://www.bal.svpschool.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/svp-shishuvihar.jpg', path: ICON.home },
-    { name: 'Sardar Vallabhbhai Patel High School (Std 6 to 8), Khetiwadi', phone: '(02692) 264516', website: 'https://www.up.svpschool.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/svp-high-6-8.jpg', path: ICON.building },
-    { name: 'Sardar Vallabhbhai Patel High School (Std 9 to 12), Khetiwadi', phone: '(02692) 262436', website: 'https://www.hs.svpschool.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/svp-high-9-12.jpg', path: ICON.building },
-    { name: 'K. M. Patel Balshala and Shishuvihar, Mogri', phone: '(02692) 233123', website: 'https://www.kmbal.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/km-patel-balshala.jpg', path: ICON.home },
-    { name: 'Mahatma Gandhi Vidyalaya (Std 6 to 8), Mogri', phone: '(02692) 230192', website: 'https://www.up.mgvidyalaya.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/mg-vidyalaya-6-8.jpg', path: ICON.building },
-    { name: 'Mahatma Gandhi Vidyalaya (Std 9 to 12), Mogri', phone: '(02692) 230192', website: 'https://www.hs.mgvidyalaya.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/mg-vidyalaya-9-12.jpg', path: ICON.cap },
-    { name: 'CES Performing Arts And Fine Arts Academy', phone: '(02692) 266789', website: 'https://www.performing.cesociety.in/', medium: 'others', image: '/assets/images/institutes/ces-performing-arts.jpg', path: ICON.arts },
+    { name: 'Charotar English Medium School, Anand', phone: '(02692) 266789', website: 'https://www.cems.ac.in/', medium: 'english', image: '/assets/images/institutes/cems.webp', path: ICON.cap },
+    { name: 'Shishuvihar, Nutan Shishuvihar And Nursary, Anand', phone: '(02692) 250864', website: 'https://www.shishuvihar.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/shishuvihar.webp', path: ICON.home },
+    { name: 'Ambalal Balshala, Anand', phone: '(02692) 243634', website: 'https://www.ambs.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/ambalal-balshala.webp', path: ICON.arts },
+    { name: 'D. N. High School (Std 6 to 8), Anand', phone: '(02692) 269060', website: 'https://www.up.dnhighschool.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/dn-high-6-8.webp', path: ICON.building },
+    { name: 'Kasturba Kanya Vidyalaya (Std 6 to 8), Anand', phone: '(02692) 250137', website: 'https://www.up.kkv.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/kkv-6-8.webp', path: ICON.book },
+    { name: 'D. N. High School (Std 9 to 12), Anand', phone: '(02692) 268940', website: 'https://www.hs.dnhighschool.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/dn-high-9-12.webp', path: ICON.building },
+    { name: 'Kasturba Kanya Vidhyalaya (Std 9 to 12), Anand', phone: '(02692) 268940', website: 'https://www.hs.kkv.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/kkv-9-12.webp', path: ICON.book },
+    { name: 'V. J. Patel Higher Secondary School, Anand', phone: '(02692) 250669', website: 'https://www.vjhs.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/dn-high-6-8.webp', path: ICON.cap },
+    { name: 'Sardar Vallabhbhai Patel Shishuvihar and Balshala, Khetiwadi', phone: '(02692) 262904', website: 'https://www.bal.svpschool.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/svp-shishuvihar.webp', path: ICON.home },
+    { name: 'Sardar Vallabhbhai Patel High School (Std 6 to 8), Khetiwadi', phone: '(02692) 264516', website: 'https://www.up.svpschool.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/svp-high-6-8.webp', path: ICON.building },
+    { name: 'Sardar Vallabhbhai Patel High School (Std 9 to 12), Khetiwadi', phone: '(02692) 262436', website: 'https://www.hs.svpschool.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/svp-high-9-12.webp', path: ICON.building },
+    { name: 'K. M. Patel Balshala and Shishuvihar, Mogri', phone: '(02692) 233123', website: 'https://www.kmbal.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/km-patel-balshala.webp', path: ICON.home },
+    { name: 'Mahatma Gandhi Vidyalaya (Std 6 to 8), Mogri', phone: '(02692) 230192', website: 'https://www.up.mgvidyalaya.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/mg-vidyalaya-6-8.webp', path: ICON.building },
+    { name: 'Mahatma Gandhi Vidyalaya (Std 9 to 12), Mogri', phone: '(02692) 230192', website: 'https://www.hs.mgvidyalaya.ac.in/', medium: 'gujarati', image: '/assets/images/institutes/mg-vidyalaya-9-12.webp', path: ICON.cap },
+    { name: 'CES Performing Arts And Fine Arts Academy', phone: '(02692) 266789', website: 'https://www.performing.cesociety.in/', medium: 'others', image: '/assets/images/institutes/ces-performing-arts.webp', path: ICON.arts },
   ];
 
   readonly visible = computed(() => {

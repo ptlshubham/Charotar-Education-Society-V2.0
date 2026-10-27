@@ -77,7 +77,7 @@ export const SOCIAL_ACTIVITIES: readonly SocialActivity[] = [
     desc: 'Project Arjun and our sports academy support students in shooting, cricket and other sports.',
     category: 'activity',
     theme: 'Sports',
-    image: '/assets/images/social-activity/sports.png',
+    image: '/assets/images/social-activity/sports.webp',
     tagline: 'Coaching in shooting, cricket and more, for every student who loves sport.',
     heading: 'Room to play, and a path to compete.',
     about: [
@@ -107,7 +107,7 @@ export const SOCIAL_ACTIVITIES: readonly SocialActivity[] = [
     desc: 'A three-day campus festival every January, with traditional and organic food, skill workshops and the Alumni Meet.',
     category: 'activity',
     theme: 'Community Events',
-    image: '/assets/images/social-activity/food-festival.png',
+    image: '/assets/images/social-activity/food-festival.webp',
     link: '/chatkaro',
   },
   {
@@ -116,7 +116,7 @@ export const SOCIAL_ACTIVITIES: readonly SocialActivity[] = [
     desc: 'Volunteers collect surplus food, pack it hygienically and take it to people in need and to animal shelters.',
     category: 'activity',
     theme: 'Social Service',
-    image: '/assets/images/social-activity/left-over-food.png',
+    image: '/assets/images/social-activity/left-over-food.webp',
     tagline: 'Good food from weddings and restaurants, sent to people who need it instead of the bin.',
     heading: 'No good food wasted.',
     about: [
@@ -142,7 +142,7 @@ export const SOCIAL_ACTIVITIES: readonly SocialActivity[] = [
     desc: 'Regular check-ups for every employee, with free medical cover of Rs. 1 lakh and accident insurance of Rs. 2 lakh.',
     category: 'camp',
     theme: 'Staff Wellbeing',
-    image: '/assets/images/social-activity/staff-health.png',
+    image: '/assets/images/social-activity/staff-health.webp',
     tagline: 'Regular check-ups, and free medical and accident cover, for every CES employee.',
     heading: 'Looking after the people who look after our students.',
     about: [
@@ -170,7 +170,7 @@ export const SOCIAL_ACTIVITIES: readonly SocialActivity[] = [
     desc: 'Regular blood donation camps with the Red Cross Society, because every drop of blood counts.',
     category: 'initiative',
     theme: 'Blood Donation',
-    image: '/assets/images/social-activity/red-cross.png',
+    image: '/assets/images/social-activity/red-cross.webp',
     tagline: 'Regular blood donation camps, held with the Red Cross Society.',
     heading: 'Every drop of blood counts.',
     about: [
@@ -195,7 +195,7 @@ export const SOCIAL_ACTIVITIES: readonly SocialActivity[] = [
     desc: 'Free, private counselling for students dealing with stress, studies, career choices or relationships.',
     category: 'initiative',
     theme: 'Wellbeing',
-    image: '/assets/images/social-activity/project-anandam.png',
+    image: '/assets/images/social-activity/project-anandam.webp',
   },
   {
     slug: 'shivani-foundation',
@@ -203,7 +203,7 @@ export const SOCIAL_ACTIVITIES: readonly SocialActivity[] = [
     desc: 'With the Dr. Shivani Bhatt Foundation, we help girls from poorer families with study costs and medical needs.',
     category: 'initiative',
     theme: "Girls' Education",
-    image: '/assets/images/social-activity/shivani-foundation.png',
+    image: '/assets/images/social-activity/shivani-foundation.webp',
     tagline: 'Help with study costs and medical needs for girls from poorer families.',
     heading: 'No girl should have to stop studying for want of money.',
     about: [

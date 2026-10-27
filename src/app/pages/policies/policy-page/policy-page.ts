@@ -19,7 +19,7 @@ import { POLICIES, POLICIES_UPDATED, Policy } from '../policies.data';
 export class PolicyPage {
   private readonly document = inject(DOCUMENT);
 
-  readonly hero = '/assets/images/hero/about.png';
+  readonly hero = '/assets/images/hero/about.webp';
   readonly updated = POLICIES_UPDATED;
 
   readonly policy: Policy;

@@ -28,19 +28,12 @@ or component edits are needed.
 | Key in `placeholder-images.ts` | Where it appears | Suggested size | What it should become |
 | --- | --- | --- | --- |
 | `heroCampus` | Hero banner background - `pages/home/hero` | 1600×900 | Wide campus/heritage-building shot; keep the left third uncluttered so the headline stays readable |
-| `institutes.schools` | Institutes carousel card 1 | 600×400 | A CES school building |
-| `institutes.colleges` | Institutes carousel card 2 | 600×400 | A CES college building |
-| `institutes.professional` | Institutes carousel card 3 | 600×400 | A professional institute building |
-| `institutes.hostels` | Institutes carousel card 4 | 600×400 | A hostel building |
-| `institutes.others` | Institutes carousel card 5 | 600×400 | Any remaining institute |
 | `chairman` | "From the Chairman" - `pages/home/leadership` | 300×380 portrait | Portrait of **Shri Virusbhai Patel** |
-| `successStories[0..3]` | Success Stories gallery | 400×300 | Student/event photography |
 | `alumni[0..3]` | "Our Alumni, Our Pride" | 300×300 square | Portraits of the four named alumni |
-| `news.classes` | News card 1 | 800×500 | Classroom photo |
-| `news.examTips` | News card 2 | 800×500 | Study/exam photo |
-| `news.annualDay` | News list item 1 | 300×220 | Annual Day photo |
-| `news.research` | News list item 2 | 300×220 | Research/lab photo |
-| `news.achievements` | News list item 3 | 300×220 | Prize-giving photo |
+
+Site photos are WebP (`.webp`). Link-preview cards for Facebook/WhatsApp/X are separate
+1200×630 JPGs in `public/assets/images/og-image/` - JPG on purpose, as not every app shows a
+WebP preview.
 
 ## Real imagery already in place
 

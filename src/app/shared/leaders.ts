@@ -46,7 +46,7 @@ export interface Leader {
 
 const CENTENARY = 'From Shatakotsav, our centenary year (2015-16)';
 const centenary = (n: string, alt: string): LeaderPhoto => ({
-  src: `/assets/images/celebration/shatakotsav/${n}.jpg`,
+  src: `/assets/images/celebration/shatakotsav/${n}.webp`,
   alt,
   caption: CENTENARY,
 });
@@ -66,7 +66,7 @@ export const LEADERS: readonly Leader[] = [
     title: 'Chairman, CES',
     subRole: 'Charotar Education Society',
     heroBlurb: 'Chairman of Charotar Education Society since 2009',
-    photo: '/assets/images/directors/chairman.jpg',
+    photo: '/assets/images/directors/chairman.webp',
     quote: CHAIRMAN_QUOTE,
     messageHeading: 'A message from our Chairman',
     message: [CHAIRMAN_QUOTE],
@@ -91,7 +91,7 @@ export const LEADERS: readonly Leader[] = [
     title: 'Hon. Secretary, CES',
     subRole: 'Syndicate and Senate Member of Sardar Patel University',
     heroBlurb: 'Honorary Secretary of Charotar Education Society since 2009',
-    photo: '/assets/images/directors/vc.jpg',
+    photo: '/assets/images/directors/vc.webp',
     quote: SECRETARY_QUOTE,
     messageHeading: 'A message from our Secretary',
     message: [

@@ -32,7 +32,7 @@ export class Careers {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly lightbox = inject(LightboxService);
 
-  readonly banner = '/assets/images/hero/careers.jpeg';
+  readonly banner = '/assets/images/hero/careers.webp';
 
   readonly values: ReadonlyArray<{ title: string; body: string; icon: string }> = [
     { title: 'Purpose Driven', body: 'Make a meaningful impact through quality education.', icon: 'target' },

@@ -36,7 +36,7 @@ export class Counselling {
   private readonly resources = inject(ResourcesService);
   private readonly document = inject(DOCUMENT);
 
-  readonly hero = '/assets/images/hero/counselling.jpeg';
+  readonly hero = '/assets/images/hero/counselling.webp';
   // TODO: a photo of Dr. Jani from CES - until then the card shows the outline user icon, not a stock face.
   readonly counsellorPhoto: string | null = null;
 

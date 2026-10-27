@@ -95,6 +95,27 @@ const EMPTY_DEFAULTS: SeoDefaults = {
 const SITE_ID = 'https://cesociety.in/#website';
 const ORGANIZATION_ID = 'https://cesociety.in/#organization';
 
+/** The site's address for share images given as a path - same fixed host as the ids above. */
+const SITE_ORIGIN = 'https://cesociety.in';
+
+/**
+ * Link-preview card for a page with no image of its own and no Default OG image in SEO
+ * Management, so a shared link never goes out bare.
+ */
+const DEFAULT_OG_IMAGE = `${SITE_ORIGIN}/assets/images/og-image/default.jpg`;
+
+/**
+ * A share image as link previews need it: an absolute URL and, for the site's own photos (WebP,
+ * which not every app previews), their JPG card in public/assets/images/og-image/ - a page
+ * banner's as og-image/<name>.jpg, any other photo's as og-image/<folder>/<name>.jpg.
+ * .htaccess sends a card that doesn't exist (yet) to the photo itself.
+ */
+const shareImage = (src: string): string => {
+  const own = src.match(/^\/?assets\/images\/(?:hero\/)?(.+)\.webp$/i);
+  if (own) return `${SITE_ORIGIN}/assets/images/og-image/${own[1]}.jpg`;
+  return src.startsWith('/') ? SITE_ORIGIN + src : src;
+};
+
 /** Treats empty/whitespace strings as absent so fallbacks take over. */
 const firstNonEmpty = (...values: (string | null | undefined)[]): string | null => {
   for (const value of values) {
@@ -209,7 +230,7 @@ export class SeoService {
     const description = firstNonEmpty(override?.description, page?.description, defaults.defaultDescription);
     const keywords = firstNonEmpty(override?.keywords, page?.keywords, defaults.defaultKeywords);
     const robots = firstNonEmpty(page?.robots, defaults.defaultRobots);
-    const image = firstNonEmpty(override?.image, page?.ogImage, defaults.defaultOgImage);
+    const image = shareImage(firstNonEmpty(override?.image, page?.ogImage, defaults.defaultOgImage) ?? DEFAULT_OG_IMAGE);
 
     this.setName('description', description);
     this.setName('keywords', keywords);
@@ -236,7 +257,7 @@ export class SeoService {
     // Twitter
     this.setName('twitter:title', firstNonEmpty(own?.twitterTitle, title));
     this.setName('twitter:description', firstNonEmpty(own?.twitterDescription, description));
-    this.setName('twitter:image', firstNonEmpty(own?.twitterImage, image));
+    this.setName('twitter:image', shareImage(firstNonEmpty(own?.twitterImage) ?? image));
     this.setName('twitter:site', firstNonEmpty(defaults.twitterHandle));
     this.setName('twitter:creator', firstNonEmpty(defaults.twitterHandle));
 

@@ -37,7 +37,7 @@ export function blogBody(html: string | null | undefined): string {
 const BLOG_PLACEHOLDER_IMAGE = '/assets/images/blog-placeholder.svg';
 
 /** The blog's page-hero photo - the /blog banner, and a post's hero when it has no cover image. */
-export const BLOG_BANNER = '/assets/images/hero/blog.jpeg';
+export const BLOG_BANNER = '/assets/images/hero/blog.webp';
 
 /** Full cover image URL - bind it directly, not through the mediaUrl pipe (the placeholder is a site asset). */
 export function blogImageUrl(b: Pick<BlogPost, 'blogImage'>): string {

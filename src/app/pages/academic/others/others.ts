@@ -11,7 +11,7 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
   styleUrl: './others.scss',
 })
 export class Others {
-  readonly banner = '/assets/images/hero/others.jpeg';
+  readonly banner = '/assets/images/hero/others.webp';
 
   readonly featured = {
     name: 'CES Performing Arts And Fine Arts Academy',
@@ -19,7 +19,7 @@ export class Others {
     phone: '(02692) 266789',
     website: 'https://www.performing.cesociety.in/',
     location: 'Anand, Gujarat',
-    image: '/assets/images/institutes/ces-performing-arts.jpg',
+    image: '/assets/images/institutes/ces-performing-arts.webp',
     icon: 'palette',
   };
 

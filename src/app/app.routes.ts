@@ -213,7 +213,7 @@ export const routes: Routes = [
           title: 'Chatkaro: Food Festival and Skill Fair',
           description:
             "CES Chatkaro: Gujarat's traditional food, a skill fair and the Alumni Meet, 11 to 13 January every year on the D.N. High School campus, Anand. Free entry for all.",
-          image: '/assets/images/social-activity/food-festival.png',
+          image: '/assets/images/social-activity/food-festival.webp',
           url: '/chatkaro',
         }),
         loadComponent: () => import('./pages/chatkaro/chatkaro').then(m => m.Chatkaro)

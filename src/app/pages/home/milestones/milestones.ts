@@ -32,14 +32,14 @@ export class Milestones {
   private readonly destroyRef = inject(DestroyRef);
 
   readonly records: ReadonlyArray<{ title: string; image: string }> = [
-    { title: 'Largest Quiz Competition', image: '/assets/images/home/Quiz.png' },
-    { title: 'Largest Sudoku Solving', image: '/assets/images/home/Sudoku.png' },
-    { title: 'Largest Mehndi Art', image: '/assets/images/home/Mahendi.png' },
-    { title: 'Maximum Arm-Link Activity', image: '/assets/images/home/ArmLinked.png' },
-    { title: 'Maximum T-Shirt Sign Campaign', image: '/assets/images/home/T-ShirtSignature.png' },
-    { title: 'Largest Kite Mosaic Display', image: '/assets/images/home/KiteMosaic.png' },
-    { title: 'Most Number of Signature Campaign', image: '/assets/images/home/Signature.png' },
-    { title: 'Longest Human Maths Equation', image: '/assets/images/home/HumanMathsEquation.png' },
+    { title: 'Largest Quiz Competition', image: '/assets/images/home/Quiz.webp' },
+    { title: 'Largest Sudoku Solving', image: '/assets/images/home/Sudoku.webp' },
+    { title: 'Largest Mehndi Art', image: '/assets/images/home/Mahendi.webp' },
+    { title: 'Maximum Arm-Link Activity', image: '/assets/images/home/ArmLinked.webp' },
+    { title: 'Maximum T-Shirt Sign Campaign', image: '/assets/images/home/T-ShirtSignature.webp' },
+    { title: 'Largest Kite Mosaic Display', image: '/assets/images/home/KiteMosaic.webp' },
+    { title: 'Most Number of Signature Campaign', image: '/assets/images/home/Signature.webp' },
+    { title: 'Longest Human Maths Equation', image: '/assets/images/home/HumanMathsEquation.webp' },
   ];
 
   /** The record in the centre. */

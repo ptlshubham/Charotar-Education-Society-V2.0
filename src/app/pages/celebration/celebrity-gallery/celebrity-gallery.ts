@@ -23,7 +23,7 @@ export class CelebrityGallery {
   /** Shatakotsav - the Centenary Celebration photo set (ported from the legacy site). */
   readonly images: readonly string[] = Array.from(
     { length: 47 },
-    (_, i) => `/assets/images/celebration/shatakotsav/${String(i + 1).padStart(2, '0')}.jpg`,
+    (_, i) => `/assets/images/celebration/shatakotsav/${String(i + 1).padStart(2, '0')}.webp`,
   );
 
   readonly showAll = signal(false);

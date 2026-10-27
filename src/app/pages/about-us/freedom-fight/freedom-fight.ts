@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './freedom-fight.scss',
 })
 export class FreedomFight {
-  readonly image = '/assets/images/about/freedom-fighter.jpeg';
+  readonly image = '/assets/images/about/freedom-fighter.webp';
 
   readonly events: ReadonlyArray<{ year: string; title: string; body: string }> = [
     {

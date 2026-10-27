@@ -11,11 +11,11 @@ import { environment } from '../../../environments/environment';
   styleUrl: './history-vj.scss',
 })
 export class HistoryVj {
-  readonly profile = '/assets/images/home/vitthalbhai.png';
-  readonly portrait = '/assets/images/history/life.png';
-  readonly historical = '/assets/images/history/prime.jpg';
-  readonly freedom = '/assets/images/history/freedom.jpg';
-  readonly banner = '/assets/images/hero/vj-patel.jpeg';
+  readonly profile = '/assets/images/home/vitthalbhai.webp';
+  readonly portrait = '/assets/images/history/life.webp';
+  readonly historical = '/assets/images/history/prime.webp';
+  readonly freedom = '/assets/images/history/freedom.webp';
+  readonly banner = '/assets/images/hero/vj-patel.webp';
 
   /** Life-sketch, from the legacy CES site and the Society's Gujarati life-sketch. */
   readonly intro: readonly string[] = [

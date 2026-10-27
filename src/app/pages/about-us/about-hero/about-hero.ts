@@ -9,7 +9,7 @@ import { PageHero } from '../../../shared/page-hero/page-hero';
   styleUrl: './about-hero.scss',
 })
 export class AboutHero {
-  readonly heroImage = '/assets/images/hero/about.png';
+  readonly heroImage = '/assets/images/hero/about.webp';
 
   readonly stats: ReadonlyArray<{ value: string; label: string; path: string[] }> = [
     { value: '110+', label: 'Years of Legacy', path: ['m12 3 9 5-9 5-9-5 9-5z', 'M21 8v6', 'M7 10.5V16c0 1.7 2.2 3 5 3s5-1.3 5-3v-5.5'] },

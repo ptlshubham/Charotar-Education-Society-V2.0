@@ -46,10 +46,29 @@ AddDefaultCharset UTF-8
 	# rule, which would otherwise show the subdomain's files here.
 	RewriteRule ^chatkaro/?$ chatkaro.html [L]
 
+	# Site photos are WebP now; old .jpg/.png addresses (links shared before the switch, Google
+	# Images, SEO Management rows) keep working. A page banner was also its share image, so it
+	# goes to its 1200x630 JPG card in og-image/; any other photo to its .webp.
+	RewriteCond %{DOCUMENT_ROOT}/assets/images/og-image/$1.jpg -f
+	RewriteRule ^assets/images/hero/([a-z0-9-]+)\.(?:jpe?g|png)$ /assets/images/og-image/$1.jpg [R=301,L]
+	RewriteCond %{DOCUMENT_ROOT}/assets/images/$1.webp -f
+	RewriteRule ^assets/images/(.+)\.(?:jpe?g|png)$ /assets/images/$1.webp [R=301,L]
+	# A share card that hasn't been made yet (SeoService asks for og-image/<name>.jpg for a page
+	# banner, og-image/<folder>/<name>.jpg for any other photo) falls back to the photo itself.
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{DOCUMENT_ROOT}/assets/images/hero/$1.webp -f
+	RewriteRule ^assets/images/og-image/([^/]+)\.jpg$ /assets/images/hero/$1.webp [R=302,L]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{DOCUMENT_ROOT}/assets/images/$1.webp -f
+	RewriteRule ^assets/images/og-image/(.+/.+)\.jpg$ /assets/images/$1.webp [R=302,L]
+
 	# Keep real files/directories untouched (prerendered /route/index.html included).
 	RewriteCond %{REQUEST_FILENAME} -f [OR]
 	RewriteCond %{REQUEST_FILENAME} -d
 	RewriteRule ^ - [L]
+
+	# A missing image is a 404, not the app shell (which would answer an <img> with HTML).
+	RewriteRule \.(?:jpe?g|png|gif|webp|avif|svg|ico)$ - [R=404,L]
 
 	# Serve a prerendered per-route HTML file when one exists (SEO), skipping /api.
 	RewriteCond %{REQUEST_URI} !^/api

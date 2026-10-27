@@ -28,9 +28,11 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client,
   },
   {
-    // Same reasoning: posts published after a deploy would have no prerendered
-    // HTML file. Trade-off: articles get no crawler-visible meta - switch to
-    // RenderMode.Server once the site runs under Node to fix social previews.
+    // Posts are published from the dashboard at any time, so none is baked into the build.
+    // On the hosted site .htaccess sends /blog/<slug> to public/site-live.php, which writes the
+    // post's title, meta tags, BlogPosting JSON-LD and text into this app shell, live from the
+    // API - crawlers that never run JavaScript (AI assistants, social previews) read the post
+    // the moment it is published.
     path: 'blog/:slug',
     renderMode: RenderMode.Client,
   },

@@ -1,7 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SeoService } from '../../../core/services/seo.service';
 import { AdmissionsCta } from '../../../shared/admissions-cta/admissions-cta';
 import { LEADERS } from '../../../shared/leaders';
 import { PageHero } from '../../../shared/page-hero/page-hero';
@@ -164,18 +163,6 @@ export class Profile {
     'Best Teacher award from the Government of India (1966-67) to Shri Vitthalbhai J. Patel, later Principal of D.N. High School',
     'Udaan students: 6 gold, 5 silver and 6 bronze medals at the Ramanujan Maths Olympiad',
   ];
-
-  constructor() {
-    inject(SeoService).applyCustom(
-      {
-        title: 'CES at a Glance',
-        description:
-          'Charotar Education Society at a glance: founded in Anand in 1916, 31+ institutes on three campuses, courses from pre-primary to Ph.D., projects, recognition and contact details.',
-        url: '/about/profile',
-      },
-      'about',
-    );
-  }
 
   /** "Download PDF": the browser's print dialog, where the page can be saved as a PDF. */
   print(): void {

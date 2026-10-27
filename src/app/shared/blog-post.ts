@@ -54,6 +54,22 @@ export function blogExcerpt(b: BlogPost, max = 160): string {
   return (b.excerpt?.trim() || plainText(b.blogDetails)).slice(0, max);
 }
 
+/** A post date as YYYY-MM-DD in India time - the API sends DATE columns as instants (e.g. 18:30Z the day before). */
+export function blogDay(value: string | null | undefined): string | null {
+  if (!value) return null;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
+  const d = new Date(value);
+  return isNaN(d.getTime()) ? null : new Date(d.getTime() + 330 * 60_000).toISOString().slice(0, 10);
+}
+
+/** 'gu' when a post is written mainly in Gujarati, else 'en' - for its lang attribute and JSON-LD. */
+export function blogLanguage(b: Pick<BlogPost, 'blogTitle' | 'blogDetails'>): 'gu' | 'en' {
+  const text = `${b.blogTitle ?? ''} ${plainText(b.blogDetails)}`;
+  const gujarati = text.match(/[઀-૿]/g)?.length ?? 0;
+  const latin = text.match(/[A-Za-z]/g)?.length ?? 0;
+  return gujarati > latin ? 'gu' : 'en';
+}
+
 export function blogTags(b: BlogPost): string[] {
   return (b.tags ?? '').split(',').map((t) => t.trim()).filter(Boolean);
 }

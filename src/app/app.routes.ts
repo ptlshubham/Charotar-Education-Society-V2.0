@@ -1,9 +1,13 @@
 import { Routes } from '@angular/router';
 import { seoResolver } from './core/resolvers/seo.resolver';
+import { SeoOverride } from './core/services/seo.service';
 
-/** Every static page declares a `seoKey`; it maps to a page entry in super admin. */
-const seo = (seoKey: string) => ({
-  data: { seoKey },
+/**
+ * Every static page declares a `seoKey`; it maps to a page entry in super admin. `fallback` is the
+ * page's built-in title/description, shown wherever that entry is blank (the admin's text wins).
+ */
+const seo = (seoKey: string, fallback?: SeoOverride) => ({
+  data: fallback ? { seoKey, seoFallback: fallback } : { seoKey },
   resolve: { seo: seoResolver },
 });
 
@@ -13,7 +17,12 @@ export const routes: Routes = [
     // no site header/footer and the whole height goes to the conversation. The floating
     // panel's expand button opens it with the same thread.
     path: 'dyuno',
-    ...seo('dyuno'),
+    ...seo('dyuno', {
+      title: 'Ask Dyuno',
+      description:
+        "Dyuno, Charotar Education Society's assistant, answers questions about its schools, colleges, courses, admissions, hostels and events, any time.",
+      url: '/dyuno',
+    }),
     loadComponent: () => import('./pages/dyuno/dyuno').then(m => m.Dyuno),
   },
   {
@@ -45,12 +54,22 @@ export const routes: Routes = [
       },
       {
         path: 'about/history',
-        ...seo('about'),
+        ...seo('about/history', {
+          title: 'Our History',
+          description:
+            'The full story of Charotar Education Society, from the Petlad Boarding House in 1906 and its founding in Anand in 1916 to the freedom struggle, the centenary and today.',
+          url: '/about/history',
+        }),
         loadComponent: () => import('./pages/about-us/history/history').then(m => m.History)
       },
       {
         path: 'about/profile',
-        ...seo('about'),
+        ...seo('about/profile', {
+          title: 'CES at a Glance',
+          description:
+            'Charotar Education Society at a glance: founded in Anand in 1916, 31+ institutes on three campuses, courses from pre-primary to Ph.D., projects, recognition and contact details.',
+          url: '/about/profile',
+        }),
         loadComponent: () => import('./pages/about-us/profile/profile').then(m => m.Profile)
       },
       {
@@ -185,7 +204,13 @@ export const routes: Routes = [
       },
       {
         path: 'chatkaro',
-        ...seo('chatkaro'),
+        ...seo('chatkaro', {
+          title: 'Chatkaro: Food Festival and Skill Fair',
+          description:
+            "CES Chatkaro: Gujarat's traditional food, a skill fair and the Alumni Meet, 11 to 13 January every year on the D.N. High School campus, Anand. Free entry for all.",
+          image: '/assets/images/social-activity/food-festival.png',
+          url: '/chatkaro',
+        }),
         loadComponent: () => import('./pages/chatkaro/chatkaro').then(m => m.Chatkaro)
       },
       {

@@ -13,7 +13,10 @@ import { MediaUrlPipe } from '../../../shared/media-url.pipe';
 import { SafeHtmlPipe } from '../../../shared/safe-html.pipe';
 import { AdmissionsCta } from '../../../shared/admissions-cta/admissions-cta';
 import { Academics } from '../../home/academics/academics';
-import { BLOG_BANNER, blogBody, blogExcerpt, blogImageUrl, blogSlug, blogTags, countTags, plainText, sortCategories } from '../../../shared/blog-post';
+import { BLOG_BANNER, blogBody, blogDay, blogExcerpt, blogImageUrl, blogLanguage, blogSlug, blogTags, countTags, plainText, sortCategories } from '../../../shared/blog-post';
+
+/** Author names that mean the Society itself rather than a person. */
+const SOCIETY_AUTHOR = /^(ces|ces admin|charotar education society)$/i;
 
 /** Average adult reading speed, for the "N min read" estimate. */
 const WORDS_PER_MINUTE = 200;
@@ -84,12 +87,21 @@ export class BlogDetail {
         this.router.navigate(['/blog', slug], { replaceUrl: true });
         return;
       }
+      const author = p.authorName?.trim() ?? '';
       this.seo.applyCustom({
         title: p.metaTitle || p.blogTitle,
         description: p.metaDescription || blogExcerpt(p),
         keywords: p.metaKeywords || p.tags,
         image: p.blogImage ? blogImageUrl(p) : null,
         url: `/blog/${slug}`,
+        article: {
+          published: blogDay(p.blogDate) ?? p.blogDate,
+          modified: blogDay(p.updateddate),
+          author: SOCIETY_AUTHOR.test(author) ? null : author,
+          section: p.category,
+          tags: blogTags(p),
+          language: `${blogLanguage(p)}-IN`,
+        },
       });
     });
   }
@@ -134,6 +146,11 @@ export class BlogDetail {
   });
 
   readonly body = computed(() => blogBody(this.post()?.blogDetails));
+  /** The body's language, so search engines and screen readers read a Gujarati post as Gujarati. */
+  readonly lang = computed(() => {
+    const p = this.post();
+    return p ? blogLanguage(p) : 'en';
+  });
 
   readonly attachments = computed(() => this.post()?.attachments ?? []);
 

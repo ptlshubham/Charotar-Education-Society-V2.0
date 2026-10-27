@@ -31,8 +31,8 @@
     </div>
 
     <!-- Cards Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 relative z-10 lg:-ml-24 xl:-ml-32 max-w-2xl mx-auto lg:mx-0">
-      @for (institute of institutes; track institute.title) {
+    <div #cards class="grid grid-cols-1 sm:grid-cols-2 gap-6 relative z-10 lg:-ml-24 xl:-ml-32 max-w-2xl mx-auto lg:mx-0">
+      @for (institute of institutes; track institute.title; let i = $index) {
         <div class="bg-white rounded-xl p-5 sm:p-6 shadow-sm flex flex-col h-full border border-gray-100/50 relative overflow-hidden group">
           
           <div class="flex items-center gap-4 mb-4">
@@ -54,7 +54,11 @@
             </div>
             <div>
               <h3 class="text-[18px] font-bold text-primary m-0">{{ institute.title }}</h3>
-              <div class="h-[3px] w-10 mt-1.5 rounded-full" [class]="institute.underlineClass"></div>
+              <!-- The counting figure is for the eye; screen readers get the final one -->
+              <p class="mt-1.5 flex items-center gap-2 text-[14px] text-muted m-0">
+                <span class="h-[3px] w-10 rounded-full shrink-0" [class]="institute.underlineClass" aria-hidden="true"></span>
+                <span><span class="font-bold text-primary tabular-nums" aria-hidden="true">{{ pad(shown()[i]) }}</span><span class="sr-only">{{ institute.count }}</span> {{ institute.unit }}</span>
+              </p>
             </div>
           </div>
           

@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PageHero } from '../../../shared/page-hero/page-hero';
-import { PLACEHOLDER } from '../../../shared/placeholder-images';
 
 @Component({
   selector: 'app-project-hero',
@@ -10,7 +9,6 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
   styleUrl: './project-hero.scss',
 })
 export class ProjectHero {
-  readonly panels = PLACEHOLDER.projects.heroPanels;
 
   readonly stats: ReadonlyArray<{ value: string; label: string; path: string[] }> = [
     { value: '12', label: 'Projects & Academies', path: ['M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z', 'M16 2v4M8 2v4M3 10h18'] },

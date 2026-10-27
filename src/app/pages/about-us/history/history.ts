@@ -1,7 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, DestroyRef, afterNextRender, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SeoService } from '../../../core/services/seo.service';
 import { AdmissionsCta } from '../../../shared/admissions-cta/admissions-cta';
 import { PageHero } from '../../../shared/page-hero/page-hero';
 
@@ -175,16 +174,6 @@ export class History {
   ];
 
   constructor() {
-    inject(SeoService).applyCustom(
-      {
-        title: 'Our History',
-        description:
-          'The full story of Charotar Education Society, from the Petlad Boarding House in 1906 and its founding in Anand in 1916 to the freedom struggle, the centenary and today.',
-        url: '/about/history',
-      },
-      'about',
-    );
-
     // Track the chapter in view (the one crossing the upper third of the screen).
     const destroyRef = inject(DestroyRef);
     afterNextRender(() => {

@@ -1,4 +1,5 @@
-import { afterNextRender, ChangeDetectionStrategy, Component, DestroyRef, ElementRef, inject, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, viewChild } from '@angular/core';
+import { countUp } from '../../../shared/count-up';
 import { Reveal } from '../../../shared/reveal.directive';
 
 interface Stat {
@@ -13,8 +14,6 @@ interface Stat {
 
 /** The Society was founded in 1916 - the years figure moves on by itself each year. */
 const FOUNDED = 1916;
-/** How long the count-up takes. */
-const COUNT_MS = 1800;
 const format = new Intl.NumberFormat('en-IN');
 
 /**
@@ -65,41 +64,7 @@ export class Stats {
   ];
 
   /** What each counter shows right now - the final figures until the count-up starts. */
-  readonly shown = signal<readonly number[]>(this.stats.map((s) => s.to));
-
-  constructor() {
-    const destroyRef = inject(DestroyRef);
-
-    afterNextRender(() => {
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      this.shown.set(this.stats.map(() => 0));
-
-      let frame = 0;
-      const io = new IntersectionObserver(
-        (entries) => {
-          if (!entries.some((e) => e.isIntersecting)) return;
-          io.disconnect();
-          const start = performance.now();
-          const step = (now: number) => {
-            const p = Math.min(1, (now - start) / COUNT_MS);
-            const eased = 1 - Math.pow(1 - p, 3); // fast, then settling on the figure
-            this.shown.set(this.stats.map((s) => Math.round(s.to * eased)));
-            if (p < 1) frame = requestAnimationFrame(step);
-          };
-          frame = requestAnimationFrame(step);
-        },
-        // Starts once the row's top edge is a little way up the screen. Not a visible-share
-        // threshold: on a short screen (phone held sideways) the row can't be 30% on view.
-        { rootMargin: '0px 0px -12% 0px' },
-      );
-      io.observe(this.figures().nativeElement);
-
-      destroyRef.onDestroy(() => {
-        io.disconnect();
-        cancelAnimationFrame(frame);
-      });
-    });
-  }
+  readonly shown = countUp(this.stats.map((s) => s.to), () => this.figures().nativeElement);
 
   format(n: number): string {
     return format.format(n);

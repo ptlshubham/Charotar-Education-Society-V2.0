@@ -77,7 +77,7 @@
       <!-- blog-content: layout for the editor's image / caption / table markup (detail.scss) -->
       <div
         class="blog-content text-[13.5px] leading-[1.9] text-muted [&_a]:text-accent [&_a]:underline [&_h1]:mt-6 [&_h1]:text-[20px] [&_h1]:font-bold [&_h1]:text-primary [&_h2]:mt-6 [&_h2]:text-[18px] [&_h2]:font-bold [&_h2]:text-primary [&_h3]:mt-5 [&_h3]:text-[16px] [&_h3]:font-bold [&_h3]:text-primary [&_img]:my-4 [&_img]:max-w-full [&_img]:rounded-lg [&_li]:mt-1 [&_ol]:mt-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mt-4 [&_strong]:text-primary [&_ul]:mt-4 [&_ul]:list-disc [&_ul]:pl-6"
-        [innerHTML]="body() | safeHtml"></div>
+        [attr.lang]="lang()" [innerHTML]="body() | safeHtml"></div>
 
       <!-- Attachments -->
       @if (attachments().length) {

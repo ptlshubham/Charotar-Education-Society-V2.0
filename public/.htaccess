@@ -27,6 +27,13 @@ AddDefaultCharset UTF-8
 	RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 	RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
 
+	# Live from the CES API through site-live.php, so a blog post published in the dashboard is in
+	# the sitemap and llms.txt, and readable by crawlers, at once - no rebuild. Ahead of the
+	# real-file rules on purpose: sitemap.xml and llms.txt are only the build's fallback copies.
+	RewriteRule ^sitemap\.xml$ site-live.php?f=sitemap [L]
+	RewriteRule ^llms\.txt$ site-live.php?f=llms [L]
+	RewriteRule ^blog/[^/]+/?$ site-live.php?f=post [L]
+
 	# Keep real files/directories untouched (prerendered /route/index.html included).
 	RewriteCond %{REQUEST_FILENAME} -f [OR]
 	RewriteCond %{REQUEST_FILENAME} -d
@@ -37,9 +44,11 @@ AddDefaultCharset UTF-8
 	RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}/index.html -f
 	RewriteRule ^(.+?)/?$ /$1/index.html [L]
 
-	# Angular SPA fallback for deep links like /auth/login (never for API calls).
+	# Angular SPA fallback for routes with no prerendered file (e.g. /navratri/2026). index.csr.html
+	# is the empty app shell; index.html is the prerendered home page, which the app would try to
+	# hydrate as the wrong page. Never for API calls.
 	RewriteCond %{REQUEST_URI} !^/api
-	RewriteRule . /index.html [L]
+	RewriteRule . /index.csr.html [L]
 </IfModule>
 
 # ---------------------------------------------------------------------------

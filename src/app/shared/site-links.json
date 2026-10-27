@@ -11,7 +11,9 @@
         { "label": "Management", "path": "/management" },
         { "label": "History of VJ Patel", "path": "/glory/history-vj" },
         { "label": "Alumni", "path": "/alumni" },
-        { "label": "Careers", "path": "/company/careers" }
+        { "label": "Careers", "path": "/company/careers" },
+        { "label": "Job Vacancies", "path": "/more/career" },
+        { "label": "Tenders", "path": "/more/tenders" }
       ]
     },
     {
@@ -50,7 +52,8 @@
       "links": [
         { "label": "Answer Key", "path": "/student-corner/answer-key" },
         { "label": "Magazine", "path": "/student-corner/magazine" },
-        { "label": "IP Cell", "path": "/ipcell" }
+        { "label": "IP Cell", "path": "/ipcell" },
+        { "label": "Counselling", "path": "/counselling" }
       ]
     },
     {
@@ -61,7 +64,8 @@
         { "label": "Schools", "path": "/academic/school" },
         { "label": "Colleges", "path": "/academic/colleges" },
         { "label": "Hostels", "path": "/academic/hostels" },
-        { "label": "Others", "path": "/academic/others" }
+        { "label": "Others", "path": "/academic/others" },
+        { "label": "Our Campuses", "path": "/more/campus" }
       ]
     },
     {
@@ -99,7 +103,8 @@
         { "label": "Home", "path": "/" },
         { "label": "Contact Us", "path": "/contact" },
         { "label": "Sitemap", "path": "/sitemap" },
-        { "label": "News", "path": "/more/news" }
+        { "label": "News", "path": "/more/news" },
+        { "label": "e-Gate Pass", "path": "/more/gate-pass" }
       ]
     }
   ]

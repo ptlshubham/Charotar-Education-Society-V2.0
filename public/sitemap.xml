@@ -2,6 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://cesociety.in/</loc></url>
   <url><loc>https://cesociety.in/about</loc></url>
+  <url><loc>https://cesociety.in/about/history</loc></url>
+  <url><loc>https://cesociety.in/about/profile</loc></url>
   <url><loc>https://cesociety.in/academic/colleges</loc></url>
   <url><loc>https://cesociety.in/academic/hostels</loc></url>
   <url><loc>https://cesociety.in/academic/others</loc></url>
@@ -10,8 +12,10 @@
   <url><loc>https://cesociety.in/beneficiary-students</loc></url>
   <url><loc>https://cesociety.in/blog</loc></url>
   <url><loc>https://cesociety.in/celebration</loc></url>
+  <url><loc>https://cesociety.in/chatkaro</loc></url>
   <url><loc>https://cesociety.in/company/careers</loc></url>
   <url><loc>https://cesociety.in/contact</loc></url>
+  <url><loc>https://cesociety.in/counselling</loc></url>
   <url><loc>https://cesociety.in/donation</loc></url>
   <url><loc>https://cesociety.in/donner-list</loc></url>
   <url><loc>https://cesociety.in/fund</loc></url>
@@ -20,6 +24,11 @@
   <url><loc>https://cesociety.in/ipcell</loc></url>
   <url><loc>https://cesociety.in/management</loc></url>
   <url><loc>https://cesociety.in/micro-donner</loc></url>
+  <url><loc>https://cesociety.in/more/campus</loc></url>
+  <url><loc>https://cesociety.in/more/career</loc></url>
+  <url><loc>https://cesociety.in/more/gate-pass</loc></url>
+  <url><loc>https://cesociety.in/more/news</loc></url>
+  <url><loc>https://cesociety.in/more/tenders</loc></url>
   <url><loc>https://cesociety.in/navratri</loc></url>
   <url><loc>https://cesociety.in/podcast</loc></url>
   <url><loc>https://cesociety.in/project</loc></url>
@@ -33,4 +42,45 @@
   <url><loc>https://cesociety.in/support/refund-cancellation-policy</loc></url>
   <url><loc>https://cesociety.in/support/terms</loc></url>
   <url><loc>https://cesociety.in/support/website-terms</loc></url>
+  <url><loc>https://cesociety.in/blog/30</loc><lastmod>2025-02-11</lastmod></url>
+  <url><loc>https://cesociety.in/blog/3</loc><lastmod>2023-01-06</lastmod></url>
+  <url><loc>https://cesociety.in/blog/kasturba-mahatmas-life-companion</loc><lastmod>2015-10-09</lastmod></url>
+  <url><loc>https://cesociety.in/blog/kasturba-the-play</loc><lastmod>2015-10-02</lastmod></url>
+  <url><loc>https://cesociety.in/blog/shikshak-pratibha-shodh-teachers-talent</loc><lastmod>2015-09-28</lastmod></url>
+  <url><loc>https://cesociety.in/blog/when-the-chairman-was-a-student-nirav-patel</loc><lastmod>2015-08-31</lastmod></url>
+  <url><loc>https://cesociety.in/blog/three-generations-with-ces-prajnesh-patel</loc><lastmod>2015-08-31</lastmod></url>
+  <url><loc>https://cesociety.in/blog/ramatotsav-traditional-games</loc><lastmod>2015-08-25</lastmod></url>
+  <url><loc>https://cesociety.in/blog/dr-anil-kakodkar-discussion-part-3</loc><lastmod>2015-08-20</lastmod></url>
+  <url><loc>https://cesociety.in/blog/dr-anil-kakodkar-discussion-part-2</loc><lastmod>2015-08-19</lastmod></url>
+  <url><loc>https://cesociety.in/blog/dr-anil-kakodkar-discussion-part-1</loc><lastmod>2015-08-19</lastmod></url>
+  <url><loc>https://cesociety.in/blog/jivan-path-na-pagthiya-book-introduction</loc><lastmod>2015-08-09</lastmod></url>
+  <url><loc>https://cesociety.in/blog/skill-fair-marathon-lectures</loc><lastmod>2015-08-07</lastmod></url>
+  <url><loc>https://cesociety.in/blog/a-glimpse-of-the-skill-fair</loc><lastmod>2015-08-06</lastmod></url>
+  <url><loc>https://cesociety.in/blog/ces-skill-development-and-employment-fair</loc><lastmod>2015-07-30</lastmod></url>
+  <url><loc>https://cesociety.in/blog/bunking-class-cost-dearly-rb-patel</loc><lastmod>2015-07-27</lastmod></url>
+  <url><loc>https://cesociety.in/blog/the-power-of-one</loc><lastmod>2015-07-24</lastmod></url>
+  <url><loc>https://cesociety.in/blog/anuj-dhar-netaji-mystery</loc><lastmod>2015-07-21</lastmod></url>
+  <url><loc>https://cesociety.in/blog/dyuno-says-hi</loc><lastmod>2015-07-21</lastmod></url>
+  <url><loc>https://cesociety.in/blog/history-of-charotar-education-society-part-2</loc><lastmod>2015-07-18</lastmod></url>
+  <url><loc>https://cesociety.in/blog/history-of-charotar-education-society-part-1</loc><lastmod>2015-07-16</lastmod></url>
+  <url><loc>https://cesociety.in/blog/vehm-andhshraddha-nirmulan-program</loc><lastmod>2015-07-13</lastmod></url>
+  <url><loc>https://cesociety.in/blog/friendship-mine-yours-and-ours</loc><lastmod>2015-06-29</lastmod></url>
+  <url><loc>https://cesociety.in/blog/if-not-a-flower-a-petal-june-2015</loc><lastmod>2015-06-29</lastmod></url>
+  <url><loc>https://cesociety.in/blog/electronics-repair-laboratory-anand</loc><lastmod>2015-06-29</lastmod></url>
+  <url><loc>https://cesociety.in/blog/netaji-subhash-chandra-bose-historic-figure</loc><lastmod>2015-06-29</lastmod></url>
+  <url><loc>https://cesociety.in/blog/music-summer-camp-sangeet-rangotsav</loc><lastmod>2015-06-27</lastmod></url>
+  <url><loc>https://cesociety.in/blog/netaji-subhash-chandra-bose-gujarati</loc><lastmod>2015-06-25</lastmod></url>
+  <url><loc>https://cesociety.in/blog/ces-family-at-anand-dham</loc><lastmod>2015-06-07</lastmod></url>
+  <url><loc>https://cesociety.in/blog/revoking-superstition-reinforcing-reason</loc><lastmod>2015-06-03</lastmod></url>
+  <url><loc>https://cesociety.in/blog/back-to-the-school-grounds-reunion</loc><lastmod>2015-06-01</lastmod></url>
+  <url><loc>https://cesociety.in/blog/sky-gazing-from-the-ces-terrace</loc><lastmod>2015-05-29</lastmod></url>
+  <url><loc>https://cesociety.in/blog/dr-bharat-patel-diary-of-memories</loc><lastmod>2015-05-26</lastmod></url>
+  <url><loc>https://cesociety.in/blog/santoor-evening-sangeet-vidyalaya</loc><lastmod>2015-05-25</lastmod></url>
+  <url><loc>https://cesociety.in/blog/pearl-of-charotar</loc><lastmod>2015-05-19</lastmod></url>
+  <url><loc>https://cesociety.in/blog/dr-bharat-patel-diary-of-memories-gujarati</loc><lastmod>2015-05-15</lastmod></url>
+  <url><loc>https://cesociety.in/blog/dn-students-in-social-service</loc><lastmod>2015-05-13</lastmod></url>
+  <url><loc>https://cesociety.in/blog/courageous-lady-of-kkv</loc><lastmod>2015-05-13</lastmod></url>
+  <url><loc>https://cesociety.in/blog/smriti-irani-replies-to-dn-students</loc><lastmod>2015-05-12</lastmod></url>
+  <url><loc>https://cesociety.in/blog/chalo-school-chalein-hum</loc><lastmod>2015-05-12</lastmod></url>
+  <url><loc>https://cesociety.in/blog/reunion-bucket-of-memories</loc><lastmod>2015-05-10</lastmod></url>
 </urlset>

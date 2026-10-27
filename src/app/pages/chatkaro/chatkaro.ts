@@ -2,7 +2,6 @@ import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, DestroyRef, afterNextRender, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import { SeoService } from '../../core/services/seo.service';
 
 /** Chatkaro runs 11 to 13 January every year, 10:30 AM to 10:30 PM. */
 const FIRST_DAY = 11;
@@ -132,15 +131,6 @@ export class Chatkaro {
   ];
 
   constructor() {
-    inject(SeoService).applyCustom(
-      {
-        title: 'Chatkaro: Food Festival and Skill Fair',
-        description:
-          "CES Chatkaro: Gujarat's traditional food, a skill fair and the Alumni Meet, 11 to 13 January every year on the D.N. High School campus, Anand. Free entry for all.",
-        image: this.photo,
-      },
-      'chatkaro',
-    );
     this.setEventData();
     inject(DestroyRef).onDestroy(() => this.document.getElementById(EVENT_SCRIPT_ID)?.remove());
 

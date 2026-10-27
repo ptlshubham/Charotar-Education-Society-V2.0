@@ -58,6 +58,21 @@ export interface SeoOverride {
   image?: string | null;
   /** Absolute URL of this page; falls back to siteUrl + current path. */
   url?: string | null;
+  /** A blog post's details - published as a schema.org BlogPosting in the page's JSON-LD. */
+  article?: SeoArticle;
+}
+
+export interface SeoArticle {
+  /** ISO date (or date-time) of publication. */
+  published: string;
+  modified?: string | null;
+  /** A person who wrote it; empty means the Society itself. */
+  author?: string | null;
+  /** The post's category. */
+  section?: string | null;
+  tags?: readonly string[];
+  /** BCP 47 language of the text, e.g. 'gu-IN' for a Gujarati post. Default 'en-IN'. */
+  language?: string | null;
 }
 
 const EMPTY_DEFAULTS: SeoDefaults = {
@@ -87,6 +102,34 @@ const firstNonEmpty = (...values: (string | null | undefined)[]): string | null 
   }
   return null;
 };
+
+/**
+ * A static page's admin entry with the page's built-in text filling the title, description and
+ * image it leaves blank - or standing in for the whole entry until "Sync Pages" has created it.
+ */
+function withFallback(page: SeoPage | null, pageKey: string, fallback: SeoOverride): SeoPage {
+  const base: SeoPage = page ?? {
+    pageKey,
+    path: fallback.url ?? '',
+    title: null,
+    description: null,
+    keywords: null,
+    ogTitle: null,
+    ogDescription: null,
+    ogImage: null,
+    twitterTitle: null,
+    twitterDescription: null,
+    twitterImage: null,
+    canonicalUrl: null,
+    robots: null,
+  };
+  return {
+    ...base,
+    title: firstNonEmpty(base.title, fallback.title),
+    description: firstNonEmpty(base.description, fallback.description),
+    ogImage: firstNonEmpty(base.ogImage, fallback.image),
+  };
+}
 
 @Injectable({ providedIn: 'root' })
 export class SeoService {
@@ -129,14 +172,15 @@ export class SeoService {
   }
 
   /**
-   * Applies the meta tags for a registered static page. Returns an observable
-   * the router resolver can wait on so tags are set before SSR serialises.
+   * Applies the meta tags for a registered static page. `fallback` is the page's built-in text,
+   * used wherever its admin entry is blank - the admin's own values always win. Returns an
+   * observable the router resolver can wait on so tags are set before SSR serialises.
    */
-  apply(pageKey: string): Observable<boolean> {
+  apply(pageKey: string, fallback?: SeoOverride): Observable<boolean> {
     return this.load().pipe(
       tap(({ pages, defaults }) => {
-        const page = pages.find(p => p.pageKey === pageKey);
-        this.render(page ?? null, defaults, null);
+        const page = pages.find(p => p.pageKey === pageKey) ?? null;
+        this.render(fallback ? withFallback(page, pageKey, fallback) : page, defaults, null);
       }),
       map(() => true),
       catchError(() => of(true)),
@@ -202,13 +246,15 @@ export class SeoService {
     const faqs = override ? [] : (page?.aiFaqs ?? []).filter(f => firstNonEmpty(f?.q) && firstNonEmpty(f?.a));
     this.pageFaqs.set({ pageKey: page?.pageKey ?? null, faqs });
 
-    this.setJsonLd(this.pageJsonLd(url, title, firstNonEmpty(own?.aiSummary, description), defaults, faqs));
+    const article = override?.article ? { ...override.article, headline: rawTitle, image } : null;
+    this.setJsonLd(this.pageJsonLd(url, title, firstNonEmpty(own?.aiSummary, description), defaults, faqs, article));
   }
 
   /**
    * schema.org JSON-LD for this page: a WebPage tied to the site and to the Organization
-   * block in index.html (same @id), plus a FAQPage when the page has FAQs. This is how
-   * AI search (Gemini, Copilot, ChatGPT, Perplexity) tells what a page is and who it is about.
+   * block in index.html (same @id), plus a FAQPage when the page has FAQs and a BlogPosting
+   * for a blog post. This is how AI search (Gemini, Copilot, ChatGPT, Perplexity) tells what
+   * a page is, who it is about, who wrote it and when.
    */
   private pageJsonLd(
     url: string | null,
@@ -216,9 +262,11 @@ export class SeoService {
     description: string | null,
     defaults: SeoDefaults,
     faqs: SeoFaq[],
+    article: (SeoArticle & { headline: string | null; image: string | null }) | null = null,
   ): object | null {
     if (!url) return null;
     const siteName = firstNonEmpty(defaults.siteName);
+    const language = firstNonEmpty(article?.language) ?? 'en-IN';
     const graph: object[] = [
       {
         '@type': 'WebPage',
@@ -226,7 +274,7 @@ export class SeoService {
         url,
         ...(title && { name: title }),
         ...(description && { description }),
-        inLanguage: 'en-IN',
+        inLanguage: language,
         isPartOf: {
           '@type': 'WebSite',
           '@id': SITE_ID,
@@ -245,6 +293,28 @@ export class SeoService {
           name: f.q,
           acceptedAnswer: { '@type': 'Answer', text: f.a },
         })),
+      });
+    }
+    if (article) {
+      const tags = (article.tags ?? []).filter(Boolean);
+      graph.push({
+        '@type': 'BlogPosting',
+        '@id': `${url}#article`,
+        mainEntityOfPage: { '@id': `${url}#webpage` },
+        url,
+        ...(article.headline && { headline: article.headline.slice(0, 110) }),
+        ...(description && { description }),
+        ...(article.image && { image: article.image }),
+        datePublished: article.published,
+        dateModified: firstNonEmpty(article.modified) ?? article.published,
+        author: firstNonEmpty(article.author)
+          ? { '@type': 'Person', name: firstNonEmpty(article.author) }
+          : { '@id': ORGANIZATION_ID },
+        publisher: { '@id': ORGANIZATION_ID },
+        ...(firstNonEmpty(article.section) && { articleSection: firstNonEmpty(article.section) }),
+        ...(tags.length && { keywords: tags.join(', ') }),
+        inLanguage: language,
+        isPartOf: { '@type': 'Blog', '@id': `${SITE_ID.replace('#website', '')}blog#blog`, name: 'CES Blog' },
       });
     }
     return { '@context': 'https://schema.org', '@graph': graph };

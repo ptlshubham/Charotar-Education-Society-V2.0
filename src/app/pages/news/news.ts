@@ -4,20 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { PageHero } from '../../shared/page-hero/page-hero';
+import { NewsletterForm } from '../../shared/newsletter-form/newsletter-form';
 import { PLACEHOLDER } from '../../shared/placeholder-images';
 import { ResourcesService } from '../../core/services/resources.service';
 import { InstituteService } from '../../core/services/institute.service';
-import { NEWS_TYPES, NewsItem, NewsType, newsDate, toNewsItem } from '../../shared/news-item';
+import { NEWS_TYPES, NEWS_TYPE_ICONS, NewsItem, NewsType, newsDate, newsTileClass, toNewsItem } from '../../shared/news-item';
 
 type Tab = NewsType | 'all';
 
 /** Icon paths for the category rail (24×24, stroked). */
-const TAB_ICONS: Record<Tab, string[]> = {
-  all: ['M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2z', 'M10 6h8M10 10h8M10 14h4'],
-  news: ['M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2z', 'M10 6h8M10 10h8M10 14h4'],
-  announcement: ['M3 11v3a1 1 0 0 0 1 1h2l4 4V6L6 10H4a1 1 0 0 0-1 1z', 'M16 9a4 4 0 0 1 0 6'],
-  circular: ['M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z', 'M14 2v6h6', 'M8 13h8M8 17h5'],
-};
+const TAB_ICONS: Record<Tab, string[]> = { all: NEWS_TYPE_ICONS.news, ...NEWS_TYPE_ICONS };
 
 /** Cards shown at first, and added by "Show more". */
 const PAGE = 12;
@@ -25,11 +21,12 @@ const PAGE = 12;
 /**
  * News & Updates - the society's news, announcements and circulars, published from Website
  * Management → News & Notices (live: GET /admin/GetPublicNews). /more/news?type=circular opens
- * a tab directly; each item has its own page at /more/news/<id>.
+ * a tab directly, ?q= a search (from an item page's search box); each item has its own page at
+ * /more/news/<id>.
  */
 @Component({
   selector: 'app-news',
-  imports: [FormsModule, PageHero, RouterLink],
+  imports: [FormsModule, PageHero, RouterLink, NewsletterForm],
   templateUrl: './news.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './news.scss',
@@ -41,7 +38,7 @@ export class News {
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
 
-  readonly banner = PLACEHOLDER.about.hero;
+  readonly banner = 'assets/images/hero/news.webp';
 
   readonly tabs: ReadonlyArray<{ key: Tab; label: string; path: string[] }> = [
     { key: 'all', label: 'All Updates', path: TAB_ICONS.all },
@@ -56,7 +53,6 @@ export class News {
   readonly query = signal('');
   readonly sort = signal<'latest' | 'oldest'>('latest');
   readonly limit = signal(PAGE);
-  email = '';
 
   readonly date = newsDate;
 
@@ -64,6 +60,9 @@ export class News {
     this.route.queryParamMap.pipe(takeUntilDestroyed()).subscribe((pm) => {
       const type = pm.get('type');
       this.tab.set(this.tabs.some((t) => t.key === type) ? (type as Tab) : 'all');
+      // Only set when present: switching tabs drops ?q= from the URL, but should keep the search.
+      const q = pm.get('q');
+      if (q !== null) this.query.set(q);
       this.limit.set(PAGE);
     });
     this.load();
@@ -111,10 +110,6 @@ export class News {
     this.limit.update((n) => n + PAGE);
   }
 
-  subscribe(): void {
-    this.email = '';
-  }
-
   tagClass(type: NewsType): string {
     switch (type) {
       case 'announcement':
@@ -128,14 +123,7 @@ export class News {
 
   /** The tile behind a card without a cover picture. */
   tileClass(type: NewsType): string {
-    switch (type) {
-      case 'announcement':
-        return 'bg-[#FFF4DE] text-[#B7791F]';
-      case 'circular':
-        return 'bg-[#FDECEC] text-accent';
-      default:
-        return 'bg-[#EEF3FB] text-primary';
-    }
+    return newsTileClass(type);
   }
 
   iconFor(type: NewsType): string[] {

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/c
 import { RouterLink } from '@angular/router';
 import { PageHero } from '../../../shared/page-hero/page-hero';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
-import { AcademicTabs, AcademicTab } from '../academic-tabs';
+import { TabBar, TabItem } from '../../../shared/tab-bar/tab-bar';
 
 type HostelCategory = 'all' | 'boys' | 'girls';
 
@@ -17,7 +17,7 @@ interface Hostel {
 
 @Component({
   selector: 'app-hostels',
-  imports: [PageHero, RouterLink, AcademicTabs],
+  imports: [PageHero, RouterLink, TabBar],
   templateUrl: './hostels.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './hostels.scss',
@@ -25,7 +25,7 @@ interface Hostel {
 export class Hostels {
   readonly banner = '/assets/images/hero/hostel.jpeg';
 
-  readonly tabs: readonly AcademicTab[] = [
+  readonly tabs: readonly TabItem[] = [
     { id: 'all', label: 'All Hostels', path: [], icon: 'apartment' },
     { id: 'boys', label: 'Boys Hostel', path: [], icon: 'person' },
     { id: 'girls', label: 'Girls Hostel', path: [], icon: 'person' },

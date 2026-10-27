@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, map, shareReplay, tap } from 'rxjs';
 import { ApiService } from './api.service';
 import { SKIP_ERROR_REDIRECT } from '../interceptors/error.interceptor';
-import { AnswerKeyEntry, BeneficiaryStudent, BlogPost, CareersPage, TenderItem, Copyright, CounsellingPayload, DonationPayload, Donor, GalleryImage, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NewsEntry, NavratriImage, NavratriPage, NavratriLiveLink, Patent, PodcastEntry, SiteNotification, Trademark, VisitorCounter } from '../../shared/models/models';
+import { AlumniPayload, AnswerKeyEntry, BeneficiaryStudent, BlogPost, CareersPage, TenderItem, Copyright, CounsellingPayload, DonationPayload, Donor, GalleryImage, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NewsEntry, NavratriImage, NavratriPage, NavratriLiveLink, Patent, PodcastEntry, SiteNotification, Trademark, VisitorCounter } from '../../shared/models/models';
 
 
 @Injectable({
@@ -65,6 +65,28 @@ export class ResourcesService {
         });
     }
 
+    /**
+     * Institute names for a form's dropdown (e-Gate Pass, alumni). The backend list carries
+     * duplicate and test rows (e.g. two "E2E Sync Inst"), so names are trimmed, blanks dropped,
+     * de-duplicated case-insensitively and sorted. Genuine test entries still need removing at the source.
+     */
+    getInstituteNames(): Observable<string[]> {
+        return this.getInstitutes().pipe(
+            map((list) => {
+                const seen = new Set<string>();
+                return (Array.isArray(list) ? list : [])
+                    .map((i) => (i?.name ?? '').trim())
+                    .filter((name) => {
+                        const key = name.toLowerCase();
+                        if (!name || seen.has(key)) return false;
+                        seen.add(key);
+                        return true;
+                    })
+                    .sort((a, b) => a.localeCompare(b));
+            }),
+        );
+    }
+
     // Careers page (Website Management → Careers). Kept out of the transfer cache (app.config)
     // so the browser always shows the live list, not the one baked in at build time.
     getCareers() {
@@ -91,6 +113,13 @@ export class ResourcesService {
 
     saveGatePass(payload: GatePassPayload) {
         return this.http.post(ApiService.SaveGatePassURL, payload, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    // Alumni registration. Answers "success", or "error" (still HTTP 200) when the insert fails.
+    saveAlumni(payload: AlumniPayload) {
+        return this.http.post<string>(ApiService.SaveAlumniDetailsURL, payload, {
             context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
         });
     }
@@ -313,9 +342,11 @@ export class ResourcesService {
         return this.http.get(ApiService.GetPublicPlansURL);
     }
 
-    // Public Website Newsletter
-    subscribeNewsletter(email: string, source: string = 'website') {
-        return this.http.post(ApiService.SubscribeNewsletterURL, { email, source });
+    // Newsletter sign-up for an institute's list. `source` says which box: news, blog, coming-soon:<section> ...
+    subscribeNewsletter(email: string, source: string, instituteId: number) {
+        return this.http.post(ApiService.SubscribeNewsletterURL, { email, source, instituteId }, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
     }
 
     // Dyuno study assistant. `history` is prior turns for context; the backend only

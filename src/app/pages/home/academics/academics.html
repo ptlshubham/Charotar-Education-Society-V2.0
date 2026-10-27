@@ -11,25 +11,9 @@
       <span class="mt-5 block h-1 w-12 rounded-full bg-secondary" aria-hidden="true"></span>
     </div>
 
-    <!-- Level tabs: an underlined row; the active one carries a gold bar -->
-    <div #tabList class="hide-scrollbar mb-8 overflow-x-auto border-b border-primary/10" role="tablist"
-      aria-label="Programme level" (keydown.arrowright)="moveTab(1, tabList)" (keydown.arrowleft)="moveTab(-1, tabList)">
-      <div class="mx-auto flex w-max gap-1 sm:gap-4 lg:gap-8">
-        @for (tab of tabs; track tab.label) {
-        @let on = active() === tab;
-        <button type="button" role="tab" [attr.aria-selected]="on" [attr.tabindex]="on ? 0 : -1"
-          aria-controls="programme-cards" (click)="select(tab)"
-          class="relative flex shrink-0 cursor-pointer items-center gap-2 px-3 pt-2 pb-3.5 text-[14px] whitespace-nowrap transition-colors focus:outline-none focus-visible:text-primary sm:px-4 sm:text-[16px]"
-          [class]="on ? 'font-semibold text-primary' : 'font-medium text-primary/70 hover:text-primary'">
-          <span class="tab-icon material-symbols-outlined !text-[22px]" [class.is-on]="on" aria-hidden="true">{{ tab.icon }}</span>
-          {{ tab.label }}
-          @if (on) {
-          <span class="absolute inset-x-0 -bottom-px h-[3px] rounded-full bg-secondary" aria-hidden="true"></span>
-          }
-        </button>
-        }
-      </div>
-    </div>
+    <!-- Level tabs: the site's tab row (shared/tab-bar) -->
+    <app-tab-bar class="mb-8 block" [tabs]="tabItems" [active]="active().level" ariaLabel="Programme level"
+      controls="programme-cards" (tabChange)="select($event)" />
 
     <!-- Programme cards -->
     <!-- Wide cards, two to a row (a lone card sits centred). Every card is one fixed height, so
@@ -40,7 +24,7 @@
       @for (course of visible(); track course.id) {
       <li class="course-card">
         <a [routerLink]="active().link"
-          class="group relative grid h-[128px] grid-cols-[38%_minmax(0,1fr)] grid-rows-1 overflow-hidden rounded-xl border border-[#E6E9EF] bg-white no-underline shadow-[0_6px_20px_-14px_rgba(32,49,84,0.3)] transition duration-200 hover:border-[#D5E2F3] hover:shadow-[0_18px_36px_-20px_rgba(32,49,84,0.4)] focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary sm:h-[152px] sm:grid-cols-[40%_minmax(0,1fr)]">
+          class="group relative grid h-[128px] grid-cols-[38%_minmax(0,1fr)] grid-rows-1 overflow-hidden rounded-xl border border-[#E6E9EF] bg-white no-underline shadow-[0_6px_20px_-14px_rgba(32,49,84,0.3)] transition duration-200 hover:border-[#D5E2F3] focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary sm:h-[152px] sm:grid-cols-[40%_minmax(0,1fr)]">
           <!-- Gold bar down the left edge on hover/focus -->
           <span class="absolute inset-y-0 left-0 z-10 w-1 origin-center scale-y-0 bg-secondary transition-transform duration-200 group-hover:scale-y-100 group-focus-visible:scale-y-100"
             aria-hidden="true"></span>

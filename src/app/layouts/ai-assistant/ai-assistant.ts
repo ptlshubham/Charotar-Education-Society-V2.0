@@ -156,7 +156,7 @@ export class AiAssistant implements OnDestroy {
     // Dyuno walks in from the right edge, waves, then waves now and then while idle - once the
     // page loader (index.html) has lifted, so the walk-in isn't spent behind it.
     afterNextRender(() => {
-      if (document.querySelector('#ces-loader:not(.is-done)')) {
+      if (document.querySelector('#ces-loader:not([hidden])')) {
         window.addEventListener('ces:loader-done', () => this.startDyuno(), { once: true });
       } else {
         this.startDyuno();

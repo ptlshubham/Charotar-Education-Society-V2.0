@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PageHero } from '../../../shared/page-hero/page-hero';
+import { TabBar } from '../../../shared/tab-bar/tab-bar';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
 import { LightboxService } from '../../../core/services/lightbox.service';
@@ -32,7 +33,7 @@ const ICON = {
  */
 @Component({
   selector: 'app-navratri-detail',
-  imports: [RouterLink, MediaUrlPipe, SafeHtmlPipe, PageHero],
+  imports: [RouterLink, MediaUrlPipe, SafeHtmlPipe, PageHero, TabBar],
   templateUrl: './navratri-detail.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './navratri-detail.scss',

@@ -183,81 +183,155 @@
   </script>
 
   <!-- ─── Page loader ───
-       Dyuno walks on the spot while the page loads (markup + script at the top of <body>).
-       Inline so it paints before the app's CSS and JS arrive. The walk frames are the
-       launcher's (layouts/ai-assistant): 110ms each, and the ground slides at his walking
-       pace (62.5px/s at 72px, so ~111px/s at 128px) so his feet don't skate. -->
+       Dyuno drops in on a thread and swings while the page loads (markup + controller in <body>).
+       Inline so it paints before the app's CSS and JS arrive.
+
+       One pose (assets/images/loader/dyuno-hang.webp, made by scripts/dyuno-loader-assets.mjs) is
+       moved and rotated; the keyframes it came from are separate renders that jump if played in
+       turn. The thread is drawn here, behind him: the sprite has its rope cut out, so the thread
+       shows through the gap between his arms. Thread and Dyuno sit in one .ces-loader__swing,
+       rotated about the top of the screen, so the thread's top never moves and its other end never
+       leaves his hands. He slides down the hanging thread, stretches it a little (the bounce),
+       eases into the swing at its far left and loops from there, so the loop has no seam. He
+       blinks at the swing's far end (the blink frame's face, laid over his).
+
+       Sizes are fractions of --m, his height from hands to soles, as the asset script printed. -->
+  <link rel="preload" as="image" href="/assets/images/loader/dyuno-hang.webp" fetchpriority="high">
   <style>
-    #ces-loader {
+    .ces-loader {
+      --m: 170px;
+      --sprite-w: calc(var(--m) * 0.533);
+      --sprite-h: calc(var(--m) * 1.0142);
+      /* where his hands are once he has settled: body + caption centred on the screen */
+      --hands: calc(50% - var(--m) / 2 - 18px);
+      --thread-w: max(2px, calc(var(--m) * 0.0177));
+      /* the thread ends behind his face (0.26-0.52 of --m below the hands), out of sight even
+         when the bounce lifts him 9px up it */
+      --thread-len: calc(var(--hands) + var(--m) * 0.38);
       position: fixed;
       inset: 0;
       z-index: 2147483000;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 18px;
-      background: #fff;
-      /* Fail-safe: lifts itself even if the script never runs. */
-      animation: ces-loader-failsafe 0.35s ease 12s forwards;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.88);
+      /* Nothing for the first 180ms (fast loads never flash it), then a quick fade. The fail-safe
+         lifts it even if the controller never runs. */
+      animation: ces-loader-in 0.15s ease 0.18s both, ces-loader-failsafe 0.25s ease 12s forwards;
     }
-    #ces-loader.is-done {
-      pointer-events: none;
-      animation: ces-loader-out 0.35s ease forwards;
-    }
-    @keyframes ces-loader-failsafe { to { opacity: 0; visibility: hidden; pointer-events: none; } }
-    @keyframes ces-loader-out { to { opacity: 0; visibility: hidden; } }
+    .ces-loader[hidden] { display: none; }
+    @keyframes ces-loader-in { from { opacity: 0; visibility: hidden; } }
+    @keyframes ces-loader-failsafe { to { opacity: 0; visibility: hidden; } }
 
-    #ces-loader .ces-loader__dyuno {
-      position: relative;
-      width: 128px;
-      height: 128px;
-    }
-    /* Every frame is stacked; each shows for its 110ms slot of the 880ms cycle. */
-    #ces-loader .ces-loader__dyuno img {
+    .ces-loader__swing {
       position: absolute;
+      top: 0;
+      left: 50%;
+      width: 0;
+      height: 100%;
+      transform-origin: 0 0;
+      animation: ces-swing-in 0.7s ease-in-out 1.53s both, ces-swing 2.8s ease-in-out 2.23s infinite;
+    }
+    @keyframes ces-swing-in { from { transform: rotate(0deg); } to { transform: rotate(5deg); } }
+    @keyframes ces-swing { 0%, 100% { transform: rotate(5deg); } 50% { transform: rotate(-5deg); } }
+
+    .ces-loader__thread {
+      position: absolute;
+      top: 0;
+      left: calc(var(--thread-w) / -2);
+      width: var(--thread-w);
+      height: var(--thread-len);
+      border-radius: 0 0 2px 2px;
+      background:
+        repeating-linear-gradient(-58deg, rgba(122, 68, 0, 0.3) 0 1px, transparent 1px 3px),
+        linear-gradient(90deg, #b8760f, #f0b030 42%, #f8c757 60%, #c98714);
+      animation: ces-thread-drop 0.26s cubic-bezier(0.3, 0.7, 0.4, 1) 0.18s both;
+    }
+    @keyframes ces-thread-drop { from { transform: translateY(-100%); } }
+
+    .ces-loader__dyuno {
+      position: absolute;
+      top: var(--hands);
+      left: calc(var(--sprite-w) * -0.4912);
+      width: var(--sprite-w);
+      height: var(--sprite-h);
+      animation: ces-dyuno-drop 1.15s linear 0.38s both;
+    }
+    /* Slides down from above the screen, stretches the thread 9px, springs back past rest, settles. */
+    @keyframes ces-dyuno-drop {
+      0% { transform: translateY(calc(-50vh - 100%)); animation-timing-function: cubic-bezier(0.25, 0.6, 0.35, 1); }
+      70% { transform: translateY(9px); animation-timing-function: ease-in-out; }
+      86% { transform: translateY(-3px); animation-timing-function: ease-in-out; }
+      100% { transform: translateY(0); }
+    }
+    .ces-loader__dyuno img {
+      position: absolute;
+      display: block;
+    }
+    .ces-loader__sprite {
       inset: 0;
       width: 100%;
       height: 100%;
+    }
+    /* Closed eyes, shown for 140ms every second swing, at the far left. */
+    .ces-loader__blink {
+      left: 19.34%;
+      top: 24.42%;
+      width: 61.88%;
+      height: 29.07%;
       opacity: 0;
-      animation: ces-loader-frame 880ms step-end infinite;
+      animation: ces-blink 5.6s step-end 2.23s infinite;
     }
-    #ces-loader .ces-loader__dyuno img:nth-child(2) { animation-delay: 110ms; }
-    #ces-loader .ces-loader__dyuno img:nth-child(3) { animation-delay: 220ms; }
-    #ces-loader .ces-loader__dyuno img:nth-child(4) { animation-delay: 330ms; }
-    #ces-loader .ces-loader__dyuno img:nth-child(5) { animation-delay: 440ms; }
-    #ces-loader .ces-loader__dyuno img:nth-child(6) { animation-delay: 550ms; }
-    #ces-loader .ces-loader__dyuno img:nth-child(7) { animation-delay: 660ms; }
-    #ces-loader .ces-loader__dyuno img:nth-child(8) { animation-delay: 770ms; }
-    @keyframes ces-loader-frame { 0% { opacity: 1; } 12.5% { opacity: 0; } }
+    @keyframes ces-blink { 0% { opacity: 0; } 50% { opacity: 1; } 52.5% { opacity: 0; } }
 
-    /* The ground under his feet, sliding left as he walks right. 3 dashes of 37px = 111px a second. */
-    #ces-loader .ces-loader__ground {
-      width: 180px;
-      height: 3px;
-      margin-top: -24px;
-      border-radius: 3px;
-      background: repeating-linear-gradient(90deg, #c5cee0 0 19px, transparent 19px 37px);
-      -webkit-mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent);
-      mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent);
-      animation: ces-loader-ground 1s linear infinite;
-    }
-    @keyframes ces-loader-ground { to { background-position-x: -111px; } }
+    /* Until his image has arrived he waits above the screen (the thread drops regardless). */
+    .ces-loader:not(.is-ready) .ces-loader__swing,
+    .ces-loader:not(.is-ready) .ces-loader__dyuno,
+    .ces-loader:not(.is-ready) .ces-loader__blink { animation-play-state: paused; }
+    .ces-loader:not(.is-ready) .ces-loader__dyuno { visibility: hidden; }
 
-    #ces-loader .ces-loader__text {
-      font: 600 13px/1 'DM Sans', system-ui, sans-serif;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+    .ces-loader__text {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(var(--hands) + var(--m) + 26px);
+      margin: 0;
+      text-align: center;
+      font: 600 14px/1.2 'DM Sans', system-ui, sans-serif;
+      letter-spacing: 0.02em;
       color: #203154;
     }
 
+    /* If his image can't load: a plain spinner instead of Dyuno and the thread. */
+    .ces-loader__spinner {
+      display: none;
+      position: absolute;
+      left: 50%;
+      top: calc(var(--hands) + var(--m) - 46px);
+      width: 36px;
+      height: 36px;
+      margin-left: -18px;
+      border: 3px solid rgba(32, 49, 84, 0.15);
+      border-top-color: #203154;
+      border-radius: 50%;
+      animation: ces-spin 0.8s linear infinite;
+    }
+    @keyframes ces-spin { to { transform: rotate(360deg); } }
+    .ces-loader.is-fallback .ces-loader__swing { display: none; }
+    .ces-loader.is-fallback .ces-loader__spinner { display: block; }
+
+    @media (max-width: 640px) {
+      .ces-loader { --m: 130px; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
-      #ces-loader .ces-loader__dyuno img,
-      #ces-loader .ces-loader__ground { animation: none; }
-      #ces-loader .ces-loader__dyuno img:first-child { opacity: 1; }
+      /* A still Dyuno, already hanging, and the caption. */
+      .ces-loader__swing,
+      .ces-loader__thread,
+      .ces-loader__dyuno,
+      .ces-loader__blink { animation: none; }
+      .ces-loader__spinner { display: none !important; }
     }
   </style>
-  <noscript><style>#ces-loader { display: none; }</style></noscript>
+  <noscript><style>.ces-loader { display: none; }</style></noscript>
 
   <!-- ─── Fonts ─── -->
   <link
@@ -299,58 +373,102 @@
   </noscript>
   <!-- End Google Tag Manager (noscript) -->
 
-  <!-- Page loader (styles in <head>). Lifts once the page's files have loaded AND the app has
-       its first data (App fires `ces:app-ready`), never before one walk cycle so it doesn't
-       just flash, never later than 10s. Fires `ces:loader-done` as it fades - the launcher
-       Dyuno waits for that before walking in. Only on a full page load; in-app navigation
-       never shows it. -->
-  <div id="ces-loader" role="status" aria-live="polite">
-    <!-- fetchpriority: otherwise the browser queues the frames behind the JS bundles, and on a
-         slow connection the ground walks without him. -->
-    <div class="ces-loader__dyuno" aria-hidden="true">
-      <img src="/assets/icons/dyuno/dyuno-walk-1.webp" alt="" width="128" height="128" fetchpriority="high">
-      <img src="/assets/icons/dyuno/dyuno-walk-2.webp" alt="" width="128" height="128" fetchpriority="high">
-      <img src="/assets/icons/dyuno/dyuno-walk-3.webp" alt="" width="128" height="128" fetchpriority="high">
-      <img src="/assets/icons/dyuno/dyuno-walk-4.webp" alt="" width="128" height="128" fetchpriority="high">
-      <img src="/assets/icons/dyuno/dyuno-walk-5.webp" alt="" width="128" height="128" fetchpriority="high">
-      <img src="/assets/icons/dyuno/dyuno-walk-6.webp" alt="" width="128" height="128" fetchpriority="high">
-      <img src="/assets/icons/dyuno/dyuno-walk-7.webp" alt="" width="128" height="128" fetchpriority="high">
-      <img src="/assets/icons/dyuno/dyuno-walk-8.webp" alt="" width="128" height="128" fetchpriority="high">
+  <!-- Page loader (styles in <head>, controller below <app-root>). Up from the first paint until
+       the page's files have loaded and the app has its first data; the app can hold it up again
+       later through PageLoader (core/services/page-loader.service.ts), e.g. while a navigation
+       loads. -->
+  <div id="ces-loader" class="ces-loader" role="status" aria-live="polite">
+    <div class="ces-loader__swing" aria-hidden="true">
+      <span class="ces-loader__thread"></span>
+      <div class="ces-loader__dyuno">
+        <img class="ces-loader__sprite" src="/assets/images/loader/dyuno-hang.webp" alt="" width="181" height="344"
+          fetchpriority="high" onload="this.closest('.ces-loader').classList.add('is-ready')"
+          onerror="this.closest('.ces-loader').classList.add('is-fallback')">
+        <img class="ces-loader__blink" src="/assets/images/loader/dyuno-hang-blink.webp" alt="" width="112" height="100"
+          decoding="async" onerror="this.remove()">
+      </div>
     </div>
-    <div class="ces-loader__ground" aria-hidden="true"></div>
-    <p class="ces-loader__text">Loading</p>
+    <span class="ces-loader__spinner" aria-hidden="true"></span>
+    <p class="ces-loader__text">Loading…</p>
   </div>
+
+  <app-root></app-root>
+
   <script>
+    // Page loader controller. Every reason to stay up is a key in `holds`; it shows while any is
+    // held and fades as soon as the last one goes. The app adds and removes keys with
+    // `ces:loading` events (PageLoader). `ces:loader-done` fires when the first one ends - the
+    // launcher Dyuno waits for it before walking in.
     (function () {
       var loader = document.getElementById('ces-loader');
       if (!loader) return;
+      var app = document.querySelector('app-root');
 
-      // Both counted from the start of the page load (performance.now() is 0 there).
-      var MIN_MS = 880;     // one walk cycle
-      var MAX_MS = 10000;   // a slow image or API never keeps the page covered
-      var pageLoaded = document.readyState === 'complete';
-      var appReady = false;
-      var lifted = false;
+      var SHOW_DELAY = 180;   // the CSS keeps it invisible this long
+      var FADE_MS = 220;
+      var FIRST_MAX = 10000;  // a slow image or API never keeps the first screen covered
 
-      function lift() {
-        if (lifted) return;
-        lifted = true;
-        setTimeout(function () {
-          loader.classList.add('is-done');
-          window.dispatchEvent(new Event('ces:loader-done'));
-          setTimeout(function () { loader.remove(); }, 400);
-        }, Math.max(0, MIN_MS - performance.now()));
+      // The first session: the page's files (window load) and the app's first data (PageLoader 'app').
+      var holds = { page: true, app: true };
+      var shownAt = 0;        // performance.now() when this session began (0 = page start)
+      var fade = null;        // the running fade-out
+      var firstDone = false;
+      var firstTimer;
+
+      function anyHeld() { for (var k in holds) return true; return false; }
+
+      function busy(on) {
+        if (!app) return;
+        if (on) app.setAttribute('aria-busy', 'true'); else app.removeAttribute('aria-busy');
       }
 
-      function check() { if (pageLoaded && appReady) lift(); }
+      function show() {
+        // Wanted again while fading out: stay up, mid-swing.
+        if (fade) { fade.cancel(); fade = null; }
+        if (!loader.hidden) return;
+        loader.hidden = false;   // back from display:none, every CSS animation starts over
+        shownAt = performance.now();
+        busy(true);
+      }
 
-      window.addEventListener('load', function () { pageLoaded = true; check(); });
-      window.addEventListener('ces:app-ready', function () { appReady = true; check(); });
-      setTimeout(lift, Math.max(0, MAX_MS - performance.now()));
+      function hide() {
+        if (loader.hidden || fade) return;
+        // Still inside the show delay: it was never visible, so just go.
+        if (performance.now() - shownAt < SHOW_DELAY) return finish();
+        fade = loader.animate([{ opacity: getComputedStyle(loader).opacity }, { opacity: 0 }],
+          { duration: FADE_MS, easing: 'ease-out' });
+        fade.onfinish = finish;
+      }
+
+      function finish() {
+        if (fade) { fade.cancel(); fade = null; }
+        loader.hidden = true;    // display:none stops every animation
+        busy(false);
+        if (!firstDone) {
+          firstDone = true;
+          clearTimeout(firstTimer);
+          window.dispatchEvent(new Event('ces:loader-done'));
+        }
+      }
+
+      function set(key, on) {
+        if (on) holds[key] = true; else delete holds[key];
+        if (anyHeld()) show(); else hide();
+      }
+
+      busy(true);
+      window.addEventListener('ces:loading', function (e) {
+        if (e.detail && e.detail.key) set(e.detail.key, !!e.detail.on);
+      });
+      if (document.readyState === 'complete') set('page', false);
+      else window.addEventListener('load', function () { set('page', false); }, { once: true });
+      firstTimer = setTimeout(function () {
+        delete holds.page;
+        delete holds.app;
+        if (!anyHeld()) hide();
+      }, Math.max(0, FIRST_MAX - performance.now()));
     })();
   </script>
-
-  <app-root></app-root>
 </body>
 
 </html>

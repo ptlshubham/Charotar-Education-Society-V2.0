@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { ProgrammeCard } from '../../../shared/programme-card/programme-card';
+import { TabBar } from '../../../shared/tab-bar/tab-bar';
 import { FOCUS_LABEL, PROJECTS, PROJECT_KIND, ProjectFocus } from '../../../shared/projects';
 
 type Focus = 'all' | ProjectFocus;
 
 @Component({
   selector: 'app-project-list',
-  imports: [ProgrammeCard],
+  imports: [ProgrammeCard, TabBar],
   templateUrl: './project-list.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './project-list.scss',

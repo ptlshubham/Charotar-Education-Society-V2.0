@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { PageHero, HeroStat } from '../../../shared/page-hero/page-hero';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
-import { AcademicTabs } from '../academic-tabs';
+import { TabBar } from '../../../shared/tab-bar/tab-bar';
 
 type Stream = 'all' | 'science' | 'management' | 'commerce' | 'arts' | 'law' | 'others';
 
@@ -19,7 +19,7 @@ interface College {
 
 @Component({
   selector: 'app-colleges',
-  imports: [PageHero, AcademicTabs],
+  imports: [PageHero, TabBar],
   templateUrl: './colleges.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './colleges.scss',

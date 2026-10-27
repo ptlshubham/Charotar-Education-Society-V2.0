@@ -35,7 +35,7 @@
   <span class="mx-auto mt-3 block h-1 w-14 rounded-full bg-secondary" aria-hidden="true"></span>
 
   <div class="mt-6">
-    <app-academic-tabs [tabs]="tabs" [active]="active()" ariaLabel="Hostels" (tabChange)="select($event)" />
+    <app-tab-bar class="block" [tabs]="tabs" [active]="active()" ariaLabel="Hostels" (tabChange)="select($event)" />
   </div>
 
   <ul
@@ -61,7 +61,7 @@
 
         <p class="mt-2.5 text-[12.5px] leading-relaxed text-muted">{{ hostel.desc }}</p>
 
-        <ul class="mt-4 mb-5 flex list-none flex-wrap gap-2">
+        <ul class="mt-auto flex list-none flex-wrap gap-2 pt-4">
           @for (tag of hostel.tags; track tag.label) {
           <li
             class="inline-flex items-center gap-1.5 rounded-full bg-[#F7F9FC] px-2.5 py-1 text-[11px] font-medium text-muted">
@@ -74,15 +74,6 @@
           </li>
           }
         </ul>
-
-        <button type="button"
-          class="mt-auto inline-flex w-fit items-center gap-2 rounded-md bg-primary px-4 py-2.5 text-[12.5px] font-semibold text-white transition-colors hover:bg-primary-dark">
-          View Details
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
-            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
-        </button>
       </div>
     </li>
     } @empty {

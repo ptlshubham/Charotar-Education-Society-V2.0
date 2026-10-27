@@ -5,7 +5,7 @@
 <section class="site-container py-14">
 
   <!-- Stream filters -->
-  <app-academic-tabs [tabs]="filters" [active]="active()" ariaLabel="Stream" (tabChange)="select($event)" />
+  <app-tab-bar class="block" [tabs]="filters" [active]="active()" ariaLabel="Stream" (tabChange)="select($event)" />
 
   <!-- Cards -->
   <ul

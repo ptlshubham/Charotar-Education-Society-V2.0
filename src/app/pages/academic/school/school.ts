@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { PageHero, HeroStat } from '../../../shared/page-hero/page-hero';
 import { PLACEHOLDER } from '../../../shared/placeholder-images';
-import { AcademicTabs } from '../academic-tabs';
+import { TabBar } from '../../../shared/tab-bar/tab-bar';
 
 type Medium = 'all' | 'english' | 'gujarati' | 'others' | 'hostels';
 
@@ -25,7 +25,7 @@ const ICON = {
 
 @Component({
   selector: 'app-school',
-  imports: [PageHero, AcademicTabs],
+  imports: [PageHero, TabBar],
   templateUrl: './school.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './school.scss',

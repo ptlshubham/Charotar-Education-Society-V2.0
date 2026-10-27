@@ -224,7 +224,10 @@
         } @else {
         <div class="flex h-[150px] w-[136px] shrink-0 items-center justify-center rounded-xl bg-primary sm:h-[250px] sm:w-[230px]"
           aria-hidden="true">
-          <span class="text-[40px] font-bold tracking-tight text-secondary sm:text-[56px]">{{ counsellorInfo.initials }}</span>
+          <svg class="h-16 w-16 text-secondary sm:h-24 sm:w-24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            @for (d of userIcon; track d) { <path [attr.d]="d" /> }
+          </svg>
         </div>
         }
 

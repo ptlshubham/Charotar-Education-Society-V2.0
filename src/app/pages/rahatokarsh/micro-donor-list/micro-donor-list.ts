@@ -60,21 +60,16 @@ export class MicroDonorList {
 
   readonly totalMicroDonors = computed(() => this.all().length.toLocaleString('en-IN'));
 
-  readonly filtersOpen = signal(false);
-  search = '';
-  private readonly query = signal('');
+  /** Donor-name search; narrows the list as you type. */
+  readonly search = signal('');
 
-  toggleFilters(): void {
-    this.filtersOpen.update((v) => !v);
-  }
-
-  applyFilters(): void {
-    this.query.set(this.search.trim().toLowerCase());
+  onSearch(value: string): void {
+    this.search.set(value);
     this.pager.reset();
   }
 
   readonly rows = computed(() => {
-    const q = this.query();
+    const q = this.search().trim().toLowerCase();
     return q ? this.all().filter((d) => (d.name || '').toLowerCase().includes(q)) : this.all();
   });
 

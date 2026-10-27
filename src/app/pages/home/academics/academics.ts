@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TabBar, TabItem } from '../../../shared/tab-bar/tab-bar';
 
 type Level = 'SCHOOL' | "BACHELOR'S" | "MASTER'S" | 'DIPLOMA / CERTIFICATE' | 'DOCTORATE';
 
@@ -31,7 +32,7 @@ const PER_TAB = 4;
  */
 @Component({
   selector: 'app-academics',
-  imports: [RouterLink],
+  imports: [RouterLink, TabBar],
   templateUrl: './academics.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './academics.scss',
@@ -72,18 +73,13 @@ export class Academics {
     { id: '24', name: 'Standard 11 to 12', short: 'Higher Secondary', level: 'SCHOOL', image: '/assets/images/institutes/kkv-9-12.jpg' },
   ];
 
-  readonly active = signal<Tab>(this.tabs[1]); // Bachelor's - the most-searched level
+  readonly active = signal<Tab>(this.tabs[0]); // School - the first tab
 
   readonly visible = computed(() => this.courses.filter((c) => c.level === this.active().level).slice(0, PER_TAB));
 
-  select(tab: Tab): void {
-    this.active.set(tab);
-  }
+  readonly tabItems: readonly TabItem[] = this.tabs.map((t) => ({ id: t.level, label: t.label, icon: t.icon }));
 
-  /** Arrow keys move between tabs, as a tab list should. */
-  moveTab(step: 1 | -1, list: HTMLElement): void {
-    const i = (this.tabs.indexOf(this.active()) + step + this.tabs.length) % this.tabs.length;
-    this.active.set(this.tabs[i]);
-    (list.querySelectorAll<HTMLButtonElement>('[role="tab"]')[i])?.focus();
+  select(level: string): void {
+    this.active.set(this.tabs.find((t) => t.level === level) ?? this.tabs[0]);
   }
 }

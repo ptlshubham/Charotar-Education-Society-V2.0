@@ -5,7 +5,7 @@
 
 <section class="site-container py-15">
 
-  <!-- Heading + total + filter toggle -->
+  <!-- Heading + total + search -->
   <div class="mt-5 grid gap-5 lg:grid-cols-[1.6fr_auto_auto] lg:items-center">
     <div>
       <h2 class="text-[24px] font-bold text-primary sm:text-[28px]">Micro Donor List</h2>
@@ -22,31 +22,20 @@
       </div>
     </div>
 
-    <button type="button" (click)="toggleFilters()" [attr.aria-expanded]="filtersOpen()"
-      class="flex h-12 items-center justify-center gap-2 rounded-lg border border-gray-300 bg-primary px-5 text-[13px] font-semibold text-white transition-colors hover:border-primary">
-      <span class="material-symbols-outlined !text-[21px] [font-variation-settings:'wght'_300]" aria-hidden="true">filter_alt</span>
-      Filter / Search
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
-        class="transition-transform duration-200" [class.rotate-180]="filtersOpen()" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
-    </button>
-  </div>
-
-  @if (filtersOpen()) {
-    <div class="animate-dropdown mt-4 flex flex-wrap items-end gap-4 rounded-xl border border-gray-200 bg-white p-5">
-      <div class="min-w-[240px] flex-1">
-        <label for="md-search" class="mb-1.5 block text-[12.5px] font-semibold text-primary">Search Donor</label>
-        <input id="md-search" type="search" [(ngModel)]="search" (keyup.enter)="applyFilters()" placeholder="Search by name..."
-          class="h-11 w-full rounded-md border border-gray-300 px-3 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary" />
-      </div>
-      <button type="button" (click)="applyFilters()"
-        class="flex h-11 items-center gap-2 rounded-md bg-primary px-6 text-[13px] font-semibold text-white transition-colors hover:bg-primary-dark">
-        Search
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" />
+    <!-- Narrows the list as you type, so the icon is a label, not a button -->
+    <div class="flex h-11 w-full items-stretch shadow-sm lg:w-[300px]" role="search">
+      <label for="md-search" class="sr-only">Search donors by name</label>
+      <input id="md-search" type="search" [ngModel]="search()" (ngModelChange)="onSearch($event)" placeholder="Search by name..."
+        class="min-w-0 flex-1 rounded-l-md border border-r-0 border-gray-300 bg-white px-3.5 text-[13px] text-primary outline-none transition-colors placeholder:text-gray-400 focus:border-primary" />
+      <span class="flex w-12 shrink-0 items-center justify-center rounded-r-md bg-primary text-white" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m20 20-3.5-3.5" />
         </svg>
-      </button>
+      </span>
     </div>
-  }
+  </div>
 
   <!-- Table -->
   <div class="mt-5 overflow-hidden rounded-xl border border-gray-200 bg-white">

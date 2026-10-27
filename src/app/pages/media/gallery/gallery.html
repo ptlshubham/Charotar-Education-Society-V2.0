@@ -7,23 +7,9 @@
 
 
   <!-- Media type + search + sort -->
-  <div class="mt-6 flex flex-wrap items-center justify-between gap-4">
-    <div role="tablist" aria-label="Media type" class="flex gap-1 rounded-lg bg-white p-1 shadow-sm">
-      <button type="button" role="tab" [attr.aria-selected]="tab() === 'photos'" (click)="selectTab('photos')"
-        class="flex items-center gap-2 rounded-md px-6 py-2.5 text-[13px] font-semibold transition-colors"
-        [class]="tab() === 'photos' ? 'bg-primary text-white' : 'text-primary hover:bg-gray-50'">
-        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]"
-          aria-hidden="true">photo_library</span>
-        Photos
-      </button>
-      <button type="button" role="tab" [attr.aria-selected]="tab() === 'videos'" (click)="selectTab('videos')"
-        class="flex items-center gap-2 rounded-md px-6 py-2.5 text-[13px] font-semibold transition-colors"
-        [class]="tab() === 'videos' ? 'bg-primary text-white' : 'text-primary hover:bg-gray-50'">
-        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]"
-          aria-hidden="true">smart_display</span>
-        Videos
-      </button>
-    </div>
+  <div class="mt-6 flex flex-wrap items-end justify-between gap-4">
+    <app-tab-bar class="min-w-0" [tabs]="mediaTabs" [active]="tab()" ariaLabel="Media type" align="start"
+      (tabChange)="selectTab($any($event))" />
 
     <div class="flex flex-wrap items-center gap-3">
       <div class="relative">

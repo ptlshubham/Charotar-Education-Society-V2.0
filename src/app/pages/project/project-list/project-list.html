@@ -1,19 +1,8 @@
 <section class="site-container py-8">
 
   <!-- Focus-area filters -->
-  <div role="tablist" aria-label="Project focus area"
-    class="flex justify-start gap-3 overflow-x-auto py-6 pb-2 sm:justify-center lg:flex-wrap lg:overflow-visible">
-    @for (filter of filters; track filter.id) {
-      <button type="button" role="tab" [attr.aria-selected]="active() === filter.id" (click)="select(filter.id)"
-        class="flex shrink-0 items-center gap-2 rounded-lg border px-4 py-2.5 text-[13px] font-semibold transition-colors"
-        [class]="active() === filter.id
-          ? 'border-primary bg-primary text-white shadow-md'
-          : 'border-gray-200 bg-gray-50/50 text-primary hover:border-primary hover:bg-white'">
-        <span class="material-symbols-outlined !text-[23px] [font-variation-settings:'wght'_300]" aria-hidden="true">{{ filter.icon }}</span>
-        {{ filter.label }}
-      </button>
-    }
-  </div>
+  <app-tab-bar class="block pt-6" [tabs]="filters" [active]="active()" ariaLabel="Project focus area"
+    (tabChange)="select($any($event))" />
 
   <!-- Cards -->
   <ul class="animate-dropdown mt-6 flex snap-x snap-mandatory list-none gap-4 overflow-x-auto pb-3 lg:grid lg:grid-cols-4 lg:gap-5 lg:overflow-visible lg:pb-0">

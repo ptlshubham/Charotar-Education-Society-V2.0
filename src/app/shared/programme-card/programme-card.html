@@ -5,8 +5,9 @@
   <h3 class="text-[15px] leading-snug font-bold text-primary">{{ item.title }}</h3>
   <p class="mt-2 flex-1 text-[12.5px] leading-relaxed text-muted">{{ item.desc }}</p>
 
+  <!-- after:inset-0 stretches the link over the whole card (the host is relative). -->
   <a [routerLink]="item.link ?? [kind.list.link, item.slug]" [attr.aria-label]="kind.cta + ': ' + item.title"
-    class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-primary no-underline hover:text-accent">
+    class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-primary no-underline group-hover:text-accent after:absolute after:inset-0">
     {{ kind.cta }}
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
   </a>

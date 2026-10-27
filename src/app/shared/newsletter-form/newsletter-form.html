@@ -1,0 +1,24 @@
+@let dark = tone() === 'dark';
+<form (ngSubmit)="submit()" class="mt-4" novalidate>
+  <label [for]="inputId()" class="sr-only">Email address</label>
+  <input [id]="inputId()" type="email" name="email" autocomplete="email" [placeholder]="placeholder()" maxlength="254"
+    [ngModel]="email()" (ngModelChange)="email.set($event); error.set('')" [attr.aria-invalid]="error() ? 'true' : null"
+    [attr.aria-describedby]="error() ? inputId() + '-error' : null"
+    class="h-11 w-full rounded-md border px-3.5 text-[13px] outline-none"
+    [class]="dark
+      ? 'border-white/25 bg-white/10 text-white placeholder:text-white/50 focus:border-white/60'
+      : 'border-gray-300 bg-white text-primary placeholder:text-gray-400 focus:border-primary'" />
+
+  @if (error()) {
+  <p [id]="inputId() + '-error'" role="alert" class="mt-1.5 text-left text-[12px]" [class]="dark ? 'text-[#FFD2D2]' : 'text-accent'">{{ error() }}</p>
+  }
+
+  <button type="submit" [disabled]="sending()"
+    class="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-md text-[13px] font-semibold transition-colors disabled:opacity-70"
+    [class]="dark ? 'bg-secondary text-primary hover:bg-secondary-dark' : 'bg-primary text-white hover:bg-primary-dark'">
+    {{ sending() ? 'Subscribing…' : 'Subscribe' }}
+    @if (!sending()) {
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+    }
+  </button>
+</form>

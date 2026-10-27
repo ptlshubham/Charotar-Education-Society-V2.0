@@ -13,6 +13,25 @@ export const NEWS_TYPES: ReadonlyArray<{ key: NewsType; label: string; plural: s
   { key: 'circular', label: 'Circular', plural: 'Circulars' },
 ];
 
+/** Icon paths per type (24×24, stroked) - the News page's category rail, and the tile shown for an item without a picture. */
+export const NEWS_TYPE_ICONS: Record<NewsType, string[]> = {
+  news: ['M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2z', 'M10 6h8M10 10h8M10 14h4'],
+  announcement: ['M3 11v3a1 1 0 0 0 1 1h2l4 4V6L6 10H4a1 1 0 0 0-1 1z', 'M16 9a4 4 0 0 1 0 6'],
+  circular: ['M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z', 'M14 2v6h6', 'M8 13h8M8 17h5'],
+};
+
+/** The tile behind an item without a cover picture. */
+export function newsTileClass(type: NewsType): string {
+  switch (type) {
+    case 'announcement':
+      return 'bg-[#FFF4DE] text-[#B7791F]';
+    case 'circular':
+      return 'bg-[#FDECEC] text-accent';
+    default:
+      return 'bg-[#EEF3FB] text-primary';
+  }
+}
+
 /** A news entry as the News page and its item pages show it. */
 export interface NewsItem {
   id: number;

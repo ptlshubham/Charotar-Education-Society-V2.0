@@ -1,20 +1,3 @@
-/* Hide scrollbar for tabs on mobile but allow scrolling */
-.hide-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-.hide-scrollbar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari and Opera */
-}
-
-/* Tab icons: light, heavier on the active tab (the icon font has no filled style loaded). */
-.tab-icon {
-  font-variation-settings: 'wght' 300;
-}
-.tab-icon.is-on {
-  font-variation-settings: 'wght' 600;
-}
-
 /* Cards fade up as a tab's set appears */
 .course-card {
   animation: fadeIn 0.35s ease-out both;

@@ -211,6 +211,24 @@ export interface CounsellingPayload {
   message: string;
 }
 
+/** Alumni registration - POST /admin/SaveAlumniDetails (the old site's payload, key for key). */
+export interface AlumniPayload {
+  instituteName: string;
+  alumniName: string;
+  alumniCourse: string;
+  alumniYear: string;
+  contactNumber: string;
+  email: string;
+  country: string;
+  state: string;
+  city: string;
+  /** Current status: Student / Business / Job / Retired / Other. */
+  type: string;
+  description: string;
+  /** Will attend the Alumni Meet - a 0/1 column. */
+  status: 0 | 1;
+}
+
 /** A patent record from GET /admin/GetPatentData (purpose splits Utility vs Design). */
 export interface Patent {
   applicationname: string;

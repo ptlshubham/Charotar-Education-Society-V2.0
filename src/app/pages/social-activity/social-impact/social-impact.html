@@ -25,11 +25,16 @@
   </div>
 
   <!-- The figures, divided by thin rules -->
-  <ul class="mt-6 grid list-none grid-cols-2 gap-x-6 gap-y-6 border-t border-primary/10 p-0 pt-6 sm:mt-8 sm:grid-cols-3 sm:pt-8 lg:grid-cols-6 lg:gap-x-0">
-    @for (stat of stats; track stat.label) {
+  <ul #figures class="mt-6 grid list-none grid-cols-2 gap-x-6 gap-y-6 border-t border-primary/10 p-0 pt-6 sm:mt-8 sm:grid-cols-3 sm:pt-8 lg:grid-cols-6 lg:gap-x-0">
+    @for (stat of stats; track stat.label; let i = $index) {
     <li class="lg:border-l lg:border-primary/10 lg:px-6 lg:first:border-l-0 lg:first:pl-0 xl:px-8">
-      <p class="text-[26px] leading-none font-bold sm:text-[30px]" [class]="stat.accent ? 'text-secondary' : 'text-primary'">{{ stat.value }}</p>
-      <p class="mt-2 text-[13px] text-muted sm:text-[14px]">{{ stat.label }}</p>
+      <!-- The counting figure is for the eye; screen readers get the final one. translate="no":
+           Google Translate swaps in its own copy of the text, so a translated figure would freeze mid-count. -->
+      <p class="text-[26px] leading-none font-bold tabular-nums sm:text-[30px]" [class]="stat.accent ? 'text-secondary' : 'text-primary'"
+        aria-hidden="true"><span translate="no">{{ format(shown()[i]) }}</span>{{ stat.suffix }}</p>
+      <p class="mt-2 text-[13px] text-muted sm:text-[14px]">
+        <span class="sr-only">{{ format(stat.to) }}{{ stat.suffix }} </span>{{ stat.label }}
+      </p>
     </li>
     }
   </ul>

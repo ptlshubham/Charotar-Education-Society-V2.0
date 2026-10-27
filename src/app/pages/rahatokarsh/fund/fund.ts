@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { PageHero } from '../../../shared/page-hero/page-hero';
+import { TabBar, TabItem } from '../../../shared/tab-bar/tab-bar';
 
 /**
  * Objective of the Rahatokarsh Fund. Both language versions are copied verbatim
@@ -7,13 +9,18 @@ import { PageHero } from '../../../shared/page-hero/page-hero';
  */
 @Component({
   selector: 'app-fund',
-  imports: [PageHero],
+  imports: [PageHero, RouterLink, TabBar],
   templateUrl: './fund.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './fund.scss',
 })
 export class Fund {
   readonly active = signal<'english' | 'gujarati'>('english');
+
+  readonly langTabs: readonly TabItem[] = [
+    { id: 'english', label: 'English', icon: 'language' },
+    { id: 'gujarati', label: 'Gujarati', icon: 'language' },
+  ];
   readonly expanded = signal(false);
 
   select(lang: 'english' | 'gujarati'): void {

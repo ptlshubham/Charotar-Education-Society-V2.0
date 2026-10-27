@@ -78,28 +78,12 @@ export class GatePass {
 
   constructor() {
     this.resources
-      .getInstitutes()
+      .getInstituteNames()
       .pipe(
         catchError(() => of([])),
         takeUntilDestroyed(),
       )
-      .subscribe((list) => {
-        // The backend list carries duplicate and test rows (e.g. two "E2E Sync
-        // Inst"). Trim, drop blanks, de-duplicate case-insensitively, and sort so
-        // the dropdown is clean and predictable. Genuine test entries still need
-        // removing at the source.
-        const seen = new Set<string>();
-        const names = (Array.isArray(list) ? list : [])
-          .map((i) => (i?.name ?? '').trim())
-          .filter((name) => {
-            const key = name.toLowerCase();
-            if (!name || seen.has(key)) return false;
-            seen.add(key);
-            return true;
-          })
-          .sort((a, b) => a.localeCompare(b));
-        this.institutes.set(names);
-      });
+      .subscribe((names) => this.institutes.set(names));
   }
 
   get f() {

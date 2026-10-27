@@ -137,6 +137,11 @@ export class AnswerKey {
   subject = ALL_SUBJECTS;
 
   private readonly query = signal({ year: ALL_YEARS, standard: ALL_STANDARDS, subject: ALL_SUBJECTS });
+  /** True once a narrowing filter has been applied - the Reset button shows only then. */
+  readonly filtered = computed(() => {
+    const q = this.query();
+    return q.year !== ALL_YEARS || q.standard !== ALL_STANDARDS || q.subject !== ALL_SUBJECTS;
+  });
   /** Paper-name search; narrows the list as you type. */
   readonly search = signal('');
 

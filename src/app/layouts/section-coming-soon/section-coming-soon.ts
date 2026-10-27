@@ -9,7 +9,7 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ResourcesService } from '../../core/services/resources.service';
+import { NewsletterService } from '../../core/services/newsletter.service';
 
 /**
  * Reusable "this section is coming soon" page block.
@@ -27,7 +27,7 @@ import { ResourcesService } from '../../core/services/resources.service';
   styleUrl: './section-coming-soon.scss',
 })
 export class SectionComingSoon {
-  private resourcesService = inject(ResourcesService);
+  private newsletter = inject(NewsletterService);
   private platformId = inject(PLATFORM_ID);
 
   // ─── Content (all overridable per usage) ───
@@ -35,7 +35,7 @@ export class SectionComingSoon {
   @Input() title = 'This Section is';
   @Input() highlight = 'Coming Soon!';
   @Input() description =
-    "We're working hard to build something amazing that will help you achieve even more with ZarklyX.";
+    "We're working on this section of the Charotar Education Society website. Leave your email and we'll let you know when it's ready.";
 
   /** Tags the newsletter signup so you can tell which section they came from. */
   @Input() source = 'coming-soon';
@@ -62,7 +62,7 @@ export class SectionComingSoon {
 
     this.submitting.set(true);
     this.error.set('');
-    this.resourcesService.subscribeNewsletter(email, this.source).subscribe({
+    this.newsletter.subscribe(email, this.source, { popup: false }).subscribe({
       next: () => {
         this.submitting.set(false);
         this.subscribed.set(true);
@@ -70,7 +70,7 @@ export class SectionComingSoon {
       },
       error: (err: any) => {
         this.submitting.set(false);
-        this.error.set(err?.error?.message || 'Something went wrong. Please try again.');
+        this.error.set(this.newsletter.errorMessage(err));
       },
     });
   }

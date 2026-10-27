@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, HostListener, inject, sig
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { PageHero } from '../../../shared/page-hero/page-hero';
+import { TabBar, TabItem } from '../../../shared/tab-bar/tab-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { catchError, of, switchMap } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
@@ -32,7 +33,7 @@ interface Video {
 
 @Component({
   selector: 'app-gallery',
-  imports: [FormsModule, Pagination, PageHero],
+  imports: [FormsModule, Pagination, PageHero, TabBar],
   templateUrl: './gallery.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './gallery.scss',
@@ -113,6 +114,11 @@ export class Gallery {
         this.loading.set(false);
       });
   }
+
+  readonly mediaTabs: readonly TabItem[] = [
+    { id: 'photos', label: 'Photos', icon: 'photo_library' },
+    { id: 'videos', label: 'Videos', icon: 'smart_display' },
+  ];
 
   selectTab(t: 'photos' | 'videos'): void {
     this.tab.set(t);

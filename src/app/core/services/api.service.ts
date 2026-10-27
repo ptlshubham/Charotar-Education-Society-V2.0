@@ -37,6 +37,8 @@ export class ApiService {
   public static SaveGatePassURL: string = ApiService.HOST_URL + '/admin/SaveGatePassUserList';
   // Counselling - book an appointment (institute dropdown reuses GetInstitutesURL).
   public static SaveCounselingURL: string = ApiService.HOST_URL + '/admin/SaveCounselingDetails';
+  // Alumni registration (institute dropdown reuses GetInstitutesURL).
+  public static SaveAlumniDetailsURL: string = ApiService.HOST_URL + '/admin/SaveAlumniDetails';
   // Navratri - yearly celebrations + per-year gallery images.
   public static GetNavratriListURL: string = ApiService.HOST_URL + '/admin/GetAllNavratriDetails';
   public static GetNavratriImagesURL: string = ApiService.HOST_URL + '/admin/GetNavratriImagesById/';
@@ -93,8 +95,8 @@ export class ApiService {
   // purchase flow reads. Unauthenticated by design.
   public static GetPublicPlansURL: string = ApiService.HOST_URL + '/superAdmin/subscription-plan/getSubscriptionPlans';
 
-  // Public Website Newsletter URL
-  public static SubscribeNewsletterURL: string = ApiService.HOST_URL + '/superAdmin/website-control/newsletter/public/subscribe';
+  // Newsletter sign-ups from the subscribe boxes - listed in Website Management → Newsletter Subscribers.
+  public static SubscribeNewsletterURL: string = ApiService.HOST_URL + '/newsletter/public/subscribe';
 
   // Public Website Contact URL
   public static SubmitContactURL: string = ApiService.HOST_URL + '/superAdmin/website-control/contact/public/submit';

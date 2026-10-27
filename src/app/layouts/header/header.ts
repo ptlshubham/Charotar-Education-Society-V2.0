@@ -225,11 +225,7 @@ export class Header implements AfterViewInit {
       icon: 'grid',
       children: [
         { label: 'Blogs', link: '/blog', icon: 'news' },
-        {
-          label: 'Management',
-          icon: 'users',
-          children: [{ label: 'e-Gate Pass', link: '/more/gate-pass', icon: 'ticket' }],
-        },
+        { label: 'e-Gate Pass', link: '/more/gate-pass', icon: 'ticket' },
         { label: 'Tenders Hub', link: '/more/tenders', icon: 'file' },
         { label: 'Career', link: '/more/career', icon: 'briefcase' },
       ],
@@ -254,7 +250,6 @@ export class Header implements AfterViewInit {
         ...(this.nav('More').children ?? []),
         { label: 'Contact Us', link: '/contact' },
         { label: 'RTI', link: '/support/disclosure-policy' },
-        { label: 'Grievance', link: '/contact' },
       ],
     },
   ];

@@ -37,7 +37,7 @@ export class Counselling {
   private readonly document = inject(DOCUMENT);
 
   readonly hero = '/assets/images/hero/counselling.jpeg';
-  // TODO: a photo of Dr. Jani from CES - until then the card shows his initials, not a stock face.
+  // TODO: a photo of Dr. Jani from CES - until then the card shows the outline user icon, not a stock face.
   readonly counsellorPhoto: string | null = null;
 
   readonly assurances: ReadonlyArray<{ title: string; body: string; icon: readonly string[] }> = [
@@ -56,6 +56,7 @@ export class Counselling {
   ];
 
   readonly usersIcon = ICON.users;
+  readonly userIcon = ICON.user;
 
   readonly benefits: readonly string[] = [
     'Reduces stress and anxiety',
@@ -79,7 +80,6 @@ export class Counselling {
 
   readonly counsellorInfo = {
     name: 'Dr. Jigar (Jignesh) Jani',
-    initials: 'JJ',
     role: 'Counselling Psychologist',
     bio: 'Dr. Jigar (Jignesh) Jani and his team offer a private, flexible and non-judgmental space to talk through exam stress, career confusion and personal challenges.',
     facts: [

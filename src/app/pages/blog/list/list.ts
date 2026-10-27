@@ -3,6 +3,8 @@ import { formatDate } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PageHero } from '../../../shared/page-hero/page-hero';
+import { TabBar, TabItem } from '../../../shared/tab-bar/tab-bar';
+import { NewsletterForm } from '../../../shared/newsletter-form/newsletter-form';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { catchError, of, switchMap } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
@@ -32,7 +34,7 @@ const PAGE = 9;
 
 @Component({
   selector: 'app-blog-list',
-  imports: [FormsModule, RouterLink, PageHero],
+  imports: [FormsModule, RouterLink, PageHero, TabBar, NewsletterForm],
   templateUrl: './list.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './list.scss',
@@ -104,6 +106,7 @@ export class BlogList {
 
   /** "All Posts" plus each category that has a post. */
   readonly tabs = computed(() => [ALL, ...sortCategories(this.allPosts().map((p) => p.category).filter(Boolean))]);
+  readonly tabItems = computed<TabItem[]>(() => this.tabs().map((t) => ({ id: t, label: t })));
 
   private readonly filtering = computed(() => this.tab() !== ALL || !!this.tag() || !!this.query());
 
@@ -134,12 +137,6 @@ export class BlogList {
   /** The Labels box: every tag in use, with its post count. */
   readonly labels = computed(() => countTags(this.allPosts().map((p) => p.tags)));
   readonly activeTag = computed(() => this.tag().toLowerCase());
-
-  email = '';
-
-  subscribe(): void {
-    this.email = '';
-  }
 
   private toPost(b: BlogPost): Post {
     const d = new Date(b.blogDate);

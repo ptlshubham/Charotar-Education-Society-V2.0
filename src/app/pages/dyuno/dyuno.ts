@@ -17,6 +17,7 @@ import { Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AssistantBridge } from '../../core/services/assistant-bridge.service';
 import { CES_TOPICS, ChatTopic, Conversation, DyunoChat, STUDY_TOPICS } from '../../core/services/dyuno-chat.service';
+import { MarkdownPipe } from '../../shared/markdown.pipe';
 
 /** The composer grows with the question up to this height, then scrolls. */
 const COMPOSER_MAX_PX = 200;
@@ -35,7 +36,7 @@ const CONFIRM_CLEAR_MS = 4000;
  */
 @Component({
   selector: 'app-dyuno',
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, MarkdownPipe],
   templateUrl: './dyuno.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './dyuno.scss',

@@ -1,8 +1,9 @@
 <app-header />
-<!-- Header banners - a site-wide notice - on phones and portrait tablets, where the header has no room
-     for them. Below the sticky header, so it scrolls away with the page; only while one is active. -->
+<!-- Header banners - a site-wide notice - on portrait tablets, where the header has no room for them.
+     Below the sticky header, so it scrolls away with the page; only while one is active. Not on phones
+     (CES's call: the strip pushed the page too far down). -->
 @if (headerBanners.ads().length) {
-<div class="flex justify-center border-b border-[#e7ebf2] bg-[#f4f6fa] px-4 py-2 lg:hidden">
+<div class="hidden justify-center border-b border-[#e7ebf2] bg-[#f4f6fa] px-4 py-2 md:flex lg:hidden">
   <app-header-ads class="aspect-[440/128] w-full max-w-[300px] overflow-hidden rounded-md" />
 </div>
 }

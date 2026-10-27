@@ -4,6 +4,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ChatMessage, DyunoChat } from '../../../core/services/dyuno-chat.service';
 import { ResourcesService } from '../../../core/services/resources.service';
+import { MarkdownPipe } from '../../../shared/markdown.pipe';
 
 interface SharedChat {
   id: string;
@@ -22,7 +23,7 @@ interface SharedChat {
  */
 @Component({
   selector: 'app-dyuno-shared',
-  imports: [DatePipe, RouterLink],
+  imports: [DatePipe, RouterLink, MarkdownPipe],
   templateUrl: './dyuno-shared.html',
   changeDetection: ChangeDetectionStrategy.Eager,
 })

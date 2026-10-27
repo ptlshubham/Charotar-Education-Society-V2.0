@@ -19,6 +19,13 @@ AddDefaultCharset UTF-8
 	RewriteEngine On
 	RewriteBase /
 
+	# Hostinger keeps each subdomain's files in a folder in here (public_html/chatkaro is
+	# chatkaro.cesociety.in, likewise mba and dashboard), and these rules would reach those sites
+	# too - a missing page on one would loop to this app's shell and fail with a 500. A request
+	# whose path doesn't match the URL came in through such a subdomain: leave it to that site.
+	RewriteCond %{REQUEST_URI}::$0 !^/(.*)::\1$
+	RewriteRule .* - [L]
+
 	# Force HTTPS, preserving whatever host was requested (works on every subdomain).
 	RewriteCond %{HTTPS} !=on
 	RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
@@ -33,6 +40,11 @@ AddDefaultCharset UTF-8
 	RewriteRule ^sitemap\.xml$ site-live.php?f=sitemap [L]
 	RewriteRule ^llms\.txt$ site-live.php?f=llms [L]
 	RewriteRule ^blog/[^/]+/?$ site-live.php?f=post [L]
+
+	# public_html/chatkaro is the chatkaro.cesociety.in subdomain's folder, so the build ships this
+	# site's /chatkaro page as chatkaro.html (scripts/after-build.mjs). Ahead of the real-directory
+	# rule, which would otherwise show the subdomain's files here.
+	RewriteRule ^chatkaro/?$ chatkaro.html [L]
 
 	# Keep real files/directories untouched (prerendered /route/index.html included).
 	RewriteCond %{REQUEST_FILENAME} -f [OR]

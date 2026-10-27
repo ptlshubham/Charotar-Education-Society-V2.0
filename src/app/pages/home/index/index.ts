@@ -7,6 +7,7 @@ import { Milestones } from '../milestones/milestones';
 import { Leadership } from '../leadership/leadership';
 import { Impact } from '../impact/impact';
 import { NewsEvents } from '../news-events/news-events';
+import { NewsCirculars } from '../news-circulars/news-circulars';
 import { AdmissionsCta } from '../../../shared/admissions-cta/admissions-cta';
 import { Categories } from '../categories/categories';
 import { NoticeTicker } from '../notice-ticker/notice-ticker';
@@ -22,6 +23,7 @@ import { Stats } from '../stats/stats';
     Stats,
     Legacy,
     Academics,
+    NewsCirculars,
     Milestones,
     Leadership,
     // Impact,

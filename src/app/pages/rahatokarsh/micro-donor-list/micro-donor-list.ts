@@ -10,6 +10,7 @@ import { Paginator } from '../../../shared/pagination/paginator';
 import { Pagination } from '../../../shared/pagination/pagination';
 import { Sorter } from '../../../shared/sorting/sorter';
 import { SortHeader } from '../../../shared/sorting/sort-header';
+import { cleanText } from '../../../shared/clean-text';
 
 @Component({
   selector: 'app-micro-donor-list',
@@ -37,8 +38,14 @@ export class MicroDonorList {
       )
       .subscribe((rows) => {
         // Normalise amount to a real number - DecimalPipe rejects string/null.
+        // Text fields are cleaned so "undefined"/"null" show as blank.
         this.all.set(
-          (Array.isArray(rows) ? rows : []).map((r) => ({ ...r, amount: Number(r.amount) || 0 })),
+          (Array.isArray(rows) ? rows : []).map((r) => ({
+            ...r,
+            name: cleanText(r.name),
+            city: cleanText(r.city),
+            amount: Number(r.amount) || 0,
+          })),
         );
         this.loading.set(false);
       });

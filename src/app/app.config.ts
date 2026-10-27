@@ -29,7 +29,7 @@ export const appConfig: ApplicationConfig = {
         // the browser refetch, so admin edits (a newly published post on /blog, say)
         // reach real visitors without a redeploy.
         filter: (req) => ![ApiService.GetPublicSeoURL, ApiService.GetPublicCareersURL, ApiService.GetPublicTendersURL,
-          ApiService.GetBlogsURL]
+          ApiService.GetBlogsURL, ApiService.GetNewsURL, ApiService.GetNavratriListURL, ApiService.GetNavratriPageURL]
           .some((url) => req.url.startsWith(url)),
       }), withNoIncrementalHydration()
     ),

@@ -27,6 +27,76 @@
   }
 }
 
+/* Dyuno's answers, rendered from Markdown (shared/markdown.pipe.ts). Sized in em, so the same
+   rules fit the 13px floating chat and the 15px /dyuno page. In the components layer: above the
+   base reset, below Tailwind utilities, so classes on the container still win. */
+@layer components {
+  .chat-md {
+    overflow-wrap: anywhere;
+
+    > * + * { margin-top: 0.75em; }
+
+    h3, h4, h5 { font-weight: 700; line-height: 1.35; color: var(--color-primary); }
+    h3 { font-size: 1.15em; }
+    h4 { font-size: 1.05em; }
+    h5 { font-size: 1em; }
+    > * + h3, > * + h4, > * + h5 { margin-top: 1.1em; }
+
+    ul, ol { padding-left: 1.4em; }
+    ul { list-style: disc; }
+    ol { list-style: decimal; }
+    ul ul, ol ul { list-style: circle; }
+    li + li, li > ul, li > ol, li > * + * { margin-top: 0.35em; }
+    li::marker { color: var(--color-muted); }
+
+    strong { font-weight: 700; }
+    a {
+      color: var(--color-primary);
+      text-decoration: underline;
+      text-decoration-color: color-mix(in srgb, var(--color-primary) 35%, transparent);
+      text-underline-offset: 2px;
+      &:hover { text-decoration-color: currentColor; }
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.88em;
+      background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+      border-radius: 4px;
+      padding: 0.1em 0.35em;
+    }
+    pre {
+      background: #1f2a44;
+      color: #e8edf7;
+      border-radius: 10px;
+      padding: 0.85em 1em;
+      overflow-x: auto;
+      font-size: 0.88em;
+      line-height: 1.55;
+      overflow-wrap: normal;
+
+      code { background: none; padding: 0; font-size: inherit; white-space: pre; }
+    }
+
+    blockquote {
+      border-left: 3px solid color-mix(in srgb, var(--color-primary) 20%, transparent);
+      padding-left: 0.9em;
+      color: var(--color-muted);
+    }
+    hr { border: 0; border-top: 1px solid color-mix(in srgb, var(--color-primary) 12%, transparent); }
+
+    .chat-md-table { overflow-x: auto; }
+    table { border-collapse: collapse; font-size: 0.93em; overflow-wrap: normal; }
+    th, td {
+      border: 1px solid color-mix(in srgb, var(--color-primary) 14%, transparent);
+      padding: 0.4em 0.7em;
+      vertical-align: top;
+    }
+    th { background: color-mix(in srgb, var(--color-primary) 5%, transparent); font-weight: 600; }
+    th:not([align]) { text-align: left; }
+  }
+}
+
 .primary-btn {
   width: 183px;
   height: 48px;

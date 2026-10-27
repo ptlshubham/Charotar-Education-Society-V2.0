@@ -1,6 +1,8 @@
 <!-- ─── Hero ─── -->
 <app-page-hero crumb="Navratri" [trail]="[{ label: 'Celebrations' }]" title="Navratri" accent="Celebration"
-  blurb="Nine nights of devotion, garba and culture on the CES campus, with a new theme every year." [image]="banner">
+  blurb="Nine nights of devotion, garba and culture on the CES campus, with a new theme every year." [image]="banner()">
+  <!-- The newest year's dates (Website Management → Navratri → the year → Dates and venue) -->
+  @if (heroDates()) {
   <div class="mt-7 flex items-center gap-3.5">
     <svg class="shrink-0 text-secondary" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -8,10 +10,11 @@
       <path d="M16 2v4M8 2v4M3 10h18" />
     </svg>
     <div>
-      <p class="text-[17px] font-semibold text-white sm:text-[19px]">22nd Sep – 2nd Oct, 2026</p>
-      <p class="mt-0.5 text-[13px] text-white/70">CES Campus, Anand</p>
+      <p class="text-[17px] font-semibold text-white sm:text-[19px]">{{ heroDates() }}</p>
+      <p class="mt-0.5 text-[13px] text-white/70">{{ heroVenue() }}</p>
     </div>
   </div>
+  }
 </app-page-hero>
 
 <section class="site-container pt-2 pb-8">
@@ -23,54 +26,58 @@
   <div class="mt-6 grid gap-6 rounded-xl border border-gray-200 bg-white p-6 lg:grid-cols-2 lg:items-center lg:p-8">
     <div>
       <p class="text-[11px] font-bold tracking-wide text-secondary-dark uppercase">Navratri at CES</p>
-      <h2 class="mt-2 text-[22px] leading-snug font-bold text-primary sm:text-[26px]">
-        Tradition. Devotion.<br />Togetherness.
-      </h2>
+      <h2 class="mt-2 text-[22px] leading-snug font-bold text-primary sm:text-[26px]">{{ page().introHeading }}</h2>
 
-      <p class="mt-4 text-[13px] leading-relaxed text-muted">
-        <span class="font-semibold text-primary">Navratri</span> at CES has a theme of its own every year, each one
-        drawn from a form of the Mother Goddess: Shaktipeeth Sadhana in 2024, Brahmandeshwari in 2023 and
-        Aishwaryadayini Maa Amba in 2022, going back to Urja Shankh in 2010.
-      </p>
-      <p class="mt-3 text-[13px] leading-relaxed text-muted">
-        Students help run the festival, and learn teamwork, discipline and time management along the way. Families
-        come together, and people of every community and every generation share the same garba ground.
-      </p>
+      <!-- Intro text from the dashboard's editor -->
+      <div class="mt-4 text-[13px] leading-relaxed text-muted [&_a]:text-accent [&_a]:underline [&_li]:mt-1 [&_ol]:list-decimal [&_ol]:pl-5 [&_p+p]:mt-3 [&_strong]:font-semibold [&_strong]:text-primary [&_ul]:list-disc [&_ul]:pl-5"
+        [innerHTML]="page().introHtml"></div>
 
-      <a routerLink="/navratri/2023"
+      @if (latestYear(); as y) {
+      <a [routerLink]="['/navratri', y]"
         class="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-[13px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
-        Know More About Navratri
+        Know More About Navratri {{ y }}
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M5 12h14M13 6l6 6-6 6" />
         </svg>
       </a>
+      }
     </div>
 
-    <div class="relative overflow-hidden rounded-xl">
-      <img [src]="banner" alt="Navratri pandal at CES campus" loading="lazy"
+    <!-- The intro video plays in place; without one, just the picture -->
+    <div class="relative overflow-hidden rounded-xl bg-primary-light">
+      @if (videoUrl(); as url) {
+      <iframe [src]="url" title="Navratri at CES - video" class="aspect-video w-full" loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      } @else {
+      <img [src]="introImage()" alt="Navratri pandal at CES campus" loading="lazy"
         class="aspect-video w-full bg-primary-light object-cover" />
-      <button type="button" aria-label="Play the Navratri video"
+      @if (hasVideo()) {
+      <button type="button" aria-label="Play the Navratri video" (click)="playing.set(true)"
         class="absolute inset-0 m-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/90 text-primary transition-transform hover:scale-105">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M8 5v14l11-7z" />
         </svg>
       </button>
+      }
+      }
     </div>
   </div>
 
   <!-- Stats -->
+  @if (stats().length) {
   <p class="mt-10 text-center text-[11.5px] font-bold tracking-[0.15em] text-primary uppercase">Navratri at a Glance</p>
   <ul class="mt-4 grid list-none grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-    @for (stat of stats; track stat.label) {
+    @for (stat of stats(); track $index) {
     <li class="rounded-xl border border-gray-200 bg-white px-3 py-5 text-center">
       <span class="material-symbols-outlined text-secondary-dark !text-[23px] [font-variation-settings:'wght'_300]"
-        aria-hidden="true">{{ stat.icon }}</span>
+        aria-hidden="true">{{ stat.icon || 'star' }}</span>
       <p class="mt-2.5 text-[17px] leading-tight font-bold text-primary">{{ stat.value }}</p>
       <p class="mt-1 text-[11px] leading-snug text-muted">{{ stat.label }}</p>
     </li>
     }
   </ul>
+  }
 
   <!-- ─── Navratri celebrations by year (from the DB) ─── -->
   <p class="mt-12 text-center text-[11.5px] font-bold tracking-[0.15em] text-muted uppercase">Navratri Through the Years

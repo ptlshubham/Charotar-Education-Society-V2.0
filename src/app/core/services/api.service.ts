@@ -40,6 +40,8 @@ export class ApiService {
   // Navratri - yearly celebrations + per-year gallery images.
   public static GetNavratriListURL: string = ApiService.HOST_URL + '/admin/GetAllNavratriDetails';
   public static GetNavratriImagesURL: string = ApiService.HOST_URL + '/admin/GetNavratriImagesById/';
+  // The /navratri page's banner, intro, video and "At a Glance" figures (Website Management → Navratri).
+  public static GetNavratriPageURL: string = ApiService.HOST_URL + '/admin/GetNavratriPage';
   // Navratri live stream - per-day YouTube/Facebook links; the active one is "live now".
   public static GetNavratriLiveLinksURL: string = ApiService.HOST_URL + '/admin/GetAllNavYTLinksDetails';
   // Podcast - CES "NextUp" episodes (YouTube links); page renders only active ones.
@@ -71,11 +73,9 @@ export class ApiService {
   public static GetPublicVideosURL: string = ApiService.HOST_URL + '/superAdmin/help-center/video-guide/public/videos';
   public static GetPublicVideoByIdURL: string = ApiService.HOST_URL + '/superAdmin/help-center/video-guide/public/videos/';
 
-  // Public Website Newsroom URLs
-  public static GetPublicNewsURL: string = ApiService.HOST_URL + '/superAdmin/website-control/newsroom/public/news';
-  public static GetPublicNewsFeaturedURL: string = ApiService.HOST_URL + '/superAdmin/website-control/newsroom/public/news/featured';
-  public static GetPublicNewsCategoriesURL: string = ApiService.HOST_URL + '/superAdmin/website-control/newsroom/public/news-categories';
-  public static GetPublicNewsBySlugURL: string = ApiService.HOST_URL + '/superAdmin/website-control/newsroom/public/news/';
+  // News & Notices (Website Management → News & Notices) - an institute's live news, announcements
+  // and circulars, newest first. Append the id.
+  public static GetNewsURL: string = ApiService.HOST_URL + '/admin/GetPublicNews/';
 
   // Public Website Community URLs
   public static GetCommunityDiscussionsURL: string = ApiService.HOST_URL + '/superAdmin/help-center/community/public/discussions';

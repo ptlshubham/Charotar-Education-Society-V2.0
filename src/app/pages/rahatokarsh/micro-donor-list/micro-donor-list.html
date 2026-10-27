@@ -82,8 +82,8 @@
                   <span class="flex h-7 w-7 items-center justify-center rounded-full bg-primary/8 text-[12px] font-semibold text-primary">{{ pager.rangeStart() + i }}</span>
                 </td>
                 <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ displayDate(donor.createddate) }}</td>
-                <td class="px-5 py-3.5 text-[13px] font-medium text-primary">{{ donor.name }}</td>
-                <td class="px-5 py-3.5 text-[13px] text-muted">{{ donor.city }}</td>
+                <td class="px-5 py-3.5 text-[13px] font-medium text-primary">{{ donor.name || '-' }}</td>
+                <td class="px-5 py-3.5 text-[13px] text-muted">{{ donor.city || '-' }}</td>
                 <td class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap text-primary">₹ {{ donor.amount | number }}</td>
                 <td class="px-5 py-3.5 whitespace-nowrap">
                   @if (donor.paymentId) {

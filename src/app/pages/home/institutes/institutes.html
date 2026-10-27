@@ -54,10 +54,13 @@
             </div>
             <div>
               <h3 class="text-[18px] font-bold text-primary m-0">{{ institute.title }}</h3>
-              <!-- The counting figure is for the eye; screen readers get the final one -->
+              <!-- The counting figure is for the eye; screen readers get the final one.
+                   translate="no": Google Translate swaps in its own copy of the text, so a translated
+                   figure would freeze mid-count. gap-1, not the space: Google drops the space before
+                   the translated unit ("૧૫શાળાઓ"). -->
               <p class="mt-1.5 flex items-center gap-2 text-[14px] text-muted m-0">
                 <span class="h-[3px] w-10 rounded-full shrink-0" [class]="institute.underlineClass" aria-hidden="true"></span>
-                <span><span class="font-bold text-primary tabular-nums" aria-hidden="true">{{ pad(shown()[i]) }}</span><span class="sr-only">{{ institute.count }}</span> {{ institute.unit }}</span>
+                <span class="inline-flex items-baseline gap-1"><span class="font-bold text-primary tabular-nums" aria-hidden="true" translate="no">{{ pad(shown()[i]) }}</span><span class="sr-only">{{ institute.count }}</span> {{ institute.unit }}</span>
               </p>
             </div>
           </div>

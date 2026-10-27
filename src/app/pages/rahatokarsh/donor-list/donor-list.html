@@ -101,8 +101,8 @@
           <tr class="border-b border-gray-100 last:border-b-0 hover:bg-[#F7F9FC]">
             <td class="px-5 py-3.5 text-[13px] text-muted">{{ pager.rangeStart() + i }}</td>
             <td class="px-5 py-3.5 text-[13px] whitespace-nowrap text-muted">{{ displayDate(donor.donationDate) }}</td>
-            <td class="px-5 py-3.5 text-[13px] font-medium text-primary">{{ donor.donnerName }}</td>
-            <td class="px-5 py-3.5 text-[13px] text-muted">{{ donor.donnerCity }}</td>
+            <td class="px-5 py-3.5 text-[13px] font-medium text-primary">{{ donor.donnerName || '-' }}</td>
+            <td class="px-5 py-3.5 text-[13px] text-muted">{{ donor.donnerCity || '-' }}</td>
             <td class="px-5 py-3.5 text-[13px] font-semibold whitespace-nowrap text-primary">₹ {{ donor.amount | number
               }}</td>
           </tr>

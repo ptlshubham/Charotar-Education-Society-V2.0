@@ -126,6 +126,11 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/news/news').then(m => m.News)
       },
       {
+        // One news item, announcement or circular - its own title and meta come from the item.
+        path: 'more/news/:id',
+        loadComponent: () => import('./pages/news/detail/news-detail').then(m => m.NewsDetail)
+      },
+      {
         path: 'more/campus',
         ...seo('more/campus'),
         loadComponent: () => import('./pages/campuses/campuses').then(m => m.Campuses)

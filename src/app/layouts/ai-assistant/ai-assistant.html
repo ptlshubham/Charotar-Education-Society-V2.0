@@ -102,15 +102,14 @@
         <p class="text-[12.5px] leading-[18px]">{{ m.text }}</p>
       </div>
       } @else {
-      <!-- Study answers run to several numbered steps - pre-wrap keeps the backend's line
-           breaks (and code indentation) instead of collapsing them into one paragraph. -->
+      <!-- Study answers are Markdown - numbered steps, bold terms, code - rendered by the markdown pipe. -->
       <div class="flex items-start gap-2 max-w-[85%]">
         <span class="flex w-7 h-7 rounded-full shrink-0 mt-0.5 overflow-hidden bg-white ring-2 ring-primary/10">
           <img src="/assets/icons/dyuno/dyuno-avatar.webp" alt="" aria-hidden="true" width="28" height="28"
             class="w-full h-full object-cover" />
         </span>
         <div class="min-w-0 rounded-[12px] rounded-tl-[4px] bg-[#f4f7f6] px-3.5 py-2.5">
-          <p class="text-primary text-[13px] leading-[19px] whitespace-pre-wrap break-words">{{ m.text }}</p>
+          <div class="chat-md text-primary text-[13px] leading-[19px] break-words" [innerHTML]="m.text | markdown"></div>
           @if (m.citations?.length) {
           <!-- Official pages this answer was looked up from - OpenAI requires them visible and clickable. -->
           <p class="mt-2 text-[11px] font-semibold uppercase tracking-wide text-muted">Official sources</p>

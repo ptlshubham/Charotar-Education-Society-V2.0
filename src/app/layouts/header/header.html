@@ -112,8 +112,10 @@
           </svg>
         </button>
         }
-        @if (item.children && openMenu() === item.label) {
-        <ul class="nav-dropdown animate-dropdown">
+        <!-- Every dropdown and submenu is in the page from the start and only shown with [hidden]:
+             Google Translate translates the page as it loads but never menu items added later. -->
+        @if (item.children) {
+        <ul class="nav-dropdown animate-dropdown" [hidden]="openMenu() !== item.label">
           @for (child of item.children; track child.label) {
           <li [class.submenu-item]="child.children?.length" (mouseenter)="onSubmenuEnter(child.label)"
             (mouseleave)="onSubmenuLeave()">
@@ -127,8 +129,7 @@
               <img class="submenu-chevron" src="/assets/images/header/icons/nav-chevron.svg" width="16" height="16"
                 alt="" />
             </button>
-            @if (openSubmenu() === child.label) {
-            <ul class="nav-submenu animate-dropdown"
+            <ul class="nav-submenu animate-dropdown" [hidden]="openSubmenu() !== child.label"
               (keydown.escape)="$event.stopPropagation(); openSubmenu.set(null); submenuTrigger.focus()">
               @for (leaf of child.children; track leaf.label) {
               <li>
@@ -138,7 +139,6 @@
               </li>
               }
             </ul>
-            }
             }
           </li>
           }
@@ -237,7 +237,8 @@
       </div>
       }
     </div>
-    <!-- Header banners, as on desktop (below lg they show in the strip under the header instead) -->
+    <!-- Header banners, as on desktop (from md to lg they show in the strip under the header instead;
+         phones show none) -->
     <app-header-ads class="hidden h-14 w-[193px] shrink-0 lg:block" fallback />
   </div>
 
@@ -264,8 +265,8 @@
               <path d="m6 9 6 6 6-6" />
             </svg>
           </button>
-          @if (openMenu() === item.label) {
-          <ul
+          <!-- In the page from the start, shown with [hidden] - see the desktop dropdown. -->
+          <ul [hidden]="openMenu() !== item.label"
             class="animate-dropdown absolute top-full left-0 z-[70] min-w-[230px] list-none overflow-hidden rounded-b-lg bg-white py-1.5 text-primary shadow-[0_12px_30px_rgba(27,50,88,0.19)]">
             @for (child of item.children; track child.label) {
             <li>
@@ -277,7 +278,6 @@
             </li>
             }
           </ul>
-          }
           }
         </li>
         }
@@ -424,8 +424,8 @@
         <path d="m6 9 6 6 6-6" />
       </svg>
     </button>
-    @if (isExpanded(item.label)) {
-    <div class="animate-dropdown bg-[#152650] py-1">
+    <!-- In the page from the start, shown with [hidden] - see the desktop dropdown. -->
+    <div class="animate-dropdown bg-[#152650] py-1" [hidden]="!isExpanded(item.label)">
       @for (child of item.children; track child.label) {
       @if (child.link) {
       <a [routerLink]="child.link" (click)="closeMobileMenu()"
@@ -444,19 +444,18 @@
           <path d="m6 9 6 6 6-6" />
         </svg>
       </button>
-      @if (isExpanded(item.label + '/' + child.label)) {
-      @for (leaf of child.children; track leaf.label) {
-      <a [routerLink]="leaf.link" (click)="closeMobileMenu()"
-        [attr.aria-current]="leaf.link && linkActive(leaf.link) ? 'page' : null"
-        class="block py-2.5 pr-5 pl-[68px] text-[13px] no-underline transition-colors hover:text-secondary"
-        [class]="leaf.link && linkActive(leaf.link) ? 'font-semibold text-secondary' : 'text-white/60'">{{ leaf.label
-        }}</a>
-      }
-      }
+      <div [hidden]="!isExpanded(item.label + '/' + child.label)">
+        @for (leaf of child.children; track leaf.label) {
+        <a [routerLink]="leaf.link" (click)="closeMobileMenu()"
+          [attr.aria-current]="leaf.link && linkActive(leaf.link) ? 'page' : null"
+          class="block py-2.5 pr-5 pl-[68px] text-[13px] no-underline transition-colors hover:text-secondary"
+          [class]="leaf.link && linkActive(leaf.link) ? 'font-semibold text-secondary' : 'text-white/60'">{{ leaf.label
+          }}</a>
+        }
+      </div>
       }
       }
     </div>
-    }
     }
     }
   </nav>

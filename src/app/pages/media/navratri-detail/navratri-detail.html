@@ -1,19 +1,21 @@
 <!-- ─── Hero ─── -->
 <app-page-hero [crumb]="'Celebration ' + year" [trail]="[{ label: 'Media' }, { label: 'Navratri', link: '/navratri' }]" title="Navratri" [accent]="'Celebration ' + year"
   blurb="A divine celebration of faith, culture and unity filled with devotion and joy."
-  [image]="banner">
+  [image]="banner()">
   <ul class="mt-6 flex list-none flex-wrap gap-x-8 gap-y-3 text-[13px] text-white/85">
+    @if (dates()) {
     <li class="flex items-center gap-2">
       <svg class="text-secondary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" />
       </svg>
-      15th Sep – 24th Oct, {{ year }}
+      {{ dates() }}
     </li>
+    }
     <li class="flex items-center gap-2">
       <svg class="text-secondary" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z" /><circle cx="12" cy="10" r="3" />
       </svg>
-      CES Campus, Anand
+      {{ venue() }}
     </li>
   </ul>
 </app-page-hero>
@@ -23,7 +25,7 @@
   <!-- Tabs + share -->
   <div class="flex flex-wrap items-center justify-between gap-4">
     <div role="tablist" aria-label="Section" class="flex flex-wrap gap-2">
-      @for (tab of tabs; track tab.id) {
+      @for (tab of tabs(); track tab.id) {
         <button type="button" role="tab" [attr.aria-selected]="active() === tab.id" (click)="select(tab.id)"
           class="flex items-center gap-2 rounded-lg border px-5 py-2.5 text-[13px] font-semibold transition-colors"
           [class]="active() === tab.id ? 'border-primary bg-primary text-white' : 'border-gray-200 bg-white text-primary hover:border-primary'">
@@ -37,18 +39,87 @@
 
     <div class="flex items-center gap-2">
       <span class="text-[12.5px] text-muted">Share:</span>
-      @for (net of [['Facebook','bg-[#1877F2]'],['Twitter','bg-[#1DA1F2]'],['WhatsApp','bg-[#25D366]'],['Copy link','bg-gray-400']]; track net[0]) {
-        <button type="button" [attr.aria-label]="net[0]"
-          class="flex h-8 w-8 items-center justify-center rounded-full text-white transition-opacity hover:opacity-85" [class]="net[1]">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M18 8a3 3 0 1 0-2.8-4H15L8.9 9.6a3 3 0 1 0 0 4.8L15 20h.2A3 3 0 1 0 18 16a3 3 0 0 0-2.2 1l-5.6-5a3 3 0 0 0 0-1.2l5.6-5A3 3 0 0 0 18 8z" />
-          </svg>
-        </button>
+      @for (net of shareLinks(); track net.label) {
+        <a [href]="net.href" target="_blank" rel="noopener" [attr.aria-label]="net.label" [title]="net.label"
+          class="flex h-8 w-8 items-center justify-center rounded-full text-white no-underline transition-opacity hover:opacity-85" [class]="net.bg">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path [attr.d]="net.path" /></svg>
+        </a>
       }
+      <button type="button" (click)="copyLink()" [attr.aria-label]="copied() ? 'Link copied' : 'Copy link'" [title]="copied() ? 'Link copied' : 'Copy link'"
+        class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-400 text-white transition-opacity hover:opacity-85">
+        @if (copied()) {
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+        } @else {
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7" /><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7" /></svg>
+        }
+      </button>
     </div>
   </div>
 
-  @if (active() === 'overview') {
+  @switch (active()) {
+  @case ('events') {
+    <!-- Programme -->
+    <ol class="animate-dropdown mt-6 list-none space-y-3 rounded-xl border border-gray-200 bg-white p-6">
+      @for (ev of events(); track $index) {
+        <li class="flex gap-4 border-b border-gray-100 pb-3 last:border-b-0 last:pb-0">
+          <span class="w-[110px] shrink-0 text-[12.5px] font-semibold text-secondary-dark">{{ day(ev.date) || '-' }}</span>
+          <div class="min-w-0">
+            <p class="text-[14px] font-bold text-primary">{{ ev.title }}</p>
+            @if (ev.details) { <p class="mt-1 text-[13px] leading-relaxed whitespace-pre-line text-muted">{{ ev.details }}</p> }
+          </div>
+        </li>
+      }
+    </ol>
+  }
+  @case ('news') {
+    <!-- Press coverage -->
+    <ul class="animate-dropdown mt-6 grid list-none gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      @for (p of press(); track $index) {
+        <li class="flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white">
+          @if (p.image) {
+            <button type="button" (click)="openClipping(p.image, p.title || 'Press clipping')" class="block cursor-zoom-in bg-[#F7F9FC]"
+              [attr.aria-label]="'View the clipping: ' + (p.title || 'press item')">
+              <img [src]="p.image | mediaUrl" alt="" loading="lazy" class="aspect-[4/3] w-full object-cover object-top" />
+            </button>
+          }
+          <div class="flex flex-1 flex-col p-4">
+            @if (p.source || p.date) {
+              <p class="text-[11.5px] font-semibold tracking-wide text-secondary-dark uppercase">
+                {{ p.source }}@if (p.source && p.date) { · }{{ day(p.date) }}</p>
+            }
+            @if (p.title) { <p class="mt-1 text-[14px] leading-snug font-bold text-primary">{{ p.title }}</p> }
+            @if (p.link) {
+              <a [href]="p.link" target="_blank" rel="noopener" class="mt-auto inline-flex items-center gap-1.5 pt-3 text-[12.5px] font-semibold text-primary no-underline hover:text-accent">
+                Read the article
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg>
+              </a>
+            }
+          </div>
+        </li>
+      }
+    </ul>
+  }
+  @case ('sponsors') {
+    <!-- Sponsors -->
+    <ul class="animate-dropdown mt-6 grid list-none grid-cols-2 gap-4 rounded-xl border border-gray-200 bg-white p-6 sm:grid-cols-3 lg:grid-cols-5">
+      @for (s of sponsors(); track $index) {
+        <li>
+          @if (s.link) {
+            <a [href]="s.link" target="_blank" rel="noopener" class="flex h-full flex-col items-center gap-2 rounded-lg p-3 text-center no-underline transition-colors hover:bg-[#F7F9FC]">
+              @if (s.logo) { <img [src]="s.logo | mediaUrl" [alt]="s.name || 'Sponsor'" loading="lazy" class="h-16 w-full object-contain" /> }
+              @if (s.name) { <span class="text-[12.5px] font-semibold text-primary">{{ s.name }}</span> }
+            </a>
+          } @else {
+            <div class="flex h-full flex-col items-center gap-2 p-3 text-center">
+              @if (s.logo) { <img [src]="s.logo | mediaUrl" [alt]="s.name || 'Sponsor'" loading="lazy" class="h-16 w-full object-contain" /> }
+              @if (s.name) { <span class="text-[12.5px] font-semibold text-primary">{{ s.name }}</span> }
+            </div>
+          }
+        </li>
+      }
+    </ul>
+  }
+  @default {
     <div class="animate-dropdown mt-6 grid gap-5 lg:grid-cols-[1.7fr_1fr]">
 
       <!-- Article -->
@@ -89,36 +160,34 @@
         </h2>
         <span class="mt-2.5 block h-1 w-12 rounded-full bg-logo" aria-hidden="true"></span>
 
-        <dl class="mt-5 space-y-4">
-          @for (item of highlights; track item.label) {
-            <div class="flex items-start gap-3">
+        <ul class="mt-5 list-none space-y-4">
+          @for (item of highlights(); track $index) {
+            <li class="flex items-start gap-3">
               <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/8 text-primary" aria-hidden="true">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                   @for (d of item.path; track d) { <path [attr.d]="d" /> }
                 </svg>
               </span>
-              <div>
-                <dt class="text-[12px] text-muted">{{ item.label }}</dt>
-                <dd class="text-[13px] font-semibold text-primary">{{ item.value }}</dd>
+              <div [class.pt-1.5]="!item.label">
+                @if (item.label) { <p class="text-[12px] text-muted">{{ item.label }}</p> }
+                <p class="text-[13px] font-semibold text-primary">{{ item.value }}</p>
               </div>
-            </div>
+            </li>
           }
-        </dl>
+        </ul>
 
-        <button type="button"
-          class="mt-6 flex w-full items-center justify-center gap-2 rounded-md bg-primary py-3 text-[13px] font-semibold text-white transition-colors hover:bg-primary-dark">
+        @if (brochure()) {
+        <a [href]="brochure()" target="_blank" rel="noopener"
+          class="mt-6 flex w-full items-center justify-center gap-2 rounded-md bg-primary py-3 text-[13px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
           </svg>
           Download Brochure
-        </button>
+        </a>
+        }
       </aside>
     </div>
-  } @else {
-    <div class="animate-dropdown mt-6 rounded-xl border border-dashed border-gray-300 bg-[#F7F9FC] px-4 py-14 text-center">
-      <p class="text-[14px] font-semibold text-primary">{{ tabs[0].label }} is the only section published so far.</p>
-      <p class="mt-1 text-[12.5px] text-muted">Events, news and sponsor details for Navratri {{ year }} are coming soon.</p>
-    </div>
+  }
   }
 
   <!-- Gallery -->

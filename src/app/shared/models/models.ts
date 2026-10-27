@@ -73,6 +73,31 @@ export interface NavratriEntry {
   themedetails: string;
   /** Relative cover image path - resolve with the `mediaUrl` pipe. */
   coverimage: string;
+  // The year's page details (migration 0058) - absent or empty until entered in the dashboard.
+  /** YYYY-MM-DD */
+  startDate?: string | null;
+  endDate?: string | null;
+  /** null = "CES Campus, Anand" */
+  venue?: string | null;
+  /** A PDF path behind "Download Brochure". */
+  brochure?: string | null;
+  highlights?: { label: string | null; value: string | null }[];
+  events?: { date: string | null; title: string | null; details: string | null }[];
+  press?: { title: string | null; source: string | null; date: string | null; link: string | null; image: string | null }[];
+  sponsors?: { name: string | null; logo: string | null; link: string | null }[];
+}
+
+/** The /navratri page's own content, from GET /admin/GetNavratriPage (Website Management → Navratri). */
+export interface NavratriPage {
+  banner: string | null;
+  introHeading: string | null;
+  /** HTML from the dashboard's editor. */
+  introHtml: string | null;
+  /** A YouTube link, played in place. */
+  introVideo: string | null;
+  introImage: string | null;
+  /** "Navratri at a Glance" - icon is a Material Symbols name. */
+  stats: { value: string | null; label: string | null; icon: string | null }[];
 }
 
 /** A gallery image for a Navratri year, from GET /admin/GetNavratriImagesById/:id. */
@@ -107,6 +132,26 @@ export interface PodcastEntry {
   episodeNo?: number | null;
   category?: string | null;
   description?: string | null;
+}
+
+/**
+ * A live news item, announcement or circular from GET /admin/GetPublicNews/:instituteId (Website
+ * Management → News & Notices). Items from before titles existed have `title` null and their
+ * headline as the first line of `message` - see shared/news-item.ts.
+ */
+export interface NewsEntry {
+  id: number;
+  /** null = news (items from before types existed). */
+  type: 'news' | 'announcement' | 'circular' | null;
+  title: string | null;
+  /** HTML from the dashboard's editor. */
+  message: string | null;
+  /** The attached PDF's path (/pdf/...). */
+  files: string | null;
+  /** The cover picture's path (/images/news/...). */
+  image: string | null;
+  /** The item's date, YYYY-MM-DD. */
+  day: string;
 }
 
 /**

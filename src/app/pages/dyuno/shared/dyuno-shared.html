@@ -51,8 +51,8 @@
             <img src="/assets/icons/dyuno/dyuno-avatar.webp" alt="" aria-hidden="true" width="32" height="32"
               class="h-full w-full object-cover" />
           </span>
-          <p class="min-w-0 flex-1 whitespace-pre-wrap break-words pt-1 text-[15px] leading-[1.7] text-[#1f2a44]">{{
-            m.text }}</p>
+          <div class="chat-md min-w-0 flex-1 break-words pt-1 text-[15px] leading-[1.7] text-[#1f2a44]"
+            [innerHTML]="m.text | markdown"></div>
         </div>
         }
         }

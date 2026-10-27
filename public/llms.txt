@@ -5,8 +5,8 @@
 ## Institution
 
 - [About Us](https://cesociety.in/about)
-- [Our History](https://cesociety.in/about/history)
-- [CES at a Glance](https://cesociety.in/about/profile)
+- [Our History](https://cesociety.in/about/history): The history of Charotar Education Society: it grew out of the Petlad Boarding House (1906), was founded in Anand, Gujarat on 16 April 1916, took part in the freedom struggle and marked its centenary in 2015-16 with 100 events and 8 Guinness World Records.
+- [CES at a Glance](https://cesociety.in/about/profile): A one-page profile of Charotar Education Society (Anand, Gujarat, founded 1916): 31+ schools, colleges and hostels on three campuses, teaching from pre-primary to Ph.D., with its projects, recognition and contact details.
 - [Management](https://cesociety.in/management)
 - [History of VJ Patel](https://cesociety.in/glory/history-vj)
 - [Alumni](https://cesociety.in/alumni)
@@ -16,7 +16,7 @@
 
 ## Celebrations
 
-- [Chatkaro](https://cesociety.in/chatkaro)
+- [Chatkaro](https://cesociety.in/chatkaro): Chatkaro is Charotar Education Society's yearly festival of traditional Gujarati food, with a skill fair and the Alumni Meet, held 11-13 January on the D.N. High School campus in Anand; entry is free.
 - [Navratri Mahotsav](https://cesociety.in/navratri)
 - [Centenary Celebration](https://cesociety.in/celebration)
 

@@ -11,6 +11,7 @@ import { Pagination } from '../../../shared/pagination/pagination';
 import { Sorter } from '../../../shared/sorting/sorter';
 import { SortHeader } from '../../../shared/sorting/sort-header';
 import { CustomSelect } from '../../../shared/custom-select/custom-select';
+import { cleanText } from '../../../shared/clean-text';
 
 @Component({
   selector: 'app-donor-list',
@@ -39,8 +40,14 @@ export class DonorList {
       .subscribe((rows) => {
         // Normalise amount to a real number - some legacy rows send it as a
         // string/null, which DecimalPipe (| number) rejects with NG02100.
+        // Text fields are cleaned so "undefined"/"null" show as blank.
         this.all.set(
-          (Array.isArray(rows) ? rows : []).map((r) => ({ ...r, amount: Number(r.amount) || 0 })),
+          (Array.isArray(rows) ? rows : []).map((r) => ({
+            ...r,
+            donnerName: cleanText(r.donnerName),
+            donnerCity: cleanText(r.donnerCity),
+            amount: Number(r.amount) || 0,
+          })),
         );
         this.loading.set(false);
       });

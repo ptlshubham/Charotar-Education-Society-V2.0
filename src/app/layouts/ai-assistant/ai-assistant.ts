@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AssistantBridge } from '../../core/services/assistant-bridge.service';
 import { CES_TOPICS, ChatTopic, DyunoChat, STUDY_TOPICS } from '../../core/services/dyuno-chat.service';
+import { MarkdownPipe } from '../../shared/markdown.pipe';
 
 /** Dyuno mascot frames - /assets/icons/dyuno/dyuno-<frame>.webp, all on one canvas so they swap in place. */
 type DyunoFrame = 'stand' | 'wave' | `walk-${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8}`;
@@ -58,7 +59,7 @@ const IDLE_WAVE_MS = 8000;
  */
 @Component({
   selector: 'app-ai-assistant',
-  imports: [FormsModule],
+  imports: [FormsModule, MarkdownPipe],
   templateUrl: './ai-assistant.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './ai-assistant.scss',
@@ -152,8 +153,15 @@ export class AiAssistant implements OnDestroy {
       this.scrollToBottom();
     });
 
-    // Dyuno walks in from the right edge, waves, then waves now and then while idle.
-    afterNextRender(() => this.startDyuno());
+    // Dyuno walks in from the right edge, waves, then waves now and then while idle - once the
+    // page loader (index.html) has lifted, so the walk-in isn't spent behind it.
+    afterNextRender(() => {
+      if (document.querySelector('#ces-loader:not(.is-done)')) {
+        window.addEventListener('ces:loader-done', () => this.startDyuno(), { once: true });
+      } else {
+        this.startDyuno();
+      }
+    });
 
     // afterNextRender keeps this out of SSR entirely - no timers or storage there,
     // and the bubble is a client-side affordance anyway.

@@ -10,6 +10,29 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
+const ICON = '.material-symbols-outlined';
+
+/**
+ * Material Symbols draw the icon from their text ("school", "bed"), so Google would translate
+ * that into a word ("શાળા", "પલંગ") and the icon would vanish. Marks every icon translate="no" -
+ * the ones on the page now and any rendered later - before Google's script starts. An attribute,
+ * not the notranslate class, so Angular's [class] bindings can never take it off again.
+ */
+function keepIconsUntranslated(): void {
+  const mark = (root: ParentNode) =>
+    root.querySelectorAll(`${ICON}:not([translate])`).forEach((el) => el.setAttribute('translate', 'no'));
+  mark(document);
+  new MutationObserver((records) => {
+    for (const record of records) {
+      for (const node of record.addedNodes) {
+        if (!(node instanceof Element)) continue;
+        if (node.matches(ICON)) node.setAttribute('translate', 'no');
+        mark(node);
+      }
+    }
+  }).observe(document.body, { childList: true, subtree: true });
+}
+
 interface Lang {
   code: string;
   /** English name, shown as a secondary label. */
@@ -84,6 +107,8 @@ export class LanguageSwitcher {
   private injectGoogleTranslate(): void {
     if (!isPlatformBrowser(this.platformId)) return;
     if (document.getElementById('google-translate-script')) return;
+
+    keepIconsUntranslated();
 
     if (!document.getElementById('google_translate_element')) {
       const host = document.createElement('div');

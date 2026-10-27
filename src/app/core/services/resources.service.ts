@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, map, shareReplay, tap } from 'rxjs';
 import { ApiService } from './api.service';
 import { SKIP_ERROR_REDIRECT } from '../interceptors/error.interceptor';
-import { AnswerKeyEntry, BeneficiaryStudent, BlogPost, CareersPage, TenderItem, Copyright, CounsellingPayload, DonationPayload, Donor, GalleryImage, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NavratriImage, NavratriLiveLink, Patent, PodcastEntry, SiteNotification, Trademark, VisitorCounter } from '../../shared/models/models';
+import { AnswerKeyEntry, BeneficiaryStudent, BlogPost, CareersPage, TenderItem, Copyright, CounsellingPayload, DonationPayload, Donor, GalleryImage, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NewsEntry, NavratriImage, NavratriPage, NavratriLiveLink, Patent, PodcastEntry, SiteNotification, Trademark, VisitorCounter } from '../../shared/models/models';
 
 
 @Injectable({
@@ -105,6 +105,12 @@ export class ResourcesService {
     // Navratri - the yearly celebration list and a year's gallery images.
     getNavratriList() {
         return this.http.get<NavratriEntry[]>(ApiService.GetNavratriListURL, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
+    }
+
+    getNavratriPage() {
+        return this.http.get<NavratriPage | null>(ApiService.GetNavratriPageURL, {
             context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
         });
     }
@@ -247,27 +253,11 @@ export class ResourcesService {
         return this.http.get(ApiService.GetPublicVideoByIdURL + id);
     }
 
-    // Public Website Newsroom
-    getPublicNews(params?: { page?: number; limit?: number; category?: string; search?: string }) {
-        let httpParams = new HttpParams();
-        if (params?.page) httpParams = httpParams.set('page', params.page.toString());
-        if (params?.limit) httpParams = httpParams.set('limit', params.limit.toString());
-        if (params?.category) httpParams = httpParams.set('category', params.category);
-        if (params?.search) httpParams = httpParams.set('search', params.search);
-        return this.http.get(ApiService.GetPublicNewsURL, { params: httpParams });
-    }
-
-    getPublicFeaturedNews(limit = 3) {
-        const httpParams = new HttpParams().set('limit', limit.toString());
-        return this.http.get(ApiService.GetPublicNewsFeaturedURL, { params: httpParams });
-    }
-
-    getPublicNewsCategories() {
-        return this.http.get(ApiService.GetPublicNewsCategoriesURL);
-    }
-
-    getPublicNewsBySlug(slug: string) {
-        return this.http.get(ApiService.GetPublicNewsBySlugURL + slug);
+    // News & Notices - an institute's live news, announcements and circulars, newest first.
+    getNews(instituteId: number | string) {
+        return this.http.get<NewsEntry[]>(ApiService.GetNewsURL + instituteId, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        });
     }
 
     // Public Website Community

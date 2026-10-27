@@ -1,6 +1,10 @@
-// Fills whatever box the parent gives it (220×64 in the desktop header).
-:host {
-  display: block;
+// Fills whatever box the parent gives it (220×64 in the desktop header). In Tailwind's components
+// layer so a parent's `hidden` / `lg:block` (utilities layer) still wins - unlayered, this beat
+// `hidden` and the tablet header showed its banner on top of the strip under it.
+@layer components {
+  :host {
+    display: block;
+  }
 }
 
 .ads-swiper,

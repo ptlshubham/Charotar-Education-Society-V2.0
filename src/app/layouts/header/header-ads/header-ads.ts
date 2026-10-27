@@ -18,8 +18,8 @@ type SwiperEl = HTMLElement & { initialize(): void; swiper?: unknown };
 
 /**
  * The institute's header banners (HeaderBannersService) as a rotating strip - used in the desktop
- * and tablet headers and in the notice strip under the phone header, so the notice shows on every
- * page at every screen size. It fills its host; the parent sets the size. With `fallback`, the
+ * and tablet headers and in the notice strip under the portrait-tablet header, so the notice shows
+ * on every page at every size but phones. It fills its host; the parent sets the size. With `fallback`, the
  * "Educating Since 1916" badge stands in while there are no banners (which is also what the server
  * renders, so hydration always matches).
  */

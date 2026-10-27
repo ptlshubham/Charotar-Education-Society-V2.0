@@ -27,10 +27,13 @@
       @for (stat of stats; track stat.label; let i = $index) {
       <li [appReveal]="i * 110"
         class="flex flex-col items-center border-primary/10 px-3 py-7 text-center max-lg:odd:border-r max-lg:[&:nth-child(n+3)]:border-t sm:px-5 lg:border-l lg:py-4">
-        <!-- The counting figure is for the eye; screen readers get the final one -->
+        <!-- The counting figure is for the eye; screen readers get the final one.
+             translate="no" on the figure: Google Translate swaps in its own copy of the text, so a
+             translated figure would freeze mid-count. The unit is spaced by margin - Google drops a
+             leading space. -->
         <p class="text-[32px] leading-none font-bold text-primary tabular-nums sm:text-[40px] lg:text-[36px] xl:text-[44px]"
           aria-hidden="true">
-          {{ format(shown()[i]) }}@if (stat.unit) { {{ stat.unit }}}<span class="ml-0.5 font-light text-secondary">{{ stat.suffix }}</span>
+          <span translate="no">{{ format(shown()[i]) }}</span>@if (stat.unit) {<span class="ml-[0.25em]">{{ stat.unit }}</span>}<span class="ml-0.5 font-light text-secondary">{{ stat.suffix }}</span>
         </p>
         <p class="mt-3 text-[14px] font-semibold text-primary sm:text-[16px]">
           <span class="sr-only">{{ format(stat.to) }}{{ stat.unit ? ' ' + stat.unit : '' }}{{ stat.suffix }} </span>{{ stat.label }}

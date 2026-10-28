@@ -404,6 +404,26 @@ export interface TenderItem {
 }
 
 /**
+ * The announcement popup (Website Management → Website Popup), from GET /popup/public - the one
+ * live popup: switched on and inside its dates. `version` differs for each popup and changes
+ * whenever it is saved.
+ */
+export interface SitePopup {
+  version: string;
+  title: string | null;
+  message: string | null;
+  /** Desktop / tablet picture; phones use `mobileImage` when there is one. */
+  image: string | null;
+  mobileImage: string | null;
+  imageAlt: string | null;
+  buttonLabel: string | null;
+  /** A path on this site or a full web address. */
+  buttonLink: string | null;
+  /** Seconds after landing (and after the cookie notice) before it opens. */
+  delaySeconds: number;
+}
+
+/**
  * The footer's visitor counter (Website Management → Visitor Counter), from POST
  * /visitors/public/check-in. `show: false` = the institute has it switched off (no numbers then);
  * a null number is one it chose not to show.

@@ -19,6 +19,9 @@ import { PageFaq } from '../../shared/page-faq/page-faq';
 import { LenisService } from '../../core/services/lenis.service';
 import { HeaderBannersService } from '../../core/services/header-banners.service';
 import { HeaderAds } from '../header/header-ads/header-ads';
+import { NoInternet } from '../../pages/error/no-internet/no-internet';
+import { SitePopup } from '../site-popup/site-popup';
+import { ConnectionService } from '../../core/services/connection.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -34,6 +37,8 @@ import { HeaderAds } from '../header/header-ads/header-ads';
     Lightbox,
     PageFaq,
     HeaderAds,
+    NoInternet,
+    SitePopup,
   ],
   templateUrl: './main-layout.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -44,6 +49,8 @@ export class MainLayout {
   private readonly router = inject(Router);
   /** The header banners (a site-wide notice), for the strip under the header on smaller screens. */
   readonly headerBanners = inject(HeaderBannersService);
+  /** Whether the connection is down, for the No Internet screen. */
+  readonly connection = inject(ConnectionService);
 
   constructor() {
     const destroyRef = inject(DestroyRef);

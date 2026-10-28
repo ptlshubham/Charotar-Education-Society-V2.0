@@ -102,7 +102,7 @@ const SITE_ORIGIN = 'https://cesociety.in';
  * Link-preview card for a page with no image of its own and no Default OG image in SEO
  * Management, so a shared link never goes out bare.
  */
-const DEFAULT_OG_IMAGE = `${SITE_ORIGIN}/assets/images/og-image/default.jpg`;
+const DEFAULT_OG_IMAGE = `${SITE_ORIGIN}/og-image.jpg`;
 
 /**
  * A share image as link previews need it: an absolute URL and, for the site's own photos (WebP,

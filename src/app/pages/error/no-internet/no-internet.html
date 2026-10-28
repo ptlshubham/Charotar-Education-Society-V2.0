@@ -1,0 +1,22 @@
+<section class="bg-[#F7F9FC]">
+  <div class="site-container flex flex-col items-center py-14 text-center">
+    <!-- The picture carries the message; the heading is for screen readers. -->
+    <h1 class="sr-only">No Internet Connection</h1>
+
+    <img [src]="illustration()" alt="A worried Dyuno holding an unplugged cable beside a crossed-out Wi-Fi sign: No Internet. Please check your connection."
+      width="1040" height="680" class="h-auto w-full max-w-[600px]" />
+
+    <button type="button" (click)="tryAgain()" [disabled]="checking()"
+      class="mt-8 inline-flex h-12 cursor-pointer items-center justify-center gap-2 rounded-md bg-primary px-8 text-[15px] font-semibold text-white transition-colors hover:bg-primary-dark disabled:cursor-wait disabled:opacity-80">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+        [class.animate-spin]="checking()">
+        <path d="M21 12a9 9 0 1 1-2.64-6.36" /><path d="M21 3v6h-6" />
+      </svg>
+      {{ checking() ? 'Checking…' : 'Try Again' }}
+    </button>
+
+    <p class="mt-4 min-h-[22px] text-[14px] font-medium text-accent" role="status">
+      @if (stillOffline()) { Still no connection. Please check your connection and try again. }
+    </p>
+  </div>
+</section>

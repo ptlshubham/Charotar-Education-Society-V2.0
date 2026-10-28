@@ -34,9 +34,6 @@ export const PLACEHOLDER = {
 
   alumni: [portrait(12), portrait(45), portrait(33), portrait(47)],
 
-  /** Campus building illustration on the 404 / 500 pages. */
-  errorBuilding: scene('ces-campus-building', 900, 700),
-
   newsItems: [
     scene('ces-news-a', 600, 420), scene('ces-news-b', 600, 420), scene('ces-news-c', 600, 420),
     scene('ces-news-d', 600, 420), scene('ces-news-e', 600, 420), scene('ces-news-f', 600, 420),

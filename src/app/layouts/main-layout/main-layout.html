@@ -34,3 +34,15 @@
 
 <!-- Site-wide photo viewer - every gallery opens it through LightboxService -->
 <app-lightbox />
+
+<!-- Announcement popup (Website Management → Website Popup) - once per visit, after the cookie notice -->
+<app-site-popup />
+
+<!-- No Internet - laid over the page while the connection is down, so the page is still there when it
+     returns. Below the page loader and the cookie banner (z 9998+). data-lenis-prevent: it scrolls on
+     its own, not the page. -->
+@if (connection.offline()) {
+<div class="fixed inset-0 z-[9000] flex flex-col overflow-y-auto bg-[#F7F9FC]" data-lenis-prevent aria-live="assertive">
+  <app-no-internet class="my-auto block" />
+</div>
+}

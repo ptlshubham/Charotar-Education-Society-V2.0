@@ -95,6 +95,8 @@ export class CookieConsent implements AfterViewInit {
   private acceptEverything(): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('cookie_consent', 'accepted');
+      // The website popup waits for this, so the two never stack.
+      window.dispatchEvent(new Event('ces:cookie-consent'));
     }
     this.showPreferences.set(false);
     this.lenis.start();

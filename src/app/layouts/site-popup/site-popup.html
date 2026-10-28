@@ -1,0 +1,57 @@
+@if (popup(); as p) {
+<!-- Backdrop: a click outside the popup closes it. Below the cookie notice and the No Internet screen. -->
+<div class="site-popup-backdrop fixed inset-0 z-[8500] flex items-center justify-center bg-black/60 p-4 sm:p-6"
+  data-lenis-prevent (click)="close()">
+  <div #dialog role="dialog" aria-modal="true"
+    [attr.aria-labelledby]="p.title ? 'site-popup-title' : null" [attr.aria-label]="p.title ? null : p.imageAlt"
+    class="site-popup-card relative flex max-h-full w-full max-w-[640px] flex-col overflow-hidden rounded-2xl bg-white shadow-[0_24px_60px_rgba(0,0,0,0.35)]"
+    (click)="$event.stopPropagation()">
+
+    <button #closeButton type="button" (click)="close()" aria-label="Close announcement"
+      class="absolute top-3 right-3 z-10 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-white/95 text-primary shadow-md transition-colors hover:bg-white hover:text-accent">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+        <path d="M18 6 6 18M6 6l12 12" />
+      </svg>
+    </button>
+
+    @if (p.image) {
+    <ng-template #picture>
+      <!-- Shorter when text sits under it, so the whole popup fits the screen. -->
+      <img [src]="p.image" [alt]="p.imageAlt" class="mx-auto block h-auto w-full object-contain"
+        [style.max-height.vh]="p.title || p.message || p.link || p.href ? 55 : 80" />
+    </ng-template>
+    <!-- The picture goes where the button goes (mouse only - the button is the keyboard's way there). -->
+    @if (p.link) {
+    <a [href]="p.link" tabindex="-1" (click)="follow($event, p.link)" class="block min-h-0 bg-[#f4f6fa]">
+      <ng-container [ngTemplateOutlet]="picture" /></a>
+    } @else if (p.href) {
+    <a [href]="p.href" target="_blank" rel="noopener" tabindex="-1" (click)="follow($event)" class="block min-h-0 bg-[#f4f6fa]">
+      <ng-container [ngTemplateOutlet]="picture" /></a>
+    } @else {
+    <div class="min-h-0 bg-[#f4f6fa]"><ng-container [ngTemplateOutlet]="picture" /></div>
+    }
+    }
+
+    @if (p.title || p.message || p.link || p.href) {
+    <div class="shrink-0 overflow-y-auto px-6 pb-6 text-center sm:px-8" [class.pt-5]="p.image" [class.pt-12]="!p.image">
+      @if (p.title) {
+      <h2 id="site-popup-title" class="text-[20px] leading-snug font-bold text-primary sm:text-[22px]">{{ p.title }}</h2>
+      }
+      @if (p.message) {
+      <p class="mt-2 text-[14px] leading-relaxed whitespace-pre-line text-muted sm:text-[15px]">{{ p.message }}</p>
+      }
+      @if (p.link || p.href) {
+      <a [href]="p.link || p.href" [attr.target]="p.href ? '_blank' : null" [attr.rel]="p.href ? 'noopener' : null"
+        (click)="follow($event, p.link)"
+        class="mt-5 inline-flex h-11 items-center justify-center gap-2 rounded-md bg-primary px-6 text-[15px] font-semibold text-white no-underline transition-colors hover:bg-primary-dark">
+        {{ p.buttonLabel }}
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      </a>
+      }
+    </div>
+    }
+  </div>
+</div>
+}

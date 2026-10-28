@@ -1,7 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Location } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { PLACEHOLDER } from '../../../shared/placeholder-images';
 
 @Component({
   selector: 'app-error404',
@@ -13,7 +12,8 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
 export class Error404 {
   constructor(private readonly location: Location) {}
 
-  readonly building = PLACEHOLDER.errorBuilding;
+  /** Dyuno beside the "Error 404" sign - a transparent cutout, 1040×767. */
+  readonly illustration = '/assets/images/error/error-404.webp';
 
   readonly quickLinks: ReadonlyArray<{ label: string; route: string; path: string[] }> = [
     { label: 'About CES', route: '/about', path: ['M3 21h18', 'M5 21V9l7-5 7 5v12', 'M9 21v-6h6v6'] },

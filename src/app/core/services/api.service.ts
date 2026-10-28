@@ -34,6 +34,8 @@ export class ApiService {
   // Footer visitor counter. The POST is this browser's check-in - on open and once a minute -
   // and returns what the footer shows (Website Management → Visitor Counter).
   public static VisitorCheckInURL: string = ApiService.HOST_URL + '/visitors/public/check-in';
+  // Announcement popup (Website Management → Website Popup) - null when there is none to show.
+  public static SitePopupURL: string = ApiService.HOST_URL + '/popup/public';
   public static SaveGatePassURL: string = ApiService.HOST_URL + '/admin/SaveGatePassUserList';
   // Counselling - book an appointment (institute dropdown reuses GetInstitutesURL).
   public static SaveCounselingURL: string = ApiService.HOST_URL + '/admin/SaveCounselingDetails';

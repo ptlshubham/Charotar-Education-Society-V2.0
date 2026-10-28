@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, map, shareReplay, tap } from 'rxjs';
 import { ApiService } from './api.service';
 import { SKIP_ERROR_REDIRECT } from '../interceptors/error.interceptor';
-import { AlumniPayload, AnswerKeyEntry, BeneficiaryStudent, BlogPost, CareersPage, TenderItem, Copyright, CounsellingPayload, DonationPayload, Donor, GalleryImage, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NewsEntry, NavratriImage, NavratriPage, NavratriLiveLink, Patent, PodcastEntry, SiteNotification, Trademark, VisitorCounter } from '../../shared/models/models';
+import { AlumniPayload, AnswerKeyEntry, BeneficiaryStudent, BlogPost, CareersPage, TenderItem, Copyright, CounsellingPayload, DonationPayload, Donor, GalleryImage, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NewsEntry, NavratriImage, NavratriPage, NavratriLiveLink, Patent, PodcastEntry, SiteNotification, SitePopup, Trademark, VisitorCounter } from '../../shared/models/models';
 
 
 @Injectable({
@@ -107,6 +107,15 @@ export class ResourcesService {
     // SKIP_ERROR_REDIRECT so a failure only leaves the counter out.
     visitorCheckIn(instituteId: number, visitorId: string) {
         return this.http.post<{ data: VisitorCounter }>(ApiService.VisitorCheckInURL, { instituteId, visitorId }, {
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        }).pipe(map((res) => res.data));
+    }
+
+    // Announcement popup (Website Management → Website Popup): null when there is none to show.
+    // SKIP_ERROR_REDIRECT so a failure only leaves the popup out.
+    getSitePopup(instituteId: number) {
+        return this.http.get<{ data: SitePopup | null }>(ApiService.SitePopupURL, {
+            params: new HttpParams().set('instituteId', instituteId),
             context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
         }).pipe(map((res) => res.data));
     }

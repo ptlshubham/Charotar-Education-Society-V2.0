@@ -1,0 +1,28 @@
+// Only the entrance animation - everything else is Tailwind in the template.
+.site-popup-backdrop {
+  animation: site-popup-fade 0.25s ease-out both;
+}
+
+.site-popup-card {
+  animation: site-popup-rise 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes site-popup-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes site-popup-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-popup-backdrop,
+  .site-popup-card {
+    animation: none;
+  }
+}

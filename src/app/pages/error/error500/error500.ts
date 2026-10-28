@@ -1,7 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Location } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { PLACEHOLDER } from '../../../shared/placeholder-images';
 
 @Component({
   selector: 'app-error500',
@@ -13,7 +12,8 @@ import { PLACEHOLDER } from '../../../shared/placeholder-images';
 export class Error500 {
   constructor(private readonly location: Location) {}
 
-  readonly building = PLACEHOLDER.errorBuilding;
+  /** Dyuno with a spanner beside the "Error 500" sign - a transparent cutout, 1040×707. */
+  readonly illustration = '/assets/images/error/error-500.webp';
 
   readonly notes: ReadonlyArray<{ title: string; desc: string; path: string[] }> = [
     {

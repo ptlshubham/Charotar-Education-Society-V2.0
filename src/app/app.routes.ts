@@ -345,6 +345,7 @@ export const routes: Routes = [
         children: [
           { path: 'error404', ...seo('error/error404'), loadComponent: () => import('./pages/error/error404/error404').then(m => m.Error404) },
           { path: 'error500', ...seo('error/error500'), loadComponent: () => import('./pages/error/error500/error500').then(m => m.Error500) },
+          { path: 'no-internet', ...seo('error/no-internet'), loadComponent: () => import('./pages/error/no-internet/no-internet').then(m => m.NoInternet) },
         ]
       }
     ]

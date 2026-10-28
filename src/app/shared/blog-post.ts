@@ -49,8 +49,11 @@ export function blogSlug(b: Pick<BlogPost, 'id' | 'slug'>): string {
   return b.slug || String(b.id);
 }
 
-/** Card / meta summary: the admin's excerpt, else the start of the body as plain text. */
-export function blogExcerpt(b: BlogPost, max = 160): string {
+/**
+ * Card / meta summary: the admin's excerpt, else the start of the body as plain text. A card from
+ * ?cards=N has no body - its `excerpt` already holds that text, cut on the server the same way.
+ */
+export function blogExcerpt(b: Pick<BlogPost, 'excerpt'> & { blogDetails?: string | null }, max = 160): string {
   return (b.excerpt?.trim() || plainText(b.blogDetails)).slice(0, max);
 }
 

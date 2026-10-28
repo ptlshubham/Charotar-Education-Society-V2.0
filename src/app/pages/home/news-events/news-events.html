@@ -29,9 +29,11 @@
         <p class="mt-2 line-clamp-3 text-[13px] leading-relaxed text-muted">{{ post.excerpt }}</p>
 
         <div class="mt-auto pt-4">
-          <a [routerLink]="['/blog', post.id]" [attr.aria-label]="'Read more: ' + post.title"
+          <!-- The post's title is part of the link text (hidden on screen), so search engines and
+               screen readers know where "Read More" goes. -->
+          <a [routerLink]="['/blog', post.id]"
             class="inline-flex items-center gap-1.5 text-[13px] font-semibold text-primary no-underline hover:text-secondary transition-colors">
-            Read More
+            Read More<span class="sr-only">: {{ post.title }}</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M5 12h14M13 6l6 6-6 6" />

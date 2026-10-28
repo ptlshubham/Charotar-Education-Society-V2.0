@@ -1,10 +1,10 @@
 import { HttpClient, HttpContext, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, map, shareReplay, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, shareReplay, tap } from 'rxjs';
 import { ApiService } from './api.service';
 import { SKIP_ERROR_REDIRECT } from '../interceptors/error.interceptor';
-import { AlumniPayload, AnswerKeyEntry, BeneficiaryStudent, BlogPost, CareersPage, TenderItem, Copyright, CounsellingPayload, DonationPayload, Donor, GalleryImage, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NewsEntry, NavratriImage, NavratriPage, NavratriLiveLink, Patent, PodcastEntry, SiteNotification, SitePopup, Trademark, VisitorCounter } from '../../shared/models/models';
+import { AlumniPayload, AnswerKeyEntry, BeneficiaryStudent, BlogCard, BlogPost, CareersPage, TenderItem, Copyright, CounsellingPayload, DonationPayload, Donor, GalleryImage, GatePassPayload, Institute, MagazineIssue, MicroDonor, NavratriEntry, NewsEntry, NavratriImage, NavratriPage, NavratriLiveLink, Patent, PodcastEntry, SiteNotification, SitePopup, Trademark, VisitorCounter } from '../../shared/models/models';
 
 
 @Injectable({
@@ -177,6 +177,20 @@ export class ResourcesService {
         return this.http.get<BlogPost[]>(ApiService.GetBlogsURL + instituteId, {
             context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
         });
+    }
+
+    // Blog cards - the newest `count` posts with only what a card shows (?cards=N): no body, and the
+    // excerpt is cut on the server, so a few KB instead of every post in full. An API from before
+    // ?cards ignores it and sends the full feed, which the cards read just the same; if the request
+    // fails, the full feed is fetched instead. Either way at most `count` posts come out.
+    getBlogCards(instituteId: number | string, count: number) {
+        return this.http.get<BlogCard[]>(ApiService.GetBlogsURL + instituteId, {
+            params: { cards: count },
+            context: new HttpContext().set(SKIP_ERROR_REDIRECT, true),
+        }).pipe(
+            catchError(() => this.getBlogs(instituteId)),
+            map((list): BlogCard[] => (Array.isArray(list) ? list : []).slice(0, count)),
+        );
     }
 
     // Notices for an institute - every row, active or not; the ticker picks the live ones.

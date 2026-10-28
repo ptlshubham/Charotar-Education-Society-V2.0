@@ -4,7 +4,7 @@
     <!-- Header - set like the other home sections -->
     <div class="mb-9 flex flex-col items-center text-center">
       <!-- <span class="mb-5 block h-1 w-12 rounded-full bg-secondary" aria-hidden="true"></span> -->
-      <span class="text-[12px] font-semibold tracking-[2px] text-secondary uppercase sm:text-[14px]">Our Programmes</span>
+      <span class="text-[12px] font-semibold tracking-[2px] text-secondary-ink uppercase sm:text-[14px]">Our Programmes</span>
       <h2 id="programmes-title" class="mt-3 text-[28px] leading-[1.1] font-semibold text-primary sm:text-[36px] lg:text-[40px]">
         Find Your Perfect Programme.
       </h2>
@@ -18,8 +18,9 @@
     <!-- Programme cards -->
     <!-- Wide cards, two to a row (a lone card sits centred). Every card is one fixed height, so
          nothing jumps when the tab changes, whatever the length of the name. -->
-    <ul id="programme-cards" role="tabpanel" [attr.aria-label]="active().label + ' programmes'"
-      class="grid list-none gap-5 p-0 lg:gap-6"
+    <!-- The tab panel wraps the list, so the list keeps its list semantics for screen readers. -->
+    <div id="programme-cards" role="tabpanel" [attr.aria-label]="active().label + ' programmes'">
+    <ul class="grid list-none gap-5 p-0 lg:gap-6"
       [class]="visible().length === 1 ? 'mx-auto max-w-[760px]' : 'lg:grid-cols-2'">
       @for (course of visible(); track course.id) {
       <li class="course-card">
@@ -33,7 +34,7 @@
 
           <div class="flex min-w-0 items-center gap-3 px-4 transition-colors group-hover:bg-[#F1F6FD] group-focus-visible:bg-[#F1F6FD] sm:gap-4 sm:px-7">
             <div class="min-w-0 flex-1">
-              <p class="text-[11px] font-semibold tracking-[2px] text-secondary uppercase sm:text-[12px]">{{ course.short }}</p>
+              <p class="text-[11px] font-semibold tracking-[2px] text-secondary-ink uppercase sm:text-[12px]">{{ course.short }}</p>
               <h3 class="mt-1 line-clamp-2 text-[15px] leading-snug font-semibold text-primary sm:mt-1.5 sm:text-[19px]">{{ course.name }}</h3>
               <span class="mt-1.5 inline-block text-[13px] text-muted underline-offset-4 group-hover:underline sm:mt-2 sm:text-[14px]">
                 Explore programme
@@ -52,6 +53,7 @@
       </li>
       }
     </ul>
+    </div>
 
     <!-- Footer button: the page for the level in view -->
     <div class="mt-10 flex justify-center">

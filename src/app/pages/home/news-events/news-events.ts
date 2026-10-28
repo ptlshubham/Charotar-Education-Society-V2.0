@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
 import { catchError, of, switchMap, timeout } from 'rxjs';
 import { ResourcesService } from '../../../core/services/resources.service';
 import { InstituteService } from '../../../core/services/institute.service';
-import { BlogPost } from '../../../shared/models/models';
+import { BlogCard } from '../../../shared/models/models';
 import { blogExcerpt, blogImageUrl, blogSlug } from '../../../shared/blog-post';
 
 interface Post {
@@ -52,9 +52,10 @@ export class NewsEvents {
       this.institute
         .resolve()
         .pipe(
-          switchMap((id) => this.resources.getBlogs(id)),
+          // Only the posts shown, without their bodies (falls back to the full feed - see getBlogCards).
+          switchMap((id) => this.resources.getBlogCards(id, FEATURED + COMPACT)),
           timeout(8000),
-          catchError(() => of<BlogPost[]>([])),
+          catchError(() => of<BlogCard[]>([])),
           takeUntilDestroyed(this.destroyRef),
         )
         // The API sends them newest first.
@@ -62,7 +63,7 @@ export class NewsEvents {
     );
   }
 
-  private toPost(b: BlogPost): Post {
+  private toPost(b: BlogCard): Post {
     const d = new Date(b.blogDate);
     return {
       id: blogSlug(b),

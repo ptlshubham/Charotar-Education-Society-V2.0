@@ -72,7 +72,9 @@ export class LanguageSwitcher {
   constructor() {
     afterNextRender(() => {
       this.current.set(this.readCookieLang());
-      this.injectGoogleTranslate();
+      // Google's script (~110 KB) is only needed to translate: picking a language sets the cookie
+      // and reloads, so an English page never loads it.
+      if (this.current() !== 'en') this.injectGoogleTranslate();
     });
   }
 

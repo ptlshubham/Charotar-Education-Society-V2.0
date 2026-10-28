@@ -3,7 +3,7 @@
   <!-- Heading, with the line about them on the right -->
   <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
     <div>
-      <p class="text-[12px] font-semibold tracking-[2px] text-secondary uppercase sm:text-[13px]">In the Community</p>
+      <p class="text-[12px] font-semibold tracking-[2px] text-secondary-ink uppercase sm:text-[13px]">In the Community</p>
       <h2 id="activities-title" class="mt-2 text-[24px] leading-[1.15] font-semibold text-primary sm:text-[30px] xl:text-[34px]">
         {{ heading() }}
       </h2>
@@ -33,7 +33,7 @@
       </a>
 
       <div class="flex min-w-0 flex-col">
-        <p class="text-[11.5px] font-semibold tracking-[1.5px] text-secondary uppercase sm:text-[12px]">{{ item.theme }}</p>
+        <p class="text-[11.5px] font-semibold tracking-[1.5px] text-secondary-ink uppercase sm:text-[12px]">{{ item.theme }}</p>
         <h3 class="mt-1.5 text-[17px] leading-snug font-semibold text-primary sm:text-[18px]">{{ item.title }}</h3>
         <p class="mt-2 text-[14px] leading-relaxed text-muted sm:text-[15px]">{{ item.desc }}</p>
         <a [routerLink]="linkTo(item)" [attr.aria-label]="'Explore: ' + item.title"

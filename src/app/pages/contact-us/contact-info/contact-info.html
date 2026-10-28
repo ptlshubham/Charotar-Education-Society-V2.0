@@ -11,7 +11,7 @@
           <h2 class="text-[16px] font-bold text-primary">{{ card.title }}</h2>
 
           @if (card.href) {
-            <a [href]="card.href" class="mt-1.5 block text-[14px] break-words font-medium text-secondary no-underline">
+            <a [href]="card.href" class="mt-1.5 block text-[14px] break-words font-medium text-secondary-ink no-underline">
               @for (line of card.lines; track line) { {{ line }} }
             </a>
           } @else {
@@ -27,7 +27,7 @@
           }
 
           @if (card.actionText) {
-            <a [href]="card.actionHref" class="mt-5 inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-secondary hover:text-secondary-dark no-underline transition-colors">
+            <a [href]="card.actionHref" class="mt-5 inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-secondary-ink hover:text-primary no-underline transition-colors">
               {{ card.actionText }}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M5 12h14M13 6l6 6-6 6" />

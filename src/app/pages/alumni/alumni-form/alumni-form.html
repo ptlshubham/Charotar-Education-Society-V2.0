@@ -11,7 +11,7 @@
         <span class="mt-1.5 block h-[3px] w-12 rounded-full bg-secondary" aria-hidden="true"></span>
         <p class="mt-2.5 text-[14px] text-[#5B6472] sm:text-[15px]">Tell us a little about yourself and your time at CES.</p>
       </div>
-      <p class="text-[13px] text-[#5B6472] sm:mb-0.5"><span class="text-logo">*</span> Required fields</p>
+      <p class="text-[13px] text-[#5B6472] sm:mb-0.5"><span class="text-accent-ink">*</span> Required fields</p>
     </div>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="mt-1">
@@ -30,7 +30,7 @@
           <div class="grid content-start gap-x-5 gap-y-3.5 sm:grid-cols-6 lg:border-l lg:border-gray-200 lg:pl-10">
             <div class="sm:col-span-4">
               <label for="instituteName" class="mb-1 block text-[13.5px] font-semibold text-primary">
-                Institute <span class="text-logo">*</span>
+                Institute <span class="text-accent-ink">*</span>
               </label>
               <app-custom-select formControlName="instituteName" [options]="institutes()" placeholder="Choose your institute"
                 [invalid]="f['instituteName'].touched && f['instituteName'].invalid" />
@@ -41,7 +41,7 @@
 
             <div class="sm:col-span-2">
               <label for="alumniYear" class="mb-1 block text-[13.5px] font-semibold text-primary">
-                Year of passing <span class="text-logo">*</span>
+                Year of passing <span class="text-accent-ink">*</span>
               </label>
               <app-custom-select formControlName="alumniYear" [options]="years" placeholder="Select year"
                 [invalid]="f['alumniYear'].touched && f['alumniYear'].invalid" />
@@ -52,7 +52,7 @@
 
             <div class="sm:col-span-3">
               <label for="alumniName" class="mb-1 block text-[13.5px] font-semibold text-primary">
-                Full name <span class="text-logo">*</span>
+                Full name <span class="text-accent-ink">*</span>
               </label>
               <input id="alumniName" type="text" formControlName="alumniName" placeholder="Enter your full name" autocomplete="name"
                 class="h-11 w-full rounded-md border border-gray-300 px-3.5 text-[14px] text-primary outline-none transition-colors placeholder:text-gray-400 focus:border-primary"
@@ -64,7 +64,7 @@
 
             <div class="sm:col-span-3">
               <label for="alumniCourse" class="mb-1 block text-[13.5px] font-semibold text-primary">
-                Course title <span class="text-logo">*</span>
+                Course title <span class="text-accent-ink">*</span>
               </label>
               <input id="alumniCourse" type="text" formControlName="alumniCourse" placeholder="Enter course name"
                 class="h-11 w-full rounded-md border border-gray-300 px-3.5 text-[14px] text-primary outline-none transition-colors placeholder:text-gray-400 focus:border-primary"
@@ -89,7 +89,7 @@
           <div class="grid content-start gap-x-5 gap-y-3.5 sm:grid-cols-6 lg:border-l lg:border-gray-200 lg:pl-10">
             <div class="sm:col-span-3">
               <label for="contactNumber" class="mb-1 block text-[13.5px] font-semibold text-primary">
-                Contact number <span class="text-logo">*</span>
+                Contact number <span class="text-accent-ink">*</span>
               </label>
               <input id="contactNumber" type="tel" formControlName="contactNumber" placeholder="Enter mobile number"
                 autocomplete="tel" inputmode="numeric"
@@ -102,7 +102,7 @@
 
             <div class="sm:col-span-3">
               <label for="email" class="mb-1 block text-[13.5px] font-semibold text-primary">
-                Email address <span class="text-logo">*</span>
+                Email address <span class="text-accent-ink">*</span>
               </label>
               <input id="email" type="email" formControlName="email" placeholder="Enter email address" autocomplete="email"
                 class="h-11 w-full rounded-md border border-gray-300 px-3.5 text-[14px] text-primary outline-none transition-colors placeholder:text-gray-400 focus:border-primary"
@@ -114,7 +114,7 @@
 
             <div class="sm:col-span-2">
               <label for="country" class="mb-1 block text-[13.5px] font-semibold text-primary">
-                Country <span class="text-logo">*</span>
+                Country <span class="text-accent-ink">*</span>
               </label>
               <app-custom-select formControlName="country" [options]="countryNames" placeholder="Select country"
                 (valueChange)="onCountryChange($event)" [invalid]="f['country'].touched && f['country'].invalid" />
@@ -125,7 +125,7 @@
 
             <div class="sm:col-span-2">
               <label for="state" class="mb-1 block text-[13.5px] font-semibold text-primary">
-                State <span class="text-logo">*</span>
+                State <span class="text-accent-ink">*</span>
               </label>
               <app-custom-select formControlName="state" [options]="states().map((state) => state.name)"
                 placeholder="Select state" (valueChange)="onStateChange($event)"
@@ -137,7 +137,7 @@
 
             <div class="sm:col-span-2">
               <label for="city" class="mb-1 block text-[13.5px] font-semibold text-primary">
-                City <span class="text-logo">*</span>
+                City <span class="text-accent-ink">*</span>
               </label>
               <app-custom-select formControlName="city" [options]="cities()" placeholder="Select city"
                 [invalid]="f['city'].touched && f['city'].invalid" />
@@ -161,7 +161,7 @@
           <div class="grid content-start gap-x-5 gap-y-3.5 sm:grid-cols-6 lg:border-l lg:border-gray-200 lg:pl-10">
             <div class="sm:col-span-6">
               <p id="alumni-status-label" class="mb-1.5 text-[13.5px] font-semibold text-primary">
-                Current status <span class="text-logo">*</span>
+                Current status <span class="text-accent-ink">*</span>
               </p>
               <div role="radiogroup" aria-labelledby="alumni-status-label" class="flex flex-wrap gap-x-8 gap-y-2.5">
                 @for (status of statuses; track status.value) {
@@ -178,7 +178,7 @@
 
             <div class="sm:col-span-6">
               <label for="description" class="mb-1 block text-[13.5px] font-semibold text-primary">
-                Tell us more about your current status <span class="text-logo">*</span>
+                Tell us more about your current status <span class="text-accent-ink">*</span>
               </label>
               <textarea id="description" formControlName="description" rows="2"
                 placeholder="Your designation, workplace, business or other details"
@@ -193,7 +193,7 @@
             <div class="rounded-md bg-[#FBF6EA] px-4 py-2.5 sm:col-span-6">
               <div role="radiogroup" aria-labelledby="alumni-meet-question" class="gap-x-6 gap-y-2 sm:grid sm:grid-cols-2 sm:items-center">
                 <p id="alumni-meet-question" class="text-[13.5px] leading-snug font-semibold text-primary">
-                  Will you attend the Alumni Meet on 13 January {{ meetYear }}? <span class="text-logo">*</span>
+                  Will you attend the Alumni Meet on 13 January {{ meetYear }}? <span class="text-accent-ink">*</span>
                 </p>
                 <div class="mt-2 flex gap-8 sm:mt-0">
                   <label class="flex cursor-pointer items-center gap-2.5 text-[13.5px] text-[#5B6472]">

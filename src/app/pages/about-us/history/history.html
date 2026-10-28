@@ -5,7 +5,7 @@
 
   <!-- Chapter list: sticky beside the story on desktop, a scrolling row on phones and tablets -->
   <nav aria-label="Chapters" class="min-w-0 lg:sticky lg:top-40 lg:self-start">
-    <p class="hidden text-[12px] font-semibold tracking-[2px] text-secondary uppercase lg:block">In this story</p>
+    <p class="hidden text-[12px] font-semibold tracking-[2px] text-secondary-ink uppercase lg:block">In this story</p>
     <ol class="hide-scrollbar -mx-4 flex list-none gap-2 overflow-x-auto px-4 py-1 sm:-mx-6 sm:px-6 lg:mx-0 lg:mt-4 lg:block lg:space-y-0.5 lg:overflow-visible lg:p-0 lg:pl-0">
       @for (c of chapters; track c.id) {
       @let on = current() === c.id;
@@ -13,7 +13,7 @@
         <a [attr.href]="'/about/history#' + c.id" (click)="jump($event, c.id)" [attr.aria-current]="on ? 'true' : null"
           class="block rounded-full border px-4 py-2 text-[13px] whitespace-nowrap no-underline transition-colors lg:rounded-none lg:border-0 lg:border-l-2 lg:py-2.5 lg:pl-4 lg:whitespace-normal"
           [class]="on ? 'border-secondary bg-secondary/10 font-semibold text-primary lg:bg-transparent' : 'border-primary/15 text-primary/70 hover:text-primary lg:border-primary/10'">
-          <span class="hidden text-[11px] font-semibold tracking-[1px] text-secondary-dark lg:block">{{ c.years }}</span>
+          <span class="hidden text-[11px] font-semibold tracking-[1px] text-secondary-ink lg:block">{{ c.years }}</span>
           {{ c.title }}
         </a>
       </li>
@@ -26,7 +26,7 @@
     @for (c of chapters; track c.id; let first = $first) {
     <section [id]="c.id" class="scroll-mt-40" [class]="first ? '' : 'mt-12 border-t border-primary/10 pt-12 lg:mt-16 lg:pt-16'"
       [attr.aria-labelledby]="c.id + '-title'">
-      <p class="text-[12px] font-semibold tracking-[2px] text-secondary uppercase sm:text-[14px]">{{ c.years }}</p>
+      <p class="text-[12px] font-semibold tracking-[2px] text-secondary-ink uppercase sm:text-[14px]">{{ c.years }}</p>
       <h2 [id]="c.id + '-title'" class="mt-2 text-[26px] leading-[1.15] font-semibold text-primary sm:text-[32px] xl:text-[36px]">
         {{ c.title }}
       </h2>

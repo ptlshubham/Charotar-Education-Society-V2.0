@@ -62,13 +62,33 @@
     })();
   </script>
 
+  <!-- One address per page: a trailing slash ("/about/") is dropped before anything reads the
+       address. The app drops it anyway once it starts - and Google Analytics ("page changes based
+       on browser history") counted that change as a second page view of every page. .htaccess
+       sends /about/ to /about as well; this covers addresses it doesn't (app-only routes). -->
+  <script>
+    (function () {
+      var p = window.location.pathname;
+      if (p.length > 1 && p.charAt(p.length - 1) === '/') {
+        history.replaceState(history.state, '', p.replace(/\/+$/, '') + window.location.search + window.location.hash);
+      }
+    })();
+  </script>
+
   <!-- ─── Connection hints ───
        Kept above the font/analytics requests so DNS + TLS start while the rest
        of the head is still parsing. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- ─── Icon font (Material Symbols) ───
+       ONLY the icons the site uses (icon_names, in alphabetical order) and only the weights it
+       uses (300-400): ~22 KB, where the whole set was 1.5 MB on every page. Kept render-blocking
+       on purpose - it is tiny, and without it an icon would flash its name as text.
+       A NEW ICON must be added to icon_names (alphabetically), or the page shows its name instead
+       - in development the console warns about any such icon (app.ts). -->
   <link
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,0"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300..400,0,0&icon_names=account_balance,apartment,arrow_forward,arrow_outward,assignment,backpack,balance,bar_chart,bed,book,business_center,calendar_month,calendar_today,call,celebration,check_circle,chevron_right,code,confirmation_number,csv,currency_rupee,description,download,eco,elderly,emoji_events,event,favorite,favorite_border,folder,folder_zip,format_align_left,format_size,gpp_good,grid_view,group,groups,headset,help,history_edu,home,image,info,key,landscape,language,light_mode,lightbulb,list,local_fire_department,local_police,location_city,location_on,mail,medical_services,menu_book,more_horiz,music_note,news,open_in_new,palette,payments,people,person,phone,photo_camera,photo_library,picture_as_pdf,redeem,refresh,restaurant,rocket,schedule,school,science,search,sell,send,shield,slideshow,smart_display,sports_cricket,star,supervisor_account,table_chart,target,theater_comedy,trending_up,update,verified_user,videocam,volunteer_activism,work,workspace_premium&display=block"
     rel="stylesheet">
 
   <!-- ─── Primary meta ───
@@ -333,26 +353,24 @@
   </style>
   <noscript><style>.ces-loader { display: none; }</style></noscript>
 
-  <!-- ─── Fonts ─── -->
+  <!-- ─── Text fonts ───
+       Not render-blocking: media="print" until the stylesheet has loaded, then "all". Text
+       shows at once in the fallback font and switches when DM Sans arrives (display=swap). -->
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Dancing+Script:wght@500;600;700&display=swap"
-    rel="stylesheet">
+    rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Dancing+Script:wght@500;600;700&display=swap"
+      rel="stylesheet">
+  </noscript>
 
   <!-- ─── Analytics ───
-       Both load async, so they sit last and never delay first render. -->
-
-  <!-- Google Tag Manager -->
-  <script>
-    (function (w, d, s, l, i) {
-      w[l] = w[l] || []; w[l].push({
-        'gtm.start':
-          new Date().getTime(), event: 'gtm.js'
-      }); var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-K6H9VP2K');
-  </script>
-  <!-- End Google Tag Manager -->
+       Loads async, so it sits last and never delays first render.
+       Google Tag Manager (GTM-K6H9VP2K) was removed on 2026-10-28: its container had no tags
+       (version 1, nothing published), yet it cost every visitor ~113 KB plus a second copy of
+       gtag.js. To use Tag Manager later, move this Analytics tag INTO it rather than running both
+       - side by side they share the dataLayer and the tag runs twice. -->
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XJKC23CCRE"></script>
@@ -366,13 +384,6 @@
 </head>
 
 <body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K6H9VP2K" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe>
-  </noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
   <!-- Page loader (styles in <head>, controller below <app-root>). Up from the first paint until
        the page's files have loaded and the app has its first data; the app can hold it up again
        later through PageLoader (core/services/page-loader.service.ts), e.g. while a navigation

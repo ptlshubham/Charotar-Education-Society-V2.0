@@ -45,6 +45,11 @@ export class NoticeTicker {
   private readonly destroyRef = inject(DestroyRef);
 
   readonly notices = signal<readonly Notice[]>([]);
+  /**
+   * True until the notices have been asked for - also in the prerendered page. The bar is shown
+   * (empty) meanwhile, so the page doesn't move down when they arrive; with none it closes.
+   */
+  readonly loading = signal(true);
   readonly paused = signal(false);
   /** Seconds for one loop (one copy's width), measured once the notices render. */
   readonly duration = signal(30);
@@ -83,6 +88,7 @@ export class NoticeTicker {
       )
       .subscribe((rows) => {
         const now = Date.now();
+        this.loading.set(false);
         this.notices.set(
           (rows ?? []).filter((n) => Number(n.isactive) === 1 && this.isLive(n, now)).flatMap((n) => this.parse(n.message ?? '')),
         );

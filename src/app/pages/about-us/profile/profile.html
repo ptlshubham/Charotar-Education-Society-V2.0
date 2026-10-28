@@ -67,7 +67,7 @@
             <p class="text-[16px] font-semibold text-primary">{{ l.name }}</p>
             <p class="text-[14px] text-muted">{{ l.position }}, since 2009</p>
             <a [routerLink]="['/management', l.role]"
-              class="no-print mt-1 inline-block text-[13px] font-semibold text-secondary-dark underline-offset-4 hover:underline">
+              class="no-print mt-1 inline-block text-[13px] font-semibold text-secondary-ink underline-offset-4 hover:underline">
               Read message
             </a>
           </div>
@@ -95,10 +95,10 @@
       <article class="break-inside-avoid rounded-xl border border-primary/10 p-5">
         <header class="flex items-baseline justify-between gap-3 border-b border-primary/10 pb-3">
           <h3 class="text-[17px] font-semibold text-primary">{{ c.name }}</h3>
-          <span class="shrink-0 text-[14px] font-semibold text-secondary-dark">{{ c.area }}</span>
+          <span class="shrink-0 text-[14px] font-semibold text-secondary-ink">{{ c.area }}</span>
         </header>
         @for (g of c.groups; track g.label) {
-        <p class="mt-4 text-[12px] font-semibold tracking-[1.5px] text-secondary-dark uppercase">{{ g.label }}</p>
+        <p class="mt-4 text-[12px] font-semibold tracking-[1.5px] text-secondary-ink uppercase">{{ g.label }}</p>
         <ul class="mt-1.5 list-none space-y-1 p-0 text-[14px] leading-snug text-muted">
           @for (i of g.items; track i) {
           <li>{{ i }}</li>

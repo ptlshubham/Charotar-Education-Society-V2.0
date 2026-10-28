@@ -8,11 +8,18 @@
 
   --color-secondary: #f5a623;      /* gold - brand secondary */
   --color-secondary-dark: #d98e0b;
+  /* Gold for small text on white/light grey/cream: the brand gold reads at only ~2:1 there; this
+     one is 5.3:1 on white, 5.0:1 on #F7F8FA and 4.8:1 on cream #F7F4EC (WCAG AA, with margin).
+     Gold on navy keeps text-secondary. */
+  --color-secondary-ink: #956100;
 
   --color-logo: #ed1c24;           /* CES logo red - use sparingly, for logo/brand marks */
 
   /* CES logo red, used for active indicators, nav underlines and link hovers. */
   --color-accent: #ed1c24;
+  /* Red for small text on white/cream and for white text on a red button: the logo red is only
+     4.4:1 there; this one is 5.5:1 on white, 5.1:1 on #FBF6EA, 4.9:1 on #F3F0E9 (WCAG AA). */
+  --color-accent-ink: #cf171e;
 
   /* Neutral muted body copy (was the ZarklyX --color-secondary grey). */
   --color-muted: #546968;

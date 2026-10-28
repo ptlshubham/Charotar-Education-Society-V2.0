@@ -74,7 +74,7 @@ export class Sitemap {
   readonly quickLinks: readonly SitemapLink[] = [
     { label: 'Home', path: '/' },
     { label: 'Contact Us', path: '/contact' },
-    { label: 'Careers', path: '/company/careers' },
+    { label: 'Careers', path: '/more/career' },
     { label: 'News', path: '/more/news' },
   ];
 }

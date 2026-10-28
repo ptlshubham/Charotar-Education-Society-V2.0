@@ -63,6 +63,12 @@ AddDefaultCharset UTF-8
 	RewriteRule ^assets/images/og-image/(.+/.+)\.jpg$ /assets/images/$1.webp [R=302,L]
 
 	# Keep real files/directories untouched (prerendered /route/index.html included).
+	# NOTE: for a prerendered page the server answers /about with a 301 to /about/ (the folder's
+	# trailing slash, added by the server itself before any rule here can serve the file). Dropping
+	# that needs "DirectorySlash Off" plus a /about/ -> /about rule - tested on Apache 2026-10-28,
+	# but NOT yet on Hostinger's LiteSpeed, where getting it wrong loops every page. Until then
+	# index.html's first script drops the slash in the browser, before Google Analytics reads the
+	# address (otherwise the app's own fix-up counted every visit twice).
 	RewriteCond %{REQUEST_FILENAME} -f [OR]
 	RewriteCond %{REQUEST_FILENAME} -d
 	RewriteRule ^ - [L]

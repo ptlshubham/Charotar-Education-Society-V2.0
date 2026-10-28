@@ -10,7 +10,7 @@
       : 'border-gray-300 bg-white text-primary placeholder:text-gray-400 focus:border-primary'" />
 
   @if (error()) {
-  <p [id]="inputId() + '-error'" role="alert" class="mt-1.5 text-left text-[12px]" [class]="dark ? 'text-[#FFD2D2]' : 'text-accent'">{{ error() }}</p>
+  <p [id]="inputId() + '-error'" role="alert" class="mt-1.5 text-left text-[12px]" [class]="dark ? 'text-[#FFD2D2]' : 'text-accent-ink'">{{ error() }}</p>
   }
 
   <button type="submit" [disabled]="sending()"

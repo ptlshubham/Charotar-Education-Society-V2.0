@@ -41,7 +41,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
         @if (icon) {
           <span class="material-symbols-outlined shrink-0 text-primary !text-[20px] [font-variation-settings:'wght'_300]" aria-hidden="true">{{ icon }}</span>
         }
-        <span [class]="value() ? 'text-primary' : 'text-gray-400'" class="truncate">
+        <span [class]="value() ? 'text-primary' : 'text-gray-500'" class="truncate">
           {{ value() || placeholder }}
         </span>
         <svg class="ml-auto shrink-0 text-gray-400 transition-transform duration-200" [class.rotate-180]="open()"

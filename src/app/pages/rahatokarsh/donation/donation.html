@@ -5,7 +5,7 @@
   [image]="heroImage">
   <div class="mt-7 flex flex-wrap items-center gap-4 mb-6">
     <a routerLink="/fund"
-      class="inline-flex items-center gap-2 rounded-md bg-accent px-6 py-3 text-[14px] font-semibold text-white no-underline transition-colors hover:brightness-110">
+      class="inline-flex items-center gap-2 rounded-md bg-accent-ink px-6 py-3 text-[14px] font-semibold text-white no-underline transition-colors hover:brightness-110">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M5 12h14M13 6l6 6-6 6" />
@@ -96,7 +96,7 @@
       <div class="mt-5 space-y-4">
         <div>
           <label for="dn-name" class="mb-1.5 block text-[12.5px] font-semibold text-primary">Full Name <span
-              class="text-logo">*</span></label>
+              class="text-accent-ink">*</span></label>
           <input id="dn-name" type="text" formControlName="fullName" placeholder="Enter your full name"
             class="h-11 w-full rounded-md border border-gray-300 px-3.5 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary"
             [class.border-red-400]="f['fullName'].touched && f['fullName'].invalid" />
@@ -107,7 +107,7 @@
 
         <div>
           <label for="dn-email" class="mb-1.5 block text-[12.5px] font-semibold text-primary">Email Address <span
-              class="text-logo">*</span></label>
+              class="text-accent-ink">*</span></label>
           <input id="dn-email" type="email" formControlName="email" placeholder="Enter your email address"
             class="h-11 w-full rounded-md border border-gray-300 px-3.5 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary"
             [class.border-red-400]="f['email'].touched && f['email'].invalid" />
@@ -118,7 +118,7 @@
 
         <div>
           <label for="dn-phone" class="mb-1.5 block text-[12.5px] font-semibold text-primary">Contact Number <span
-              class="text-logo">*</span></label>
+              class="text-accent-ink">*</span></label>
           <input id="dn-phone" type="tel" formControlName="contactNumber" placeholder="Enter your contact number"
             class="h-11 w-full rounded-md border border-gray-300 px-3.5 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary"
             [class.border-red-400]="f['contactNumber'].touched && f['contactNumber'].invalid" />
@@ -129,7 +129,7 @@
 
         <div>
           <label for="dn-city" class="mb-1.5 block text-[12.5px] font-semibold text-primary">City <span
-              class="text-logo">*</span></label>
+              class="text-accent-ink">*</span></label>
           <input id="dn-city" type="text" formControlName="city" placeholder="Enter your city"
             class="h-11 w-full rounded-md border border-gray-300 px-3.5 text-[13px] text-primary outline-none placeholder:text-gray-400 focus:border-primary"
             [class.border-red-400]="f['city'].touched && f['city'].invalid" />
@@ -141,7 +141,7 @@
         <!-- Amount -->
         <div>
           <p class="mb-1.5 text-[12.5px] font-semibold text-primary">
-            Donation Amount <span class="text-logo">(Minimum ₹10)</span> <span class="text-logo">*</span>
+            Donation Amount <span class="text-accent-ink">(Minimum ₹10)</span> <span class="text-accent-ink">*</span>
           </p>
           <div class="grid grid-cols-3 gap-2 sm:grid-cols-5">
             @for (preset of presets; track preset) {
@@ -205,7 +205,7 @@
         }
 
         <button type="submit" [disabled]="submitting()"
-          class="flex h-12 w-full items-center justify-center gap-2 rounded-md bg-logo text-[14px] font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70">
+          class="flex h-12 w-full items-center justify-center gap-2 rounded-md bg-accent-ink text-[14px] font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path
               d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z" />

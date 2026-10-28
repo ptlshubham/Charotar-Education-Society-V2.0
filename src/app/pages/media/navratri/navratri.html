@@ -25,7 +25,7 @@
   <!-- Intro + video -->
   <div class="mt-6 grid gap-6 rounded-xl border border-gray-200 bg-white p-6 lg:grid-cols-2 lg:items-center lg:p-8">
     <div>
-      <p class="text-[11px] font-bold tracking-wide text-secondary-dark uppercase">Navratri at CES</p>
+      <p class="text-[11px] font-bold tracking-wide text-secondary-ink uppercase">Navratri at CES</p>
       <h2 class="mt-2 text-[22px] leading-snug font-bold text-primary sm:text-[26px]">{{ page().introHeading }}</h2>
 
       <!-- Intro text from the dashboard's editor -->
@@ -114,8 +114,8 @@
           class="aspect-video w-full bg-primary-light object-cover transition-transform duration-300 group-hover:scale-105" />
       </a>
       <div class="flex flex-1 flex-col p-5">
-        <h3 class="text-[16px] leading-snug font-bold text-logo">
-          {{ item.title }} <span class="text-secondary-dark">Navratri {{ item.year }}</span>
+        <h3 class="text-[16px] leading-snug font-bold text-accent-ink">
+          {{ item.title }} <span class="text-secondary-ink">Navratri {{ item.year }}</span>
         </h3>
         <p class="mt-2 flex-1 text-[12.5px] leading-relaxed text-muted">{{ teaser(item.themedetails) }}</p>
         <a [routerLink]="['/navratri', item.year]"

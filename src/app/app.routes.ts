@@ -327,11 +327,12 @@ export const routes: Routes = [
         ]
       },
       {
+        // The old "Careers" placeholder (coming soon, template job list) - the real Careers page, with
+        // the vacancies from Website Management, is /more/career. Old links and search results go there.
         path: 'company',
-        loadComponent: () => import('./pages/company/company.component').then(m => m.CompanyComponent),
         children: [
-          { path: '', redirectTo: 'careers', pathMatch: 'full' },
-          { path: 'careers', ...seo('company/careers'), loadComponent: () => import('./pages/company/careers/careers').then(m => m.Careers) }
+          { path: '', redirectTo: '/more/career', pathMatch: 'full' },
+          { path: 'careers', redirectTo: '/more/career', pathMatch: 'full' },
         ]
       },
       {

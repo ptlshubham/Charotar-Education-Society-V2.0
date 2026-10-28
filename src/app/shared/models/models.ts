@@ -180,6 +180,14 @@ export interface BlogPost {
   updateddate?: string | null;
 }
 
+/**
+ * A post as a blog card shows it - GET /admin/GetBlogsDetailsById/:instituteId?cards=N, the N newest
+ * posts. There is no body: `excerpt` is the admin's excerpt or the start of the body as plain text,
+ * cut on the server. A full {@link BlogPost} fits this type too (the fallback when ?cards fails).
+ */
+export type BlogCard = Pick<BlogPost, 'id' | 'slug' | 'blogTitle' | 'category' | 'excerpt' | 'authorName' | 'blogDate' | 'blogImage'>
+  & Partial<Pick<BlogPost, 'blogDetails'>>;
+
 /** A downloadable file attached to a blog post; `url` is a media path. */
 export interface BlogAttachment {
   name: string;

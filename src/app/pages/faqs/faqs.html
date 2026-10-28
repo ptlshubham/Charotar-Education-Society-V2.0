@@ -42,7 +42,7 @@
 
     <!-- Topic list: sticky beside the answers on desktop, a scrolling row on phones and tablets -->
     <nav aria-label="FAQ topics" class="min-w-0 lg:sticky lg:top-40 lg:self-start">
-      <p class="hidden text-[12px] font-semibold tracking-[2px] text-secondary uppercase lg:block">On this page</p>
+      <p class="hidden text-[12px] font-semibold tracking-[2px] text-secondary-ink uppercase lg:block">On this page</p>
       <ol class="hide-scrollbar -mx-4 flex list-none gap-2 overflow-x-auto px-4 py-1 sm:-mx-6 sm:px-6 lg:mx-0 lg:mt-4 lg:block lg:max-h-[calc(100vh-13rem)] lg:space-y-0.5 lg:overflow-y-auto lg:p-0 lg:thin-scrollbar">
         @for (cat of visible(); track cat.id; let i = $index) {
         @let on = current() === cat.id;
@@ -50,7 +50,7 @@
           <a [attr.href]="'/support/faqs#' + cat.id" (click)="jump($event, cat.id)" [attr.aria-current]="on ? 'true' : null"
             class="block rounded-full border px-4 py-2 text-[13px] whitespace-nowrap no-underline transition-colors lg:flex lg:gap-3 lg:rounded-none lg:border-0 lg:border-l-2 lg:py-1.5 lg:pl-4 lg:whitespace-normal"
             [class]="on ? 'border-secondary bg-secondary/10 font-semibold text-primary lg:bg-transparent' : 'border-primary/15 text-primary/70 hover:text-primary lg:border-primary/10'">
-            <span class="hidden w-5 shrink-0 text-[11px] font-semibold tracking-[1px] text-secondary-dark lg:block lg:pt-px">{{ (i + 1).toString().padStart(2, '0') }}</span>
+            <span class="hidden w-5 shrink-0 text-[11px] font-semibold tracking-[1px] text-secondary-ink lg:block lg:pt-px">{{ (i + 1).toString().padStart(2, '0') }}</span>
             <span class="lg:flex-1">{{ cat.label }}</span>
             <span class="ml-1.5 text-[11px] font-normal text-muted lg:ml-0 lg:pt-px">{{ cat.faqs.length }}</span>
           </a>
@@ -64,7 +64,7 @@
       @for (cat of visible(); track cat.id; let first = $first) {
       <section [id]="cat.id" class="scroll-mt-40" [class]="first ? '' : 'mt-10 border-t border-primary/10 pt-10 lg:mt-12 lg:pt-12'"
         [attr.aria-labelledby]="cat.id + '-title'">
-        <p class="flex items-center gap-2.5 text-[12px] font-semibold tracking-[2px] text-secondary uppercase sm:text-[13px]">
+        <p class="flex items-center gap-2.5 text-[12px] font-semibold tracking-[2px] text-secondary-ink uppercase sm:text-[13px]">
           <svg class="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             @for (d of cat.path; track d) { <path [attr.d]="d" /> }
@@ -123,7 +123,7 @@
       <!-- Still have questions -->
       <div class="mt-12 flex flex-wrap items-center justify-between gap-5 rounded-2xl bg-[#F7F9FC] p-6 sm:p-8 lg:mt-14">
         <div>
-          <h2 class="text-[12px] font-semibold tracking-[2px] text-secondary uppercase sm:text-[13px]">Still have questions?</h2>
+          <h2 class="text-[12px] font-semibold tracking-[2px] text-secondary-ink uppercase sm:text-[13px]">Still have questions?</h2>
           <p class="mt-2 max-w-[520px] text-[15px] leading-relaxed text-muted">
             Ask Dyuno, our AI assistant, any time, or write to us and the CES office will help.
           </p>

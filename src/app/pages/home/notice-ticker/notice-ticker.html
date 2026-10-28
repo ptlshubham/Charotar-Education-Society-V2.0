@@ -1,5 +1,6 @@
-@if (notices().length) {
-<section class="nt bg-secondary" aria-label="Latest notices">
+<!-- Shown (empty) while the notices load, so the page below doesn't move when they arrive. -->
+@if (loading() || notices().length) {
+<section class="nt bg-secondary" aria-label="Latest notices" [attr.aria-busy]="loading() || null">
   <div class="site-container flex items-center gap-3 py-2.5 sm:gap-4">
 
     <!-- Label -->
@@ -44,7 +45,7 @@
     </div>
 
     <!-- Pause / play - moving text must be stoppable -->
-    <button type="button" (click)="paused.set(!paused())" [attr.aria-pressed]="paused()"
+    <button type="button" (click)="paused.set(!paused())" [attr.aria-pressed]="paused()" [class.invisible]="!notices().length"
       [attr.aria-label]="paused() ? 'Play notices' : 'Pause notices'" [title]="paused() ? 'Play' : 'Pause'"
       class="nt-toggle flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-primary ring-1 ring-primary/30 transition-colors hover:bg-primary hover:text-secondary">
       @if (paused()) {

@@ -54,6 +54,13 @@ export class Hero {
    */
   readonly banners = signal<readonly Banner[]>([]);
 
+  /**
+   * True until the banners have been asked for - also in the prerendered page. Meanwhile the
+   * section holds the banners' exact space, so the page doesn't jump down when they arrive (that
+   * jump was most of the home page's layout shift). With no banners the space closes.
+   */
+  readonly loading = signal(true);
+
   /** Current slide, mirrored from Swiper so the custom dots can highlight. */
   readonly activeIndex = signal(0);
 
@@ -90,7 +97,8 @@ export class Hero {
           alt: b.title || b.keywords || 'Charotar Education Society',
           ...this.target(b.link),
         }));
-        if (!mapped.length) return; // no banners - the section stays out
+        this.loading.set(false);
+        if (!mapped.length) return; // no banners - the section closes
 
         this.banners.set(mapped);
         this.mountSwiper();

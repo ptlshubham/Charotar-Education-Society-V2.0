@@ -94,7 +94,7 @@
               <ol class="mt-2 list-decimal space-y-1 pl-5 text-[12px] text-muted">
                 @for (inst of vac.institutes; track $index) {
                 <li><a [href]="inst.url" target="_blank" rel="noopener noreferrer"
-                    class="text-accent no-underline hover:underline">{{ inst.name }}</a></li>
+                    class="text-accent-ink no-underline hover:underline">{{ inst.name }}</a></li>
                 }
               </ol>
               }
@@ -134,7 +134,7 @@
                 }
                 @case ('closed') {
                 <span
-                  class="inline-flex items-center rounded bg-red-50 px-2 py-0.5 text-[10.5px] font-bold tracking-wide text-red-600 uppercase">Application
+                  class="inline-flex items-center rounded bg-red-50 px-2 py-0.5 text-[10.5px] font-bold tracking-wide text-red-700 uppercase">Application
                   Closed</span>
                 }
                 }
@@ -244,7 +244,7 @@
                 <li>
                   @if (inst.url) {
                   <a [href]="inst.url" target="_blank" rel="noopener noreferrer"
-                    class="text-accent no-underline hover:underline">{{ inst.name }}</a>
+                    class="text-accent-ink no-underline hover:underline">{{ inst.name }}</a>
                   } @else {
                   {{ inst.name }}
                   }

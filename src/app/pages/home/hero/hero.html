@@ -2,9 +2,14 @@
      baked in), so there is no HTML overlay. Desktop (1920×520) and mobile
      (1080×1350) crops are art-directed via <picture>; the slide's aspect ratio
      matches each crop so nothing is ever cut off. Slides come from the server
-     (ResourcesService.getSliderBanners) only - with none, the section isn't shown. -->
-@if (banners().length) {
-<section class="relative w-full overflow-hidden bg-primary">
+     (ResourcesService.getSliderBanners) only - with none, the section isn't shown.
+     While they load (and in the prerendered page) the section keeps their space. -->
+@if (loading() || banners().length) {
+<section class="relative w-full overflow-hidden bg-primary" [attr.aria-busy]="loading() || null">
+
+  @if (!banners().length) {
+  <div class="aspect-[1080/1350] w-full md:aspect-[1920/520]"></div>
+  }
 
   <swiper-container init="false" #swiperEl class="hero-swiper block w-full">
     @for (b of banners(); track b.desktop; let i = $index; let first = $first) {

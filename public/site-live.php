@@ -14,6 +14,9 @@
  * the API's address is in site-live.json, written by scripts/generate-site-files.mjs) and is kept
  * for a few minutes. If the API can't be reached, the last copy - or else the build's own file -
  * is served, so these URLs never fail.
+ *
+ * Runs on PHP 7.1+ - no arrow functions (7.4), match or str_contains (8.0): the host's PHP version
+ * is set per site in hPanel and may be older than the developer's.
  */
 declare(strict_types=1);
 
@@ -98,7 +101,9 @@ function serveSitemap(string $api, string $site): void
         return;
     }
     // Every page from the build, minus its (possibly old) post list, plus the live one.
-    $lines = array_filter(explode("\n", $static), fn ($line) => !preg_match('#<loc>[^<]*/blog/[^<]+</loc>#', $line));
+    $lines = array_filter(explode("\n", $static), function ($line) {
+        return !preg_match('#<loc>[^<]*/blog/[^<]+</loc>#', $line);
+    });
     $xml = implode("\n", $lines);
     $posts = implode("\n", $index['sitemap']);
     echo str_replace('</urlset>', ($posts !== '' ? $posts . "\n" : '') . '</urlset>', $xml);
@@ -148,7 +153,9 @@ function setMeta(string $html, string $attr, string $key, ?string $value): strin
 {
     if ($value === null || $value === '') return $html;
     $tag = '<meta ' . $attr . '="' . $key . '" content="' . esc($value) . '">';
-    $html = preg_replace_callback('/<meta\s+' . $attr . '="' . preg_quote($key, '/') . '"[^>]*>/i', fn () => $tag, $html, 1, $count);
+    $html = preg_replace_callback('/<meta\s+' . $attr . '="' . preg_quote($key, '/') . '"[^>]*>/i', function () use ($tag) {
+        return $tag;
+    }, $html, 1, $count);
     return $count ? $html : str_replace('</head>', $tag . "\n</head>", $html);
 }
 
@@ -176,7 +183,10 @@ function servePost(string $api, string $site): void
         return;
     }
 
-    $html = preg_replace_callback('#<title>.*?</title>#s', fn () => '<title>' . esc((string) $page['title']) . '</title>', $shell, 1);
+    $title = '<title>' . esc((string) $page['title']) . '</title>';
+    $html = preg_replace_callback('#<title>.*?</title>#s', function () use ($title) {
+        return $title;
+    }, $shell, 1);
     $html = setMeta($html, 'name', 'description', $page['description'] ?? null);
     $html = setMeta($html, 'name', 'keywords', $page['keywords'] ?? null);
     $html = setMeta($html, 'property', 'og:type', 'article');
@@ -189,7 +199,9 @@ function servePost(string $api, string $site): void
     $html = setMeta($html, 'name', 'twitter:description', $page['description'] ?? null);
     $html = setMeta($html, 'name', 'twitter:image', $page['image'] ?? null);
     $canonical = '<link rel="canonical" href="' . esc((string) ($page['canonical'] ?? '')) . '">';
-    $html = preg_replace_callback('/<link\s+rel="canonical"[^>]*>/i', fn () => $canonical, $html, 1, $count);
+    $html = preg_replace_callback('/<link\s+rel="canonical"[^>]*>/i', function () use ($canonical) {
+        return $canonical;
+    }, $html, 1, $count);
     if (!$count) $html = str_replace('</head>', $canonical . "\n</head>", $html);
 
     // The same id SeoService uses, so the app replaces this block instead of adding a second one.
@@ -204,7 +216,9 @@ function servePost(string $api, string $site): void
         . '<p>' . esc((string) ($article['byline'] ?? '')) . '</p>'
         . (string) ($article['html'] ?? '')
         . '</article></div><script>document.getElementById("seo-snapshot").remove()</script>';
-    $html = preg_replace_callback('#<app-root></app-root>#', fn () => '<app-root></app-root>' . $snapshot, $html, 1, $count);
+    $html = preg_replace_callback('#<app-root></app-root>#', function () use ($snapshot) {
+        return '<app-root></app-root>' . $snapshot;
+    }, $html, 1, $count);
     if (!$count) $html = str_replace('</body>', $snapshot . "\n</body>", $html);
 
     echo $html;

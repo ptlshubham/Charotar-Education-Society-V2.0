@@ -7,11 +7,11 @@
 - [About Us](https://cesociety.in/about): Charotar Education Society is an educational organization based in Anand, Gujarat. This page introduces its mission, history, leadership and educational work.
 - [Our History](https://cesociety.in/about/history): The history of Charotar Education Society: it grew out of the Petlad Boarding House (1906), was founded in Anand, Gujarat on 16 April 1916, took part in the freedom struggle and marked its centenary in 2015-16 with 100 events and 8 Guinness World Records.
 - [CES at a Glance](https://cesociety.in/about/profile): A one-page profile of Charotar Education Society (Anand, Gujarat, founded 1916): 31+ schools, colleges and hostels on three campuses, teaching from pre-primary to Ph.D., with its projects, recognition and contact details.
-- [Management](https://cesociety.in/management): Management / Leadership is a section of Charotar Education Society (CES), based in Anand, Gujarat. Meet the management and leadership associated with Charotar Education Society and learn about the organization’s governance.
-- [History of VJ Patel](https://cesociety.in/glory/history-vj): Glory and History (VJ) is a section of Charotar Education Society (CES), based in Anand, Gujarat. Explore the history, milestones and achievements featured in the V.J. section of Charotar Education Society's website.
+- [Management](https://cesociety.in/management): The Management page introduces the people who lead Charotar Education Society today. CES has been run by its own volunteers and elected bodies for more than a century.
+- [History of VJ Patel](https://cesociety.in/glory/history-vj): The life of Shri Vitthalbhai J. Patel (V.J. Patel): his early life, his part in the freedom movement and his life in teaching. A freedom fighter, teacher and principal, he gave 35 years of his life to Charotar Education Society.
 - [Alumni](https://cesociety.in/alumni): Alumni Network is a section of Charotar Education Society (CES), based in Anand, Gujarat. Connect with the Charotar Education Society alumni network, explore alumni initiatives and stay connected with the CES community in Anand, Gujarat.
 - [Careers](https://cesociety.in/company/careers): Career Opportunities is a section of Charotar Education Society (CES), based in Anand, Gujarat. Explore career opportunities and recruitment updates from Charotar Education Society. Review current openings and application details published by CES.
-- [Job Vacancies](https://cesociety.in/more/career): Careers (More) is a section of Charotar Education Society (CES), based in Anand, Gujarat. Find career-related information, opportunities and updates from Charotar Education Society in Anand, Gujarat.
+- [Job Vacancies](https://cesociety.in/more/career): The Careers page of Charotar Education Society (Anand, Gujarat) lists current vacancies at CES and its institutions, with their application dates, recruitment notices and application forms.
 - [Tenders](https://cesociety.in/more/tenders): Tenders and Notices is a section of Charotar Education Society (CES), based in Anand, Gujarat. View tenders, official notices and related announcements published by Charotar Education Society. Check each notice for deadlines and requirements.
 
 ## Celebrations
@@ -33,8 +33,8 @@
 
 ## Student Corner
 
-- [Answer Key](https://cesociety.in/student-corner/answer-key): Answer Keys (Student Corner) is a section of Charotar Education Society (CES), based in Anand, Gujarat. Find student-corner answer keys and academic resources published by Charotar Education Society. Check the relevant notice for the applicable examination or class.
-- [Magazine](https://cesociety.in/student-corner/magazine): Magazine (Student Corner) is a section of Charotar Education Society (CES), based in Anand, Gujarat. Read student-corner magazine content and publications from the Charotar Education Society community.
+- [Answer Key](https://cesociety.in/student-corner/answer-key): The Answer Keys page in the Charotar Education Society Student Corner publishes official answer keys for standard and subject examinations. Check the relevant notice for the examination or class.
+- [Magazine](https://cesociety.in/student-corner/magazine): Balanitra is the annual student magazine of Charotar Education Society (Anand, Gujarat), collecting students' creative work, achievements and memorable moments.
 - [IP Cell](https://cesociety.in/ipcell): IP Cell (Patents, Copyrights, Trademarks) is a section of Charotar Education Society (CES), based in Anand, Gujarat. Learn about the Intellectual Property Cell and resources related to patents, copyrights and trademarks at Charotar Education Society.
 - [Counselling](https://cesociety.in/counselling): Counselling Services is a section of Charotar Education Society (CES), based in Anand, Gujarat. Learn about counselling services and student support resources available through Charotar Education Society. Check the page for service details and contact information.
 

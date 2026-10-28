@@ -360,9 +360,15 @@ export class SeoService {
     script.textContent = JSON.stringify(data).replace(/</g, '\\u003c');
   }
 
-  /** "%s | ZarklyX" + "Pricing" → "Pricing | ZarklyX". */
+  /**
+   * "%s | Charotar Education Society" + "Dyuno AI" → "Dyuno AI | Charotar Education Society". A
+   * title that already names the site or has its own " | " part ("Blogs and Articles | Charotar
+   * Education Society", "IP Cell … | CES") is complete as written - the template would name it twice.
+   */
   private applyTemplate(value: string, template: string | null): string {
     if (!template || !template.includes('%s')) return value;
+    const siteName = template.replace('%s', '').replace(/^[\s|:·–-]+|[\s|:·–-]+$/g, '');
+    if (value.includes(' | ') || (siteName && value.toLowerCase().includes(siteName.toLowerCase()))) return value;
     return template.replace('%s', value);
   }
 
